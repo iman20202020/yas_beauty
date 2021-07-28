@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html dir="rtl" lang="fa-IR">
+<head dir="rtl">
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <link rel="stylesheet" href="{% static "accounts/assets/bootstrap/css/bootstrap.min.css" %}">
+      <link rel="stylesheet" href="{% static "accounts/assets/farsi/farsi.css" %}">
+      <link rel="stylesheet" href="{% static 'accounts/fa5/css/all.css' %}">
+      <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">
+      <link rel="stylesheet" href="{% static 'accounts/main.css' %}">
+
+    <nav class="  navbar navbar-expand-lg navbar-dark   bg-dark  ">
+        <div class="container justify-content-start text-center">
+
+           <a class="navbar-brand m-3 "  href="{% url 'accounts:index_accounts' %}"> <img class=" " src="{% static 'accounts/images/logo1.jpg' %}"> </a>
+           <button class="navbar-toggler " aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation" type="button" data-target="#navbar" data-toggle="collapse">
+               <span class="navbar-toggler-icon"></span>
+           </button>
+           <div id="navbar" class="navbar-collapse collapse">
+               <ul class="nav navbar-nav">
+                   <li><a  class="nav nav-link text text-white  " href="{% url 'accounts:index_accounts' %}"> صفحه اصلی   </a>
+                   </li>
+                   <li><a  id="user_key"  class="nav nav-link  text text-white "
+                                 href=" {% if user.is_authenticated %}{% url 'accounts:profile_edit' %}
+                                        {% else %}{% url 'accounts:login_view' %}{% endif %}" >
+                       {% if user.is_authenticated %}  نمایه کاربری {{ user }}{% else %}ورود و  ثبت نام{% endif %}
+                       </a>
+                   </li>
+                    <li ><a href="#" class="nav nav-link text textr-white  "><i class="fas fa-support "></i> پشتیبانی</a></li >
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="dropdown-1" aria-expanded="false" href="#" data-toggle="dropdown">ارتباط با ما</a>
+                        <div class="dropdown-menu text-center" aria-labelledby="dropdown-1">
+                            <a  class="nav nav-link bg-secondary " href="#">درباره ما   </a>
+                            <a  class="nav nav-link bg-secondary" href="#">همکاری با ما</a>
+                            <a  class="nav nav-link bg-secondary" href="#">تماس  با ما</a>
+                        </div>
+                    </li>
+
+           {% if  user.is_authenticated %}
+
+                <li   >
+                    <a class="nav nav-link text text-white " href="{% url 'accounts:logout_view' %}" >خروج</a>
+                </li>
+
+           {% endif %}
+                </ul>
+            </div>
+
+        <form class="form-inline  mx-3 " action="{% url 'accounts:search_view' %}" method="get" >
+
+            <input class="form-control form-inline " aria-label="Search" type="search" placeholder=" جستجو" name="search_text">
+            <button type="submit" class="form-inline " ><i class='fa fa-search' ></i></button>
+
+
+        </form>
+        </div>
+
+
+
+    </nav>
+
+
+</head>
+{% block title %}{% endblock %}
+<body >
+<div class="text-right alert ">
+    <ul>
+    {% for result in results %}
+        <li>{{ result }} </li>
+    {% endfor %}
+    </ul>
+    <p class="alert ">{{ search_message }}</p>
+    <ul>
+    {% for teacher_result in results_teachers %}
+        <li><a href="{% url 'accounts:profile_edit' %}">{{ teacher_result }} </a></li>
+    {% endfor %}
+    </ul>
+</div>
+    {% block contents %}{% endblock %}
+</body>
+    {% block footer %}
+    {% endblock %}
+
+<div class="container row bg-light">
+
+
+
+
+
+
+            </div>
+
+
+
+<script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>
+<script src="{% static 'accounts/assets/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'accounts/assets/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'accounts/assets/dropdown/js/nav-dropdown.js' %}"></script>
+<script src="{% static 'accounts/assets/dropdown/js/navbar-dropdown.js' %}"></script>
+<script src="{% static 'accounts/assets/bootstrap/js/jquery.touch-swipe.min.js' %}"></script>
+<script src="{% static 'accounts/fa5/js/all.min.js' %}"></script>
+<script src="{% static 'accounts/fa5/js/v4-shims.min.js' %}"></script>
+{% if user.is_authenticated %}
+    <script >
+        $(document).ready(function () {
+            $("#user_key").css('background-color', '#f67e7d')
+
+        })
+    </script>
+
+{% endif %}
+
+</html>

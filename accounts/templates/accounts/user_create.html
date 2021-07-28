@@ -1,0 +1,35 @@
+{% extends "accounts/_base.html" %}
+{% block title %}
+
+
+{% endblock %}
+
+{% block contents %}
+<div class="row ">
+    <div class="container">
+        <div class="col text-center just pt-4  " >
+             <div class="mbr-section-head ">
+                <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 text-primary">
+                    <strong>ثبت نام</strong></h4>
+             </div><br>
+             <div class="col-lg-8  col-md-8 col-sm-12  text-left ">
+                 <form action="" class="" method="post" >
+                     {% csrf_token %}
+                     {{ user_create_form.as_p }}
+                     <input  type="submit" class="btn btn-primary col-4 " value="ثبت"/>
+                 </form>
+             </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block footer %}
+<div class="col text-right">
+
+{% if user_saved %}
+    <strong>شما :</strong>
+    <button type="button" class="btn btn-dark"  name="student_button"> <a href="{% url 'accounts:student_edit' %}" >دانش آموز هستید<<i class="fas fa-user-graduate"></i></a></button>
+    <button type="button" class="btn btn-dark"  name="student_button"> <a href="{% url 'accounts:teacher_edit' %}" >معلم هستید</a></button>
+{% endif %}
+</div>
+{% endblock %}

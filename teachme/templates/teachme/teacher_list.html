@@ -1,0 +1,78 @@
+
+{% extends 'accounts/_base.html' %}
+{% load static %}
+{% block title %}
+{##}
+{#<form action="" method="post" class=" col justify-content-center alert-success form-inline pt-3 ">#}
+{#    {% csrf_token %}#}
+{#       {{ student_edit_form }}#}
+{#    <button type="submit" class=" btn btn-primary">Search</button>#}
+{#</form>#}
+
+{% endblock %}
+
+
+{% block contents %}
+
+
+            <div class="  col-lg-12 col-md-12 col-sm-12 alert text-center alert-info text-dark mt-2 mb-0 py-1 px-3  ">
+                {{ teachers.count }}
+                معلم پیدا شد
+            </div><br>
+            <div class="  justify-content-center">
+
+                <table class="table table-striped ">
+                    <thead>
+                        <tr>
+                            <th> عکس پروفایل</th>
+                            <th>نام معلم</th>
+                            <th>موضوع تدریس</th>
+                            <th>رشته و آخرین مدرک تحصیلی</th>
+                            <th> سابقه تدریس </th>
+                            <th>محدوده قیمت کلاس </th>
+                            <th> امتیاز معلم از 5</th>
+                            <th>شهر</th>
+                        </tr>
+
+                    </thead>
+
+
+                    {% for teacher in page_obj %}
+                        <tr>
+                           <td class="w-25"><a href="{% url 'teachme:teacher_detail' teacher.id %}"><img src="{% static teacher.image %}" class="img-thumbnail" alt=""></a></td>
+                            <td><a href="{% url 'teachme:teacher_detail' teacher.id %}"> {{ teacher.first_name }}  {{ teacher.last_name }}</a></td>
+{#                            <td>{{ teacher.language.language_name }}</td>#}
+                            <td>{{ teacher.syllabus.syllabus_name }}</td>
+                            <td>{{ teacher.qualification }}</td>
+                            <td>{{ teacher.experience }}</td>
+                            <td>{{ teacher.price_range.price_range_name }}</td>
+                            <td>{{ teacher.points}}</td>
+                            <td>{{ teacher.city.city}}</td>
+
+                        </tr>
+                   {% endfor %}
+                </table><br>
+            <a href="{% url 'accounts:student_edit' %}"> تغییر پارامترهای جستجو>></a>
+
+    </div>
+    <div class="pagination fixed-bottom justify-content-center alert-info" >
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <button type="button" class="btn  "><a href="?page=1">&laquo; first</a></button>
+            <button type="button" class="btn  "><a href="?page={{ page_obj.previous_page_number }}">previous</a></button>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+           <button type="button" class="btn  "> <a href="?page={{ page_obj.next_page_number }}">next</a></button>
+            <button type="button" class="btn  "><a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></button>
+        {% endif %}
+    </span>
+</div>
+
+
+        {% endblock %}
+ </div>
