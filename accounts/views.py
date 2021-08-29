@@ -231,79 +231,8 @@ def student_edit(request):
 
 @login_required
 @csrf_exempt
-# def teacher_edit(request):
-#     if request.is_ajax():
-#         category = request.GET.get('category', None)
-#         category_list = request.GET.get('category_list', None)
-#         if category_list:
-#             category_list = list(LearnCategory.objects.all().values())
-#             return JsonResponse(category_list, safe=False)
-#         syll = list(Syllabus.objects.filter(learn_category=category).values())
-#         return JsonResponse(syll, safe=False)
-#
-#     else:
-#
-#         teacher_edit_form = TeacherEditForm()
-#         cities = list(City.objects.all().values())
-#         price_ranges = list(PriceRange.objects.all().values())
-#         # languages = list(Language.objects.all().values())
-#         categories = list(LearnCategory.objects.all().values())
-#         syllabuses = None
-#         first_name = None
-#         last_name = None
-#         teacher_profile = None
-#         error = ''
-#         if hasattr(request.user, 'teacher'):
-#             teacher_profile = Teacher.objects.get(user_id=request.user.id)
-#             teacher_edit_form = TeacherEditForm(instance=teacher_profile)
-#             error = 'welcome' + "  " + str(request.user)
-#
-#             if request.method == 'POST':
-#                 try:
-#                     teacher_edited = TeacherEditForm(request.POST, request.FILES)
-#                     teacher_edited = teacher_edited.save(commit=False)
-#                     teacher_edited.user = request.user
-#                     teacher_edited.pk = teacher_profile.id
-#                     if teacher_edited.image == "":
-#                         teacher_edited.image = teacher_profile.image
-#                     if teacher_edited.degree_image == "":
-#                         teacher_edited.degree_image = teacher_profile.degree_image
-#                     if teacher_edited.national_card_image == "":
-#                         teacher_edited.national_card_image = teacher_profile.national_card_image
-#                     teacher_edited.save()
-#                     teacher_profile = request.user.teacher
-#                     error = "profile edited successfully"
-#                 except:
-#                     error = 'your inputs not valid'
-#         elif hasattr(request.user, 'student'):
-#             return HttpResponse("You are a student please sign up with a different username as a teacher ")
-#         if request.method == 'POST' and hasattr(request.user, 'teacher') is False:
-#             try:
-#                 teacher_edit_form = TeacherEditForm(request.POST, request.FILES)
-#                 if teacher_edit_form.is_valid():
-#                     teacher = teacher_edit_form.save(commit=False)
-#                     teacher.user = request.user
-#                     teacher.save()
-#                     error = "profile saved as  a teacher successfully"
-#                     teacher_profile = request.user.teacher
-#             except:
-#                 teacher_profile = request.POST
-#                 error = "please complete inputs carefully"
-#         context = {
-#             'teacher_profile': teacher_profile,
-#             'teacher_edit_form': teacher_edit_form,
-#             'error': error,
-#             'cities': cities,
-#             'price_ranges': price_ranges,
-#             # 'languages': languages,
-#             'categories': categories,
-#             'syllabuses': syllabuses,
-#             'first_name': first_name,
-#             'last_name': last_name,
-#         }
-#
-#         return render(request, 'accounts/teacher_edit.html', context)
-#
+
+
 
 def teacher_edit(request):
         if request.is_ajax():

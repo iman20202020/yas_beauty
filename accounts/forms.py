@@ -36,6 +36,7 @@ class MyUserCreate(UserCreationForm):
     )
     phone_number = forms.CharField(label="شماره همراه ")
 
+
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ("username","email","phone_number")
