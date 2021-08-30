@@ -84,6 +84,7 @@ def index_accounts(request):
 
 def user_create(request):
     if request.method == 'POST':
+
         logout(request)
         user_create_form = MyUserCreate(request.POST)
         if user_create_form.is_valid:
@@ -92,6 +93,7 @@ def user_create(request):
                 # user.is_active = False
 
                 user_saved = user
+
                 user.save()
                 login(request, user)
             except:
@@ -107,7 +109,11 @@ def user_create(request):
 
     }
     return render(request, 'accounts/user_create.html', context)
+def user_verify(request):
+    if request.method == 'POST':
+        mobile_number = request.POST.get('input_mobile_number')
 
+    return render(request, 'accounts/user_verify.html', {'userverify': user_verify})
 
 def login_view(request):
     if request.method == 'POST':

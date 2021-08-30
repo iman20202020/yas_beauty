@@ -25,7 +25,15 @@
 {% endblock %}
 {% block footer %}
 <div class="col text-right">
-
+{#{% if user_valid %}#}
+<strong>کد تایید به شماره همراه شما ارسال شد لطفا آنرا وارد کنید</strong>
+     <form action="" class="" method="post" >
+     {% csrf_token %}
+     <label for="veri_code_input"></label>
+     <input type="text" id="veri_code_input" name="veri_code_input">
+         <input type="submit" class="btn btn-dark">
+     </form>
+{#{% endif %}#}
 {% if user_saved %}
     <strong>شما :</strong>
     <button type="button" class="btn btn-dark"  name="student_button"> <a href="{% url 'accounts:student_edit' %}" >دانش آموز هستید<<i class="fas fa-user-graduate"></i></a></button>
