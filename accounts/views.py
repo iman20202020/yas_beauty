@@ -81,6 +81,8 @@ def index_accounts(request):
 
     return render(request, 'accounts/index.html', context)
 
+def contact_us(request):
+    return render(request, 'accounts/contact_us.html', {})
 
 def user_create(request):
     if request.method == 'POST':
@@ -106,14 +108,16 @@ def user_create(request):
     context = {
         'user_create_form': user_create_form,
         'user_saved': user_saved,
-
     }
     return render(request, 'accounts/user_create.html', context)
+
+
 def user_verify(request):
     if request.method == 'POST':
         mobile_number = request.POST.get('input_mobile_number')
 
     return render(request, 'accounts/user_verify.html', {'userverify': user_verify})
+
 
 def login_view(request):
     if request.method == 'POST':
