@@ -133,13 +133,14 @@ def login_view(request):
             elif hasattr(user, 'student'):
                 return HttpResponseRedirect(reverse('accounts:student_edit'))
             else:
-                return HttpResponse("logined but you are not saaved as a student or a teacher"
-                                    "please signup with a different username!!!")
+                # TODO remove record in db if user is not staff
+                return HttpResponse("شما وارد شده اید  اما نه به عنوان استاد و نه آموزنده . لطفا با نام کاربری دیگری دوباره ثبت نام کنید")
 
         else:
             context = {
                 'username': username,
                 'error': "user not found",
+
             }
             return render(request, 'accounts/login.html', context)
     else:
