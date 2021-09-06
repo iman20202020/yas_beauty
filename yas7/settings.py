@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'teachme.apps.TeachmeConfig',
-    'verify.apps.VerifyConfig',
+
 
 
 ]

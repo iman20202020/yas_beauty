@@ -1,6 +1,10 @@
+import math
 import os
+import random
 from itertools import chain
 from os import walk
+
+from django.contrib.auth.models import User
 from django.template.defaultfilters import filesizeformat
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
@@ -13,6 +17,7 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from kavenegar import *
 
 from accounts.forms import MyUserCreate, StudentEditForm, TeacherEditForm
 from accounts.models import LearnCategory, Syllabus, PriceRange, Student, Teacher, City
@@ -113,10 +118,29 @@ def user_create(request):
 
 
 def user_verify(request):
+    response = {}
     if request.method == 'POST':
         mobile_number = request.POST.get('input_mobile_number')
+        digits = "0123456789"
+        otp_code = ""
 
-    return render(request, 'accounts/user_verify.html', {'userverify': user_verify})
+        # length of password can be changed
+        # by changing value in range
+        for i in range(4):
+            otp_code += digits[math.floor(random.random() * 10)]
+
+
+            api = KavenegarAPI(
+                '4C446667424F455A36304C484E7A4B466633597532372F594D4C514F3356457162524C793056523168626F3D', )
+            params = {
+                'receptor': mobile_number,
+                'template': 'otp1',
+                'token': str(otp_code),
+                'type': 'sms',  # sms vs call
+            }
+            response = api.verify_lookup(params)
+
+    return render(request, 'accounts/user_verify.html', {'userverify': user_verify,'response':response,  })
 
 
 def login_view(request):
@@ -133,8 +157,9 @@ def login_view(request):
             elif hasattr(user, 'student'):
                 return HttpResponseRedirect(reverse('accounts:student_edit'))
             else:
-                # TODO remove record in db if user is not staff
-                return HttpResponse("شما وارد شده اید  اما نه به عنوان استاد و نه آموزنده . لطفا با نام کاربری دیگری دوباره ثبت نام کنید")
+                get_user_pk = request.user.pk
+                User.objects.get(pk=get_user_pk).delete()
+                return HttpResponse("خطایی رخ داده لطفا دوباره ثبت نام کنید")
 
         else:
             context = {
@@ -198,7 +223,6 @@ def student_edit(request):
                     student_profile = request.user.student
                     error = "نمایه شما با موفقیت تغییر یافت "
                 except :
-
                     error = 'ورودی های خود را کنترل کنید'
                     raise ValidationError( 'ورودی های خود را کنترل کنید')
             if hasattr(request.user, 'teacher'):
@@ -219,7 +243,6 @@ def student_edit(request):
                 student_profile = request.POST
                 error = "لطفا ورودی های هود را کنترل کنید"
 
-
         context = {
             'student_profile' : student_profile,
             'student_edit_form': student_edit_form,
@@ -233,18 +256,11 @@ def student_edit(request):
             # 'last_name' : last_name,
             }
 
-
         return render(request, 'accounts/student_edit.html', context)
-
-
-
 
 
 @login_required
 @csrf_exempt
-
-
-
 def teacher_edit(request):
         if request.is_ajax():
             category = request.GET.get('category',None)
