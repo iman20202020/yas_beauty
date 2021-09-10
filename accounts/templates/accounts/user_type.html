@@ -1,0 +1,21 @@
+{% extends 'accounts/_base.html' %}
+{% block title %}
+<div class="row ">
+    <div class="container">
+        <div class="col text-center"  >
+            <div class="mbr-section-head ">
+                <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 ">
+                    <strong>خوش آمدید</strong></h4>
+             </div><br>
+        <div>
+        <strong>لطفا نوع کاربری خود را انتخاب کنید:</strong><br><br>
+    </div>
+
+    <button type="button" class="btn btn-lg btn-outline-dark "  name="student_button"><i class="fas fa-user-graduate"></i>&nbsp; آموزنده هستید
+        <a  href="{% url 'accounts:student_edit' %}" > </a></button><br><br>
+    <button type="button" class="btn btn-lg btn-outline-dark"  name="student_button"><i class="fas fa-chalkboard-teacher"></i>&nbsp;استاد هستید
+        <a href="{% url 'accounts:teacher_edit' %}" > </a></button>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -5,39 +5,42 @@
 {% endblock %}
 
 {% block contents %}
+
 <div class="row ">
     <div class="container">
         <div class="col text-center just pt-4  " >
-             <div class="mbr-section-head ">
+        {% if user_saved == None %}
+             <div class="mbr-section-head  " id="get_user_info">
                 <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 text-primary">
                     <strong>ثبت نام</strong></h4>
              </div><br>
-             <div class="col-lg-8  col-md-8 col-sm-12  text-left ">
-                 <form action="" class="" method="post" >
+             <div class="col-lg-8  col-md-8 col-sm-12  text-left " >
+                 <form action="{% url 'accounts:user_create' %}" class="" method="post" >
                      {% csrf_token %}
                      {{ user_create_form.as_p }}
                      <input  type="submit" class="btn btn-primary col-4 " value="ثبت"/>
                  </form>
              </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
-{% block footer %}
-<div class="col text-right">
-{#{% if user_valid %}#}
-<strong>کد تایید به شماره همراه شما ارسال شد لطفا آنرا وارد کنید</strong>
-     <form action="" class="" method="post" >
-     {% csrf_token %}
-     <label for="veri_code_input"></label>
-     <input type="text" id="veri_code_input" name="veri_code_input">
-         <input type="submit" class="btn btn-dark">
-     </form>
-{#{% endif %}#}
+        {% endif %}
+
+
 {% if user_saved %}
-    <strong>شما :</strong>
-    <button type="button" class="btn btn-dark"  name="student_button"> <a href="{% url 'accounts:student_edit' %}" >دانش آموز هستید<<i class="fas fa-user-graduate"></i></a></button>
-    <button type="button" class="btn btn-dark"  name="student_button"> <a href="{% url 'accounts:teacher_edit' %}" >معلم هستید</a></button>
-{% endif %}
+
+    <div class="mbr-section-head " id="get_user_type" >
+                <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 ">
+                    <strong>خوش آمدید</strong></h4>
+             </div><br>
+        <div>
+        <strong>لطفا نوع کاربری خود را انتخاب کنید:</strong><br><br>
+
+
+
+        <a  href="{% url 'accounts:student_edit' %}" >  <button type="button" class="btn btn-lg btn-outline-dark "  name="student_button"><i class="fas fa-user-graduate"></i>&nbsp;آموزنده هستید</button>  </a><br><br>
+            <a href="{% url 'accounts:teacher_edit' %}" > <button type="button" class="btn btn-lg btn-outline-dark"  name="student_button"><i class="fas fa-chalkboard-teacher"></i>&nbsp;استاد هستید</button>
+</a>
+    </div>
+        </div>
 </div>
+    </div>
+{% endif %}
 {% endblock %}

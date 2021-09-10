@@ -2,7 +2,7 @@ import math
 import os
 import random
 from itertools import chain
-from os import walk
+from accounts.otp import *
 
 from django.contrib.auth.models import User
 from django.template.defaultfilters import filesizeformat
@@ -119,28 +119,41 @@ def user_create(request):
 
 def user_verify(request):
     response = {}
+
     if request.method == 'POST':
-        mobile_number = request.POST.get('input_mobile_number')
-        digits = "0123456789"
-        otp_code = ""
+        user_verified = None
+        otp_code = None
+        if 'input_mobile_number' in request.POST:
+            mobile_number = request.POST.get('input_mobile_number')
+            response = send_otp(mobile_number)
+            if response[0]['status'] == 5:
+                user_verified = 'code_sent'
+                otp_code = response[1]
+            else:
+                user_verified = 'code_not_sent'
+                otp_code = None
+        if 'veri_code_input' in request.POST:
+            otp_code = request.POST.get('otp_code_generated')
+            veri_code_input = request.POST.get('veri_code_input')
+            if otp_code == veri_code_input:
+                user_verified = 'code_checked'
+                user_create_form = MyUserCreate()
+                user_saved = None
+                context = {'user_saved':user_saved, 'user_create_form':user_create_form, 'user_verified':user_verified}
+                return render(request, 'accounts/user_create.html', context)
+            else:
+                user_verified = 'code_check_error'
 
-        # length of password can be changed
-        # by changing value in range
-        for i in range(4):
-            otp_code += digits[math.floor(random.random() * 10)]
+    else:
+        user_verified = None
+        otp_code = None
+    context = {
+     'user_verified': user_verified,
+     'response': response,
+     'otp_code': otp_code,
+     }
 
-
-            api = KavenegarAPI(
-                '4C446667424F455A36304C484E7A4B466633597532372F594D4C514F3356457162524C793056523168626F3D', )
-            params = {
-                'receptor': mobile_number,
-                'template': 'otp1',
-                'token': str(otp_code),
-                'type': 'sms',  # sms vs call
-            }
-            response = api.verify_lookup(params)
-
-    return render(request, 'accounts/user_verify.html', {'userverify': user_verify,'response':response,  })
+    return render(request, 'accounts/user_verify.html', context )
 
 
 def login_view(request):
@@ -184,6 +197,10 @@ def profile_edit(request):
     if hasattr(request.user, 'student'):
         return HttpResponseRedirect(reverse('accounts:student_edit'))
     else:
+
+        get_user_pk = request.user.pk
+        User.objects.get(pk=get_user_pk).delete()
+
         return HttpResponse("لطفا دوباره بصورت معلم یا دانش آموز ثبت نام کنید")
 
 
@@ -226,6 +243,7 @@ def student_edit(request):
                     error = 'ورودی های خود را کنترل کنید'
                     raise ValidationError( 'ورودی های خود را کنترل کنید')
             if hasattr(request.user, 'teacher'):
+                get_user_pk = request.user.pk
                 return HttpResponse("شما به عنوان معلم ثبت نام کرده اید نه دانش آموز ")
 
         if request.method == 'POST' and hasattr(request.user, 'student') is False:
@@ -312,9 +330,10 @@ def teacher_edit(request):
 
 
                         teacher_profile = request.user.teacher
-                        error = "نمایه شما با موفقیت تغییر کرد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
+                        error = "مشخصات شما با موفقیت تغییر کرد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
+
                     except :
-                         raise ValidationError("ورودی ها دقیق نیست")
+                         error = " خطا !  لطفا ورودی ها را کنترل کنید و دوباره سعی کنید"
             elif hasattr(request.user, 'student'):
                 return HttpResponse("مشخصات شما به عنوان دانش آموز ثبت شده لطفا با نام کاربری دیگری به عنوان معلم ثبت نام کنید ")
             if request.method == 'POST' and hasattr(request.user, 'teacher') == False:
@@ -326,6 +345,8 @@ def teacher_edit(request):
                         teacher.save()
                         error = "مشخصات شما ثبت شد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
                         teacher_profile = request.user.teacher
+                    else:
+                        error = 'ورودی ها دقیق نیست لطفا دوباره سعی کنید'
                 except:
                     teacher_profile = request.POST
                     error = "لطفا اطلاعات وارد شده را بررسی کنید"

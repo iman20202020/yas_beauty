@@ -1,26 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% if user_verify == None %}
-<form action="" class="" method="post">
-{% csrf_token %}
-<label for="input_mobile_number"> لطفا شماره همراه خود را وارد کنید</label>
-<input type="text" name="input_mobile_number" >
-<input type="submit" class="btn btn-dark">
-</form>
-{% endif %}
-{% if user_verify %}
-<strong>کد تایید به شماره همراه شما ارسال شد لطفا آنرا وارد کنید</strong>
-     <form action="" class="" method="post" >
-     {% csrf_token %}
-     <label for="veri_code_input"></label>
-     <input type="text" id="veri_code_input" name="veri_code_input">
-         <input type="submit" class="btn btn-dark">
-     </form>
-{% endif %}
-</body>
-</html>
+
+
+{% extends 'accounts/_base.html' %}
+{% block title %}
+<div class="row ">
+    <div class="container">
+        <div class="col text-center"  >
+            <div class="mbr-section-head ">
+                <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 ">
+                    <strong>خوش آمدید</strong></h4>
+             </div><br>
+          {% if user_verified == None %}
+                <strong>لطفا شماره همراه خود را وارد کنید</strong><br><br>
+                <form action="" class="" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="input_mobile_number" >
+                    <input type="submit" class="btn btn-dark" value="ثبت">
+                </form>
+
+            {% endif %}
+            {% if user_verified == 'code_sent' %}
+                <strong>کد تایید به شماره همراه شما ارسال شد لطفا آنرا وارد کنید</strong><br><br>
+                 <form action="" class="" method="post" >
+                     {% csrf_token %}
+                     <label for="veri_code_input"></label>
+                     <input type="text" id="veri_code_input" name="veri_code_input">
+                     <input type="hidden" id="otp_code_generated" name="otp_code_generated" value="{{ otp_code }}">
+                     <input type="submit" class="btn btn-dark" value="ارسال">
+                 </form>
+            {% endif %}
+            {% if user_verified == 'code_check_error' %}
+                <strong class="text-danger"> کد وارد شده صحیح نیست</strong><br>
+
+                <form action="" class="" method="post" >
+                     {% csrf_token %}
+                     <label for="veri_code_input"></label>
+                     <input type="text" id="veri_code_input" name="veri_code_input">
+                     <input type="hidden" id="otp_code_generated" name="otp_code_generated" value="{{ otp_code }}">
+                     <input type="submit" class="btn btn-dark" value="ارسال دوباره">
+                 </form>
+                <br><br>
+
+               <button class="btn btn-outline-dark" id="show_resend_mobile" onclick="show_resend()" > <strong >ارسال دوباره کد به شماره همراه</strong></button>
+                    <br><br>
+
+                <div id="resend_mobile" style="display: none">
+                    <strong>لطفا شماره همراه خود را  دوباره وارد کنید</strong><br><br>
+                    <form action="" class="" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="input_mobile_number" >
+                        <input type="submit" class="btn btn-dark" value="ثبت">
+                    </form>
+                </div>
+            {% endif %}
+{{ user_verified }}
+{{ otp_code }}
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+<script >
+    function show_resend () {
+
+            $("#resend_mobile").css('display','block');
+            $("#show_resend_mobile").css('display','none');
+
+        }
+
+</script>
+{% endblock %}
