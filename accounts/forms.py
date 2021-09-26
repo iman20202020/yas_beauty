@@ -6,22 +6,20 @@ from django.template.defaultfilters import filesizeformat
 from django.utils.translation import ugettext_lazy as _
 
 
-from accounts.models import Student, Teacher
+from accounts.models import Student, Teacher, MyUser
 from yas7 import settings
 
 
 class MyUserCreate(UserCreationForm):
-    email = forms.EmailField(required=True, label='ایمیل')
+    # email = forms.EmailField(required=True, label='ایمیل')
 
     def __init__(self, *args, **kwargs):
         super(MyUserCreate, self).__init__(*args, **kwargs)
 
-        super().__init__(*args, **kwargs)
-        for fieldname in ['username',]:
-            self.fields[fieldname].help_text = None
-    # error_messages = {
-    #      'رمز عبور ها یکسان نیست',
-    # }
+        # super().__init__(*args, **kwargs)
+        # for fieldname in ['username',]:
+        #     self.fields[fieldname].help_text = None
+
     password1 = forms.CharField(
         label="گذر واژه",
         strip=False,
@@ -34,20 +32,21 @@ class MyUserCreate(UserCreationForm):
         strip=False,
         help_text=None,
     )
-    phone_number = forms.CharField(label="شماره همراه ")
+
 
 
     class Meta(UserCreationForm.Meta):
-        model = User
-        fields = ("username","email","phone_number")
-        field_classes = {'username': UsernameField}
+        model = MyUser
+        fields = ("username","phone_number")
+        field_classes = {'email': UsernameField}
 
 class StudentEditForm(forms.ModelForm):
     class Meta:
         model = Student
         exclude = ['user','email']
 
-        field_classes = {'username': UsernameField}
+
+        # field_classes = {'username': UsernameField}
 
 
 class TeacherEditForm(UserChangeForm):

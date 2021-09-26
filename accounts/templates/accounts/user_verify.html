@@ -25,6 +25,7 @@
                      <label for="veri_code_input"></label>
                      <input type="text" id="veri_code_input" name="veri_code_input">
                      <input type="hidden" id="otp_code_generated" name="otp_code_generated" value="{{ otp_code }}">
+                     <input type="hidden" id="mobile_number" name="mobile_number" value="{{ mobile_number }}">
                      <input type="submit" class="btn btn-dark" value="ارسال">
                  </form>
             {% endif %}
@@ -54,6 +55,7 @@
             {% endif %}
 {{ user_verified }}
 {{ otp_code }}
+        {{ mobile_number }}
 
             </div>
 

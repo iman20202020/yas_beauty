@@ -123,6 +123,7 @@ def user_verify(request):
     if request.method == 'POST':
         user_verified = None
         otp_code = None
+        mobile_number = None
         if 'input_mobile_number' in request.POST:
             mobile_number = request.POST.get('input_mobile_number')
             response = send_otp(mobile_number)
@@ -132,14 +133,22 @@ def user_verify(request):
             else:
                 user_verified = 'code_not_sent'
                 otp_code = None
-        if 'veri_code_input' in request.POST:
+        if 'veri_code_input' in request.POST and 'mobile_number'in request.POST:
             otp_code = request.POST.get('otp_code_generated')
             veri_code_input = request.POST.get('veri_code_input')
             if otp_code == veri_code_input:
+                mobile_number = request.POST.get('mobile_number')
                 user_verified = 'code_checked'
                 user_create_form = MyUserCreate()
+                user_create_form.phone_number = mobile_number
+
                 user_saved = None
-                context = {'user_saved':user_saved, 'user_create_form':user_create_form, 'user_verified':user_verified}
+                context = {
+                    'user_saved':user_saved,
+                    'user_create_form':user_create_form,
+                    'user_verified':user_verified,
+                    'mobile_number': mobile_number,
+                }
                 return render(request, 'accounts/user_create.html', context)
             else:
                 user_verified = 'code_check_error'
@@ -147,7 +156,9 @@ def user_verify(request):
     else:
         user_verified = None
         otp_code = None
+        mobile_number = None
     context = {
+     'mobile_number': mobile_number,
      'user_verified': user_verified,
      'response': response,
      'otp_code': otp_code,

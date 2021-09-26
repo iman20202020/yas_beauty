@@ -149,3 +149,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 # 500MB - 429916160
 # MAX_UPLOAD_SIZE = 5242880
 
+AUTH_USER_MODEL = 'accounts.MyUser'

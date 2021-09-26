@@ -1,13 +1,28 @@
 
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import User, AbstractUser
-from django.core.validators import FileExtensionValidator
+# from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from django.core.validators import FileExtensionValidator, EmailValidator, validate_email
 from django.db import models
 
 
-from accounts.validators import validate_video_size, validate_image_size
+from accounts.validators import validate_video_size, validate_image_size, email_validate
 
 
+class MyUser(AbstractUser):
+    phone_number = models.CharField(max_length=13,default='0912')
+
+
+    username = models.CharField(
+        verbose_name="ایمیل",
+        max_length=50,
+        unique=True,
+        help_text=None,
+        validators=[validate_email],
+        error_messages={
+            'unique':"یک کاربر با این ایمیل وجود دارد .",
+        },
+    )
 class City(models.Model):
     city = models.CharField(primary_key=True, max_length=15, default='تهران', unique=True)
     city_name = models.CharField(max_length=30, )
@@ -39,7 +54,7 @@ class PriceRange(models.Model):
 
 
 class Teacher(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, )
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE, )
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     national_id = models.PositiveIntegerField()
@@ -66,7 +81,7 @@ class Teacher(models.Model):
         return self.last_name
 
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True)
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE, blank=True)
     price_range = models.ForeignKey('PriceRange', on_delete=models.CASCADE)
     learn_type = models.IntegerField(blank=True,default=0)
     syllabus = models.ForeignKey('Syllabus', on_delete=models.CASCADE, default='phys')
