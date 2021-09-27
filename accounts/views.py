@@ -124,8 +124,8 @@ def user_verify(request):
         user_verified = None
         otp_code = None
         mobile_number = None
-        if 'input_mobile_number' in request.POST:
-            mobile_number = request.POST.get('input_mobile_number')
+        if 'input_mobile' in request.POST:
+            mobile_number = request.POST.get('input_mobile')
             response = send_otp(mobile_number)
             if response[0]['status'] == 5:
                 user_verified = 'code_sent'

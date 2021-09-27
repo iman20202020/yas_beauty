@@ -10,7 +10,7 @@ from accounts.validators import validate_video_size, validate_image_size, mobile
 
 
 class MyUser(AbstractUser):
-    phone_number = models.CharField(verbose_name='شماره همراه',max_length=13,blank=False,unique=True)
+    phone_number = models.CharField(verbose_name='شماره همراه',max_length=13,blank=False,unique=True,)
 
 
     username = models.CharField(

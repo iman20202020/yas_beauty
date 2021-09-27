@@ -21,8 +21,9 @@ def validate_image_size(value):
         return value
 
 def mobile_validate(value):
-    validation = mobile.is_valid(value)
-    if validation['validation'] == True:
-        return True
+    valid = mobile.is_valid(value)
+
+    if valid == True:
+        return value
     else:
         raise ValidationError("شماره معتبر وارد کنید")

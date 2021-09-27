@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 from accounts.models import Student, Teacher, MyUser
+from accounts.validators import mobile_validate
 from yas7 import settings
 
 
