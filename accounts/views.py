@@ -140,7 +140,9 @@ def user_verify(request):
                 mobile_number = request.POST.get('mobile_number')
                 user_verified = 'code_checked'
                 user_create_form = MyUserCreate()
-                user_create_form.phone_number = mobile_number
+                user_create_form.fields['phone_number'].initial = mobile_number
+
+                # user_create_form.phone_number = mobile_number
 
                 user_saved = None
                 context = {

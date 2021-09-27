@@ -6,11 +6,11 @@ from django.core.validators import FileExtensionValidator, EmailValidator, valid
 from django.db import models
 
 
-from accounts.validators import validate_video_size, validate_image_size, email_validate
+from accounts.validators import validate_video_size, validate_image_size, mobile_validate
 
 
 class MyUser(AbstractUser):
-    phone_number = models.CharField(max_length=13,default='0912')
+    phone_number = models.CharField(verbose_name='شماره همراه',max_length=13,blank=False,unique=True)
 
 
     username = models.CharField(
