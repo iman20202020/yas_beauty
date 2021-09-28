@@ -11,10 +11,10 @@
             </div><br>
             <div id="send_mobile_div" {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: none" {% endif %}>
                 <strong>لطفا شماره همراه خود را وارد کنید</strong><br><br>
-                <form action="" class="" method="post">
+                <form action="" class="" method="post" autocomplete="off">
                     {% csrf_token %}
                     <input type="text" name="input_mobile"  id="input_mobile"
-                           onkeyup="check_number('input_mobile_submit','input_mobile')" autofocus >
+                           onkeyup="check_number('input_mobile_submit','input_mobile')" autofocus  autocomplete="new-password">
                     <input type="submit"  id="input_mobile_submit" class="btn btn-dark " value="ثبت"  disabled>
                 </form>
             </div>
@@ -67,6 +67,7 @@
         let num1 = $("#"+mobile_inputted).val();
         const pattern = /(0|\+98)?([ ]|-|[()]){0,2}9[1|2|3|4]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/ig;
         if (pattern.test(num1) ) {
+            {#$('#'+mobile_inputted).autocomplete("off")#}
             $('#'+submit_id).removeAttr("disabled")
         }
         else{
