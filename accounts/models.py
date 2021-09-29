@@ -57,7 +57,7 @@ class Teacher(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE, )
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    national_id = models.PositiveIntegerField()
+    national_id = models.PositiveIntegerField(unique=True)
     price_range = models.ForeignKey('PriceRange', on_delete=models.CASCADE)
     # language = models.ForeignKey('Language', on_delete=models.CASCADE)
     city = models.ForeignKey('City', on_delete=models.CASCADE, default='تهران')

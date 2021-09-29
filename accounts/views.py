@@ -20,7 +20,7 @@ from django.views.decorators.csrf import csrf_exempt
 from kavenegar import *
 
 from accounts.forms import MyUserCreate, StudentEditForm, TeacherEditForm
-from accounts.models import LearnCategory, Syllabus, PriceRange, Student, Teacher, City
+from accounts.models import LearnCategory, Syllabus, PriceRange, Student, Teacher, City, MyUser
 
 
 def base_view(request):
@@ -184,12 +184,13 @@ def login_view(request):
                 return HttpResponseRedirect(reverse('accounts:student_edit'))
             else:
                 get_user_pk = request.user.pk
-                User.objects.get(pk=get_user_pk).delete()
+                MyUser.objects.get(pk=get_user_pk).delete()
                 return HttpResponse("خطایی رخ داده لطفا دوباره ثبت نام کنید")
 
         else:
             context = {
                 'username': username,
+
                 'error': "user not found",
 
             }
