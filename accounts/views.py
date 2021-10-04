@@ -316,25 +316,52 @@ def teacher_edit(request):
             teacher_profile= None
             error = ''
             if hasattr(request.user, 'teacher'):
-                teacher_profile = Teacher.objects.get(user_id=request.user.id)
-                teacher_edit_form = TeacherEditForm(instance=teacher_profile)
-                error = str(request.user)+" "+'خوش آمدید'
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+                teacher_profile = Teacher.objects.get(user_id=request.user.id)
+                # teacher_edit_form = TeacherEditForm(instance=teacher_profile)
+                error = str(request.user)+" "+'خوش آمدید'
+                #
                 if request.method == 'POST':
                     try:
-                        teacher_edited = TeacherEditForm(request.POST, request.FILES)
+
+                        teacher_edited = TeacherEditForm(request.POST, request.FILES,instance=teacher_profile)
                         teacher_edited = teacher_edited.save(commit=False)
                         teacher_edited.user = request.user
                         teacher_edited.pk = teacher_profile.id
                         if teacher_edited.sample_video == "":
                             teacher_edited.sample_video = teacher_profile.sample_video
+                        if os.path.isfile(teacher_profile.sample_video.path) :
+                            os.remove(teacher_profile.sample_video.path)
+
 
                         if teacher_edited.image == "":
                             teacher_edited.image = teacher_profile.image
+
+
+                        if os.path.isfile(teacher_profile.image.path) :
+                            os.remove(teacher_profile.image.path)
                         if teacher_edited.degree_image == "":
                             teacher_edited.degree_image = teacher_profile.degree_image
+                        if os.path.isfile(teacher_profile.degree_image.path) :
+                            os.remove(teacher_profile.degree_image.path)
+
                         if teacher_edited.national_card_image == "":
                             teacher_edited.national_card_image = teacher_profile.national_card_image
+                        if os.path.isfile(teacher_profile.national_card_image.path) :
+                            os.remove(teacher_profile.national_card_image.path)
                         teacher_edited.save()
                         # file_usage_check = list(list(Teacher.objects.all().values()))
                         # video_filenames = next(walk('/videos'))
