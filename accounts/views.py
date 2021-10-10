@@ -94,6 +94,8 @@ def user_create(request):
 
         logout(request)
         user_create_form = MyUserCreate(request.POST)
+
+
         if user_create_form.is_valid:
             try:
                 user = user_create_form.save(commit=False)
@@ -117,56 +119,6 @@ def user_create(request):
     return render(request, 'accounts/user_create.html', context)
 
 
-def user_verify(request):
-    response = {}
-
-    if request.method == 'POST':
-        user_verified = None
-        otp_code = None
-        mobile_number = None
-        if 'input_mobile' in request.POST:
-            mobile_number = request.POST.get('input_mobile')
-            response = send_otp(mobile_number)
-            if response[0]['status'] == 5:
-                user_verified = 'code_sent'
-                otp_code = response[1]
-            else:
-                user_verified = 'code_not_sent'
-                otp_code = None
-        if 'veri_code_input' in request.POST and 'mobile_number'in request.POST:
-            otp_code = request.POST.get('otp_code_generated')
-            veri_code_input = request.POST.get('veri_code_input')
-            if otp_code == veri_code_input:
-                mobile_number = request.POST.get('mobile_number')
-                user_verified = 'code_checked'
-                user_create_form = MyUserCreate()
-                user_create_form.fields['phone_number'].initial = mobile_number
-
-                # user_create_form.phone_number = mobile_number
-
-                user_saved = None
-                context = {
-                    'user_saved':user_saved,
-                    'user_create_form':user_create_form,
-                    'user_verified':user_verified,
-                    'mobile_number': mobile_number,
-                }
-                return render(request, 'accounts/user_create.html', context)
-            else:
-                user_verified = 'code_check_error'
-
-    else:
-        user_verified = None
-        otp_code = None
-        mobile_number = None
-    context = {
-     'mobile_number': mobile_number,
-     'user_verified': user_verified,
-     'response': response,
-     'otp_code': otp_code,
-     }
-
-    return render(request, 'accounts/user_verify.html', context )
 
 
 def login_view(request):
@@ -213,7 +165,7 @@ def profile_edit(request):
     else:
 
         get_user_pk = request.user.pk
-        User.objects.get(pk=get_user_pk).delete()
+        MyUser.objects.get(pk=get_user_pk).delete()
 
         return HttpResponse("لطفا دوباره بصورت معلم یا دانش آموز ثبت نام کنید")
 
@@ -338,39 +290,19 @@ def teacher_edit(request):
                     try:
 
                         teacher_edited = TeacherEditForm(request.POST, request.FILES,instance=teacher_profile)
-                        teacher_edited = teacher_edited.save(commit=False)
+                        # teacher_edited = teacher_edited.save(commit=False)
                         teacher_edited.user = request.user
                         teacher_edited.pk = teacher_profile.id
-                        if teacher_edited.sample_video == "":
-                            teacher_edited.sample_video = teacher_profile.sample_video
+                        teacher_edited.save()
                         if os.path.isfile(teacher_profile.sample_video.path) :
                             os.remove(teacher_profile.sample_video.path)
-
-
-                        if teacher_edited.image == "":
-                            teacher_edited.image = teacher_profile.image
-
-
                         if os.path.isfile(teacher_profile.image.path) :
                             os.remove(teacher_profile.image.path)
-                        if teacher_edited.degree_image == "":
-                            teacher_edited.degree_image = teacher_profile.degree_image
-                        if os.path.isfile(teacher_profile.degree_image.path) :
+                        if os.path.isfile(teacher_profile.degree_image.path):
                             os.remove(teacher_profile.degree_image.path)
-
-                        if teacher_edited.national_card_image == "":
-                            teacher_edited.national_card_image = teacher_profile.national_card_image
                         if os.path.isfile(teacher_profile.national_card_image.path) :
                             os.remove(teacher_profile.national_card_image.path)
-                        teacher_edited.save()
-                        # file_usage_check = list(list(Teacher.objects.all().values()))
-                        # video_filenames = next(walk('/videos'))
-                        # for i in range(0,len(video_filenames)):
-                        #     if video_filenames[i] not in file_usage_check:
-                        #         os.remove('media/videos/Django-Web-Development_7_1.mp4')
 
-
-                        teacher_profile = request.user.teacher
                         error = "مشخصات شما با موفقیت تغییر کرد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
 
                     except :
@@ -432,7 +364,120 @@ def search_view(request):
                 search_message = "موردی یافت نشد"
 
         return render(request, 'accounts/index.html', {'results': results, 'search_message': search_message,'results_teachers': results_teachers})
+def user_verify(request):
+    response = {}
+
+    if request.method == 'POST':
+        user_verified = None
+        otp_code = None
+        mobile_number = None
+
+        if 'input_mobile' in request.POST:
+            mobile_number = request.POST.get('input_mobile')
+            response = send_otp(mobile_number)
+            if response[0]['status'] == 5:
+                user_verified = 'code_sent'
+                otp_code = response[1]
+            else:
+                user_verified = 'code_not_sent'
+                otp_code = None
+        if 'veri_code_input' in request.POST and 'mobile_number'in request.POST:
+            otp_code = request.POST.get('otp_code_generated')
+            veri_code_input = request.POST.get('veri_code_input')
+            if otp_code == veri_code_input:
+                mobile_number = request.POST.get('mobile_number')
+                user_verified = 'code_checked'
+                user_create_form = MyUserCreate()
+
+                user_create_form.fields['phone_number'].initial = mobile_number
+
+
+                # user_create_form.phone_number = mobile_number
+
+                user_saved = None
+                context = {
+                    'user_saved':user_saved,
+                    'user_create_form':user_create_form,
+                    'user_verified':user_verified,
+                    'mobile_number': mobile_number,
+                }
+                return render(request, 'accounts/user_create.html', context)
+            else:
+                user_verified = 'code_check_error'
+
+    else:
+        user_verified = None
+        otp_code = None
+        mobile_number = None
+    context = {
+     'mobile_number': mobile_number,
+     'user_verified': user_verified,
+     'response': response,
+     'otp_code': otp_code,
+     }
+
+    return render(request, 'accounts/user_verify.html', context )
+
+
+def pass_reset(request):
+    response = {}
+    user_verified = None
+    otp_code = None
+    mobile_number = None
+    if request.method == 'POST':
+
+        if 'input_mobile' in request.POST:
+            mobile_number = request.POST.get('input_mobile')
+            response = send_otp(mobile_number)
+            if response[0]['status'] == 5:
+                user_verified = 'code_sent'
+                otp_code = response[1]
+            else:
+                user_verified = 'code_not_sent'
+                otp_code = None
+        if 'veri_code_input' in request.POST and 'mobile_number' in request.POST:
+            otp_code = request.POST.get('otp_code_generated')
+            veri_code_input = request.POST.get('veri_code_input')
+            if otp_code == veri_code_input:
+                mobile_number = request.POST.get('mobile_number')
+                user =MyUser.objects.get(phone_number=mobile_number)
+                user_email = getattr(user, 'username')
+
+
+                user_verified = 'code_checked'
+
+                user_create_form = MyUserCreate()
+                user_create_form.fields['phone_number'].initial = mobile_number
+                user_create_form.fields['username'].initial = user_email
+                reset_pass_request = True
+                context = {
+                    'user_verified': user_verified,
+                    'otp_code': otp_code,
+                    'reset_pass_request': reset_pass_request,
+                    'mobile_number': mobile_number,
+
+                    'user_create_form': user_create_form,
+
+                }
+                return render(request,'accounts/user_create.html',context)
+    # if True:
+    #     return pass_reset(request)
 
 
 
+    context = {
+        'user_verified':user_verified,
+        'otp_code':otp_code,
+        'mobile_number':mobile_number,
+    }
 
+    return render(request,'accounts/user_verify.html',context)
+
+def pass_reset_confirmed(request):
+        mobile_number =request.POST.get('phone_number')
+        user = MyUser.objects.get(phone_number=mobile_number)
+        new_password = request.POST.get('password1')
+        user.set_password(new_password)
+        user.save()
+        login(request, user)
+        return render(request, 'accounts/pass_reset-confirmed.html',{})

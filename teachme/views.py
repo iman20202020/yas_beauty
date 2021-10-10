@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.shortcuts import render
-from accounts.models import Student, Teacher
+from accounts.models import Student, Teacher, MyUser
 
 
 def index(request):
@@ -13,7 +13,7 @@ def index(request):
 
 
 def teacher_list(request):
-    user_select = User.objects.get(id=request.user.pk)
+    user_select = MyUser.objects.get(id=request.user.pk)
     student_selected = Student.objects.get(user=user_select)
     student_city = student_selected.city
     student_learn_type = student_selected.learn_type

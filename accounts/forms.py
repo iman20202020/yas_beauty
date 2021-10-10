@@ -38,7 +38,8 @@ class MyUserCreate(UserCreationForm):
         help_text=None,
     )
 
-    phone_number = forms.CharField(widget=forms.HiddenInput(),required=True,label="شماره همراه", )
+    phone_number = forms.CharField(required=True,label="شماره همراه", widget=forms.TextInput(attrs={'readonly':'readonly'}) )
+    # phone_number.__setattr__('readonly','readonly')
 
 
 class StudentEditForm(forms.ModelForm):

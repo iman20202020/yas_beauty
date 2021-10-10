@@ -33,7 +33,7 @@
                        <div class="col-lg-12 col-md-12 col-sm-12 form-group text-center" data-for="image">
                              <label for="degree_image">عکس خود را اینجا بارگذاری کنید :</label>
                               <input name="image" id="image_upload" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'image_preview')" class="file-upload"
-                              {% if teacher_profile.degree_image %} {% else %}required {% endif %}>
+                              {% if teacher_profile.degree_image %} {% else %} {% endif %}>
 
 {#                           <label class="btn btn-outline-secondary">عکس خود را اینجا بارگذاری کنید#}
 {#                               <input name="image"   id="image_upload" type="file" onchange="show_confirm_key()"#}
@@ -44,21 +44,21 @@
                        </div>
 
                        <div class="col-lg-6 col-md-6 col-sm-12 form-group" data-for="first_name">
-                            <input type="text"  name="first_name" onchange="show_confirm_key()" placeholder="نام"
+                            <input type="text"  name="first_name" onchange="show_confirm_key()" placeholder="نام*"
                                 data-form-field="first_name" class="form-control" id="first_name-form7-v"
-                                   value="{{ teacher_profile.first_name }}" >
+                                   value="{{ teacher_profile.first_name }}" required>
                        </div>
 
                        <div class="col-lg-6 col-md-6 col-sm-12 form-group" data-for="last_name">
-                          <input type="text"  name="last_name" onchange="show_confirm_key()" placeholder="نام خانوادگی"
+                          <input type="text"  name="last_name" onchange="show_confirm_key()" placeholder="نام خانوادگی*"
                                    data-form-field="last_name" class="form-control" value="{{ teacher_profile.last_name }}"
                                    id="last_name-form7-v" required>
                        </div>
 
                        <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="national_id">
-                           <label for="national_id-form7-v ">کد ملی :</label>
+                           <label for="national_id-form7-v ">کد ملی* :</label>
                             <input type="text" onchange="show_confirm_key()" name="national_id" data-form-field="national_id"
-                                   class="form-control"  value="{{ teacher_profile.national_id }}" id="national_id-form7-v">
+                                   class="form-control"  value="{{ teacher_profile.national_id }}" id="national_id-form7-v" required>
                        </div>
 
                        <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="price_range">
@@ -121,9 +121,9 @@
                         </div>
 
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group text-right" data-for="qualification">
-                            <label for="qualification-form7-v" class="label">رشته تحصیلی و آخرین مدرک تحصیلی و توضیحات :</label>
+                            <label for="qualification-form7-v" class="label">رشته تحصیلی و آخرین مدرک تحصیلی و توضیحات* :</label>
                             <textarea   name="qualification" onchange="show_confirm_key()"
-                                   class="form-control" id="qualification-form7-v" required rows="5" maxlength="256">{% if teacher_profile.qualification %}{{ teacher_profile.qualification }}{% endif %}
+                                   class="form-control" id="qualification-form7-v"  rows="5" maxlength="256" >{% if teacher_profile.qualification %}{{ teacher_profile.qualification }}{% endif %}
                             </textarea>
                         </div>
 
@@ -150,9 +150,9 @@
                         </div>
 
                         <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="national_card_image">
-                            <label for="national_card_image">عکس کارت ملی :</label>
+                            <label for="national_card_image">عکس کارت ملی* :</label>
                             <input name="national_card_image" id="national_card_image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'national_card_image_preview')" class="file-upload"
-                                    {% if teacher_profile.national_card_image %} {% else %}required {% endif %}>
+                                    {% if teacher_profile.national_card_image %} {% else %} {% endif %}>
 {##}
 {#                         <label class="btn btn-outline-secondary">عکس کارت ملی#}
 {#                               <input name="national_card_image"   id="national_card_image" type="file" onchange="show_confirm_key()"#}
@@ -168,7 +168,7 @@
                         <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image">
                             <label for="degree_image">عکس مدرک تحصیلی  :</label>
                               <input name="degree_image" id="degree_image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'degree_image_preview')" class="file-upload"
-                              {% if teacher_profile.degree_image %} {% else %}required {% endif %}>
+                              {% if teacher_profile.degree_image %} {% else %} {% endif %}>
 
 
 
@@ -186,9 +186,9 @@
                     <div class="col-lg-4 col-md-4 col-sm-12  text-right" data-for="sample_video">
 
 
-                            <label for="sample_video">ویدیوی نمونه تدریس :</label>
+                            <label for="sample_video">ویدیوی نمونه تدریس* :</label>
                               <input name="sample_video" id="sample_video" type="file" onchange="show_confirm_key() " class="-file-video"
-                              {% if teacher_profile.sample_video %}  {% else %} {% endif %}><br>
+                              {% if teacher_profile.sample_video %}  {% else %}  {% endif %}><br>
 
 
 {#         <label class="btn btn-outline-secondary">ویدیوی نمونه تدریس#}
