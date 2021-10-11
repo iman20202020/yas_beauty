@@ -268,47 +268,30 @@ def teacher_edit(request):
             teacher_profile= None
             error = ''
             if hasattr(request.user, 'teacher'):
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 teacher_profile = Teacher.objects.get(user_id=request.user.id)
-                # teacher_edit_form = TeacherEditForm(instance=teacher_profile)
+                teacher_edit_form = TeacherEditForm( instance=teacher_profile)
                 error = str(request.user)+" "+'خوش آمدید'
-                #
                 if request.method == 'POST':
-                    try:
-
-                        teacher_edited = TeacherEditForm(request.POST, request.FILES,instance=teacher_profile)
-                        # teacher_edited = teacher_edited.save(commit=False)
-                        teacher_edited.user = request.user
-                        teacher_edited.pk = teacher_profile.id
-                        teacher_edited.save()
-                        if os.path.isfile(teacher_profile.sample_video.path) :
-                            os.remove(teacher_profile.sample_video.path)
-                        if os.path.isfile(teacher_profile.image.path) :
-                            os.remove(teacher_profile.image.path)
-                        if os.path.isfile(teacher_profile.degree_image.path):
-                            os.remove(teacher_profile.degree_image.path)
-                        if os.path.isfile(teacher_profile.national_card_image.path) :
-                            os.remove(teacher_profile.national_card_image.path)
-
+                    teacher_edit_form = TeacherEditForm(request.POST, request.FILES,instance=teacher_profile)
+                    if teacher_edit_form.is_valid():
+                        teacher_edit_form.user = request.user
+                        teacher_edit_form.pk = teacher_profile.id
+                        # if os.path.isfile(teacher_profile.sample_video.path) :
+                        #     os.remove(teacher_profile.sample_video.path)
+                        # if os.path.isfile(teacher_profile.image.path) :
+                        #     os.remove(teacher_profile.image.path)
+                        # if os.path.isfile(teacher_profile.degree_image.path):
+                        #     os.remove(teacher_profile.degree_image.path)
+                        # if os.path.isfile(teacher_profile.national_card_image.path) :
+                        #     os.remove(teacher_profile.national_card_image.path)
+                        teacher_edit_form.save()
                         error = "مشخصات شما با موفقیت تغییر کرد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
 
-                    except :
+                    else :
                          error = " خطا !  لطفا ورودی ها را کنترل کنید و دوباره سعی کنید"
             elif hasattr(request.user, 'student'):
                 return HttpResponse("مشخصات شما به عنوان دانش آموز ثبت شده لطفا با نام کاربری دیگری به عنوان معلم ثبت نام کنید ")
+
             if request.method == 'POST' and hasattr(request.user, 'teacher') == False:
                 try:
                     teacher_edit_form = TeacherEditForm(request.POST, request.FILES)
@@ -317,7 +300,7 @@ def teacher_edit(request):
                         teacher.user = request.user
                         teacher.save()
                         error = "مشخصات شما ثبت شد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
-                        teacher_profile = request.user.teacher
+                        teacher_profile = request.user
                     else:
                         error = 'ورودی ها دقیق نیست لطفا دوباره سعی کنید'
                 except:
@@ -329,15 +312,15 @@ def teacher_edit(request):
                 'error': error,
                 'cities': cities,
                 'price_ranges' : price_ranges,
-                # 'languages' : languages,
+                # 'teacher_edited' : teacher_edited,
                 'categories' : categories,
                 'syllabuses' : syllabuses,
                 'first_name' : first_name,
                 'last_name' : last_name,
                 }
 
-
             return render(request, 'accounts/teacher_edit.html', context)
+
 
 def search_view(request):
     results = []
