@@ -403,7 +403,7 @@ def user_verify(request):
 
 
 def pass_reset(request):
-    response = {}
+    error = None
     user_verified = None
     otp_code = None
     mobile_number = None
@@ -423,15 +423,17 @@ def pass_reset(request):
             veri_code_input = request.POST.get('veri_code_input')
             if otp_code == veri_code_input:
                 mobile_number = request.POST.get('mobile_number')
-                user =MyUser.objects.get(phone_number=mobile_number)
-                user_email = getattr(user, 'username')
 
+                user =MyUser.objects.filter(phone_number=mobile_number,)
+                if not user:
+                    error = 'چنین کاربری وجود ندارد لطفا دوباره شماره خود را وارد کنید'
+                    return render(request, 'accounts/user_verify.html',{'error':error})
 
                 user_verified = 'code_checked'
 
                 user_create_form = MyUserCreate()
                 user_create_form.fields['phone_number'].initial = mobile_number
-                user_create_form.fields['username'].initial = user_email
+                # user_create_form.fields['username'].initial = user_email
                 reset_pass_request = True
                 context = {
                     'user_verified': user_verified,
@@ -458,9 +460,15 @@ def pass_reset(request):
 
 def pass_reset_confirmed(request):
         mobile_number =request.POST.get('phone_number')
+        entered_email =request.POST.get('username')
         user = MyUser.objects.get(phone_number=mobile_number)
-        new_password = request.POST.get('password1')
-        user.set_password(new_password)
-        user.save()
-        login(request, user)
+        user_email = getattr(user,'username')
+        if entered_email == user_email:
+
+            new_password = request.POST.get('password1')
+            user.set_password(new_password)
+            user.save()
+            login(request, user)
+        else:
+            return HttpResponse('ایمیل وارد شده با شماره همراه مطابق نیست')
         return render(request, 'accounts/pass_reset-confirmed.html',{})
