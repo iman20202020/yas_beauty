@@ -25,13 +25,11 @@
   <input type="password" id="inputPassword" class="form-control" placeholder="رمز عبور" name="password" required
    oninvalid="setCustomValidity('لطفاً رمز عبور را وارد کنید')" oninput="setCustomValidity('')">
   <div class="checkbox mb-3">
-{#    <label>#}
-{#      <input type="checkbox" name="remember_me" value="remember-me"> Remember me#}
-{#    </label>#}
   </div>
   <button class="btn btn-lg btn-primary btn-block" type="submit">ورود</button><br>
   <a href="{% url 'accounts:user_verify' %}"> <button class="btn btn-lg btn-info btn-block" type="button">ثبت نام</button></a>
-
+<br>
+        <a href="{% url 'accounts:pass_reset' %}">بازیابی رمز عبور</a>
 
   <p class="mt-5 mb-3 text-muted">yasacademy&copy; 2020 </p>
 

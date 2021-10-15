@@ -91,10 +91,11 @@
 </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12">
-        <form class="form-control text-right" action="" method="post">
+        <form class="form-control text-right" action="{% url 'teachme:teacher_request'  %}" method="post">
             {% csrf_token %}
-            <input type="hidden" name="teacher_request_send" value="#">
-            <button type="submit" class="btn btn-primary ">ارسال درخواست به معلم </button>
+            <input type="hidden" name="teacher_selected_id" value="{{ teacher_selected.id }}">
+            <input type="hidden" name="student_user_id" value="{{ student_user_id }}">
+           <a > <button type="submit" class="btn btn-primary ">ارسال درخواست به معلم </button></a>
 
         </form>
          <a href="{% url 'teachme:teacher_list' %}">بازگشت به لیست معلم ها>></a>
