@@ -151,3 +151,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 # MAX_UPLOAD_SIZE = 5242880
 
 AUTH_USER_MODEL = 'accounts.MyUser'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.mail.ostadbaz.ir'
+# # EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'requests1@ostadbaz.ir'
+# EMAIL_HOST_PASSWORD = 'Requests48199047'

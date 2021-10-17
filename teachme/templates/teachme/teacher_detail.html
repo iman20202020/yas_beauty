@@ -89,21 +89,20 @@
         </tr>
     </table>
 </div>
-
+<a href="" class="p-4">  قوانین سایت </a><br>
     <div class="col-lg-12 col-md-12 col-sm-12">
         <form class="form-control text-right" action="{% url 'teachme:teacher_request'  %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="teacher_selected_id" value="{{ teacher_selected.id }}">
             <input type="hidden" name="student_user_id" value="{{ student_user_id }}">
-           <a > <button type="submit" class="btn btn-primary ">ارسال درخواست به معلم </button></a>
 
-        </form>
-         <a href="{% url 'teachme:teacher_list' %}">بازگشت به لیست معلم ها>></a>
+           <a > <button type="submit" id="submit_form" class="btn btn-primary " >پذیرفتن قوانین سایت و ارسال درخواست به معلم </button></a>
+
+        </form><br><br>
+
+         <a href="{% url 'teachme:teacher_list' %}">بازگشت به لیست معلم ها>></a><br><br>
 
     </div>
-
-
-</div>
 
 
 

@@ -1,13 +1,13 @@
+from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render
-
-
 
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from accounts.models import Student, Teacher, MyUser
 from teachme.send_sms import *
+from yas7 import settings
 
 
 def index(request):
@@ -24,11 +24,12 @@ def teacher_list(request):
     student_price_range = student_selected.price_range
     # student_mobile_number = student_selected.mobile_number
     if student_selected.learn_type < 2:
-        teachers = Teacher.objects.filter( category=student_category, syllabus=student_syllabus,
-                                      price_range=student_price_range)
+        teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
+                                          price_range=student_price_range)
     else:
         teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
-                                          price_range=student_price_range,city=student_city,learn_type=student_learn_type)
+                                          price_range=student_price_range, city=student_city,
+                                          learn_type=student_learn_type)
     teachers = Paginator(teachers, 5)
     page_number = request.GET.get('page')
     page_obj = teachers.get_page(page_number)
@@ -48,22 +49,38 @@ def teacher_detail(request, teacher_id):
     }
     return render(request, 'teachme/teacher_detail.html', context)
 
-def teacher_request(request):
-    teacher_id = request.POST.get('teacher_selected_id')
 
+def teacher_request(request):
+    clerk_phone = '09361164819'
+    teacher_id = request.POST.get('teacher_selected_id')
     teacher_requested = Teacher.objects.get(id=teacher_id)
-    # teacher_requested_user_id = getattr(teacher_requested,'user_id')
-    # teacher_requested_user_params = MyUser.objects.get(id=teacher_requested_user_id)
-    # teacher_phone = teacher_requested_user_params.phone_number
+
+    teacher_requested_user_id = getattr(teacher_requested,'user_id')
+    teacher_requested_user_params = MyUser.objects.get(id=teacher_requested_user_id)
+    teacher_phone = teacher_requested_user_params.phone_number
+
+
 
     student_user_id = request.POST.get('student_user_id')
-    # student = Student.objects.get(user_id=student_user_id)
+    student = Student.objects.get(user_id=student_user_id)
     student_user_params = MyUser.objects.get(id=student_user_id)
     student_phone = student_user_params.phone_number
+
+    clerk_sms_token = 'id:{},uid{}'.format(teacher_id, teacher_requested_user_id)
+    clerk_sms_token2 = teacher_phone
+    clerk_sms_token3 = 'id{},{}'.format(student.id,student_phone)
+
     send_sms_stu(student_phone,teacher_requested.last_name)
+    send_sms_clerk(clerk_phone,clerk_sms_token,clerk_sms_token2,clerk_sms_token3)
+
+    # send_mail(
+    #     'test from django',
+    #     'Here is the message.',
+    #     settings.EMAIL_HOST_USER,
+    #     ['aliamiri@gmail.com'],
+    #     # fail_silently=False,
+    # )
 
     return HttpResponse(student_phone)
-
-
 
     # response = send_otp(mobile_number)
