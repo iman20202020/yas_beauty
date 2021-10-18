@@ -204,7 +204,7 @@ def student_edit(request):
                     student_edited.pk = student_profile.id
                     student_edited.save()
                     student_profile = request.user.student
-                    error = "نمایه شما با موفقیت تغییر یافت "
+                    error = "مشخصات جستجوی شما با موفقیت تغییر یافت "
                 except :
                     error = 'ورودی های خود را کنترل کنید'
                     raise ValidationError( 'ورودی های خود را کنترل کنید')
@@ -225,7 +225,7 @@ def student_edit(request):
                     student_profile = request.user.student
             except:
                 student_profile = request.POST
-                error = "لطفا ورودی های هود را کنترل کنید"
+                error = "لطفا ورودی های خود را کنترل کنید"
 
         context = {
             'student_profile' : student_profile,
@@ -341,7 +341,7 @@ def search_view(request):
             results_teachers = list(chain(result1_teachers,result2_teachers,result3_teachers ))
 
             if  results_teachers :
-                search_message = str(len(results_teachers)) + "معلم پیدا شد"
+                search_message = str(len(results_teachers)) + "استاد پیدا شد"
 
             else:
                 search_message = "موردی یافت نشد"

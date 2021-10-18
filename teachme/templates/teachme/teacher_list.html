@@ -16,22 +16,23 @@
 
 
             <div class="  col-lg-12 col-md-12 col-sm-12 alert text-center alert-info text-dark mt-2 mb-0 py-1 px-3  ">
+            <p> برای درس {{ student_syllabus }} محدوده قیمت  {{ student_price_range }} در شهر {{ city_to_show }} بصورت {{ learn_type_to_show }} </p>
                 {{ teachers.count }}
-                معلم پیدا شد
+                استاد پیدا شد
             </div><br>
             <div class="  justify-content-center">
 
                 <table class="table table-striped ">
                     <thead>
                         <tr>
-                            <th> عکس پروفایل</th>
-                            <th>نام معلم</th>
-                            <th>موضوع تدریس</th>
+                            <th> </th>
+                            <th>نام </th>
+{#                            <th>موضوع تدریس</th>#}
                             <th>رشته و آخرین مدرک تحصیلی</th>
                             <th> سابقه تدریس </th>
-                            <th>محدوده قیمت کلاس </th>
-                            <th> امتیاز معلم از 5</th>
-                            <th>شهر</th>
+{#                            <th>محدوده قیمت کلاس </th>#}
+                            <th> امتیاز از5</th>
+{#                            <th>شهر</th>#}
                         </tr>
 
                     </thead>
@@ -42,12 +43,12 @@
                            <td class="w-25"><a href="{% url 'teachme:teacher_detail' teacher.id %}"><img src="{% static teacher.image %}" class="img-thumbnail" alt=""></a></td>
                             <td><a href="{% url 'teachme:teacher_detail' teacher.id %}"> {{ teacher.first_name }}  {{ teacher.last_name }}</a></td>
 {#                            <td>{{ teacher.language.language_name }}</td>#}
-                            <td>{{ teacher.syllabus.syllabus_name }}</td>
-                            <td>{{ teacher.qualification }}</td>
-                            <td>{{ teacher.experience }}</td>
-                            <td>{{ teacher.price_range.price_range_name }}</td>
+{#                            <td>{{ teacher.syllabus.syllabus_name }}</td>#}
+                            <td><sub>{{ teacher.qualification }}</sub></td>
+                            <td>{{ teacher.experience }}سال</td>
+{#                            <td>{{ teacher.price_range.price_range_name }}</td>#}
                             <td>{{ teacher.points}}</td>
-                            <td>{{ teacher.city.city}}</td>
+{#                            <td>{{ teacher.city.city}}</td>#}
 
                         </tr>
                    {% endfor %}

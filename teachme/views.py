@@ -10,15 +10,27 @@ from teachme.send_sms import *
 from yas7 import settings
 
 
-def index(request):
-    return render(request, 'teachme/index.html', {})
+# def index(request):
+#     return render(request, 'teachme/index.html', {})
 
 
 def teacher_list(request):
+    learn_type_to_show =None
     user_select = MyUser.objects.get(id=request.user.pk)
     student_selected = Student.objects.get(user=user_select)
     student_city = student_selected.city
+    city_to_show = student_selected.city.city_name
     student_learn_type = student_selected.learn_type
+
+    if student_learn_type == 0:
+        learn_type_to_show = 'آنلاین یا حضوری'
+    if student_learn_type == 1:
+        learn_type_to_show = 'آنلاین '
+    if student_learn_type == 2:
+        learn_type_to_show = 'حضوری'
+
+
+
     student_category = student_selected.category
     student_syllabus = student_selected.syllabus
     student_price_range = student_selected.price_range
@@ -30,12 +42,17 @@ def teacher_list(request):
         teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
                                           price_range=student_price_range, city=student_city,
                                           learn_type=student_learn_type)
-    teachers = Paginator(teachers, 5)
+    teachers = Paginator(teachers, 15)
     page_number = request.GET.get('page')
     page_obj = teachers.get_page(page_number)
     context = {
         'teachers': teachers,
         'page_obj': page_obj,
+        'student_category': student_category,
+        'learn_type_to_show': learn_type_to_show,
+        'student_price_range': student_price_range,
+        'student_syllabus': student_syllabus,
+        'city_to_show': city_to_show,
     }
     return render(request, 'teachme/teacher_list.html', context)
 
