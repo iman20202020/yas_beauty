@@ -7,6 +7,16 @@
                 <strong>{% if error %}نمایه کاربری{% else %} ثبت مشخصات کاربری{% endif %}</strong></h4>
         </div>
         <div class="row justify-content-center mt-4">
+                           <div class="dragArea row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group" data-for="points">
+                            <label  id="label_points"   for="points-form7-v" class="label ">امتیاز شما: {{ teacher_profile.points }}
+                                <div class="progress">
+                                    <div id="points_progress_bar" class="progress-bar  " >
+                                    </div>
+                                </div>
+                            </label>
+                            <input type="hidden"   name="points"  data-form-field="points" id="points-form7-v"   {% if teacher_profile %} value={{ teacher_profile.points }} {% else %} value=3 {% endif %} >
+                        </div>
 
             <div class="col-lg-8 mx-auto mbr-form" data-form-type="">
                 <form action="" id="teacher_edit_form" name="teacher_edit_form" method="POST" class="mbr-form form-with-styler mx-auto" enctype="multipart/form-data">
@@ -18,16 +28,7 @@
                         {{ teacher_edit_form.errors }}
                         </div>
                     </div>
-                    <div class="dragArea row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 form-group" data-for="points">
-                            <label  id="label_points"   for="points-form7-v" class="label ">امتیاز شما: {{ teacher_profile.points }}
-                                <div class="progress">
-                                    <div id="points_progress_bar" class="progress-bar  " >
-                                    </div>
-                                </div>
-                            </label>
-                            <input type="hidden"   name="points"  data-form-field="points" id="points-form7-v"   {% if teacher_profile %} value={{ teacher_profile.points }} {% else %} value=3 {% endif %} >
-                        </div>
+
                        <div class="col-lg-12 col-md-12 col-sm-12 form-group text-center" data-for="image">
                              <label for="degree_image">عکس خود را اینجا بارگذاری کنید :</label>
                               <input name="image" id="image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'image_preview')" class="file-upload">
@@ -65,6 +66,20 @@
                             </select>
                        </div>
 
+                        <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="category">
+                            <label for="category-form7-v">زیرمجموعه :</label>
+                            <select name="category" onchange="show_confirm_key()" data-form-field="category" class="form-control"
+                                    id="category-form7-v">
+
+                                {% for category in categories %}
+                                    <option value="{{ category.category }}"
+                                        {% if  teacher_profile.category.category == category.category %}selected{% endif %}>
+                                        {{ category.category_name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
                        <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="syllabus">
                            <label for="syll">موضوع :</label>
                            <select  onchange="show_confirm_key()" name="syllabus" data-form-field="syllabus" class="form-control "  id="syll">
@@ -80,19 +95,7 @@
                          </select>
                         </div>
 
-                        <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="category">
-                            <label for="category-form7-v">زیرمجموعه :</label>
-                            <select name="category" onchange="show_confirm_key()" data-form-field="category" class="form-control"
-                                    id="category-form7-v">
 
-                                {% for category in categories %}
-                                    <option value="{{ category.category }}"
-                                        {% if  teacher_profile.category.category == category.category %}selected{% endif %}>
-                                        {{ category.category_name }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </div>
 
                         <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="experience" >
                             <label for="experience-form7-v " class="inline_label" dir="rtl">سابقه تدریس :</label>
@@ -112,7 +115,7 @@
                         </div>
 
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group text-right" data-for="qualification">
-                            <label for="qualification-form7-v" class="label">رشته تحصیلی و آخرین مدرک تحصیلی و توضیحات* :</label>
+                            <label for="qualification-form7-v" class="label"> خود را برای مخاطب شرح دهید* :</label>
                             <textarea   name="qualification" onchange="show_confirm_key()"
                                    class="form-control" id="qualification-form7-v"  rows="5" maxlength="256" >{% if teacher_profile.qualification %}{{ teacher_profile.qualification }}{% endif %}
                             </textarea>

@@ -75,7 +75,7 @@ class Teacher(models.Model):
                                     validators=[FileExtensionValidator(allowed_extensions=['mp4', 'wmv']),validate_video_size],
                                     help_text='یک ویدیو حداکثر سه دقیقه از تدریس خود بارگذاری کنید')
     learn_type = models.IntegerField( default=0,blank=True)
-
+    is_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.last_name

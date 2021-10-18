@@ -37,11 +37,11 @@ def teacher_list(request):
     # student_mobile_number = student_selected.mobile_number
     if student_selected.learn_type < 2:
         teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
-                                          price_range=student_price_range)
+                                          price_range=student_price_range,is_confirmed=True)
     else:
         teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
                                           price_range=student_price_range, city=student_city,
-                                          learn_type=student_learn_type)
+                                          learn_type=student_learn_type,is_confirmed=True)
     teachers = Paginator(teachers, 15)
     page_number = request.GET.get('page')
     page_obj = teachers.get_page(page_number)
@@ -60,6 +60,7 @@ def teacher_list(request):
 def teacher_detail(request, teacher_id):
     student_user_id = request.user.id
     teacher_selected = Teacher.objects.get(pk=teacher_id)
+
     context = {
         'teacher_selected': teacher_selected,
         'student_user_id': student_user_id,

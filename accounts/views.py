@@ -30,31 +30,29 @@ def base_view(request):
 def index_accounts(request):
 #slect syllabuses for each category on index
     syllabuses_university = Syllabus.objects.filter(learn_category='دانشگاهی')
-    teacher_university = Teacher.objects.filter(category='دانشگاهی')
+    teacher_university = Teacher.objects.filter(category='دانشگاهی',is_confirmed=True)
     syllabuses_high_school = Syllabus.objects.filter(learn_category='متوسطه دوم')
-    teacher_high_school = Teacher.objects.filter(category='متوسطه دوم')
+    teacher_high_school = Teacher.objects.filter(category='متوسطه دوم',is_confirmed=True)
     syllabuses_mid_school = Syllabus.objects.filter(learn_category='متوسطه اول')
-    teacher_mid_school = Teacher.objects.filter(category='متوسطه اول')
+    teacher_mid_school = Teacher.objects.filter(category='متوسطه اول',is_confirmed=True)
     syllabuses_primary_school = Syllabus.objects.filter(learn_category='دبستان')
-    teacher_primary_school = Teacher.objects.filter(category='دبستان')
-
+    teacher_primary_school = Teacher.objects.filter(category='دبستان',is_confirmed=True)
     syllabuses_computer = Syllabus.objects.filter(learn_category='کامپیوتر')
-    teacher_computer = Teacher.objects.filter(category='کامپیوتر')
+    teacher_computer = Teacher.objects.filter(category='کامپیوتر',is_confirmed=True)
     syllabuses_music = Syllabus.objects.filter(learn_category='موسیقی')
-    teacher_music = Teacher.objects.filter(category='موسیقی')
+    teacher_music = Teacher.objects.filter(category='موسیقی',is_confirmed=True)
     syllabuses_art = Syllabus.objects.filter(learn_category='هنرهای تجسمی')
-    teacher_art = Teacher.objects.filter(category='هنرهای تجسمی')
+    teacher_art = Teacher.objects.filter(category='هنرهای تجسمی',is_confirmed=True)
     syllabuses_sport = Syllabus.objects.filter(learn_category='ورزش')
-    teacher_sport = Teacher.objects.filter(category='ورزش')
+    teacher_sport = Teacher.objects.filter(category='ورزش',is_confirmed=True)
     syllabuses_cinema = Syllabus.objects.filter(learn_category='سینما و بازیگری')
-    teacher_cinema = Teacher.objects.filter(category='سینما و بازیگری')
+    teacher_cinema = Teacher.objects.filter(category='سینما و بازیگری',is_confirmed=True)
     syllabuses_tech = Syllabus.objects.filter(learn_category='کارهای فنی')
-    teacher_tech = Teacher.objects.filter(category='کارهای فنی')
+    teacher_tech = Teacher.objects.filter(category='کارهای فنی',is_confirmed=True)
     syllabuses_cooking = Syllabus.objects.filter(learn_category='آشپزی')
-    teacher_cooking = Teacher.objects.filter(category='آشپزی')
-
+    teacher_cooking = Teacher.objects.filter(category='آشپزی',is_confirmed=True)
     syllabuses_makeup = Syllabus.objects.filter(learn_category='آرایش و زیبایی')
-    teacher_makeup = Teacher.objects.filter(category='آرایش و زیبایی')
+    teacher_makeup = Teacher.objects.filter(category='آرایش و زیبایی',is_confirmed=True)
 
     context = {
         'syllabuses_university': syllabuses_university,
@@ -276,6 +274,8 @@ def teacher_edit(request):
                     if teacher_edit_form.is_valid():
                         teacher_edit_form.user = request.user
                         teacher_edit_form.pk = teacher_profile.id
+                        teacher = teacher_edit_form.save(commit=False)
+                        teacher.is_confirmed = False
                         # if os.path.isfile(teacher_profile.sample_video.path) :
                         #     os.remove(teacher_profile.sample_video.path)
                         # if os.path.isfile(teacher_profile.image.path) :
@@ -284,7 +284,7 @@ def teacher_edit(request):
                         #     os.remove(teacher_profile.degree_image.path)
                         # if os.path.isfile(teacher_profile.national_card_image.path) :
                         #     os.remove(teacher_profile.national_card_image.path)
-                        teacher_edit_form.save()
+                        teacher.save()
                         error = "مشخصات شما با موفقیت تغییر کرد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
 
                     else :
