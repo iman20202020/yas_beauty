@@ -53,6 +53,8 @@ def index_accounts(request):
     teacher_cooking = Teacher.objects.filter(category='آشپزی',is_confirmed=True)
     syllabuses_makeup = Syllabus.objects.filter(learn_category='آرایش و زیبایی')
     teacher_makeup = Teacher.objects.filter(category='آرایش و زیبایی',is_confirmed=True)
+    syllabuses_language = Syllabus.objects.filter(learn_category='زبان های خارجی')
+    teacher_language = Teacher.objects.filter(category='زبان های خارجی',is_confirmed=True)
 
     context = {
         'syllabuses_university': syllabuses_university,
@@ -79,28 +81,25 @@ def index_accounts(request):
         'teacher_cooking': teacher_cooking,
         'syllabuses_makeup': syllabuses_makeup,
         'teacher_makeup': teacher_makeup,
-
+        'syllabuses_language': syllabuses_language,
+        'teacher_language': teacher_language,
     }
-
     return render(request, 'accounts/index.html', context)
+
 
 def contact_us(request):
     return render(request, 'accounts/contact_us.html', {})
 
+
 def user_create(request):
     if request.method == 'POST':
-
         logout(request)
         user_create_form = MyUserCreate(request.POST)
-
-
         if user_create_form.is_valid:
             try:
                 user = user_create_form.save(commit=False)
                 # user.is_active = False
-
                 user_saved = user
-
                 user.save()
                 login(request, user)
             except:
@@ -117,8 +116,6 @@ def user_create(request):
     return render(request, 'accounts/user_create.html', context)
 
 
-
-
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -133,16 +130,11 @@ def login_view(request):
             elif hasattr(user, 'student'):
                 return HttpResponseRedirect(reverse('accounts:student_edit'))
             else:
-                get_user_pk = request.user.pk
-                MyUser.objects.get(pk=get_user_pk).delete()
-                return HttpResponse("خطایی رخ داده لطفا دوباره ثبت نام کنید")
-
+                return render(request,'accounts/user_create.html',{'user_saved': 1})
         else:
             context = {
                 'username': username,
-
-                'error': "user not found",
-
+                'error': "کاربر موجود نیست",
             }
             return render(request, 'accounts/login.html', context)
     else:
@@ -154,6 +146,7 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('accounts:index_accounts'))
 
+
 @login_required
 def profile_edit(request):
     if hasattr(request.user, 'teacher'):
@@ -161,10 +154,8 @@ def profile_edit(request):
     if hasattr(request.user, 'student'):
         return HttpResponseRedirect(reverse('accounts:student_edit'))
     else:
-
         get_user_pk = request.user.pk
         MyUser.objects.get(pk=get_user_pk).delete()
-
         return HttpResponse("لطفا دوباره بصورت معلم یا دانش آموز ثبت نام کنید")
 
 
@@ -179,9 +170,7 @@ def student_edit(request):
             return JsonResponse(category_list, safe=False)
         syll = list(Syllabus.objects.filter(learn_category=category).values())
         return JsonResponse(syll, safe=False)
-
     else:
-
         student_edit_form = StudentEditForm()
         cities = list(City.objects.all().values())
         price_ranges = list(PriceRange.objects.all().values())
@@ -209,13 +198,10 @@ def student_edit(request):
             if hasattr(request.user, 'teacher'):
                 get_user_pk = request.user.pk
                 return HttpResponse("شما به عنوان معلم ثبت نام کرده اید نه دانش آموز ")
-
         if request.method == 'POST' and hasattr(request.user, 'student') is False:
             try:
                 student_edit_form = StudentEditForm(request.POST)
-
                 if student_edit_form.is_valid():
-
                     student = student_edit_form.save(commit=False)
                     student.user = request.user
                     student.save()
@@ -224,7 +210,6 @@ def student_edit(request):
             except:
                 student_profile = request.POST
                 error = "لطفا ورودی های خود را کنترل کنید"
-
         context = {
             'student_profile' : student_profile,
             'student_edit_form': student_edit_form,
@@ -252,9 +237,7 @@ def teacher_edit(request):
                 return JsonResponse(category_list, safe=False)
             syll = list(Syllabus.objects.filter(learn_category=category).values())
             return JsonResponse(syll,safe=False)
-
         else:
-
             teacher_edit_form = TeacherEditForm()
             cities = list(City.objects.all().values())
             price_ranges=list(PriceRange.objects.all().values())
@@ -291,7 +274,6 @@ def teacher_edit(request):
                          error = " خطا !  لطفا ورودی ها را کنترل کنید و دوباره سعی کنید"
             elif hasattr(request.user, 'student'):
                 return HttpResponse("مشخصات شما به عنوان دانش آموز ثبت شده لطفا با نام کاربری دیگری به عنوان معلم ثبت نام کنید ")
-
             if request.method == 'POST' and hasattr(request.user, 'teacher') == False:
                 try:
                     teacher_edit_form = TeacherEditForm(request.POST, request.FILES)
@@ -318,7 +300,6 @@ def teacher_edit(request):
                 'first_name' : first_name,
                 'last_name' : last_name,
                 }
-
             return render(request, 'accounts/teacher_edit.html', context)
 
 
@@ -328,33 +309,28 @@ def search_view(request):
     search_message = None
     if request.method == "GET":
         search_query = request.GET.get('search_text',None)
-
         if search_query:
-
             result1 = Syllabus.objects.filter(syllabus__icontains= search_query)
-            result1_teachers = Teacher.objects.filter(syllabus__syllabus_name__contains=search_query)
+            result1_teachers = Teacher.objects.filter(syllabus__syllabus_name__contains=search_query,is_confirmed=True)
             result2 = LearnCategory.objects.filter(category_name__icontains=search_query)
-            result2_teachers = Teacher.objects.filter(category__category__contains=search_query)
+            result2_teachers = Teacher.objects.filter(category__category__contains=search_query,is_confirmed=True)
 
-            result3_teachers = Teacher.objects.filter(Q(last_name__icontains=search_query)|Q(first_name__icontains=search_query))
+            result3_teachers = Teacher.objects.filter(Q(last_name__icontains=search_query,is_confirmed=True)|Q(first_name__icontains=search_query,is_confirmed=True))
             results = list(chain(result1, result2, ))
             results_teachers = list(chain(result1_teachers,result2_teachers,result3_teachers ))
-
             if  results_teachers :
                 search_message = str(len(results_teachers)) + "استاد پیدا شد"
-
             else:
                 search_message = "موردی یافت نشد"
-
         return render(request, 'accounts/index.html', {'results': results, 'search_message': search_message,'results_teachers': results_teachers})
+
+
 def user_verify(request):
     response = {}
-
     if request.method == 'POST':
         user_verified = None
         otp_code = None
         mobile_number = None
-
         if 'input_mobile' in request.POST:
             mobile_number = request.POST.get('input_mobile')
             response = send_otp(mobile_number)
@@ -371,12 +347,8 @@ def user_verify(request):
                 mobile_number = request.POST.get('mobile_number')
                 user_verified = 'code_checked'
                 user_create_form = MyUserCreate()
-
                 user_create_form.fields['phone_number'].initial = mobile_number
-
-
                 # user_create_form.phone_number = mobile_number
-
                 user_saved = None
                 context = {
                     'user_saved':user_saved,
@@ -387,7 +359,6 @@ def user_verify(request):
                 return render(request, 'accounts/user_create.html', context)
             else:
                 user_verified = 'code_check_error'
-
     else:
         user_verified = None
         otp_code = None
@@ -398,7 +369,6 @@ def user_verify(request):
      'response': response,
      'otp_code': otp_code,
      }
-
     return render(request, 'accounts/user_verify.html', context )
 
 
@@ -408,7 +378,6 @@ def pass_reset(request):
     otp_code = None
     mobile_number = None
     if request.method == 'POST':
-
         if 'input_mobile' in request.POST:
             mobile_number = request.POST.get('input_mobile')
             response = send_otp(mobile_number)
@@ -423,14 +392,11 @@ def pass_reset(request):
             veri_code_input = request.POST.get('veri_code_input')
             if otp_code == veri_code_input:
                 mobile_number = request.POST.get('mobile_number')
-
                 user =MyUser.objects.filter(phone_number=mobile_number,)
                 if not user:
                     error = 'چنین کاربری وجود ندارد لطفا دوباره شماره خود را وارد کنید'
                     return render(request, 'accounts/user_verify.html',{'error':error})
-
                 user_verified = 'code_checked'
-
                 user_create_form = MyUserCreate()
                 user_create_form.fields['phone_number'].initial = mobile_number
                 # user_create_form.fields['username'].initial = user_email
@@ -440,23 +406,16 @@ def pass_reset(request):
                     'otp_code': otp_code,
                     'reset_pass_request': reset_pass_request,
                     'mobile_number': mobile_number,
-
                     'user_create_form': user_create_form,
-
                 }
                 return render(request,'accounts/user_create.html',context)
-    # if True:
-    #     return pass_reset(request)
-
-
-
     context = {
         'user_verified':user_verified,
         'otp_code':otp_code,
         'mobile_number':mobile_number,
     }
-
     return render(request,'accounts/user_verify.html',context)
+
 
 def pass_reset_confirmed(request):
         mobile_number =request.POST.get('phone_number')
@@ -464,7 +423,6 @@ def pass_reset_confirmed(request):
         user = MyUser.objects.get(phone_number=mobile_number)
         user_email = getattr(user,'username')
         if entered_email == user_email:
-
             new_password = request.POST.get('password1')
             user.set_password(new_password)
             user.save()
@@ -472,3 +430,4 @@ def pass_reset_confirmed(request):
         else:
             return HttpResponse('ایمیل وارد شده با شماره همراه مطابق نیست')
         return render(request, 'accounts/pass_reset-confirmed.html',{})
+
