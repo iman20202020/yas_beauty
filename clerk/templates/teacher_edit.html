@@ -1,0 +1,320 @@
+{% extends "accounts/_base.html" %}
+{% load static %}
+{% block contents %}
+    <div class="container p-4">
+        <div class="mbr-section-head text-center">
+            <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-4">
+                <strong>{% if error %}نمایه کاربری{% else %} ثبت مشخصات کاربری{% endif %}</strong></h4>
+        </div>
+        <div class="row justify-content-center mt-4">
+                           <div class="dragArea row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group" data-for="points">
+                            <label  id="label_points"   for="points-form7-v" class="label ">امتیاز شما: {{ teacher_profile.points }}
+                                <div class="progress">
+                                    <div id="points_progress_bar" class="progress-bar  " >
+                                    </div>
+                                </div>
+                            </label>
+                            <input type="hidden"   name="points"  data-form-field="points" id="points-form7-v"   {% if teacher_profile %} value={{ teacher_profile.points }} {% else %} value=3 {% endif %} >
+                        </div>
+
+            <div class="col-lg-8 mx-auto mbr-form" data-form-type="">
+                <form action="" id="teacher_edit_form" name="teacher_edit_form" method="POST" class="mbr-form form-with-styler mx-auto" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                    <div class="">
+                        <div  data-form-alert="" class="alert text-center {% if  "successfully" in error  %} alert-success {% else %}alert-danger{% endif %} col-12 mbr-fonts-style align-center mb-0
+                         {% if  error  %} d-block {% else %}d-none {% endif %}d-none ">{{ error }}<br>
+                        {{ teacher_edit_form.errors }}
+                        </div>
+                    </div>
+
+                       <div class="col-lg-12 col-md-12 col-sm-12 form-group text-center" data-for="image">
+                             <label for="degree_image">عکس خود را اینجا بارگذاری کنید :</label>
+                              <input name="image" id="image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'image_preview')" class="file-upload">
+
+                           <img id="image_preview" src="{% static teacher_profile.image %} " class="img-rounded col-lg-6 col-md-6 col-sm-12" >
+                       </div>
+                       <div class="col-lg-6 col-md-6 col-sm-12 form-group" data-for="first_name">
+                            <input type="text"  name="first_name" onchange="show_confirm_key()" placeholder="نام*"
+                                data-form-field="first_name" class="form-control" id="first_name-form7-v"
+                                   value="{{ teacher_profile.first_name }}" required>
+                       </div>
+
+                       <div class="col-lg-6 col-md-6 col-sm-12 form-group" data-for="last_name">
+                          <input type="text"  name="last_name" onchange="show_confirm_key()" placeholder="نام خانوادگی*"
+                                   data-form-field="last_name" class="form-control" value="{{ teacher_profile.last_name }}"
+                                   id="last_name-form7-v" required>
+                       </div>
+
+                       <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="national_id">
+                           <label for="national_id-form7-v ">کد ملی* :</label>
+                            <input type="text" onchange="show_confirm_key()" name="national_id" data-form-field="national_id"
+                                   class="form-control"  value="{{ teacher_profile.national_id }}" id="national_id-form7-v" required>
+                       </div>
+
+                       <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="price_range">
+                        <label for="price-form7-v" dir="rtl"> هزینه کلاس :</label>
+                            <select  name="price_range"onchange="show_confirm_key()" data-form-field="price"
+                                     class="form-control"  id="price-form7-v">
+
+                                {% for price_range in price_ranges %}
+                                  <option dir="rtl" value="{{ price_range.price_range }}"
+                                          {% if  teacher_profile.price_range.price_range == price_range.price_range %}selected{% endif %}
+                                  >{{ price_range.price_range_name }}</option>
+                                {% endfor %}
+                            </select>
+                       </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="category">
+                            <label for="category-form7-v">زیرمجموعه :</label>
+                            <select name="category" onchange="show_confirm_key()" data-form-field="category" class="form-control"
+                                    id="category-form7-v">
+
+                                {% for category in categories %}
+                                    <option value="{{ category.category }}"
+                                        {% if  teacher_profile.category.category == category.category %}selected{% endif %}>
+                                        {{ category.category_name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                       <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="syllabus">
+                           <label for="syll">موضوع :</label>
+                           <select  onchange="show_confirm_key()" name="syllabus" data-form-field="syllabus" class="form-control "  id="syll">
+                                {% if teacher_profile %}
+                                    <option selected value="{{ teacher_profile.syllabus.syllabus }}">{{ teacher_profile.syllabus.syllabus }}</option>
+                                {% endif %}
+
+                                {% if syllabuses %}
+                                    {% for syllabus in syllabuses %}
+                                        <option value="{{ syllabus.syllabus}}">{{ syllabus.syllabus_name }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                         </select>
+                        </div>
+
+
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="experience" >
+                            <label for="experience-form7-v " class="inline_label" dir="rtl">سابقه تدریس :</label>
+                                <select  name="experience" onchange="show_confirm_key()" data-form-field="experience" class="form-control"  id="experience-form7-v">
+                                    <option value="1" selected>۱ سال یا کمتر</option>
+                                    <option value="2">۲ سال </option>
+                                    <option value="3">۳ سال</option>
+                                    <option value="4">۴ سال </option>
+                                    <option value="5">۵ سال </option>
+                                    <option value="6">۶ سال </option>
+                                    <option value="7">۷ سال </option>
+                                    <option value="8">۸ سال </option>
+                                    <option value="9">۹ سال </option>
+                                    <option value="10">۱۰ سال و بیشتر </option>
+
+                                </select>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group text-right" data-for="qualification">
+                            <label for="qualification-form7-v" class="label"> خود را برای مخاطب شرح دهید* :</label>
+                            <textarea   name="qualification" onchange="show_confirm_key()"
+                                   class="form-control" id="qualification-form7-v"  rows="5" maxlength="256" >{% if teacher_profile.qualification %}{{ teacher_profile.qualification }}{% endif %}
+                            </textarea>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="learn_type">
+                            <label for="learn_type-form7-v">نوع آموزش :</label><br>
+                            <select  name="learn_type" onchange="show_confirm_key()" data-form-field="experience" class="form-control"  id="learn_type-form7-v">
+                                    <option value=0 selected>آنلاین یا حضوری</option>
+                                    <option value=1>آنلاین </option>
+                                    <option value=2>حضوری</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="city" id="city_div">
+                            <label for="city-form7-v">شهر:</label>
+                            <select  name="city" onchange="show_confirm_key()" data-form-field="city" class="form-control" id="city-form7-v">
+                                {% for city in cities %}
+                                    <option value="{{ city.city }}"
+                                        {% if  teacher_profile.city.city == city.city %}selected{% endif %}>{{ city.city_name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="national_card_image">
+                            <label for="national_card_image">عکس کارت ملی* :</label>
+                            <input name="national_card_image" id="national_card_image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'national_card_image_preview')" class="file-upload">
+                            <img id="national_card_image_preview" src="{% static teacher_profile.national_card_image %}" class="img-rounded col-lg-6 col-md-6 col-sm-12 " >
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image">
+                            <label for="degree_image">عکس مدرک تحصیلی*  :</label>
+                              <input name="degree_image" id="degree_image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'degree_image_preview')" class="file-upload"
+                              {% if teacher_profile.degree_image %} {% else %} {% endif %}>
+                              <img id="degree_image_preview" src="{% static teacher_profile.degree_image %} " class="img-rounded col-lg-6 col-md-6 col-sm-12"  >
+                        </div>
+
+
+                    <div class="col-lg-4 col-md-4 col-sm-12  text-right" data-for="sample_video">
+                            <label for="sample_video">ویدیوی نمونه تدریس* :</label>
+                              <input name="sample_video" id="sample_video" type="file" onchange="show_confirm_key() " class="-file-video"
+                              {% if teacher_profile.sample_video %}  {% else %}  {% endif %}><br>
+                    {% if teacher_profile.sample_video %}
+                      <video  src="{% static teacher_profile.sample_video %}" class="col-lg-6 col-md-12 col-sm-12 "controls></video>
+                    {% endif %}
+
+
+
+<div  id="spinner-box" class="m-5 text-center not-visible" >
+  <strong>در حال بارگذاری . . . </strong><br>
+
+  <div class="spinner-border ml-auto no" role="status" aria-hidden="true"></div>
+</div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group  text-center" >
+                            <input  id="confirm_edit_key" type="submit" onclick="showSpinner()" class="btn btn-dark btn-lg" value="تایید و ثبت ">
+{#                             <a type="button" id="student_search_key" class="btn btn-danger " href="{% url 'teachme:student_list' %}">Show available students</a>#}
+                        </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+{% block footer %}
+
+
+  <script src="{% static "accounts/assets/web/assets/jquery/jquery.min.js" %}"></script>
+  <script src="{% static "accounts/assets/bootstrap/js/bootstrap.min.js" %}"></script>
+  <script src="{% static "accounts/assets/dropdown/js/nav-dropdown.js" %}"></script>
+  <script src="{% static "accounts/assets/dropdown/js/navbar-dropdown.js" %}"></script>
+  <script src="{% static "accounts/assets/formstyler/jquery.formstyler.js" %}"></script>
+  <script src="{% static "accounts/assets/formstyler/jquery.formstyler.min.js" %}"></script>
+
+  <script type="text/javascript"  >
+     function points_progress(p) {
+
+                var points_ratio = p/5 ;
+                var w = points_ratio *100 + '%';
+                var bg_color;
+                var bg = points_ratio*350-80;
+                bg_color = 'hsl('+ bg +', 90%,43%)';
+                $('#points_progress_bar').css('width', w).css('background-color', bg_color);
+
+            }
+
+      function ajax_syllabus(){
+          $('#syll').empty();
+          $.ajax({
+              url: "{% url 'accounts:teacher_edit' %}",
+              contentType: "json",
+              data: {
+              category: $('#category-form7-v').val(),
+              },
+              success: function(result) {
+                  var i;
+                  for (i = 0; i<result.length; i++) {
+                  optText = result[i]['syllabus_name'];
+                  optValue = result[i]['syllabus'];
+                  $('#syll').append(`<option value="${optValue}">${optText}</option>`);
+                  if ( optValue=="{{ teacher_profile.syllabus }}"){
+                                 $('#syll').val(optValue);
+                             }
+                  }
+          }});
+      }
+    $(document).ready(function(){
+
+        points_progress({{ teacher_profile.points }});
+
+
+        {% if error %}
+        {#$('#student_search_key').css('display','block');#}
+        $('#confirm_edit_key').css('display','none');
+        {% else %}
+        {#$('#student_search_key').css('display','none');#}
+        $('#confirm_edit_key').css('display','block');
+        {% endif %}
+
+        $('#confirm_edit_key').css('display','none');
+       $('#syll').empty();
+       ajax_syllabus()
+       $('#category-form7-v').change(function () {
+           {#$('#syll').empty();#}
+           ajax_syllabus()
+
+
+        })
+    })
+   $("#category-form7-v").select(function(){
+       $('#category-form7-v').empty();
+       $.ajax({
+            url: "{% url 'accounts:teacher_edit' %}",
+            contentType: "json",
+            data: {
+                category_list: 1,
+                  },
+            success: function(result) {
+                var i;
+                for (i = 0; i<result.length; i++) {
+                    optText = result[i]['category_name'];
+                    optValue = result[i]['category'];
+                    $('#syll').append(`<option value="${optValue}">${optText}</option>`);
+                }
+        }});
+ })
+        function show_confirm_key(){
+          $('#confirm_edit_key').css('display','block');
+          {#$('#student_search_key').css('display','none');#}
+      }
+    function image_upload_preview(u,i) {
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#'+i).attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+            }
+        }
+        $('#' + u).change(function () {
+            readURL(this);
+        });
+    }
+function showSpinner() {
+    {#alert('jghfjhdg')#}
+    const spinnerBox = document.getElementById('spinner-box')
+    const uploadForm = document.getElementById('teacher_edit_form')
+    // console.log(spinnerBox)
+    spinnerBox.classList.add('visible')
+    {#spinnerBox.classList.remove('not-visible')#}
+    $.ajax({
+        type: 'GET',
+        url: uploadForm.action,
+        success:function (response) {
+            setTimeout(()=>{
+                spinnerBox.classList.remove('visible')
+            spinnerBox.classList.add('not-visible')
+            console.log('response',response);
+                {#alert()#}
+            },500)
+
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+     {% if teacher_profile.experience %}
+        $("#experience-form7-v").val({{ teacher_profile.experience }})
+     {% endif %}
+  {% if teacher_profile.learn_type %}
+        $("#learn_type-form7-v").val({{ teacher_profile.learn_type }})
+     {% endif %}
+  </script>
+ <script src="{% static 'accounts/assets/accounts.js' %}"></script>
+{% endblock %}

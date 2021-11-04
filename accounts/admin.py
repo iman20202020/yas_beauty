@@ -10,3 +10,4 @@ admin.site.register(PriceRange)
 admin.site.register(LearnCategory)
 admin.site.register(City)
 admin.site.register(MyUser, UserAdmin)
+UserAdmin.fieldsets += ('Custom fields set', {'fields': ('phone_number', )}),

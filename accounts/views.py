@@ -1,24 +1,13 @@
-import math
-import os
-import random
 from itertools import chain
 from accounts.otp import *
-
-from django.contrib.auth.models import User
-from django.template.defaultfilters import filesizeformat
-from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.postgres.search import SearchVector, SearchQuery
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from kavenegar import *
-
 from accounts.forms import MyUserCreate, StudentEditForm, TeacherEditForm
 from accounts.models import LearnCategory, Syllabus, PriceRange, Student, Teacher, City, MyUser
 
@@ -73,8 +62,8 @@ def index_accounts(request):
         'teacher_computer': teacher_computer,
         'syllabuses_primary_school': syllabuses_primary_school,
         'teacher_primary_school': teacher_primary_school,
-        'syllabuses_cinema' : syllabuses_cinema,
-        'teacher_cinema' : teacher_cinema,
+        'syllabuses_cinema': syllabuses_cinema,
+        'teacher_cinema': teacher_cinema,
         'syllabuses_tech': syllabuses_tech,
         'teacher_tech': teacher_tech,
         'syllabuses_cooking': syllabuses_cooking,
@@ -243,7 +232,7 @@ def teacher_edit(request):
             price_ranges=list(PriceRange.objects.all().values())
             # languages=list(Language.objects.all().values())
             categories=list(LearnCategory.objects.all().values())
-            syllabuses = None
+            syllabuses = list(Syllabus.objects.all().values())
             first_name = None
             last_name = None
             teacher_profile= None
