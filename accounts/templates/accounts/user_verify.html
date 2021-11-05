@@ -21,15 +21,22 @@
             </div>
             <div id="send_otp_div"   {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: block"{% else %}style="display: none" {% endif %}>
                 <strong>کد تایید به شماره همراه شما ارسال شد لطفا آنرا وارد کنید</strong><br><br>
-                 <form action="" class="" method="post" >
-                     {% csrf_token %}
-                     <label for="veri_code_input"></label>
-                     <input type="text" id="veri_code_input" name="veri_code_input" autofocus>
-                     <input type="hidden" id="otp_code_generated" name="otp_code_generated" value="{{ otp_code }}">
-                     <input type="hidden" id="mobile_number" name="mobile_number" value="{{ mobile_number }}">
-                     <input type="submit" class="btn btn-dark"  {% if user_verified == 'code_sent'%}value="ثبت کد"{% else %}value=" ثبت  مجدد" {% endif %}>
-                 </form>
+                <form action="" class="" method="post" >
+                    {% csrf_token %}
+                    <label for="veri_code_input"></label>
+                    <input type="text" id="veri_code_input" name="veri_code_input" autofocus>
+                    <input type="hidden" id="otp_code_generated" name="otp_code_generated" value="{{ otp_code }}">
+                    <input type="hidden" id="mobile_number" name="mobile_number" value="{{ mobile_number }}">
+                    <input type="submit" class="btn btn-dark"  {% if user_verified == 'code_sent'%}value="ثبت کد"{% else %}disabled{% endif %}>
+                </form>
+                <br>
+                <div id="countdown" class="inline-group"></div>
+                <a id="resend_btn"   href="{% url 'accounts:user_verify' %}" style="display: none" >ارسال مجدد</a>
             </div>
+
+
+
+
             <div id="resend_otp_div" {% if user_verified == 'code_check_error' %} style="display: block"{% else %}style="display: none" {% endif %} >
                 <strong class="text-danger"> کد وارد شده صحیح نیست</strong><br>
                 <form method="post">
@@ -56,5 +63,20 @@
             }
 
     }
+    {#countdown and resend verification ode#}
+
+var timeleft = 60;
+var downloadTimer = setInterval(function(){
+  if(timeleft <= 0){
+    clearInterval(downloadTimer);
+    $('#countdown').css('display','none') ;
+    $('#resend_btn').css('display','block')
+  } else {
+    document.getElementById("countdown").innerHTML =    timeleft +" ثانیه تا ارسال مجدد ";
+  }
+  timeleft -= 1;
+}, 1000);
+
 </script>
+
 {% endblock %}

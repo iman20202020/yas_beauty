@@ -8,7 +8,8 @@
     animation-duration: 2s;
     animation-timing-function: ease;
     animation-delay: 3s;
-    animation-fill-mode: backwards;
+    animation-fill-mode: forwards;
+
 }
     @keyframes example {
 100% {
@@ -23,7 +24,7 @@ li{font-size: 12px;color: black;}
 
 
 </style>
-<header dir="rtl">
+<head dir="rtl">
     <title></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,12 +53,13 @@ li{font-size: 12px;color: black;}
                        {% if user.is_authenticated %}  نمایه کاربری {{ user }}{% else %}ورود و  ثبت نام{% endif %}
                        </a>
                    </li>
-                    <li ><a href="#" class="nav nav-link text textr-white  "><i class="fas fa-support "></i> پشتیبانی</a></li >
+{#                    <li ><a href="#" class="nav nav-link text textr-white  "><i class="fas fa-support "></i> پشتیبانی</a></li >#}
+                    <li ><a href="#" class="nav nav-link text textr-white  "><i class="fas fa-blog "></i> بلاگ </a></li >
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="dropdown-1" aria-expanded="false" href="#" data-toggle="dropdown">ارتباط با ما</a>
+                        <a class="nav-link dropdown-toggle" id="dropdown-1" aria-expanded="false" href="#" data-toggle="dropdown"><i class="fas fa-phone "></i>   ارتباط با ما</a>
                         <div class="dropdown-menu text-center" aria-labelledby="dropdown-1">
-{#                            <a  class="nav nav-link bg-secondary " href="#">درباره ما   </a>#}
-{#                            <a  class="nav nav-link bg-secondary" href="#">همکاری با ما</a>#}
+                            <a  class="nav nav-link bg-secondary " href="#">درباره ما   </a>
+                            <a  class="nav nav-link bg-secondary" href="#">همکاری با ما</a>
                             <a  class="nav nav-link bg-secondary" href="{% url 'accounts:contact_us' %}">تماس  با ما</a>
                         </div>
                     </li>
@@ -74,8 +76,8 @@ li{font-size: 12px;color: black;}
 
         <form class="form-inline  mx-3 " action="{% url 'accounts:search_view' %}" method="get" >
 
-            <input class="form-control form-inline " aria-label="Search" type="search" placeholder=" جستجو" name="search_text">
-            <button type="submit" class="form-inline " ><i class='fa fa-search' ></i></button>
+            <input class="form-control  " aria-label="Search" type="search" placeholder=" جستجو" name="search_text">
+            <button type="submit" class="" ><i class='fa fa-search ' ></i></button>
 
 
         </form>
@@ -83,7 +85,7 @@ li{font-size: 12px;color: black;}
     </nav>
 
 
-</header>
+</head>
 {% block title %}{% endblock %}
 <body >
 <div class="text-right alert ">

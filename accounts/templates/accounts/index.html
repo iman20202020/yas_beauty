@@ -1,26 +1,13 @@
 {% extends 'accounts/_base.html' %}
 {% load static %}
 {% block title %}
-
-
-    <div  class="content border-secondary  border-top text-center pt-4 text-primary" style="height: 50px">
-
+<header>
+    <div  class="content border-secondary  border-top text-center pt-4 " style="height: 50px">
         <h1 id="title_1" style="font-size: xx-large;" >استادباز معرفی معلم خصوصی </h1>
-          <h2 id="title_2" style="display: none;font-size: x-large; ">کیفیت تدریس استادها رو قبلا چک کردیم</h2>
+        <h2 id="title_2" style="display: none;font-size: x-large; ">کیفیت تدریس استادها رو قبلا چک کردیم</h2>
         <h2 id="title_3" style="display: none;font-size: x-large" >جلسه اول خوشت نیومد پول نده</h2>
-
-
-
-    </ul>
     </div>
-
-<script>
-
-</script>
-
-
-
-
+</header>
 {% endblock %}
 
 
@@ -44,6 +31,59 @@
 
 <div class=" container ">
     <div class=" row  justify-content-center ">
+
+    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-5 mt-3 " onclick="avail_list_toggle('language_available_teachers')">
+    <section>
+        <img {% if teacher_language %}src="{% static 'accounts/images/language.png' %}" {% else %}src="{% static 'accounts/images/language-bw.png' %}" {% endif %} ><br>
+        <h6>زبان های خارجی</h6>
+        <a href="{% url 'accounts:student_edit' %}">
+            <div id="language_available_teachers" style="display: none ;">
+                <ul  class="list-group d-lg-inline-flex" style="" >
+                    {% for syllabus in syllabuses_language %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
+                        <script type="text/javascript">
+                            var count = 0 ;
+                                {% for teacher in teacher_language %}
+                                    {% if teacher.syllabus == syllabus %}
+                                         count++
+                                    {% endif %}
+                                {% endfor %}
+                            document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                        </script>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </a>
+    </section>
+    </div>
+
+
+    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-4 mt-2 "onclick="avail_list_toggle('computer_available_teachers')">
+    <section>
+        <img {% if teacher_computer %}src="{% static 'accounts/images/computer.png' %}" {% else %}src="{% static 'accounts/images/computer-bw.png' %}" {% endif %} ><br>
+        <h6>کامپیوتر و برنامه نویسی</h6>
+        <a href="{% url 'accounts:student_edit' %}">
+            <div id="computer_available_teachers" style="display: none ;">
+                <ul  class="list-group d-lg-inline-flex" style="" >
+                    {% for syllabus in syllabuses_computer %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
+                        <script type="text/javascript">
+                        var count = 0 ;
+                        {% for teacher in teacher_computer %}
+                            {% if teacher.syllabus == syllabus %}
+                                 count++
+                            {% endif %}
+                        {% endfor %}
+                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                        </script>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </a>
+    </section>
+    </div>
 
         <div class=" col-lg-2 col-md-3 col-sm-12 text-center   p-4 " onclick="avail_list_toggle('makeup_available_teachers')">
         <section  >
@@ -101,33 +141,33 @@
 
 
 
-    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-5 mt-4 " onclick="avail_list_toggle('cooking_available_teachers')">
+
+
+    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-4 mt-2 "onclick="avail_list_toggle('cinema_available_teachers')">
     <section>
-        <img {% if teacher_cooking %}src="{% static 'accounts/images/cooking.png' %}" {% else %}src="{% static 'accounts/images/cooking-bw.png' %}" {% endif %} ><br>
-        <h6>آشپزی و شیرینی پزی</h6>
+        <img {% if teacher_cinema %}src="{% static 'accounts/images/cinema.png' %}" {% else %}src="{% static 'accounts/images/cinema-bw.png' %}" {% endif %} ><br>
+        <h6>سینما و بازیگری</h6>
         <a href="{% url 'accounts:student_edit' %}">
-            <div id="cooking_available_teachers" style="display: none ;">
+            <div id="cinema_available_teachers" style="display: none ;">
                 <ul  class="list-group d-lg-inline-flex" style="" >
-                    {% for syllabus in syllabuses_cooking %}
+                    {% for syllabus in syllabuses_cinema %}
                         <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
                         <script type="text/javascript">
-                            var count = 0 ;
-                            {% for teacher in teacher_cooking %}
-                                {% if teacher.syllabus == syllabus %}
-                                     count++
-                                {% endif %}
-                            {% endfor %}
-                            document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                        var count = 0 ;
+                        {% for teacher in teacher_cinema %}
+                            {% if teacher.syllabus == syllabus %}
+                                 count++
+                            {% endif %}
+                        {% endfor %}
+                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                         </script>
-                        </li>
+                       </li>
                     {% endfor %}
                 </ul>
             </div>
         </a>
     </section>
     </div>
-
-
 
     <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-5 " onclick="avail_list_toggle('art_available_teachers')">
     <section>
@@ -157,59 +197,8 @@
 
 
 
-    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-4 "  onclick="avail_list_toggle('sport_available_teachers')">
-    <section>
-        <img {% if teacher_sport %}src="{% static 'accounts/images/sport.png' %}" {% else %}src="{% static 'accounts/images/sport-bw.png' %}" {% endif %} ><br>
-        <h6>ورزش و بدنسازی</h6>
-            <a href="{% url 'accounts:student_edit' %}">
-                <div id="sport_available_teachers" style="display: none ;">
-                    <ul  class="list-group d-lg-inline-flex" style="" >
-                        {% for syllabus in syllabuses_sport %}
-                            <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
-                            <script type="text/javascript">
-                                var count = 0 ;
-                                {% for teacher in teacher_sport %}
-                                    {% if teacher.syllabus == syllabus %}
-                                         count++
-                                    {% endif %}
-                                {% endfor %}
-                                document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
-                            </script>
-                            </li>
-                        {% endfor %}
-                   </ul>
-                </div>
-            </a>
-    </section>
-    </div>
 
 
-
-    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-5 mt-3 " onclick="avail_list_toggle('language_available_teachers')">
-    <section>
-        <img {% if teacher_language %}src="{% static 'accounts/images/language.png' %}" {% else %}src="{% static 'accounts/images/language-bw.png' %}" {% endif %} ><br>
-        <h6>زبان های خارجی</h6>
-        <a href="{% url 'accounts:student_edit' %}">
-            <div id="language_available_teachers" style="display: none ;">
-                <ul  class="list-group d-lg-inline-flex" style="" >
-                    {% for syllabus in syllabuses_language %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
-                        <script type="text/javascript">
-                            var count = 0 ;
-                                {% for teacher in teacher_language %}
-                                    {% if teacher.syllabus == syllabus %}
-                                         count++
-                                    {% endif %}
-                                {% endfor %}
-                            document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
-                        </script>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </a>
-    </section>
-    </div>
 
 
 
@@ -324,26 +313,23 @@
         </a>
     </section>
     </div>
-
-
-
-    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-4 mt-2 "onclick="avail_list_toggle('computer_available_teachers')">
+    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-5 mt-4 " onclick="avail_list_toggle('cooking_available_teachers')">
     <section>
-        <img {% if teacher_computer %}src="{% static 'accounts/images/computer.png' %}" {% else %}src="{% static 'accounts/images/computer-bw.png' %}" {% endif %} ><br>
-        <h6>کامپیوتر و برنامه نویسی</h6>
+        <img {% if teacher_cooking %}src="{% static 'accounts/images/cooking.png' %}" {% else %}src="{% static 'accounts/images/cooking-bw.png' %}" {% endif %} ><br>
+        <h6>آشپزی و شیرینی پزی</h6>
         <a href="{% url 'accounts:student_edit' %}">
-            <div id="computer_available_teachers" style="display: none ;">
+            <div id="cooking_available_teachers" style="display: none ;">
                 <ul  class="list-group d-lg-inline-flex" style="" >
-                    {% for syllabus in syllabuses_computer %}
+                    {% for syllabus in syllabuses_cooking %}
                         <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
                         <script type="text/javascript">
-                        var count = 0 ;
-                        {% for teacher in teacher_computer %}
-                            {% if teacher.syllabus == syllabus %}
-                                 count++
-                            {% endif %}
-                        {% endfor %}
-                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                            var count = 0 ;
+                            {% for teacher in teacher_cooking %}
+                                {% if teacher.syllabus == syllabus %}
+                                     count++
+                                {% endif %}
+                            {% endfor %}
+                            document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                         </script>
                         </li>
                     {% endfor %}
@@ -353,33 +339,36 @@
     </section>
     </div>
 
-
-
-    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-4 mt-2 "onclick="avail_list_toggle('cinema_available_teachers')">
+    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-4 "  onclick="avail_list_toggle('sport_available_teachers')">
     <section>
-        <img {% if teacher_cinema %}src="{% static 'accounts/images/cinema.png' %}" {% else %}src="{% static 'accounts/images/cinema-bw.png' %}" {% endif %} ><br>
-        <h6>سینما و بازیگری</h6>
-        <a href="{% url 'accounts:student_edit' %}">
-            <div id="cinema_available_teachers" style="display: none ;">
-                <ul  class="list-group d-lg-inline-flex" style="" >
-                    {% for syllabus in syllabuses_cinema %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
-                        <script type="text/javascript">
-                        var count = 0 ;
-                        {% for teacher in teacher_cinema %}
-                            {% if teacher.syllabus == syllabus %}
-                                 count++
-                            {% endif %}
+        <img {% if teacher_sport %}src="{% static 'accounts/images/sport.png' %}" {% else %}src="{% static 'accounts/images/sport-bw.png' %}" {% endif %} ><br>
+        <h6>ورزش و بدنسازی</h6>
+            <a href="{% url 'accounts:student_edit' %}">
+                <div id="sport_available_teachers" style="display: none ;">
+                    <ul  class="list-group d-lg-inline-flex" style="" >
+                        {% for syllabus in syllabuses_sport %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
+                            <script type="text/javascript">
+                                var count = 0 ;
+                                {% for teacher in teacher_sport %}
+                                    {% if teacher.syllabus == syllabus %}
+                                         count++
+                                    {% endif %}
+                                {% endfor %}
+                                document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                            </script>
+                            </li>
                         {% endfor %}
-                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
-                        </script>
-                       </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </a>
+                   </ul>
+                </div>
+            </a>
     </section>
     </div>
+
+
+
+
+
 
     </div>
 </div>
@@ -390,29 +379,27 @@
 
 
 <script>
-
-var m=1;
-var n=2;
-var p=3;
-function change_title(m,n,p){
-     $('#title_'+m).css('display','block')
-     $('#title_'+m).addClass("roll_anim")
-     $('#title_'+n).css('display','none')
-     $('#title_'+p).css('display','none')
- };
-;
-     setInterval(function(){
-         change_title(m,n,p)
-
-         m++
-         n++
-         p++
-         if (m>3){m=1}
-         if (n>3){n=1}
-         if (p>3){p=1}
-          },4000);
- function avail_list_toggle(list_name) {
-     $("#"+list_name).toggle()
- }
+    var m=1;
+    var n=2;
+    var p=3;
+    function change_title(m,n,p){
+         $('#title_'+m).css('display','block')
+         $('#title_'+m).addClass("roll_anim")
+         $('#title_'+n).css('display','none')
+         $('#title_'+p).css('display','none')
+     };
+    ;
+         setInterval(function(){
+             change_title(m,n,p)
+             m++
+             n++
+             p++
+             if (m>3){m=1}
+             if (n>3){n=1}
+             if (p>3){p=1}
+              },4000);
+     function avail_list_toggle(list_name) {
+         $("#"+list_name).toggle()
+     }
 </script>
 {% endblock %}
