@@ -2,9 +2,12 @@ asgiref==3.4.1
 certifi==2021.5.30
 charset-normalizer==2.0.4
 Django==3.2.5
+django-password-reset==2.0
 django-test==0.4030
+dnspython==2.1.0
 ghasedak==0.1.7
 idna==3.2
+iran-mobiles==0.0.2
 kavenegar==1.1.2
 Pillow==8.3.1
 psycopg2-binary==2.9.1

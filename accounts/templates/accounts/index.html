@@ -12,13 +12,14 @@
 
 
 {% block contents %}
-    <style > </style>
+
 <div class="align-center container  ">
         <div class="row justify-content-center text-center">
             <div class="col-12   " dir="rtl">
 {#                <header class=" display-4 text text-center "  ><h3> استادباز <br>معرفی معلم خصوصی</h3><br>#}
 {#                </header>#}
 {#                <h5 class="text-dark"><strong>بهترین استادو با چند کلیک  پیدا کن ‍</strong></h5>#}
+
                 <div class="mbr-section-btn mt-1  text text-center">
                     <a class="btn btn-primary "  {% if user.is_authenticated %} hidden {% endif %} href="{% url 'accounts:user_verify' %}">کاربر جدیدم &nbsp;
                     <i class="fas fa-user" ></i>
@@ -59,7 +60,7 @@
     </div>
 
 
-    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-4 mt-2 "onclick="avail_list_toggle('computer_available_teachers')">
+    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-4 mt-4 "onclick="avail_list_toggle('computer_available_teachers')">
     <section>
         <img {% if teacher_computer %}src="{% static 'accounts/images/computer.png' %}" {% else %}src="{% static 'accounts/images/computer-bw.png' %}" {% endif %} ><br>
         <h6>کامپیوتر و برنامه نویسی</h6>
@@ -143,7 +144,7 @@
 
 
 
-    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-4 mt-2 "onclick="avail_list_toggle('cinema_available_teachers')">
+    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-4 mt-4 "onclick="avail_list_toggle('cinema_available_teachers')">
     <section>
         <img {% if teacher_cinema %}src="{% static 'accounts/images/cinema.png' %}" {% else %}src="{% static 'accounts/images/cinema-bw.png' %}" {% endif %} ><br>
         <h6>سینما و بازیگری</h6>
@@ -169,7 +170,7 @@
     </section>
     </div>
 
-    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-5 " onclick="avail_list_toggle('art_available_teachers')">
+    <div class=" col-lg-2 col-md-3 col-sm-12 text-center  mt-4 pt-4 " onclick="avail_list_toggle('art_available_teachers')">
     <section>
         <img {% if teacher_art %}src="{% static 'accounts/images/art.png' %}" {% else %}src="{% static 'accounts/images/art-bw.png' %}" {% endif %} ><br>
         <h6>هنرهای تجسمی</h6>
@@ -205,7 +206,8 @@
     <div class=" col-lg-2 col-md-3 col-sm-12 text-center  pt-4 mt-1  " onclick="avail_list_toggle('university_available_teachers')">
      <section>
         <img {% if teacher_university %}src="{% static 'accounts/images/university.png' %}" {% else %}src="{% static 'accounts/images/university-bw.png' %}" {% endif %} ><br>
-        <h6>دانشگاهی</h6>
+        <br>
+         <h6>دانشگاهی</h6>
         <a href="{% url 'accounts:student_edit' %}">
             <div id="university_available_teachers" style="display: none ;">
                 <ul  class="list-group d-lg-inline-flex" style="" >
@@ -313,7 +315,7 @@
         </a>
     </section>
     </div>
-    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-5 mt-4 " onclick="avail_list_toggle('cooking_available_teachers')">
+    <div class=" col-lg-2 col-md-3 col-sm-12 text-center   pt-4 mt-4 " onclick="avail_list_toggle('cooking_available_teachers')">
     <section>
         <img {% if teacher_cooking %}src="{% static 'accounts/images/cooking.png' %}" {% else %}src="{% static 'accounts/images/cooking-bw.png' %}" {% endif %} ><br>
         <h6>آشپزی و شیرینی پزی</h6>
