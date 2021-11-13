@@ -140,12 +140,13 @@ def logout_view(request):
 def profile_edit(request):
     if hasattr(request.user, 'teacher'):
         return HttpResponseRedirect(reverse('accounts:teacher_edit'))
-    if hasattr(request.user, 'student'):
-        return HttpResponseRedirect(reverse('accounts:student_edit'))
+    # if hasattr(request.user, 'student'):
+    #     return HttpResponseRedirect(reverse('accounts:student_edit'))
     else:
-        get_user_pk = request.user.pk
-        MyUser.objects.get(pk=get_user_pk).delete()
-        return HttpResponse("لطفا دوباره بصورت معلم یا دانش آموز ثبت نام کنید")
+        return HttpResponseRedirect(reverse('accounts:student_edit'))
+        # get_user_pk = request.user.pk
+        # MyUser.objects.get(pk=get_user_pk).delete()
+        # return HttpResponse("لطفا دوباره بصورت معلم یا دانش آموز ثبت نام کنید")
 
 
 @login_required
@@ -248,6 +249,17 @@ def teacher_edit(request):
                         teacher_edit_form.pk = teacher_profile.id
                         teacher = teacher_edit_form.save(commit=False)
                         teacher.is_confirmed = False
+                        teacher.save()
+                        error = "مشخصات شما با موفقیت تغییر کرد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
+                        clerk_phone = '09361164819'
+                        teacher_user_id = request.user.id
+                        teacher_requested = MyUser.objects.get(id=request.user.id)
+                        teacher_email = request.user.username
+                        teacher_phone = teacher_requested.phone_number
+                        sms_token = 'user_id:{},name:{}'.format(teacher_user_id, teacher.last_name)
+                        sms_token2 = teacher_phone
+                        sms_token3 = teacher_email
+                        send_sms_teacher_edit(clerk_phone,sms_token, sms_token2,sms_token3)
                         # if os.path.isfile(teacher_profile.sample_video.path) :
                         #     os.remove(teacher_profile.sample_video.path)
                         # if os.path.isfile(teacher_profile.image.path) :
@@ -256,15 +268,13 @@ def teacher_edit(request):
                         #     os.remove(teacher_profile.degree_image.path)
                         # if os.path.isfile(teacher_profile.national_card_image.path) :
                         #     os.remove(teacher_profile.national_card_image.path)
-                        teacher.save()
-                        error = "مشخصات شما با موفقیت تغییر کرد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
 
                     else :
                          error = " خطا !  لطفا ورودی ها را کنترل کنید و دوباره سعی کنید"
             elif hasattr(request.user, 'student'):
                 return HttpResponse("مشخصات شما به عنوان دانش آموز ثبت شده لطفا با نام کاربری دیگری به عنوان معلم ثبت نام کنید ")
             if request.method == 'POST' and hasattr(request.user, 'teacher') == False:
-                try:
+
                     teacher_edit_form = TeacherEditForm(request.POST, request.FILES)
                     if teacher_edit_form.is_valid():
                         teacher = teacher_edit_form.save(commit=False)
@@ -272,11 +282,19 @@ def teacher_edit(request):
                         teacher.save()
                         error = "مشخصات شما ثبت شد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
                         teacher_profile = request.user
+
+                        clerk_phone = '09361164819'
+                        teacher_user_id = request.user.id
+                        teacher_requested = MyUser.objects.get(id=request.user.id)
+                        teacher_email = request.user.username
+                        teacher_phone = teacher_requested.phone_number
+                        sms_token = 'user_id:{},name:{}'.format(teacher_user_id, teacher.last_name)
+                        sms_token2 = teacher_phone
+                        sms_token3 = teacher_email
+                        send_sms_teacher_edit(clerk_phone, sms_token, sms_token2, sms_token3)
                     else:
                         error = 'ورودی ها دقیق نیست لطفا دوباره سعی کنید'
-                except:
-                    teacher_profile = request.POST
-                    error = "لطفا اطلاعات وارد شده را بررسی کنید"
+
             context = {
                 'teacher_profile' : teacher_profile,
                 'teacher_edit_form': teacher_edit_form,

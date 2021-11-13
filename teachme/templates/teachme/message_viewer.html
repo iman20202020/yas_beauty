@@ -1,0 +1,18 @@
+
+
+{% extends 'accounts/_base.html' %}
+{% block title %}
+<div class="row ">
+    <div class="container">
+        <div class=" text-center"  >
+            <div class="mbr-section-head ">
+                <h4 class="mbr-section-title mbr-fonts-style align-center p-4 ">
+                    <strong>{{ message }}</strong></h4><br><br>
+                <a href="{% url 'accounts:index_accounts' %}"> <button class="btn btn-outline-dark">بازگشت به صفحه اصلی</button></a>
+            </div><br>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -18,5 +18,6 @@ urlpatterns = [
     path('pass-reset/',views.pass_reset, name='pass_reset' ),
     path('pass-reset-conf/',views.pass_reset_confirmed, name='pass_reset_confirmed' ),
 
+
 ]
 

@@ -68,7 +68,7 @@ class Teacher(models.Model):
                                             help_text='عکس خود را اینجا بارگذاری کنید')
     degree_image = models.ImageField(upload_to="images/", validators=[validate_image_size],
                                      help_text='عکس مدرک تحصیلی خود را بارگذاری کنید')
-    qualification = models.CharField(max_length=256,blank=True, help_text='مدرک تحصیلی و گرایش تحصیلی خود را ذکر کنید')
+    qualification = models.CharField(max_length=120,blank=True, help_text='مدرک تحصیلی و گرایش تحصیلی خود را ذکر کنید')
     experience = models.CharField(max_length=3, default='3', blank=True)
     points = models.IntegerField(default=3, blank=True)
     sample_video = models.FileField(verbose_name='ویدیوی نمونه',upload_to='videos/',blank=True,

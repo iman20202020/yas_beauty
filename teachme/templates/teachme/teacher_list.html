@@ -2,12 +2,20 @@
 {% extends 'accounts/_base.html' %}
 {% load static %}
 {% block title %}
-{##}
-{#<form action="" method="post" class=" col justify-content-center alert-success form-inline pt-3 ">#}
-{#    {% csrf_token %}#}
-{#       {{ student_edit_form }}#}
-{#    <button type="submit" class=" btn btn-primary">Search</button>#}
-{#</form>#}
+<style>
+.text-wrap {
+
+    text-align: center;
+    font-size: small;
+  display: block;
+  width: 150px;
+    height: 130px;
+    word-wrap: break-word;
+  overflow: hidden;
+  {#white-space: nowrap;#}
+  text-overflow: ellipsis;
+}
+</style>
 
 {% endblock %}
 
@@ -20,7 +28,7 @@
                 {{ teachers.count }}
                 استاد پیدا شد
             </div><br>
-            <div class="  justify-content-center">
+            <div class=" col-lg-12 col-md-12 col-sm-12 text-right  ">
 
                 <table class="table table-striped ">
                     <thead>
@@ -28,7 +36,7 @@
                             <th> </th>
                             <th>نام </th>
 {#                            <th>موضوع تدریس</th>#}
-                            <th>رشته و آخرین مدرک تحصیلی</th>
+                            <th>درباره استاد</th>
                             <th> سابقه تدریس </th>
 {#                            <th>محدوده قیمت کلاس </th>#}
                             <th> امتیاز از5</th>
@@ -44,7 +52,9 @@
                             <td><a href="{% url 'teachme:teacher_detail' teacher.id %}"> {{ teacher.first_name }}  {{ teacher.last_name }}</a></td>
 {#                            <td>{{ teacher.language.language_name }}</td>#}
 {#                            <td>{{ teacher.syllabus.syllabus_name }}</td>#}
-                            <td><sub>{{ teacher.qualification }}</sub></td>
+
+                            <td><span class="text-wrap   ">{{ teacher.qualification }}</span></td>
+
                             <td>{{ teacher.experience }}سال</td>
 {#                            <td>{{ teacher.price_range.price_range_name }}</td>#}
                             <td>{{ teacher.points}}</td>

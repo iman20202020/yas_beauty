@@ -25,9 +25,9 @@
         {% csrf_token %}
 
         <h1 class="h3 mb-3 font-weight-normal">ورود</h1>
-        <label for="inputUsername" class="sr-only">نام کاربری</label>
-        <input type="text" id="inputUsername" class="form-control" placeholder="نام کاربری" name="username"
-              oninvalid="setCustomValidity('لطفاً نام کاربری را وارد کنید')" oninput="setCustomValidity('')"
+        <label for="inputUsername" class="sr-only">ایمیل</label>
+        <input type="text" id="inputUsername" class="form-control" placeholder="ایمیل" name="username"
+              oninvalid="setCustomValidity('لطفاً ایمیل را وارد کنید')" oninput="setCustomValidity('')"
               value="{{ username }}" required autofocus>
         <label for="inputPassword" class="sr-only">رمز عبور</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="رمز عبور" name="password" required

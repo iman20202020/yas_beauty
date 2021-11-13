@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.shortcuts import render
+from django.urls import reverse
+
 from accounts.models import Student, Teacher, MyUser
 from teachme.send_sms import *
 from yas7 import settings
@@ -43,6 +45,7 @@ def teacher_list(request):
         teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
                                           price_range=student_price_range, city=student_city,
                                           learn_type=student_learn_type,is_confirmed=True)
+
     teachers = Paginator(teachers, 15)
     page_number = request.GET.get('page')
     page_obj = teachers.get_page(page_number)
@@ -94,6 +97,9 @@ def teacher_request(request):
     #     # fail_silently=False,
     # )
 
-    return HttpResponse(student_phone)
+    return HttpResponseRedirect(reverse('teachme:message_viewer',args=['درخواست شما ثبت شد بزودی جهت هماهنگی با شما تماس می گیریم'] ))
 
     # response = send_otp(mobile_number)
+def message_viewer(request,message_get):
+    message = message_get
+    return render(request, 'teachme/message_viewer.html', {'message':message})
