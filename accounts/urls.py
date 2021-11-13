@@ -17,6 +17,7 @@ urlpatterns = [
     path('contact-us/',views.contact_us, name='contact_us' ),
     path('pass-reset/',views.pass_reset, name='pass_reset' ),
     path('pass-reset-conf/',views.pass_reset_confirmed, name='pass_reset_confirmed' ),
+    path('site/laws/',views.site_laws, name='site_laws' ),
 
 
 ]

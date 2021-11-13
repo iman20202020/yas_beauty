@@ -438,3 +438,5 @@ def pass_reset_confirmed(request):
             return HttpResponse('ایمیل وارد شده با شماره همراه مطابق نیست')
         return render(request, 'accounts/pass_reset-confirmed.html',{})
 
+def site_laws(request):
+    return render(request,'accounts/sit_laws.html',{})

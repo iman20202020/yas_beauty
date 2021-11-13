@@ -6,9 +6,9 @@
 
 
     <!-- Bootstrap core CSS -->
-<link rel="stylesheet" href={% static "accounts/assets/bootstrap/css/bootstrap.css" %} >
-<link rel="stylesheet" href={% static "accounts/assets/bootstrap/css/bootstrap.min.css" %} >
-<link rel="stylesheet" href={% static "accounts/assets/bootstrap/js/bootstrap.min.js" %} >
+{#<link rel="stylesheet" href={% static "accounts/assets/bootstrap/css/bootstrap.css" %} >#}
+{#<link rel="stylesheet" href={% static "accounts/assets/bootstrap/css/bootstrap.min.css" %} >#}
+{#<link rel="stylesheet" href={% static "accounts/assets/bootstrap/js/bootstrap.min.js" %} >#}
 
 
 <body class="  text-center">
@@ -18,8 +18,6 @@
              {% if  error  %} d-block {% else %}d-none {% endif %}d-none ">{{ error }}<br>
 
         </div>
-
-
 
     <form class="form-signin " method="post">
         {% csrf_token %}
