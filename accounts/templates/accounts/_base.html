@@ -25,14 +25,15 @@ li{font-size: 12px;color: black;}
 
 </style>
 <head dir="rtl">
-    <title></title>
+    <title>معلم خصوصی استادباز </title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset=utf-8>
 
-      <link rel="stylesheet" href="{% static "accounts/assets/bootstrap/css/bootstrap.min.css" %}">
-      <link rel="stylesheet" href="{% static "accounts/assets/farsi/farsi.css" %}">
-      <link rel="stylesheet" href="{% static 'accounts/fa5/css/all.css' %}">
-      <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">
+    <link rel="stylesheet" href="{% static "accounts/assets/bootstrap/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "accounts/assets/farsi/farsi.css" %}">
+    <link rel="stylesheet" href="{% static 'accounts/fa5/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">
+</head>
 
 
     <nav class="  navbar navbar-expand-lg navbar-dark   bg-dark  ">
@@ -54,7 +55,7 @@ li{font-size: 12px;color: black;}
                        </a>
                    </li>
 {#                    <li ><a href="#" class="nav nav-link text textr-white  "><i class="fas fa-support "></i> پشتیبانی</a></li >#}
-                    <li ><a href="#" class="nav nav-link text text-white  "><i class="fas fa-blog "></i> بلاگ </a></li >
+                    <li ><a href="{% url 'show_blog' 1 %}" class="nav nav-link text text-white  "><i class="fas fa-blog "></i> مجله </a></li >
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text text-white" id="dropdown-1" aria-expanded="false" href="#" data-toggle="dropdown"><i class="fas fa-phone "></i>   ارتباط با ما</a>
                         <div class="dropdown-menu text-center" aria-labelledby="dropdown-1">
@@ -85,7 +86,7 @@ li{font-size: 12px;color: black;}
     </nav>
 
 
-</head>
+
 {% block title %}{% endblock %}
 <body >
 <div class="text-right alert ">
