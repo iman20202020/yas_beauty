@@ -16,17 +16,18 @@
                     <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 text-primary">
                     <strong> ثبت نام آموزنده</strong></h4>
                     <br>
-                <div  data-form-alert="" class="alert text-center ">{{ student_submit_form.errors }}
+                <div  data-form-alert="" class="alert ">{% if message %}{{ message }}{% endif %}
                 </div>
 
                     {{ student_submit_form.as_p }}
 
-                    <input  type="submit" class="btn btn-primary col-4  " value="ثبت"/>
+                    <input  type="submit" class="btn btn-primary col-4 ml-5" value="ثبت"/>
 
                 </form>
             </div>
 
-
+    </div>
+</div>
 
 
 {% endblock %}
@@ -80,6 +81,10 @@
         $("#learn_type-form7-v").val({{ student_profile.learn_type }})
      {% endif %}
 
+
+
+
   </script>
+
  <script src="{% static 'accounts/assets/accounts.js' %}"></script>
 {% endblock %}

@@ -17,48 +17,48 @@ from yas7 import settings
 #     return render(request, 'teachme/index.html', {})
 
 
-def teacher_list(request):
-    learn_type_to_show =None
-    user_select = MyUser.objects.get(id=request.user.pk)
-    student_selected = StudentSubmit.objects.get(user=user_select)
-    student_city = student_selected.city
-    city_to_show = student_selected.city.city_name
-    student_learn_type = student_selected.learn_type
-
-    if student_learn_type == 0:
-        learn_type_to_show = 'آنلاین یا حضوری'
-    if student_learn_type == 1:
-        learn_type_to_show = 'آنلاین '
-    if student_learn_type == 2:
-        learn_type_to_show = 'حضوری'
-
-
-
-    student_category = student_selected.category
-    student_syllabus = student_selected.syllabus
-    student_price_range = student_selected.price_range
-    # student_mobile_number = student_selected.mobile_number
-    if student_selected.learn_type < 2:
-        teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
-                                          price_range=student_price_range,is_confirmed=True)
-    else:
-        teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
-                                          price_range=student_price_range, city=student_city,
-                                          learn_type=student_learn_type,is_confirmed=True)
-
-    teachers = Paginator(teachers, 15)
-    page_number = request.GET.get('page')
-    page_obj = teachers.get_page(page_number)
-    context = {
-        'teachers': teachers,
-        'page_obj': page_obj,
-        'student_category': student_category,
-        'learn_type_to_show': learn_type_to_show,
-        'student_price_range': student_price_range,
-        'student_syllabus': student_syllabus,
-        'city_to_show': city_to_show,
-    }
-    return render(request, 'teachme/teacher_list.html', context)
+# def teacher_list(request):
+#     learn_type_to_show =None
+#     user_select = MyUser.objects.get(id=request.user.pk)
+#     student_selected = StudentSubmit.objects.get(user=user_select)
+#     student_city = student_selected.city
+#     city_to_show = student_selected.city.city_name
+#     student_learn_type = student_selected.learn_type
+#
+#     if student_learn_type == 0:
+#         learn_type_to_show = 'آنلاین یا حضوری'
+#     if student_learn_type == 1:
+#         learn_type_to_show = 'آنلاین '
+#     if student_learn_type == 2:
+#         learn_type_to_show = 'حضوری'
+#
+#
+#
+#     student_category = student_selected.category
+#     student_syllabus = student_selected.syllabus
+#     student_price_range = student_selected.price_range
+#     # student_mobile_number = student_selected.mobile_number
+#     if student_selected.learn_type < 2:
+#         teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
+#                                           price_range=student_price_range,is_confirmed=True)
+#     else:
+#         teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
+#                                           price_range=student_price_range, city=student_city,
+#                                           learn_type=student_learn_type,is_confirmed=True)
+#
+#     teachers = Paginator(teachers, 15)
+#     page_number = request.GET.get('page')
+#     page_obj = teachers.get_page(page_number)
+#     context = {
+#         'teachers': teachers,
+#         'page_obj': page_obj,
+#         'student_category': student_category,
+#         'learn_type_to_show': learn_type_to_show,
+#         'student_price_range': student_price_range,
+#         'student_syllabus': student_syllabus,
+#         'city_to_show': city_to_show,
+#     }
+#     return render(request, 'teachme/teacher_list.html', context)
 
 @login_required
 def teacher_detail(request, teacher_id):

@@ -13,6 +13,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from accounts.forms import MyUserCreate, StudentEditForm, TeacherEditForm, StudentSubmitForm
 from accounts.models import LearnCategory, Syllabus, PriceRange, Student, Teacher, City, MyUser
+from accounts.validators import is_valid_iran_code
 
 
 def base_view(request):
@@ -147,67 +148,7 @@ def profile_edit(request):
     #     return HttpResponseRedirect(reverse('accounts:student_edit'))
     else:
         return HttpResponseRedirect(reverse('accounts:student_edit'))
-        # get_user_pk = request.user.pk
-        # MyUser.objects.get(pk=get_user_pk).delete()
-        # return HttpResponse("لطفا دوباره بصورت معلم یا دانش آموز ثبت نام کنید")
 
-
-#
-# def teacher_list(request):
-#     learn_type_to_show =None
-#     user_select = MyUser.objects.get(id=request.user.pk)
-#     student_selected = Student.objects.get(user=user_select)
-#     student_city = student_selected.city
-#     city_to_show = student_selected.city.city_name
-#     student_learn_type = student_selected.learn_type
-#
-#     if student_learn_type == 0:
-#         learn_type_to_show = 'آنلاین یا حضوری'
-#     if student_learn_type == 1:
-#         learn_type_to_show = 'آنلاین '
-#     if student_learn_type == 2:
-#         learn_type_to_show = 'حضوری'
-#
-#
-#
-#     student_category = student_selected.category
-#     student_syllabus = student_selected.syllabus
-#     student_price_range = student_selected.price_range
-#     # student_mobile_number = student_selected.mobile_number
-#     if student_selected.learn_type < 2:
-#         teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
-#                                           price_range=student_price_range,is_confirmed=True)
-#     else:
-#         teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
-#                                           price_range=student_price_range, city=student_city,
-#                                           learn_type=student_learn_type,is_confirmed=True)
-#
-#     teachers = Paginator(teachers, 15)
-#     page_number = request.GET.get('page')
-#     page_obj = teachers.get_page(page_number)
-#     context = {
-#         'teachers': teachers,
-#         'page_obj': page_obj,
-#         'student_category': student_category,
-#         'learn_type_to_show': learn_type_to_show,
-#         'student_price_range': student_price_range,
-#         'student_syllabus': student_syllabus,
-#         'city_to_show': city_to_show,
-#     }
-#     return render(request, 'teachme/teacher_list.html', context)
-
-
-
-
-
-
-
-
-
-
-
-
-# @login_required
 @csrf_exempt
 def student_edit(request):
     if request.is_ajax():
@@ -267,59 +208,14 @@ def student_edit(request):
                     }
             return render(request, 'teachme/teacher_list.html', context)
 
-        if request.user.is_authenticated and hasattr(request.user, 'student'):
-            pass
-        #     student_profile = Student.objects.get(user_id=request.user.id)
-        #     student_edit_form = StudentEditForm(instance=student_profile)
-        #     error = str(request.user)+" "+'خوش آمدید'
-        #     if request.method == 'POST':
-        #         try:
-        #             student_edited = StudentEditForm(request.POST)
-        #             student_edited = student_edited.save(commit=False)
-        #             student_edited.user = request.user
-        #             student_edited.pk = student_profile.id
-        #             student_edited.save()
-        #             student_profile = request.user.student
-        #             error = "مشخصات جستجوی شما با موفقیت تغییر یافت "
-        #         except :
-        #             error = 'ورودی های خود را کنترل کنید'
-        #             raise ValidationError( 'ورودی های خود را کنترل کنید')
-        #     if hasattr(request.user, 'teacher'):
-        #         get_user_pk = request.user.pk
-        #         return HttpResponse("شما به عنوان معلم ثبت نام کرده اید نه دانش آموز ")
-        # if  request.user.is_authenticated:
-        #     return HttpResponseRedirect(reverse('accounts:student_submit'))
-        #     try:
-        #         student_edit_form = StudentEditForm(request.POST)
-        #         if student_edit_form.is_valid():
-        #             student = student_edit_form.save(commit=False)
-        #             student.user = request.user
-        #             student.save()
-        #             error = "به عنوان دانش آموز در سیستم ثبت شدید"
-        #             student_profile = request.user.student
-        #     except:
-        #         student_profile = request.POST
-        #         error = "لطفا ورودی های خود را کنترل کنید"
-        #
-
-
-  # techer list codes
-
-
-
-
-# end of teacher list codes
         context = {
             'student_profile' : student_profile,
             'student_edit_form': student_edit_form,
             'error': error,
             'cities': cities,
             'price_ranges' : price_ranges,
-            # 'learn_types' : learn_types,
             'categories' : categories,
             'syllabuses' : syllabuses,
-            # 'first_name' : first_name,
-            # 'last_name' : last_name,
             }
 
         return render(request, 'accounts/student_edit.html', context)
@@ -327,14 +223,17 @@ def student_edit(request):
 def student_submit(request):
     if request.method == 'POST':
         student_submit_form = StudentSubmitForm(request.POST)
-        if student_submit_form.is_valid:
-            student_submit = student_submit_form.save(commit=False)
-            student_submit.user = request.user
-            student_submit.save()
-            message = 'از انتخاب شما متشکریم'
-            return HttpResponseRedirect(reverse('accounts:student_edit'))
+        national_id_entered = student_submit_form.data['national_id']
+        if is_valid_iran_code(national_id_entered):
+
+            if student_submit_form.is_valid:
+                student_submit = student_submit_form.save(commit=False)
+                student_submit.user = request.user
+                student_submit.save()
+
+                return HttpResponseRedirect(reverse('accounts:student_edit'))
         else:
-            message = " خطا !  لطفا ورودی ها را کنترل کنید و دوباره سعی کنید"
+            message = " شماره ملی معتبر نیست"
     else:
         student_submit_form = StudentSubmitForm()
         message = None

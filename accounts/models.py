@@ -6,7 +6,7 @@ from django.core.validators import FileExtensionValidator, EmailValidator, valid
 from django.db import models
 
 
-from accounts.validators import validate_video_size, validate_image_size, mobile_validate
+from accounts.validators import validate_video_size, validate_image_size
 
 
 class MyUser(AbstractUser):
@@ -97,4 +97,4 @@ class StudentSubmit(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE,blank=True)
     first_name = models.CharField(verbose_name='نام', max_length=30)
     last_name = models.CharField(verbose_name='نام خانوادگی', max_length=30)
-    national_id = models.PositiveIntegerField(verbose_name='شماره ملی',unique=True)
+    national_id = models.CharField(verbose_name='شماره ملی',unique=True,max_length=10,)

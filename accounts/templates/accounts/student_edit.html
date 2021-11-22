@@ -9,8 +9,8 @@
                 <strong>{% if error %}تنظیمات جستجوی استاد {% else %}تنظیمات جستجوی استاد{% endif %}</strong></h3>
         </div>
         <div class="row justify-content-center mt-4">
-            <div class="col-lg-8 mx-auto mbr-form" data-form-type="">
-                <form action="" method="POST" class="mbr-form form-with-styler mx-auto" >
+            <div class="col-lg-8 mx-auto mbr-form " data-form-type="">
+                <form action="" method="POST" class="mbr-form form-with-styler mx-auto text-center" >
                 {% csrf_token %}
 <!--                    <input type="hidden" name="email" data-form-email="true" value="1234">-->
 <!--                       -->
@@ -18,11 +18,10 @@
                     <div class="">
                         <div  data-form-alert="" class="alert text-center {% if  "successfully" in error  %} alert-success {% else %}alert-danger{% endif %} col-12 mbr-fonts-style align-center mb-0
                          {% if  error  %} d-block {% else %}d-none {% endif %}d-none ">{{ error }}</div>
-                        <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12">Oops...! some
-                            problem!</div>
+
                     </div>
-                    <div class="dragArea row">
-                        <div class="col-lg-6 col-md-12 col-sm-12 form-group text-center" data-for="category">
+
+                        <div class="col-lg-6 col-md-12 col-sm-12 form-group " data-for="category">
                         <label for="category-form7-v">زیر موضوع تدریس :</label>
                             <select    name="category" onchange="show_confirm_key()" data-form-field="category" class="form-control"  id="category-form7-v">
 
@@ -33,10 +32,8 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="col-lg-6 col-md-12 col-sm-12 form-group text-center" data-for="syllabus">
+                        <div class="col-lg-6 col-md-12 col-sm-12 form-group " data-for="syllabus">
                             <label for="syll">موضوع تدریس :</label>
-
-
 
                           <select  onchange="show_confirm_key() "  name="syllabus" data-form-field="syllabus" class="form-control"  id="syll">
 {#
@@ -47,17 +44,8 @@
                                 {% endfor %}
                          </select>
                         </div>
-{#                        <div class="col-lg-6 col-md-12 col-sm-12 form-group" data-for="language">#}
-{#                        <label for="language-form7-v" class="label">Language:</label>#}
-{#                            <select  name="language" onchange="show_confirm_key()" data-form-field="language" class="form-control"  id="language-form7-v">#}
-{#                                {% for language in languages %}#}
-{#                                  <option value="{{ language.language }}"#}
-{#                                          {% if  student_profile.language.language == language.language %}selected{% endif %}#}
-{#                                  >{{ language.language_name }}</option>#}
-{#                                {% endfor %}#}
-{#                            </select>#}
-{#                        </div>#}
-                        <div class="col-lg-6 col-md-12 col-sm-12 form-group text-center" data-for="price_range">
+
+                        <div class="col-lg-6 col-md-12 col-sm-12 form-group " data-for="price_range">
                             <label for="price-form7-v">محدوده قیمت :</label>
                             <select  name="price_range" onchange="show_confirm_key()" data-form-field="price" class="form-control" id="price-form7-v">
 
@@ -68,7 +56,7 @@
                                 {% endfor %}
                                 </select>
                         </div>
-                         <div class="col-lg-6 col-md-6 col-sm-12 form-group text-center" data-for="learn_type">
+                         <div class="col-lg-6 col-md-6 col-sm-12 form-group " data-for="learn_type">
                             <label for="learn_type-form7-v">نوع آموزش :</label><br>
                             <select  name="learn_type" onchange="show_confirm_key()" data-form-field="experience" class="form-control"  id="learn_type-form7-v">
                                     <option value=0 selected>آنلاین یا حضوری</option>
@@ -78,7 +66,7 @@
 
                     </div>
 
-                        <div class="col-lg-6 col-md-6 col-sm-12 form-group text-center" data-for="city" id="city_div">
+                        <div class="col-lg-6 col-md-6 col-sm-12 form-group " data-for="city" id="city_div">
                             <label for="city-form7-v">شهر:</label>
                             <select  name="city" onchange="show_confirm_key()" data-form-field="city" class="form-control" id="city-form7-v">
 
@@ -90,12 +78,9 @@
                                 </select>
                         </div><br>
 
-                        <div class="col-lg-6 col-md-6 col-sm-12  justify-content-center" >
-                          <input  id="confirm_edit_key" type="submit" class="btn btn-dark " value="تایید تغییرات">
 
-{#                         <a type="button" id="teacher_search_key" class="btn btn-danger  " href="{% url 'teachme:teacher_list' %}">پیدا کردن استاد</a>#}
+                          <input  id="confirm_edit_key" type="submit" class="btn btn-dark mr-3 " value="تایید تغییرات">
 
-                        </div>
                 </form>
             </div>
 
