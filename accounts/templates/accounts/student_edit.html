@@ -37,13 +37,7 @@
                             <label for="syll">موضوع تدریس :</label>
 
 
-{#                                {% if syllabuses %}#}
-{#                                    {% for syllabus in syllabuses %}#}
-{##}
-{#                                    <option value="{{ syllabus.syllabus}}"  >{{ syllabus.syllabus_name }}</option>#}
-{#                                    {% endfor %}#}
-{##}
-{#                            {% endif %}#}
+
                           <select  onchange="show_confirm_key() "  name="syllabus" data-form-field="syllabus" class="form-control"  id="syll">
 {#
                             {% for syllabus in syllabuses %}
@@ -94,12 +88,12 @@
                                   >{{ city.city_name }}</option>
                                 {% endfor %}
                                 </select>
-                        </div>
+                        </div><br>
 
-                        <div class="col-lg-6 col-md-12 col-sm-12 form-group " >
-                          <input  id="confirm_edit_key" type="submit" class="btn btn-dark" value="تایید تغییرات">
+                        <div class="col-lg-6 col-md-6 col-sm-12  justify-content-center" >
+                          <input  id="confirm_edit_key" type="submit" class="btn btn-dark " value="تایید تغییرات">
 
-                         <a type="button" id="teacher_search_key" class="btn btn-danger  " href="{% url 'teachme:teacher_list' %}">پیدا کردن استاد</a>
+{#                         <a type="button" id="teacher_search_key" class="btn btn-danger  " href="{% url 'teachme:teacher_list' %}">پیدا کردن استاد</a>#}
 
                         </div>
                 </form>

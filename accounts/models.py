@@ -92,3 +92,9 @@ class Student(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class StudentSubmit(models.Model):
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE,blank=True)
+    first_name = models.CharField(verbose_name='نام', max_length=30)
+    last_name = models.CharField(verbose_name='نام خانوادگی', max_length=30)
+    national_id = models.PositiveIntegerField(verbose_name='شماره ملی',unique=True)

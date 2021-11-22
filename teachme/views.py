@@ -8,7 +8,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.urls import reverse
 
-from accounts.models import Student, Teacher, MyUser
+from accounts.models import  Teacher, MyUser, StudentSubmit
 from teachme.send_sms import *
 from yas7 import settings
 
@@ -20,7 +20,7 @@ from yas7 import settings
 def teacher_list(request):
     learn_type_to_show =None
     user_select = MyUser.objects.get(id=request.user.pk)
-    student_selected = Student.objects.get(user=user_select)
+    student_selected = StudentSubmit.objects.get(user=user_select)
     student_city = student_selected.city
     city_to_show = student_selected.city.city_name
     student_learn_type = student_selected.learn_type
@@ -62,8 +62,16 @@ def teacher_list(request):
 
 @login_required
 def teacher_detail(request, teacher_id):
-    student_user_id = request.user.id
-    teacher_selected = Teacher.objects.get(pk=teacher_id)
+    teacher_selected = None
+    student_user_id = None
+    if hasattr(request.user, 'studentsubmit') ==False and  hasattr(request.user, 'teacher') == False:
+        return HttpResponseRedirect(reverse('accounts:student_submit'))
+
+    if hasattr(request.user, 'studentsubmit'):
+        student_user_id = request.user.id
+        teacher_selected = Teacher.objects.get(pk=teacher_id)
+    if hasattr(request.user, 'teacher'):
+        return HttpResponseRedirect(reverse('teachme:message_viewer',args=['شما به عنوان معلم ثبت شده اید برای درخواست استاد دوباره با شماره تلفن و ایمیل جدید به عنوان دانش آموز ثبت نام کنید']))
 
     context = {
         'teacher_selected': teacher_selected,
@@ -80,7 +88,7 @@ def teacher_request(request):
     teacher_requested_user_params = MyUser.objects.get(id=teacher_requested_user_id)
     teacher_phone = teacher_requested_user_params.phone_number
     student_user_id = request.POST.get('student_user_id')
-    student = Student.objects.get(user_id=student_user_id)
+    student = StudentSubmit.objects.get(user_id=student_user_id)
     student_user_params = MyUser.objects.get(id=student_user_id)
     student_phone = student_user_params.phone_number
     clerk_sms_token = 'id:{},uid{}'.format(teacher_id, teacher_requested_user_id)

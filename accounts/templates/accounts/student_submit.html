@@ -1,0 +1,85 @@
+{% extends 'accounts/_base.html' %}
+{% load static %}
+{% block contents %}
+
+<div class="row ">
+    <div class="container">
+
+
+
+
+             <div class="mbr-section-head col-lg-6  col-md-12 col-sm-6 pl-5 content justify-content-center" id="get_user_info">
+
+
+               <form method="post" action="" style="padding-left: 100px">
+                {% csrf_token %}
+                    <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 text-primary">
+                    <strong> ثبت نام آموزنده</strong></h4>
+                    <br>
+                <div  data-form-alert="" class="alert text-center ">{{ student_submit_form.errors }}
+                </div>
+
+                    {{ student_submit_form.as_p }}
+
+                    <input  type="submit" class="btn btn-primary col-4  " value="ثبت"/>
+
+                </form>
+            </div>
+
+
+
+
+{% endblock %}
+{% block footer %}
+    <script src="{% static "accounts/assets/web/assets/jquery/jquery.min.js" %}"></script>
+
+
+  <script type="text/javascript"  >
+
+      function ajax_syllabus(){
+       $("#syll").empty();
+
+          $.ajax({
+              url: "{% url 'accounts:student_edit' %}",
+              contentType: "json",
+              data: {
+              category: $('#category-form7-v').val(),
+              },
+              success: function(result) {
+                  var i;
+                  for (i = 0; i<result.length; i++) {
+                          optText = result[i]['syllabus_name'];
+                          optValue = result[i]['syllabus'];
+                          $('#syll').append(`<option value="${optValue}">${optText}</option>`);
+
+                             if ( optValue=="{{ student_profile.syllabus }}"){
+                                 $('#syll').val(optValue);
+                             }
+                  }
+          }
+          });
+
+      }
+    $(document).ready(function(){
+        {% if error %}
+        $('#teacher_search_key').css('display','block');
+        $('#confirm_edit_key').css('display','none');
+        {% else %}
+        $('#teacher_search_key').css('display','none');
+        $('#confirm_edit_key').css('display','block');
+        {% endif %}
+       {#$('#syll').empty();#}
+       ajax_syllabus()
+       $('#category-form7-v').change(function () {
+           $('#syll').empty();
+           ajax_syllabus()
+        })
+    })
+     {# #}
+      {% if student_profile.learn_type %}
+        $("#learn_type-form7-v").val({{ student_profile.learn_type }})
+     {% endif %}
+
+  </script>
+ <script src="{% static 'accounts/assets/accounts.js' %}"></script>
+{% endblock %}

@@ -63,9 +63,10 @@
                         </tr>
                    {% endfor %}
                 </table><br>
-            <a href="{% url 'accounts:student_edit' %}"> تغییر پارامترهای جستجو>></a>
+
 
     </div>
+    <div class="text-center pl-3"> <button class="btn btn-dark " onclick="history.back()" > بازگشت >></button></div><br>
     <div class="pagination fixed-bottom justify-content-center alert-info" >
     <span class="step-links">
         {% if page_obj.has_previous %}

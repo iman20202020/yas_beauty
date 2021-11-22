@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm,  UserChangeForm
 
-from accounts.models import Student, Teacher, MyUser
+from accounts.models import Student, Teacher, MyUser, StudentSubmit
 
 
 class MyUserCreate(UserCreationForm):
@@ -37,11 +37,10 @@ class StudentEditForm(forms.ModelForm):
         model = Student
         exclude = ['user','email']
 
-#
-# class TeacherEditForm(UserChangeForm):
-#     class Meta(UserChangeForm.Meta):
-#         model = Teacher
-#         exclude = ['user','email']
+class StudentSubmitForm(forms.ModelForm):
+    class Meta:
+        model = StudentSubmit
+        exclude = ['user','email']
 
 
 class TeacherEditForm(forms.ModelForm):
