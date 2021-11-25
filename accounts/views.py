@@ -303,15 +303,15 @@ def teacher_edit(request):
             elif hasattr(request.user, 'studentsubmit'):
                 return HttpResponse("مشخصات شما به عنوان دانش آموز ثبت شده لطفا با نام کاربری دیگری به عنوان معلم ثبت نام کنید ")
             if request.method == 'POST' and hasattr(request.user, 'teacher') == False:
-
-                    teacher_edit_form = TeacherEditForm(request.POST, request.FILES)
+                teacher_edit_form = TeacherEditForm(request.POST, request.FILES)
+                national_id_entered = teacher_edit_form.data['national_id']
+                if is_valid_iran_code(national_id_entered):
                     if teacher_edit_form.is_valid():
                         teacher = teacher_edit_form.save(commit=False)
                         teacher.user = request.user
                         teacher.save()
                         error = "مشخصات شما ثبت شد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
                         teacher_profile = request.user
-
                         clerk_phone = '09361164819'
                         teacher_user_id = request.user.id
                         teacher_requested = MyUser.objects.get(id=request.user.id)
@@ -323,6 +323,8 @@ def teacher_edit(request):
                         send_sms_teacher_edit(clerk_phone, sms_token, sms_token2, sms_token3)
                     else:
                         error = 'ورودی ها دقیق نیست لطفا دوباره سعی کنید'
+                else:
+                    error = " شماره ملی معتبر نیست"
 
             context = {
                 'teacher_profile' : teacher_profile,
@@ -412,6 +414,7 @@ def pass_reset(request):
     user_verified = None
     otp_code = None
     mobile_number = None
+    email = None
     if request.method == 'POST':
         if 'input_mobile' in request.POST:
             mobile_number = request.POST.get('input_mobile')
@@ -425,8 +428,8 @@ def pass_reset(request):
         if 'veri_code_input' in request.POST and 'mobile_number' in request.POST:
             otp_code = request.POST.get('otp_code_generated')
             veri_code_input = request.POST.get('veri_code_input')
+            mobile_number = request.POST.get('mobile_number')
             if otp_code == veri_code_input:
-                mobile_number = request.POST.get('mobile_number')
                 user =MyUser.objects.filter(phone_number=mobile_number,)
                 if not user:
                     error = 'چنین کاربری وجود ندارد لطفا دوباره شماره خود را وارد کنید'

@@ -29,8 +29,9 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group text-center" data-for="image">
                      <label for="degree_image">عکس خود را اینجا بارگذاری کنید :</label>
-                     <input name="image" id="image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'image_preview')" class="file-upload">
-                     <img id="image_preview" src="{% static teacher_profile.image %} " class="img-rounded col-lg-6 col-md-6 col-sm-12" alt="عکس قابل نمایش نیست">
+                     <input name="image" id="image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'image_preview')" class="file-upload"
+                            {% if teacher_profile.image %}{% else %}required{% endif %}>
+                     <img id="image_preview" src="{% static teacher_profile.image %} " class="img-rounded col-lg-6 col-md-6 col-sm-12"  >
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group" data-for="first_name">
                     <input type="text"  name="first_name" onchange="show_confirm_key()" placeholder="نام*"
@@ -94,8 +95,9 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group text-right" data-for="qualification">
                     <label for="qualification-form7-v" class="label"> خود را برای مخاطب شرح دهید*(حداکثر120 حرف) :</label>
-                    <textarea   name="qualification" onchange="show_confirm_key()"
-                        class="form-control" id="qualification-form7-v"  rows="5" maxlength="120" onchange="show_confirm_key()"  >{% if teacher_profile.qualification %}{{ teacher_profile.qualification }}{% endif %}
+                   <textarea   name="qualification" onchange="show_confirm_key()"
+                        class="form-control" id="qualification-form7-v"  rows="5" maxlength="120" onchange="show_confirm_key()" required >
+                       {% if teacher_profile.qualification %}{{ teacher_profile.qualification }}{% endif %}
                     </textarea>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="learn_type">
@@ -118,18 +120,19 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="national_card_image">
                     <label for="national_card_image">عکس کارت ملی* :</label>
-                    <input name="national_card_image" id="national_card_image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'national_card_image_preview')" class="file-upload">
-                    <img id="national_card_image_preview" src="{% static teacher_profile.national_card_image %}" class="img-rounded col-lg-6 col-md-6 col-sm-12 " >
+                    <input name="national_card_image" id="national_card_image" type="file" onchange="show_confirm_key()"
+                           onfocus="image_upload_preview(this.id,'national_card_image_preview')" class="file-upload"  {% if teacher_profile.national_card_image %}{% else %}required{% endif %}>
+                    <img id="national_card_image_preview" src="{% static teacher_profile.national_card_image %}" class="img-rounded col-lg-6 col-md-6 col-sm-12 "  >
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image">
-                    <label for="degree_image">عکس مدرک تحصیلی*  :</label>
+                    <label for="degree_image">عکس مدرک تحصیلی(اختیاری)  :</label>
                     <input name="degree_image" id="degree_image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'degree_image_preview')" class="file-upload"
                         {% if teacher_profile.degree_image %} {% else %} {% endif %}>
                     <img id="degree_image_preview" src="{% static teacher_profile.degree_image %} " class="img-rounded col-lg-6 col-md-6 col-sm-12"  >
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12  text-right" data-for="sample_video">
                     <label for="sample_video">ویدیوی نمونه تدریس* :</label>
-                    <input name="sample_video" id="sample_video" type="file" onchange="show_confirm_key() " class="-file-video">
+                    <input name="sample_video" id="sample_video" type="file" onchange="show_confirm_key() " class="-file-video"  {% if teacher_profile.sample_video %}{% else %}required{% endif %}>
                         {% if teacher_profile.sample_video %}
                             <video  src="{% static teacher_profile.sample_video %}" class="col-lg-6 col-md-12 col-sm-12 "controls></video>
                         {% endif %}
@@ -139,7 +142,7 @@
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group  text-center" >
-                    <input  id="confirm_edit_key" type="submit" onclick="showSpinner()" class="btn btn-dark btn-lg" value="تایید و ثبت ">
+                    <input  id="confirm_edit_key" type="submit" onclick="showSpinner()" class="btn btn-primary  form-control" value="تایید و ثبت ">
                 </div>
             </form>
 

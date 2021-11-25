@@ -20,7 +20,7 @@
                  <form action="{% if reset_pass_request %}{% url 'accounts:pass_reset_confirmed' %}{% else %}{% url 'accounts:user_create' %}{% endif %}" style="padding-left: 100px" method="post" >
                      {% csrf_token %}
                      {{ user_create_form.as_p }}
-                     <input  type="submit" class="btn btn-primary col-4 " value="ثبت"/>
+                     <input  type="submit" class="btn btn-primary  col-6 " value="ثبت"/>
                  </form>
              </div>
         {% endif %}

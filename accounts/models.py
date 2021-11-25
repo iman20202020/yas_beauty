@@ -66,7 +66,7 @@ class Teacher(models.Model):
     image = models.ImageField(upload_to='images/', blank=True,validators=[validate_image_size])
     national_card_image = models.ImageField(upload_to='images/',blank=True,validators=[validate_image_size],
                                             help_text='عکس خود را اینجا بارگذاری کنید')
-    degree_image = models.ImageField(upload_to="images/", validators=[validate_image_size],
+    degree_image = models.ImageField(upload_to="images/", validators=[validate_image_size],blank=True,
                                      help_text='عکس مدرک تحصیلی خود را بارگذاری کنید')
     qualification = models.CharField(max_length=120,blank=True, help_text='مدرک تحصیلی و گرایش تحصیلی خود را ذکر کنید')
     experience = models.CharField(max_length=3, default='3', blank=True)
@@ -98,3 +98,23 @@ class StudentSubmit(models.Model):
     first_name = models.CharField(verbose_name='نام', max_length=30)
     last_name = models.CharField(verbose_name='نام خانوادگی', max_length=30)
     national_id = models.CharField(verbose_name='شماره ملی',unique=True,max_length=10,)
+    def __str__(self):
+        return self.last_name
+
+class RequestClass(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE,blank=True)
+    student = models.ForeignKey(StudentSubmit, on_delete=models.CASCADE,blank=True)
+    start_date = models.DateField(auto_now_add=True)
+    is_confirmed = models.BooleanField(default=False)
+    is_started = models.BooleanField(default=False)
+    number_of_sessions = models.PositiveIntegerField(blank=True,null=True)
+    price = models.PositiveIntegerField(blank=True,null=True)
+    class_type_choices = (
+        ('حضوری', 'حضوری'),
+        ('آنلاین', 'آنلاین'),
+        ('حضوری و آنلاین', 'حضوری و آنلاین'),
+                       )
+    type_of_class = models.CharField(max_length=20,choices=class_type_choices,default='حضوری')
+
+    def __str__(self):
+        return self.teacher.last_name

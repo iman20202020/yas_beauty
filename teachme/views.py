@@ -97,13 +97,6 @@ def teacher_request(request):
     send_sms_stu(student_phone,teacher_requested.last_name)
     send_sms_clerk(clerk_phone,clerk_sms_token,clerk_sms_token2,clerk_sms_token3)
 
-    # send_mail(
-    #     'test from django',
-    #     'Here is the message.',
-    #     settings.EMAIL_HOST_USER,
-    #     ['aliamiri@gmail.com'],
-    #     # fail_silently=False,
-    # )
 
     return HttpResponseRedirect(reverse('teachme:message_viewer',args=['درخواست شما ثبت شد بزودی جهت هماهنگی با شما تماس می گیریم'] ))
 
