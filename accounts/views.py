@@ -267,33 +267,39 @@ def teacher_edit(request):
                 error = str(request.user)+" "+'خوش آمدید'
                 if request.method == 'POST':
                     teacher_edit_form = TeacherEditForm(request.POST, request.FILES,instance=teacher_profile)
-                    if teacher_edit_form.is_valid():
-                        teacher_edit_form.user = request.user
-                        teacher_edit_form.pk = teacher_profile.id
-                        teacher = teacher_edit_form.save(commit=False)
-                        teacher.is_confirmed = False
-                        teacher.save()
-                        error = "مشخصات شما با موفقیت تغییر کرد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
-                        clerk_phone = '09361164819'
-                        teacher_user_id = request.user.id
-                        teacher_requested = MyUser.objects.get(id=request.user.id)
-                        teacher_email = request.user.username
-                        teacher_phone = teacher_requested.phone_number
-                        sms_token = 'user_id:{},name:{}'.format(teacher_user_id, teacher.last_name)
-                        sms_token2 = teacher_phone
-                        sms_token3 = teacher_email
-                        send_sms_teacher_edit(clerk_phone,sms_token, sms_token2,sms_token3)
-                        # if os.path.isfile(teacher_profile.sample_video.path) :
-                        #     os.remove(teacher_profile.sample_video.path)
-                        # if os.path.isfile(teacher_profile.image.path) :
-                        #     os.remove(teacher_profile.image.path)
-                        # if os.path.isfile(teacher_profile.degree_image.path):
-                        #     os.remove(teacher_profile.degree_image.path)
-                        # if os.path.isfile(teacher_profile.national_card_image.path) :
-                        #     os.remove(teacher_profile.national_card_image.path)
 
-                    else :
-                         error = " خطا !  لطفا ورودی ها را کنترل کنید و دوباره سعی کنید"
+                    national_id_entered = teacher_edit_form.data['national_id']
+                    if is_valid_iran_code(national_id_entered):
+
+                        if teacher_edit_form.is_valid():
+                            teacher_edit_form.user = request.user
+                            teacher_edit_form.pk = teacher_profile.id
+                            teacher = teacher_edit_form.save(commit=False)
+                            teacher.is_confirmed = False
+                            teacher.save()
+                            error = "مشخصات شما با موفقیت تغییر کرد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
+                            clerk_phone = '09361164819'
+                            teacher_user_id = request.user.id
+                            teacher_requested = MyUser.objects.get(id=request.user.id)
+                            teacher_email = request.user.username
+                            teacher_phone = teacher_requested.phone_number
+                            sms_token = 'user_id:{},name:{}'.format(teacher_user_id, teacher.last_name)
+                            sms_token2 = teacher_phone
+                            sms_token3 = teacher_email
+                            send_sms_teacher_edit(clerk_phone,sms_token, sms_token2,sms_token3)
+                            # if os.path.isfile(teacher_profile.sample_video.path) :
+                            #     os.remove(teacher_profile.sample_video.path)
+                            # if os.path.isfile(teacher_profile.image.path) :
+                            #     os.remove(teacher_profile.image.path)
+                            # if os.path.isfile(teacher_profile.degree_image.path):
+                            #     os.remove(teacher_profile.degree_image.path)
+                            # if os.path.isfile(teacher_profile.national_card_image.path) :
+                            #     os.remove(teacher_profile.national_card_image.path)
+
+                        else :
+                             error = " خطا !  لطفا ورودی ها را کنترل کنید و دوباره سعی کنید"
+                    else:
+                        error = " شماره ملی معتبر نیست"
             elif hasattr(request.user, 'studentsubmit'):
                 return HttpResponse("مشخصات شما به عنوان دانش آموز ثبت شده لطفا با نام کاربری دیگری به عنوان معلم ثبت نام کنید ")
             if request.method == 'POST' and hasattr(request.user, 'teacher') == False:
@@ -373,12 +379,11 @@ def user_verify(request):
         if 'veri_code_input' in request.POST and 'mobile_number'in request.POST:
             otp_code = request.POST.get('otp_code_generated')
             veri_code_input = request.POST.get('veri_code_input')
+            mobile_number = request.POST.get('mobile_number')
             if otp_code == veri_code_input:
-                mobile_number = request.POST.get('mobile_number')
                 user_verified = 'code_checked'
                 user_create_form = MyUserCreate()
                 user_create_form.fields['phone_number'].initial = mobile_number
-                # user_create_form.phone_number = mobile_number
                 user_saved = None
                 context = {
                     'user_saved':user_saved,

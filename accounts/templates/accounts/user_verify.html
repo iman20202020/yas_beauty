@@ -10,6 +10,8 @@
             <div class="mbr-section-head ">
                 <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 "><strong>خوش آمدید</strong></h4>
             </div><br>
+
+
             <div id="send_mobile_div" {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: none" {% endif %}>
                 <strong>لطفا شماره همراه خود را وارد کنید</strong><br><br>
                 <form action="" class="" method="post" autocomplete="off">
@@ -19,27 +21,35 @@
                     <input type="submit"  id="input_mobile_submit" class="btn btn-dark " value="ثبت"  disabled>
                 </form>
             </div>
-            <div id="send_otp_div"   {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: block"{% else %}style="display: none" {% endif %}>
+
+            <div id="send_otp_div"   {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: block"
+                 {% else %}style="display: none" {% endif %} >
                 <strong>کد تایید به شماره همراه شما ارسال شد لطفا آنرا وارد کنید</strong><br><br>
-                <form action="" class="" method="post" >
+                <form action="" class="" method="post" class="form-group text-center" >
                     {% csrf_token %}
                     <label for="veri_code_input"></label>
-                    <input type="text" id="veri_code_input" name="veri_code_input" autofocus>
+                    <input type="text" id="veri_code_input" name="veri_code_input" autofocus placeholder="_   _   _   _" class="text-center" onkeyup="check_length()" >
                     <input type="hidden" id="otp_code_generated" name="otp_code_generated" value="{{ otp_code }}">
                     <input type="hidden" id="mobile_number" name="mobile_number" value="{{ mobile_number }}">
-                    <input type="submit" class="btn btn-dark"  {% if user_verified == 'code_sent'%}value="ثبت کد"{% else %}disabled{% endif %}>
+                    <input type="submit"  id="code_register" class="btn btn-dark" value="ثبت کد" disabled >
                 </form>
                 <br>
-                <div id="countdown" class="inline-group"></div>
-                <a id="resend_btn"   href="{% url 'accounts:user_verify' %}" style="display: none" >ارسال مجدد</a>
-            </div>
+
+
+
+                </div>
 
             <div id="resend_otp_div" {% if user_verified == 'code_check_error' %} style="display: block"{% else %}style="display: none" {% endif %} >
-                <strong class="text-danger"> کد وارد شده صحیح نیست</strong><br>
-                <form method="post">
+                <strong class="text-danger"> کد وارد شده صحیح نیست</strong><br><br>
+                <form method="post" action="">
                     {% csrf_token %}
-                    <input  type="submit" class="btn btn-outline-dark" name="resend_mobile" value="وارد کردن دوباره شماره همراه">
-                </form>
+                    <input type="hidden" id="input_mobile" name="input_mobile" value="{{ mobile_number }}">
+
+                    <input type="submit" id="resend_btn" class=" container" value="ارسال مجدد" style="display: none; width: 150px">
+
+{#                    <input  type="submit" class="btn btn-outline-dark" name="resend_mobile" value="وارد کردن دوباره شماره همراه">#}
+                </form><br>
+            <div id="countdown" class="inline-group"></div>
             </div>
 {{ user_verified }}
 {{ otp_code }}
@@ -48,8 +58,19 @@
     </div>
 </div>
 <script >
+function check_length() {
+
+if($('#veri_code_input').val().length === 4){
+    $('#code_register').removeAttr("disabled")
+}
+else {
+     $('#code_register').prop( "disabled", true )
+}
+}
+
 {#        regex for mobile number iranian validate#}
     function check_number (submit_id,mobile_inputted) {
+
         let num1 = $("#"+mobile_inputted).val();
         const pattern = /(0|\+98)?([ ]|-|[()]){0,2}9[0|1|2|3|4]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/ig;
         if (pattern.test(num1) ) {
@@ -72,6 +93,7 @@ var downloadTimer = setInterval(function(){
   }
   timeleft -= 1;
 }, 1000);
+
 
 </script>
 
