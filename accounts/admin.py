@@ -10,5 +10,17 @@ admin.site.register(Syllabus)
 admin.site.register(PriceRange)
 admin.site.register(LearnCategory)
 admin.site.register(City)
-admin.site.register(MyUser, UserAdmin)
-UserAdmin.fieldsets += ('Custom fields set', {'fields': ('phone_number', )}),
+
+
+class MyUserAdmin(UserAdmin):
+    add_fieldsets = (
+        (None, {
+            'fields': ('username', 'password1', 'password2')
+        }),
+        ('Personal info', {
+            'fields': ('first_name', 'last_name', 'phone_number')
+        }))
+
+
+admin.site.register(MyUser, MyUserAdmin)
+# UserAdmin.fieldsets += ('Custom fields set', {'fields': ('phone_number', )}),

@@ -130,19 +130,19 @@
                         {% if teacher_profile.degree_image %} {% else %} {% endif %}>
                     <img id="degree_image_preview" src="{% static teacher_profile.degree_image %} " class="img-rounded col-lg-6 col-md-6 col-sm-12"  >
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-12  text-right" data-for="sample_video">
+                <div class="col-lg-4 col-md-4 col-sm-12  text-right " data-for="sample_video">
                     <label for="sample_video">ویدیوی نمونه تدریس* :</label>
                     <input name="sample_video" id="sample_video" type="file" onchange="show_confirm_key() " class="-file-video"  {% if teacher_profile.sample_video %}{% else %}required{% endif %}>
                         {% if teacher_profile.sample_video %}
                             <video  src="{% static teacher_profile.sample_video %}" class="col-lg-6 col-md-12 col-sm-12 "controls></video>
                         {% endif %}
-                    <div  id="spinner-box" class="m-5 text-center " style="display: none">
+                    <div  id="spinner-box" class="m-5 text-center  " style="display: none" >
                         <span>در حال بارگذاری . . . </span><br>
                          <div class="spinner-border ml-auto no" role="status" aria-hidden="true"></div>
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group  text-center" >
-                    <input  id="confirm_edit_key" type="submit" onclick="showSpinner()" class="btn btn-primary  form-control" value="تایید و ثبت ">
+                    <input  id="confirm_edit_key" type="submit" onclick="show2()" class="btn btn-primary  form-control" value="تایید و ثبت ">
                 </div>
             </form>
 
@@ -240,29 +240,31 @@
             readURL(this);
         });
     }
-    function showSpinner() {
-        const spinnerBox = document.getElementById('spinner-box')
-        const uploadForm = document.getElementById('teacher_edit_form')
-        {#spinnerBox.css('display','block');#}
-        {#spinnerBox.classList.add('visible')#}
-        spinnerBox.classList.remove('not-visible')
-        $.ajax({
-            type: 'GET',
-            url: uploadForm.action,
-            success:function (response) {
-                setTimeout(()=>{
-                    {#spinnerBox.css('display','none');#}
-                    spinnerBox.classList.remove('visible')
-                spinnerBox.classList.add('not-visible')
-                console.log('response',response);
+    {#function showSpinner() {#}
+    {##}
+    {#    const spinnerBox = document.getElementById('spinner-box')#}
+    {#    const uploadForm = document.getElementById('teacher_edit_form')#}
+    {#    spinnerBox.css('display','block');#}
+    {##}
+        {#spinnerBox.classList.remove('not_visible_element')#}
+        {#spinnerBox.classList.add('visible_element')#}
+    {#    $.ajax({#}
+    {#        type: 'GET',#}
+    {#        url: uploadForm.action,#}
+    {#        success:function (response) {#}
+    {#            setTimeout(()=>{#}
+    {#                spinnerBox.css('display','none');#}
+                    {#spinnerBox.classList.remove('visible_element')#}
+                {#spinnerBox.classList.add('not_visible_element')#}
+    {#            console.log('response',response);#}
                     {#alert()#}
-                },500)
-            },
-            error: function (error) {
-                console.log(error)
-            }
-        })
-    }
+    {#            },500)#}
+    {#        },#}
+    {#        error: function (error) {#}
+    {#            console.log(error)#}
+    {#        }#}
+    {#    })#}
+    {#}#}
 
 
     {% if teacher_profile.experience %}
@@ -272,7 +274,10 @@
     {% if teacher_profile.learn_type %}
         $("#learn_type-form7-v").val({{ teacher_profile.learn_type }})
     {% endif %}
+function show2() {
+    $('#spinner-box').css('display','block')
 
+}
 
 </script>
 

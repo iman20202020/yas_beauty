@@ -26,6 +26,8 @@ class MyUser(AbstractUser):
 class City(models.Model):
     city = models.CharField(primary_key=True, max_length=15, default='تهران', unique=True)
     city_name = models.CharField(max_length=30, )
+    def __str__(self):
+        return self.city_name
 
 
 class LearnCategory(models.Model):
@@ -46,7 +48,7 @@ class Syllabus(models.Model):
 
 
 class PriceRange(models.Model):
-    price_range = models.CharField(primary_key=True, max_length=5,  unique=True)
+    price_range = models.CharField(primary_key=True, max_length=10,  unique=True)
     price_range_name = models.CharField(max_length=30,)
 
     def __str__(self):
@@ -78,7 +80,7 @@ class Teacher(models.Model):
     is_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.last_name
+        return self.last_name+","+self.user.phone_number
 
 class Student(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE, blank=True)
@@ -89,17 +91,13 @@ class Student(models.Model):
     city = models.ForeignKey('City', on_delete=models.CASCADE, default='تهران')
 
 
-
-    def __str__(self):
-        return self.user.username
-
 class StudentSubmit(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE,blank=True)
     first_name = models.CharField(verbose_name='نام', max_length=30)
     last_name = models.CharField(verbose_name='نام خانوادگی', max_length=30)
     national_id = models.CharField(verbose_name='شماره ملی',unique=True,max_length=10,)
     def __str__(self):
-        return self.last_name
+        return self.last_name+','+self.user.phone_number
 
 class RequestClass(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE,blank=True)
@@ -117,4 +115,4 @@ class RequestClass(models.Model):
     type_of_class = models.CharField(max_length=20,choices=class_type_choices,default='حضوری')
 
     def __str__(self):
-        return self.teacher.last_name
+        return "t:"+self.teacher.user.phone_number+" ,s: "+self.student.user.phone_number
