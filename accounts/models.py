@@ -78,6 +78,7 @@ class Teacher(models.Model):
                                     help_text='یک ویدیو حداکثر سه دقیقه از تدریس خود بارگذاری کنید')
     learn_type = models.IntegerField( default=0,blank=True)
     is_confirmed = models.BooleanField(default=False)
+    gender = models.IntegerField(default=1,blank=True)
 
     def __str__(self):
         return self.last_name+","+self.user.phone_number
@@ -95,7 +96,10 @@ class StudentSubmit(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE,blank=True)
     first_name = models.CharField(verbose_name='نام', max_length=30)
     last_name = models.CharField(verbose_name='نام خانوادگی', max_length=30)
-    national_id = models.CharField(verbose_name='شماره ملی',unique=True,max_length=10,)
+    national_id = models.PositiveIntegerField(unique=True)
+
+    gender = models.IntegerField(default=1, blank=True,  verbose_name='جنسیت')
+
     def __str__(self):
         return self.last_name+','+self.user.phone_number
 

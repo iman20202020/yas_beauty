@@ -46,6 +46,13 @@
                     <input type="text" onchange="show_confirm_key()" name="national_id" data-form-field="national_id"
                         class="form-control"  value="{{ teacher_profile.national_id }}" id="national_id-form7-v" required>
                 </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="learn_type">
+                    <label for="learn_type-form7-v"> جنسیت :</label><br>
+                    <select  name="learn_type" onchange="show_confirm_key()" data-form-field="gender" class="form-control"  id="gender-form7-v">
+                        <option value=1>مرد </option>
+                        <option value=2>زن</option>
+                    </select>
+                </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="price_range">
                     <label for="price-form7-v" dir="rtl"> هزینه کلاس :</label>
                     <select  name="price_range"onchange="show_confirm_key()" data-form-field="price" class="form-control"  id="price-form7-v">
@@ -240,31 +247,31 @@
             readURL(this);
         });
     }
-    {#function showSpinner() {#}
-    {##}
-    {#    const spinnerBox = document.getElementById('spinner-box')#}
-    {#    const uploadForm = document.getElementById('teacher_edit_form')#}
-    {#    spinnerBox.css('display','block');#}
-    {##}
+    function showSpinner() {
+
+        const spinnerBox = document.getElementById('spinner-box')
+        const uploadForm = document.getElementById('teacher_edit_form')
+        spinnerBox.css('display','block');
+
         {#spinnerBox.classList.remove('not_visible_element')#}
         {#spinnerBox.classList.add('visible_element')#}
-    {#    $.ajax({#}
-    {#        type: 'GET',#}
-    {#        url: uploadForm.action,#}
-    {#        success:function (response) {#}
-    {#            setTimeout(()=>{#}
-    {#                spinnerBox.css('display','none');#}
+        $.ajax({
+            type: 'GET',
+            url: uploadForm.action,
+            success:function (response) {
+                setTimeout(()=>{
+                    spinnerBox.css('display','none');
                     {#spinnerBox.classList.remove('visible_element')#}
                 {#spinnerBox.classList.add('not_visible_element')#}
-    {#            console.log('response',response);#}
+                console.log('response',response);
                     {#alert()#}
-    {#            },500)#}
-    {#        },#}
-    {#        error: function (error) {#}
-    {#            console.log(error)#}
-    {#        }#}
-    {#    })#}
-    {#}#}
+                },500)
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    }
 
 
     {% if teacher_profile.experience %}

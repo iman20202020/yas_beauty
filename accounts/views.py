@@ -221,17 +221,21 @@ def student_edit(request):
         return render(request, 'accounts/student_edit.html', context)
 
 def student_submit(request):
+    message = None
     if request.method == 'POST':
         student_submit_form = StudentSubmitForm(request.POST)
         national_id_entered = student_submit_form.data['national_id']
         if is_valid_iran_code(national_id_entered):
-
-            if student_submit_form.is_valid:
+            if student_submit_form.is_valid():
                 student_submit = student_submit_form.save(commit=False)
                 student_submit.user = request.user
                 student_submit.save()
-
-                return HttpResponseRedirect(reverse('accounts:student_edit'))
+                message = 'ثبت نام شما با موفقیت انجام شد'
+                return render(request,'accounts/student_edit.html',{'message':message})
+            else:
+                if student_submit_form.errors['national_id']:
+                    message = 'این شماره ملی قبلا ثبت شده'
+                return render(request, 'accounts/student_submit.html', {'message': message})
         else:
             message = " شماره ملی معتبر نیست"
     else:
