@@ -37,10 +37,7 @@ li{font-size: 18px;color: black;}
 
 
     <nav class="  navbar navbar-expand-lg navbar-dark   bg-dark  ">
-        <div class="container justify-content-start text-center">
-
-
-           <a class="navbar-brand m-3 "  href="{% url 'accounts:index_accounts' %}"> <img class=" " src="{% static 'accounts/images/logo1.jpg' %}"> </a>
+        <div class="container justify-content-start text-right">
            <button class="navbar-toggler " aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation" type="button" data-target="#navbar" data-toggle="collapse">
                <span class="navbar-toggler-icon"></span>
            </button>
@@ -75,14 +72,17 @@ li{font-size: 18px;color: black;}
                 </ul>
             </div>
 
-        <form class="form-inline  mx-3 " action="{% url 'accounts:search_view' %}" method="get" >
+        <form class="   " action="{% url 'accounts:search_view' %}" method="get" >
 
-            <input class="form-control  " aria-label="Search" type="search" placeholder=" جستجو" name="search_text">
+            <input class="  " aria-label="Search" type="search" placeholder=" جستجو" name="search_text">
             <button type="submit" class="" ><i class='fa fa-search ' ></i></button>
-
+ <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid" src="{% static 'accounts/images/logo1.jpg' %}"> </a>
 
         </form>
+
+
         </div>
+
     </nav>
 
 

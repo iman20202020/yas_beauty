@@ -127,7 +127,7 @@ def login_view(request):
         else:
             context = {
                 'username': username,
-                'error': "کاربر موجود نیست",
+                'error': "ایمیل یا رمز عبور صحیح نیست",
             }
             return render(request, 'accounts/login.html', context)
     else:
@@ -274,7 +274,6 @@ def teacher_edit(request):
 
                     national_id_entered = teacher_edit_form.data['national_id']
                     if is_valid_iran_code(national_id_entered):
-
                         if teacher_edit_form.is_valid():
                             teacher_edit_form.user = request.user
                             teacher_edit_form.pk = teacher_profile.id
@@ -301,7 +300,7 @@ def teacher_edit(request):
                             #     os.remove(teacher_profile.national_card_image.path)
 
                         else :
-                             error = " خطا !  لطفا ورودی ها را کنترل کنید و دوباره سعی کنید"
+                             error = ""
                     else:
                         error = " شماره ملی معتبر نیست"
             elif hasattr(request.user, 'studentsubmit'):
@@ -326,7 +325,8 @@ def teacher_edit(request):
                         sms_token3 = teacher_email
                         send_sms_teacher_edit(clerk_phone, sms_token, sms_token2, sms_token3)
                     else:
-                        error = 'ورودی ها دقیق نیست لطفا دوباره سعی کنید'
+                        error = ''
+                        teacher_profile = teacher_edit_form
                 else:
                     error = " شماره ملی معتبر نیست"
 

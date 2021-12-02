@@ -1,37 +1,47 @@
 {% extends "accounts/_base.html" %}
 {% load static %}
 {% block contents %}
+
     <div class="container p-4">
         <div class="mbr-section-head text-center">
-            <h1 class="mbr-section-title mbr-fonts-style align-center mb-0 display-4">
-                <strong>{% if error %}نمایه کاربری{% else %} ثبت مشخصات کاربری{% endif %}</strong></h1>
+            <h1 class="mbr-section-title mbr-fonts-style align-center mb-0 ">
+                <strong>{% if error %}نمایه کاربری{% else %} مشخصات کاربری{% endif %}</strong></h1>
         </div>
         <div class="row justify-content-center mt-4">
-                           <div class="dragArea row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 form-group" data-for="points">
-                            <label  id="label_points"   for="points-form7-v" class="label ">امتیاز شما: {{ teacher_profile.points }} از 5
-                                <div class="progress">
-                                    <div id="points_progress_bar" class="progress-bar  " >
-                                    </div>
-                                </div>
-                            </label>
-                            <input type="hidden"   name="points"  data-form-field="points" id="points-form7-v"   {% if teacher_profile %} value={{ teacher_profile.points }} {% else %} value=3 {% endif %} >
+            <div class="dragArea row">
+                <div class="col-lg-12 col-md-12 col-sm-12 form-group" data-for="points">
+                    <label  id="label_points"   for="points-form7-v" class="label ">امتیاز شما: {{ teacher_profile.points }} از 5
+                        <div class="progress">
+                            <div id="points_progress_bar" class="progress-bar  " >
+                            </div>
                         </div>
-        </div>
+                    </label>
+                    <input type="hidden"   name="points"  data-form-field="points" id="points-form7-v"   {% if teacher_profile %} value={{ teacher_profile.points }} {% else %} value=3 {% endif %} >
+                </div>
+            </div>
         <div class="col-lg-8 mx-auto mbr-form" data-form-type="">
             <form action="" id="teacher_edit_form" name="teacher_edit_form" method="POST" class="mbr-form form-with-styler mx-auto" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="">
                     <div  data-form-alert="" class="alert text-center {% if  "successfully" in error  %} alert-success {% else %}alert-danger{% endif %} col-12 mbr-fonts-style align-center mb-0
                         {% if  error  %} d-block {% else %}d-none {% endif %}d-none ">{{ error }}<br>
-                        {{ teacher_edit_form.errors }}
+                        {% if teacher_edit_form.errors.sample_video %} <span>خطا در بارگذاری ویدئو</span><br>
+                            {{ teacher_edit_form.errors.sample_video }}
+                        {% endif %}
+                        {{ teacher_edit_form.errors.national_id }}
+                        {{ teacher_edit_form.errors.national_card_image }}
+                        {{ teacher_edit_form.errors.image }}
+                        {{ teacher_edit_form.errors.image }}
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group text-center" data-for="image">
                      <label for="degree_image">عکس خود را اینجا بارگذاری کنید :</label>
-                     <input name="image" id="image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'image_preview')" class="file-upload"
+                     <input name="image" id="image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'image_preview')"
+                            onerror="this.style.display='none'" class="file-upload"
                             {% if teacher_profile.image %}{% else %}required{% endif %}>
-                     <img id="image_preview" src="{% static teacher_profile.image %} " class="img-rounded col-lg-6 col-md-6 col-sm-12"  >
+                    {% if teacher_profile.image %}
+                          <img id="image_preview" src="{% static teacher_profile.image %} " class="img-thumbnail col-lg-6 col-md-6 col-sm-12"  >
+                    {% endif %}
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group" data-for="first_name">
                     <input type="text"  name="first_name" onchange="show_confirm_key()" placeholder="نام*"
@@ -129,14 +139,16 @@
                     <label for="national_card_image">عکس کارت ملی* :</label>
                     <input name="national_card_image" id="national_card_image" type="file" onchange="show_confirm_key()"
                            onfocus="image_upload_preview(this.id,'national_card_image_preview')" class="file-upload"  {% if teacher_profile.national_card_image %}{% else %}required{% endif %}>
-                    <img id="national_card_image_preview" src="{% static teacher_profile.national_card_image %}" class="img-rounded col-lg-6 col-md-6 col-sm-12 "  >
+                    {% if teacher_profile.national_card_image %}
+                        <img id="national_card_image_preview" src="{% static teacher_profile.national_card_image %}" class="img-rounded col-lg-6 col-md-6 col-sm-12 "  >
+                    {% endif %}
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image">
-                    <label for="degree_image">عکس مدرک تحصیلی(اختیاری)  :</label>
-                    <input name="degree_image" id="degree_image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'degree_image_preview')" class="file-upload"
-                        {% if teacher_profile.degree_image %} {% else %} {% endif %}>
-                    <img id="degree_image_preview" src="{% static teacher_profile.degree_image %} " class="img-rounded col-lg-6 col-md-6 col-sm-12"  >
-                </div>
+{#                <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image">#}
+{#                    <label for="degree_image">عکس مدرک تحصیلی(اختیاری)  :</label>#}
+{#                    <input name="degree_image" id="degree_image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'degree_image_preview')" class="file-upload"#}
+{#                        {% if teacher_profile.degree_image %} {% else %} {% endif %}>#}
+{#                    <img id="degree_image_preview" src="{% static teacher_profile.degree_image %} " class="img-rounded col-lg-6 col-md-6 col-sm-12"  >#}
+{#                </div>#}
                 <div class="col-lg-4 col-md-4 col-sm-12  text-right " data-for="sample_video">
                     <label for="sample_video">ویدیوی نمونه تدریس* :</label>
                     <input name="sample_video" id="sample_video" type="file" onchange="show_confirm_key() " class="-file-video"  {% if teacher_profile.sample_video %}{% else %}required{% endif %}>
@@ -144,12 +156,12 @@
                             <video  src="{% static teacher_profile.sample_video %}" class="col-lg-6 col-md-12 col-sm-12 "controls></video>
                         {% endif %}
                     <div  id="spinner-box" class="m-5 text-center  " style="display: none" >
-                        <span>در حال بارگذاری . . . </span><br>
+{#                        <span>در حال بارگذاری . . . </span><br>#}
                          <div class="spinner-border ml-auto no" role="status" aria-hidden="true"></div>
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group  text-center" >
-                    <input  id="confirm_edit_key" type="submit" onclick="show2()" class="btn btn-primary  form-control" value="تایید و ثبت ">
+                    <input  id="confirm_edit_key" type="submit" onclick="show2(),window.scrollTo(0,document.body.scrollHeight);" class="btn btn-primary  form-control" value="تایید و ثبت ">
                 </div>
             </form>
 

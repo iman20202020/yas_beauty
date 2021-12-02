@@ -16,10 +16,31 @@
                 <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 text-primary">
                     <strong>ثبت نام</strong></h4>
              </div><br>
-             <div class="col-lg-8  col-md-8 col-sm-12  text-left " >
-                 <form action="{% if reset_pass_request %}{% url 'accounts:pass_reset_confirmed' %}{% else %}{% url 'accounts:user_create' %}{% endif %}" style="padding-left: 100px" method="post" >
+             <div class="col-lg-8 mx-auto mbr-form text-center"  >
+             {{ user_create_form.errors.username }}
+             {{ user_create_form.errors.password2 }}
+             {{ user_create_form.errors.phone_number }}
+                 <form action="{% if reset_pass_request %}{% url 'accounts:pass_reset_confirmed' %}{% else %}{% url 'accounts:user_create' %}{% endif %}"
+                       class="mbr-form form-with-styler mx-auto text-right"  method="post" >
                      {% csrf_token %}
-                     {{ user_create_form.as_p }}
+                     {% if user_create_form.errors.phone_number %}
+                        <a href="{% url 'accounts:user_verify' %}" class="text-danger "><< ورود دوباره شماره همراه</a><br><br>
+                     {% endif %}
+                 <label>شماره همراه</label>
+{{ user_create_form.phone_number }}<br><br>
+{##}
+{#                <label for="first_name">شماره همراه :</label>#}
+{#                     <input name="first_name" id="first_name" class="form-control"><br>#}
+
+                <label for="username">ایمیل خود را وارد کنید :</label>
+                     <input type="email" name="username" id="first_name" class="form-control"><br>
+
+                <label for="password1">رمز عبور :</label>
+                     <input type="password" name="password1" id="first_name" class="form-control"><br>
+
+                <label for="password2">تکرار رمز عبور:</label>
+                     <input  type="password" name="password2" id="first_name" class="form-control"><br>
+
                      <input  type="submit" class="btn btn-primary  col-6 " value="ثبت"/>
                  </form>
              </div>

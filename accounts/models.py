@@ -74,7 +74,9 @@ class Teacher(models.Model):
     experience = models.CharField(max_length=3, default='3', blank=True)
     points = models.IntegerField(default=3, blank=True)
     sample_video = models.FileField(verbose_name='ویدیوی نمونه',upload_to='videos/',blank=True,
-                                    validators=[FileExtensionValidator(allowed_extensions=['mp4', 'wmv']),validate_video_size],
+                                    validators=[FileExtensionValidator(
+                                        allowed_extensions=['mp4', 'wmv','mov','3gp'])
+                                        ,validate_video_size],
                                     help_text='یک ویدیو حداکثر سه دقیقه از تدریس خود بارگذاری کنید')
     learn_type = models.IntegerField( default=0,blank=True)
     is_confirmed = models.BooleanField(default=False)
