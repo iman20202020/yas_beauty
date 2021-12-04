@@ -40,7 +40,7 @@
                             onerror="this.style.display='none'" class="file-upload"
                             {% if teacher_profile.image %}{% else %}required{% endif %}>
                     {% if teacher_profile.image %}
-                          <img id="image_preview" src="{% static teacher_profile.image %} " class="img-thumbnail col-lg-6 col-md-6 col-sm-12"  >
+                          <img id="image_preview" src="{% static teacher_profile.image %} " class="img-rounded col-lg-6 col-md-6 col-sm-12"  >
                     {% endif %}
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group" data-for="first_name">
@@ -264,19 +264,15 @@
         const spinnerBox = document.getElementById('spinner-box')
         const uploadForm = document.getElementById('teacher_edit_form')
         spinnerBox.css('display','block');
-
-        {#spinnerBox.classList.remove('not_visible_element')#}
-        {#spinnerBox.classList.add('visible_element')#}
+        {% if teacher_edit_form.errors %}
+        {% else %}
         $.ajax({
             type: 'GET',
             url: uploadForm.action,
             success:function (response) {
                 setTimeout(()=>{
                     spinnerBox.css('display','none');
-                    {#spinnerBox.classList.remove('visible_element')#}
-                {#spinnerBox.classList.add('not_visible_element')#}
                 console.log('response',response);
-                    {#alert()#}
                 },500)
             },
             error: function (error) {
@@ -284,7 +280,7 @@
             }
         })
     }
-
+    {% endif %}
 
     {% if teacher_profile.experience %}
         $("#experience-form7-v").val({{ teacher_profile.experience }})
