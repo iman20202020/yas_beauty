@@ -137,8 +137,7 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="national_card_image">
                     <label for="national_card_image">عکس کارت ملی* :</label>
-                    <input name="national_card_image" id="national_card_image" type="file" onchange="show_confirm_key()"
-                           onfocus="image_upload_preview(this.id,'national_card_image_preview')" class="file-upload"  {% if teacher_profile.national_card_image %}{% else %}required{% endif %}>
+                           <input name="national_card_image" id="national_card_image" type="file" onchange="show_confirm_key()"onfocus="image_upload_preview(this.id,'national_card_image_preview')" class="file-upload"  {% if teacher_profile.national_card_image %}{% else %}required{% endif %}>
                     {% if teacher_profile.national_card_image %}
                         <img id="national_card_image_preview" src="{% static teacher_profile.national_card_image %}" class="img-rounded col-lg-6 col-md-6 col-sm-12 "  >
                     {% endif %}
@@ -174,7 +173,7 @@
 {% block footer %}
 
 <script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>
-<script src="{% static 'accounts/assets/accounts.js' %}"></script>
+{#<script src="{% static 'accounts/assets/accounts.js' %}"></script>#}
 <script type="text/javascript"  >
     function points_progress(p)
     {

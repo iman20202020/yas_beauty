@@ -231,7 +231,10 @@ def student_submit(request):
                 student_submit.user = request.user
                 student_submit.save()
                 message = 'ثبت نام شما با موفقیت انجام شد'
-                return render(request,'accounts/student_edit.html',{'message':message})
+                teacher_id = request.POST.get('teacher_id', None)
+                if teacher_id:
+                    return render(request, 'teachme/teacher_detail.html', {'teacher_id': teacher_id})
+                # return render(request,'accounts/student_edit.html',{'message':message})
             else:
                 if student_submit_form.errors['national_id']:
                     message = 'این شماره ملی قبلا ثبت شده'

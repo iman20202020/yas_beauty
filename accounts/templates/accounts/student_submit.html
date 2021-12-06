@@ -15,8 +15,9 @@
                 </div>
             </div>
             <div class="col-lg-8 mx-auto mbr-form" >
-                <form action="" id="stu_sub_form" name="stu_sub_form" method="POST" class="mbr-form form-with-styler mx-auto text-right" >
+                <form action="{% url 'accounts:student_submit' %}" id="stu_sub_form" name="stu_sub_form" method="POST" class="mbr-form form-with-styler mx-auto text-right" >
                 {% csrf_token %}
+                    {% if teacher_id %}<input type="hidden" name="teacher_id" value="{{ teacher_id }}">{% endif %}
                 <label for="first_name">نام :</label>
                      <input name="first_name" id="first_name" class="form-control"><br>
                 <label for="last_name" class="text-right">نام خانوادگی :</label>

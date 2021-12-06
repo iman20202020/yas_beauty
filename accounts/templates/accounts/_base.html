@@ -75,17 +75,11 @@ li{font-size: 18px;color: black;}
         <form class="   " action="{% url 'accounts:search_view' %}" method="get" >
 
             <input class="  " aria-label="Search" type="search" placeholder=" جستجو" name="search_text">
-            <button type="submit" class="" ><i class='fa fa-search ' ></i></button>
- <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid" src="{% static 'accounts/images/logo1.jpg' %}"> </a>
-
+            <button type="submit" class=" " ><i class='fa fa-search ' ></i></button>
+ <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid pr-2" src="{% static 'accounts/images/logo1.png' %}"> </a>
         </form>
-
-
         </div>
-
     </nav>
-
-
 
 {% block title %}{% endblock %}
 <body >
