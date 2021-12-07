@@ -21,6 +21,7 @@
 
     <form class="form-signin " method="post">
         {% csrf_token %}
+        {% if teacher_id %}<input type="hidden" name="teacher_id" value="{{ teacher_id }}">{% endif %}
 
         <h1 class="h3 mb-3 font-weight-normal">ورود</h1>
         <label for="inputUsername" class="sr-only">ایمیل</label>

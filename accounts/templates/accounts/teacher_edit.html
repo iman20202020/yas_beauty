@@ -111,9 +111,9 @@
                     </select>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group text-right" data-for="qualification">
-                    <label for="qualification-form7-v" class="label"> خود را برای مخاطب شرح دهید*(حداکثر120 حرف) :</label>
+                    <label for="qualification-form7-v" class="label"> خود را برای مخاطب شرح دهید*(حداکثر200 حرف) :</label>
                    <textarea   name="qualification" onchange="show_confirm_key()"
-                        class="form-control" id="qualification-form7-v"  rows="5" maxlength="120" onchange="show_confirm_key()" required >
+                        class="form-control" id="qualification-form7-v"  rows="5" maxlength="200" onchange="show_confirm_key()" required >
                        {% if teacher_profile.qualification %}{{ teacher_profile.qualification }}{% endif %}
                     </textarea>
                 </div>

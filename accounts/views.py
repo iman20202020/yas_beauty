@@ -95,6 +95,9 @@ def user_create(request):
                 user_saved = user
                 user.save()
                 login(request, user)
+                teacher_id = request.POST.get('teacher_id', None)
+                if teacher_id:
+                    return render(request, 'teachme/teacher_detail.html', {'teacher_id': teacher_id})
             except:
                 user_saved = None
         else:
@@ -111,6 +114,7 @@ def user_create(request):
 
 def login_view(request):
     if request.method == 'POST':
+        teacher_id = request.POST.get('teacher_id', None)
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
@@ -122,6 +126,8 @@ def login_view(request):
                 return HttpResponseRedirect(reverse('accounts:teacher_edit'))
             elif hasattr(user, 'studentsubmit'):
                 return HttpResponseRedirect(reverse('accounts:student_edit'))
+            if teacher_id:
+                return render(request, 'teachme/teacher_detail.html', {'teacher_id': teacher_id})
             else:
                 return render(request,'accounts/user_create.html',{'user_saved': 1})
         else:
@@ -303,11 +309,12 @@ def teacher_edit(request):
                             #     os.remove(teacher_profile.national_card_image.path)
 
                         else :
-                             error = ""
+                             error = "خطا:"
                     else:
                         error = " شماره ملی معتبر نیست"
             elif hasattr(request.user, 'studentsubmit'):
                 return HttpResponse("مشخصات شما به عنوان دانش آموز ثبت شده لطفا با نام کاربری دیگری به عنوان معلم ثبت نام کنید ")
+
             if request.method == 'POST' and hasattr(request.user, 'teacher') == False:
                 teacher_edit_form = TeacherEditForm(request.POST, request.FILES)
                 national_id_entered = teacher_edit_form.data['national_id']
@@ -328,8 +335,8 @@ def teacher_edit(request):
                         sms_token3 = teacher_email
                         send_sms_teacher_edit(clerk_phone, sms_token, sms_token2, sms_token3)
                     else:
-                        error = ''
-                        teacher_profile = teacher_edit_form
+                        error = 'خطا:'
+
                 else:
                     error = " شماره ملی معتبر نیست"
 

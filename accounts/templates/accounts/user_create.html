@@ -1,70 +1,53 @@
 {% extends "accounts/_base.html" %}
 {% block title %}
-
-
 {% endblock %}
 
 {% block contents %}
-
 <div class="row ">
     <div class="container">
         <div class="col text-center just pt-4  " >
-
-
-        {% if user_saved == None %}
-             <div class="mbr-section-head  " id="get_user_info">
-                <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 text-primary">
-                    <strong>ثبت نام</strong></h4>
-             </div><br>
-             <div class="col-lg-8 mx-auto mbr-form text-center"  >
-             {{ user_create_form.errors.username }}
-             {{ user_create_form.errors.password2 }}
-             {{ user_create_form.errors.phone_number }}
-                 <form action="{% if reset_pass_request %}{% url 'accounts:pass_reset_confirmed' %}{% else %}{% url 'accounts:user_create' %}{% endif %}"
-                       class="mbr-form form-with-styler mx-auto text-right"  method="post" >
-                     {% csrf_token %}
-                     {% if user_create_form.errors.phone_number %}
-                        <a href="{% url 'accounts:user_verify' %}" class="text-danger "><< ورود دوباره شماره همراه</a><br><br>
-                     {% endif %}
-                 <label>شماره همراه</label>
-{{ user_create_form.phone_number }}<br><br>
-{##}
-{#                <label for="first_name">شماره همراه :</label>#}
-{#                     <input name="first_name" id="first_name" class="form-control"><br>#}
-
-                <label for="username">ایمیل خود را وارد کنید :</label>
-                     <input type="email" name="username" id="first_name" class="form-control"><br>
-
-                <label for="password1">رمز عبور :</label>
-                     <input type="password" name="password1" id="first_name" class="form-control"><br>
-
-                <label for="password2">تکرار رمز عبور:</label>
-                     <input  type="password" name="password2" id="first_name" class="form-control"><br>
-
-                     <input  type="submit" class="btn btn-primary  col-6 " value="ثبت"/>
-                 </form>
-             </div>
-        {% endif %}
-
-
-{% if user_saved %}
-
-    <div class="mbr-section-head " id="get_user_type" >
-                <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 ">
-                    <strong>خوش آمدید</strong></h4>
-             </div><br>
-        <div>
-        <strong>لطفا نوع کاربری خود را انتخاب کنید:</strong><br><br>
-
-
-
-        <a  href="{% url 'accounts:student_edit' %}" >  <button type="button" class="btn btn-lg btn-outline-dark "  name="student_button"><i class="fas fa-user-graduate"></i>&nbsp;آموزنده هستید</button>  </a><br><br>
-            <a href="{% url 'accounts:teacher_edit' %}" > <button type="button" class="btn btn-lg btn-outline-dark"  name="student_button"><i class="fas fa-chalkboard-teacher"></i>&nbsp;استاد هستید</button>
-</a>
-    </div>
+            {% if user_saved == None %}
+                <div class="mbr-section-head  " id="get_user_info">
+                    <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 text-primary">
+                        <strong>ثبت نام</strong></h4>
+                </div><br>
+                <div class="col-lg-8 mx-auto mbr-form text-center"  >
+                        {{ user_create_form.errors.username }}
+                        {{ user_create_form.errors.password2 }}
+                        {{ user_create_form.errors.phone_number }}
+                    <form action="{% if reset_pass_request %}{% url 'accounts:pass_reset_confirmed' %}{% else %}{% url 'accounts:user_create' %}{% endif %}"
+                        class="mbr-form form-with-styler mx-auto text-right"  method="post" >
+                        {% csrf_token %}
+                        {% if teacher_id %}<input type="hidden" name="teacher_id" value="{{ teacher_id }}">{% endif %}
+                        {% if user_create_form.errors.phone_number %}
+                            <a href="{% url 'accounts:user_verify' %}" class="text-danger "><< ورود دوباره شماره همراه</a><br><br>
+                        {% endif %}
+                        <label>شماره همراه</label>
+                        {{ user_create_form.phone_number }}<br><br>
+                        <label for="username">ایمیل خود را وارد کنید :</label>
+                        <input type="email" name="username" id="first_name" class="form-control"><br>
+                        <label for="password1">رمز عبور :</label>
+                        <input type="password" name="password1" id="first_name" class="form-control"><br>
+                        <label for="password2">تکرار رمز عبور:</label>
+                        <input  type="password" name="password2" id="first_name" class="form-control"><br>
+                        <input  type="submit" class="btn btn-primary  col-6 " value="ثبت"/>
+                    </form>
+                </div>
+            {% endif %}
+            {% if user_saved %}
+                <div class="mbr-section-head " id="get_user_type" >
+                    <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 ">
+                        <strong>خوش آمدید</strong></h4>
+                </div><br>
+                <div>
+                    <strong>لطفا نوع کاربری خود را انتخاب کنید:</strong><br><br>
+                    <a  href="{% url 'accounts:student_edit' %}" >  <button type="button" class="btn btn-lg btn-outline-dark "
+                                                                            name="student_button"><i class="fas fa-user-graduate"></i>&nbsp;آموزنده هستید</button>  </a><br><br>
+                    <a href="{% url 'accounts:teacher_edit' %}" > <button type="button" class="btn btn-lg btn-outline-dark"
+                                                                          name="student_button"><i class="fas fa-chalkboard-teacher"></i>&nbsp;استاد هستید</button></a>
+                </div>
         </div>
-</div>
     </div>
+</div>
 {% endif %}
-
 {% endblock %}

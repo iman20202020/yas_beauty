@@ -129,8 +129,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'accounts/static'),
     os.path.join(BASE_DIR, 'media/')
 ]
+# replace below with this in deploy
+# STATIC_ROOT = '/home/ostadbaz/public_html/static/'
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = '/home/ostadbaz/yas7/media/'
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static_root/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 

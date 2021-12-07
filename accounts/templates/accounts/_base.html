@@ -20,27 +20,21 @@
 .visible{display: block;}
 
 li{font-size: 18px;color: black;}
-
-
-
 </style>
 <head dir="rtl">
     <title>معلم خصوصی استادباز </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" charset=utf-8>
-
     <link rel="stylesheet" href="{% static "accounts/assets/bootstrap/css/bootstrap.min.css" %}">
     <link rel="stylesheet" href="{% static "accounts/assets/farsi/farsi.css" %}">
     <link rel="stylesheet" href="{% static 'accounts/fa5/css/all.css' %}">
-   <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">
 </head>
-
-
-    <nav class="  navbar navbar-expand-lg navbar-dark   bg-dark  ">
-        <div class="container justify-content-start text-right">
-           <button class="navbar-toggler " aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation" type="button" data-target="#navbar" data-toggle="collapse">
-               <span class="navbar-toggler-icon"></span>
-           </button>
+<nav class="  navbar navbar-expand-lg navbar-dark   bg-dark  ">
+    <div class="container justify-content-start text-right">
+       <button class="navbar-toggler " aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation" type="button" data-target="#navbar" data-toggle="collapse">
+           <span class="navbar-toggler-icon"></span>
+       </button>
            <div id="navbar" class="navbar-collapse collapse">
                <ul class="nav navbar-nav">
                    <li><a  class="nav nav-link text text-white  " href="{% url 'accounts:index_accounts' %}"> صفحه اصلی   </a>
@@ -54,32 +48,22 @@ li{font-size: 18px;color: black;}
 {#                    <li ><a href="#" class="nav nav-link text textr-white  "><i class="fas fa-support "></i> پشتیبانی</a></li >#}
                     <li ><a href="{% url 'show_blog' 1 %}" class="nav nav-link text text-white  "><i class="fas fa-blog "></i> مجله </a></li >
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text text-white" id="dropdown-1" aria-expanded="false" href="#" data-toggle="dropdown"><i class="fas fa-phone "></i>   ارتباط با ما</a>
-                        <div class="dropdown-menu text-center" aria-labelledby="dropdown-1">
-                            <a  class="nav nav-link bg-secondary " href="#">درباره ما   </a>
-                            <a  class="nav nav-link bg-secondary" href="#">همکاری با ما</a>
-                            <a  class="nav nav-link bg-secondary" href="{% url 'accounts:contact_us' %}">تماس  با ما</a>
-                        </div>
+                        <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'accounts:contact_us' %}" ><i class="fas fa-phone "></i>   تماس با ما</a>
                     </li>
-
-           {% if  user.is_authenticated %}
-
-                <li   >
-                    <a class="nav nav-link text text-white " href="{% url 'accounts:logout_view' %}" >خروج</a>
-                </li>
-
-           {% endif %}
-                </ul>
-            </div>
-
+               {% if  user.is_authenticated %}
+                    <li   >
+                        <a class="nav nav-link text text-white " href="{% url 'accounts:logout_view' %}" >خروج</a>
+                    </li>
+               {% endif %}
+               </ul>
+           </div>
         <form class="   " action="{% url 'accounts:search_view' %}" method="get" >
-
             <input class="  " aria-label="Search" type="search" placeholder=" جستجو" name="search_text">
             <button type="submit" class=" " ><i class='fa fa-search ' ></i></button>
- <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid pr-2" src="{% static 'accounts/images/logo1.png' %}"> </a>
+            <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid pr-2" src="{% static 'accounts/images/logo1.png' %}"> </a>
         </form>
-        </div>
-    </nav>
+    </div>
+</nav>
 
 {% block title %}{% endblock %}
 <body >
@@ -100,11 +84,6 @@ li{font-size: 18px;color: black;}
 </body>
     {% block footer %}
     {% endblock %}
-
-
-
-
-
 <script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>
 <script src="{% static 'accounts/assets/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'accounts/assets/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -117,10 +96,8 @@ li{font-size: 18px;color: black;}
     <script >
         $(document).ready(function () {
             $("#user_key").css('background-color', '#f67e7d')
-
         })
     </script>
 
 {% endif %}
-
 </html>
