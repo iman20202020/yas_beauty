@@ -72,19 +72,23 @@
         <a href="{% url 'accounts:student_edit' %}">
             <div id="computer_available_teachers" style="display: none ;">
                 <ul  class="list-group d-lg-inline-flex" style="" >
-                    {% for syllabus in syllabuses_computer %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
+                    {% if teacher_computer %}
                         <script type="text/javascript">
-                        var count = 0 ;
-                        {% for teacher in teacher_computer %}
-                            {% if teacher.syllabus == syllabus %}
-                                 count++
-                            {% endif %}
-                        {% endfor %}
-                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                            {% for syllabus in syllabuses_computer %}
+                                var count = 0 ;
+                                {% for teacher in teacher_computer %}
+                                    {% if teacher.syllabus == syllabus %}
+                                         count++
+                                    {% endif %}
+                                {% endfor %}
+                                    if (count>0){
+                                        document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
+                                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                                        document.write("</li>")
+                                        }
+                            {% endfor %}
                         </script>
-                        </li>
-                    {% endfor %}
+                {% endif %}
                 </ul>
             </div>
         </a>
@@ -124,19 +128,23 @@
         <a href="{% url 'accounts:student_edit' %}">
             <div id="music_available_teachers" style="display: none ;">
                 <ul  class="list-group d-lg-inline-flex" style="" >
-                    {% for syllabus in syllabuses_music %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
-                            <script type="text/javascript">
-                                 var count = 0 ;
+                    {% if teacher_music %}
+                        <script type="text/javascript">
+                            {% for syllabus in syllabuses_music %}
+                                var count = 0 ;
                                 {% for teacher in teacher_music %}
                                     {% if teacher.syllabus == syllabus %}
                                          count++
                                     {% endif %}
                                 {% endfor %}
-                                 document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
-                             </script>
-                        </li>
-                    {% endfor %}
+                                    if (count>0){
+                                        document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
+                                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                                        document.write("</li>")
+                                        }
+                            {% endfor %}
+                        </script>
+                {% endif %}
                 </ul>
             </div>
         </a>
@@ -149,19 +157,23 @@
         <a href="{% url 'accounts:student_edit' %}">
             <div id="cinema_available_teachers" style="display: none ;">
                 <ul  class="list-group d-lg-inline-flex" style="" >
-                    {% for syllabus in syllabuses_cinema %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
+                   {% if teacher_cinema %}
                         <script type="text/javascript">
-                        var count = 0 ;
-                        {% for teacher in teacher_cinema %}
-                            {% if teacher.syllabus == syllabus %}
-                                 count++
-                            {% endif %}
-                        {% endfor %}
-                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                            {% for syllabus in syllabuses_cinema %}
+                                var count = 0 ;
+                                {% for teacher in teacher_cinema %}
+                                    {% if teacher.syllabus == syllabus %}
+                                         count++
+                                    {% endif %}
+                                {% endfor %}
+                                    if (count>0){
+                                        document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
+                                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                                        document.write("</li>")
+                                        }
+                            {% endfor %}
                         </script>
-                       </li>
-                    {% endfor %}
+                {% endif %}
                 </ul>
             </div>
         </a>
@@ -175,19 +187,23 @@
         <a href="{% url 'accounts:student_edit' %}">
             <div id="art_available_teachers" style="display: none ;">
                 <ul  class="list-group d-lg-inline-flex" style="" >
-                    {% for syllabus in syllabuses_art %}
-                         <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
-                         <script type="text/javascript">
-                         var count = 0 ;
-                         {% for teacher in teacher_art %}
-                             {% if teacher.syllabus == syllabus %}
-                                count++
-                             {% endif %}
-                         {% endfor %}
-                         document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
-                         </script>
-                        </li>
-                    {% endfor %}
+                    {% if teacher_art %}
+                        <script type="text/javascript">
+                            {% for syllabus in syllabuses_art %}
+                                var count = 0 ;
+                                {% for teacher in teacher_art %}
+                                    {% if teacher.syllabus == syllabus %}
+                                         count++
+                                    {% endif %}
+                                {% endfor %}
+                                    if (count>0){
+                                        document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
+                                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                                        document.write("</li>")
+                                        }
+                            {% endfor %}
+                        </script>
+                {% endif %}
                 </ul>
             </div>
         </a>
@@ -202,19 +218,23 @@
         <a href="{% url 'accounts:student_edit' %}">
             <div id="university_available_teachers" style="display: none ;">
                 <ul  class="list-group d-lg-inline-flex" style="" >
-                    {% for syllabus in syllabuses_university %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
+                    {% if teacher_university %}
                         <script type="text/javascript">
-                            var count = 0 ;
-                            {% for teacher in teacher_university %}
-                                {% if teacher.syllabus == syllabus %}
-                                     count++
-                                {% endif %}
+                            {% for syllabus in syllabuses_university %}
+                                var count = 0 ;
+                                {% for teacher in teacher_university %}
+                                    {% if teacher.syllabus == syllabus %}
+                                         count++
+                                    {% endif %}
+                                {% endfor %}
+                                    if (count>0){
+                                        document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
+                                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                                        document.write("</li>")
+                                        }
                             {% endfor %}
-                            document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                         </script>
-                        </li>
-                    {% endfor %}
+                {% endif %}
                 </ul>
             </div>
         </a>
@@ -228,19 +248,23 @@
         <a href="{% url 'accounts:student_edit' %}">
             <div id="high_available_teachers" style="display: none ;">
                 <ul  class="list-group d-lg-inline-flex" style="" >
-                    {% for syllabus in syllabuses_high_school %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
-                            <script type="text/javascript">
+                    {% if teacher_high_school %}
+                        <script type="text/javascript">
+                            {% for syllabus in syllabuses_high_school %}
                                 var count = 0 ;
                                 {% for teacher in teacher_high_school %}
                                     {% if teacher.syllabus == syllabus %}
                                          count++
                                     {% endif %}
                                 {% endfor %}
-                                document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
-                            </script>
-                        </li>
-                        {% endfor %}
+                                    if (count>0){
+                                        document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
+                                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                                        document.write("</li>")
+                                        }
+                            {% endfor %}
+                        </script>
+                {% endif %}
                 </ul>
             </div>
         </a>
@@ -254,19 +278,23 @@
         <a href="{% url 'accounts:student_edit' %}">
             <div id="mid_available_teachers" style="display: none ;">
                 <ul  class="list-group d-lg-inline-flex" style="" >
-                    {% for syllabus in syllabuses_mid_school %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
+                    {% if teacher_mid_school %}
                         <script type="text/javascript">
-                            var count = 0 ;
-                            {% for teacher in teacher_mid_school %}
-                                {% if teacher.syllabus == syllabus %}
-                                     count++
-                                {% endif %}
+                            {% for syllabus in syllabuses_mid_school %}
+                                var count = 0 ;
+                                {% for teacher in teacher_mid_school %}
+                                    {% if teacher.syllabus == syllabus %}
+                                         count++
+                                    {% endif %}
+                                {% endfor %}
+                                    if (count>0){
+                                        document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
+                                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                                        document.write("</li>")
+                                        }
                             {% endfor %}
-                            document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                         </script>
-                        </li>
-                    {% endfor %}
+                {% endif %}
                 </ul>
             </div>
         </a>
@@ -280,19 +308,23 @@
         <a href="{% url 'accounts:student_edit' %}">
             <div id="primary_available_teachers" style="display: none ;">
                 <ul  class="list-group d-lg-inline-flex" style="" >
-                    {% for syllabus in syllabuses_primary_school %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
+                    {% if teacher_primary_school %}
                         <script type="text/javascript">
-                        var count = 0 ;
-                        {% for teacher in teacher_primary_school %}
-                            {% if teacher.syllabus == syllabus %}
-                                 count++
-                            {% endif %}
-                        {% endfor %}
-                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                            {% for syllabus in syllabuses_primary_school %}
+                                var count = 0 ;
+                                {% for teacher in teacher_primary_school %}
+                                    {% if teacher.syllabus == syllabus %}
+                                         count++
+                                    {% endif %}
+                                {% endfor %}
+                                    if (count>0){
+                                        document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
+                                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                                        document.write("</li>")
+                                        }
+                            {% endfor %}
                         </script>
-                        </li>
-                    {% endfor %}
+                {% endif %}
                 </ul>
             </div>
         </a>
@@ -306,19 +338,23 @@
         <a href="{% url 'accounts:student_edit' %}">
             <div id="cooking_available_teachers" style="display: none ;">
                 <ul  class="list-group d-lg-inline-flex" style="" >
-                    {% for syllabus in syllabuses_cooking %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
+                    {% if teacher_cooking %}
                         <script type="text/javascript">
-                            var count = 0 ;
-                            {% for teacher in teacher_cooking %}
-                                {% if teacher.syllabus == syllabus %}
-                                     count++
-                                {% endif %}
+                            {% for syllabus in syllabuses_cooking %}
+                                var count = 0 ;
+                                {% for teacher in teacher_cooking %}
+                                    {% if teacher.syllabus == syllabus %}
+                                         count++
+                                    {% endif %}
+                                {% endfor %}
+                                    if (count>0){
+                                        document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
+                                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                                        document.write("</li>")
+                                        }
                             {% endfor %}
-                            document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                         </script>
-                        </li>
-                    {% endfor %}
+                {% endif %}
                 </ul>
             </div>
         </a>
@@ -332,19 +368,23 @@
             <a href="{% url 'accounts:student_edit' %}">
                 <div id="sport_available_teachers" style="display: none ;">
                     <ul  class="list-group d-lg-inline-flex" style="" >
-                        {% for syllabus in syllabuses_sport %}
-                            <li class="list-group-item d-flex justify-content-between align-items-center " >{{ syllabus }}
-                            <script type="text/javascript">
+                        {% if teacher_sport %}
+                        <script type="text/javascript">
+                            {% for syllabus in syllabuses_sport %}
                                 var count = 0 ;
                                 {% for teacher in teacher_sport %}
                                     {% if teacher.syllabus == syllabus %}
                                          count++
                                     {% endif %}
                                 {% endfor %}
-                                document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
-                            </script>
-                            </li>
-                        {% endfor %}
+                                    if (count>0){
+                                        document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
+                                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                                        document.write("</li>")
+                                        }
+                            {% endfor %}
+                        </script>
+                {% endif %}
                    </ul>
                 </div>
             </a>
@@ -352,6 +392,38 @@
     </div>
     </div>
 </div>
+
+ <div class=" col-lg-2 col-md-3 col-sm-12 text-center pt-4 {% if teacher_tech %}d-block{% else %}d-none{% endif %}"
+         onclick="avail_list_toggle('tech_available_teachers')">
+    <section>
+        <img src="{% static 'accounts/images/tech.png' %}" ><br>
+        <h6>آموزش های فنی</h6>
+            <a href="{% url 'accounts:student_edit' %}">
+                <div id="tech_available_teachers" style="display: none ;">
+                    <ul  class="list-group d-lg-inline-flex" style="" >
+                        {% if teacher_tech %}
+                        <script type="text/javascript">
+                            {% for syllabus in syllabuses_tech %}
+                                var count = 0 ;
+                                {% for teacher in teacher_tech %}
+                                    {% if teacher.syllabus == syllabus %}
+                                         count++
+                                    {% endif %}
+                                {% endfor %}
+                                    if (count>0){
+                                        document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
+                                        document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
+                                        document.write("</li>")
+                                        }
+                            {% endfor %}
+                        </script>
+                {% endif %}
+                   </ul>
+                </div>
+            </a>
+    </section>
+    </div>
+
 {% endblock %}
 {% block footer %}
 <script>
