@@ -123,19 +123,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR,'static/')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'accounts/static'),
-    os.path.join(BASE_DIR, 'media/')
-]
-# replace below with this in deploy
-# STATIC_ROOT = '/home/ostadbaz/public_html/static/'
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = '/home/ostadbaz/yas7/media/'
 
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static_root/')
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
 
 
 AUTH_USER_MODEL = 'accounts.MyUser'

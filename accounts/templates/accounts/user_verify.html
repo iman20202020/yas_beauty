@@ -34,13 +34,10 @@
                     <input type="submit"  id="code_register" class="btn btn-dark" value="ثبت کد" disabled >
                 </form>
                 <br>
+            </div>
 
-
-
-                </div>
-
-            <div id="resend_otp_div" {% if user_verified == 'code_check_error' %} style="display: block"{% else %}style="display: none" {% endif %} >
-                <strong class="text-danger"> کد وارد شده صحیح نیست</strong><br><br>
+            <div id="resend_otp_div" {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: block"{% else %}style="display: none" {% endif %} >
+                {% if user_verified == 'code_check_error' %} <strong class="text-danger"> کد وارد شده صحیح نیست</strong><br><br>{% endif %}
                 <form method="post" action="">
                     {% csrf_token %}
                     <input type="hidden" id="input_mobile" name="input_mobile" value="{{ mobile_number }}">

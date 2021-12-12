@@ -48,7 +48,7 @@
 
                     {% for teacher in page_obj %}
                         <tr>
-                           <td class="w-25"><a href="{% url 'teachme:teacher_detail' teacher.id %}"><img src="{% static teacher.image %}" class="img-thumbnail" alt=""></a></td>
+                           <td class="w-25"><a href="{% url 'teachme:teacher_detail' teacher.id %}"><img src="{{ teacher.image.url }}" class="img-thumbnail" alt=""></a></td>
                             <td><a href="{% url 'teachme:teacher_detail' teacher.id %}"> {{ teacher.first_name }}  {{ teacher.last_name }}</a></td>
 {#                            <td>{{ teacher.language.language_name }}</td>#}
 {#                            <td>{{ teacher.syllabus.syllabus_name }}</td>#}

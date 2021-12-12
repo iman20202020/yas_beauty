@@ -25,7 +25,8 @@ urlpatterns = [
     path('teachme/', include('teachme.urls')),
     path('blog/', include('blog.urls')),
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = "OSTADBAZ Admin"
 admin.site.site_title = "OSTADBAZ Admin "

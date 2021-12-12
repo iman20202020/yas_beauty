@@ -40,7 +40,7 @@
                             onerror="this.style.display='none'" class="file-upload"
                             {% if teacher_profile.image %}{% else %}required{% endif %}>
                     {% if teacher_profile.image %}
-                          <img id="image_preview" src="{% static teacher_profile.image %} " class="img-rounded col-lg-6 col-md-6 col-sm-12"  >
+                          <img id="image_preview" src="{{ teacher_profile.image.url }} " class="img-rounded col-lg-6 col-md-6 col-sm-12"  >
                     {% endif %}
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group" data-for="first_name">
@@ -139,7 +139,7 @@
                     <label for="national_card_image">عکس کارت ملی* :</label>
                            <input name="national_card_image" id="national_card_image" type="file" onchange="show_confirm_key()"onfocus="image_upload_preview(this.id,'national_card_image_preview')" class="file-upload"  {% if teacher_profile.national_card_image %}{% else %}required{% endif %}>
                     {% if teacher_profile.national_card_image %}
-                        <img id="national_card_image_preview" src="{% static teacher_profile.national_card_image %}" class="img-rounded col-lg-6 col-md-6 col-sm-12 "  >
+                        <img id="national_card_image_preview" src="{{ teacher_profile.national_card_image.url }}" class="img-rounded col-lg-6 col-md-6 col-sm-12 "  >
                     {% endif %}
                 </div>
 {#                <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image">#}
@@ -152,7 +152,7 @@
                     <label for="sample_video">ویدیوی نمونه تدریس* :</label>
                     <input name="sample_video" id="sample_video" type="file" onchange="show_confirm_key() " class="-file-video"  {% if teacher_profile.sample_video %}{% else %}required{% endif %}>
                         {% if teacher_profile.sample_video %}
-                            <video  src="{% static teacher_profile.sample_video %}" class="col-lg-6 col-md-12 col-sm-12 "controls></video>
+                            <video  src="{{ teacher_profile.sample_video.url }}" class="col-lg-6 col-md-12 col-sm-12 "controls></video>
                         {% endif %}
                     <div  id="spinner-box" class="m-5 text-center  " style="display: none" >
 {#                        <span>در حال بارگذاری . . . </span><br>#}

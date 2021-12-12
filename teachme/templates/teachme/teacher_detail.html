@@ -18,10 +18,10 @@
     </div>
     <div class=" d-flex   align-items-center row bg-secondary ">
         <div class="  col-lg-3 col-md-3 col-sm-12" >
-            <img  src="{% static teacher_selected.image %}"  id="teacher_image" class="img-thumbnail">
+            <img  src="{{ teacher_selected.image.url }}"  id="teacher_image" class="img-thumbnail">
         </div>
         <div class="embed-responsive embed-responsive-4by3  col-lg-3 col-md-3 col-sm-12 " >
-             <video class="embed-responsive-item " src="{% static teacher_selected.sample_video %}" controls></video>
+             <video class="embed-responsive-item " src="{{ teacher_selected.sample_video.url }}" controls></video>
         </div>
         <div class="   col-lg-5 col-md-5 col-sm-12 m-2    " >
             <textarea class="form-control bg-secondary  text-white" id="exampleFormControlTextarea1" disabled rows="6" dir="auto">
