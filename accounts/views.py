@@ -127,7 +127,8 @@ def login_view(request):
             elif hasattr(user, 'studentsubmit'):
                 return HttpResponseRedirect(reverse('accounts:student_edit'))
             if teacher_id:
-                return render(request, 'teachme/teacher_detail.html', {'teacher_id': teacher_id})
+                from_login = 'login'
+                return render(request, 'teachme/teacher_detail.html', {'teacher_id': teacher_id,'from_login': from_login,})
             else:
                 return render(request,'accounts/user_create.html',{'user_saved': 1})
         else:

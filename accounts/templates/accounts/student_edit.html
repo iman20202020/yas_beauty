@@ -20,8 +20,9 @@
                          {% if  error  %} d-block {% else %}d-none {% endif %}d-none ">{{ error }}</div>
                     </div>
                     <div class="col-lg-6 col-md-12 col-sm-12 form-group " data-for="category">
-                        <label for="category-form7-v">زیر موضوع تدریس :</label>
+                        <label for="category-form7-v">زیر گروه تدریس :</label>
                         <select    name="category" onchange="show_confirm_key()" data-form-field="category" class="form-control"  id="category-form7-v">
+                            <option  value="">انتخاب کنید</option>
                             {% for category in categories %}
                                 <option value="{{ category.category }}">
                                 {% if  student_profile.category.category == category.category %}selected{% endif %}
@@ -32,7 +33,9 @@
                     <div class="col-lg-6 col-md-12 col-sm-12 form-group " data-for="syllabus">
                         <label for="syll">موضوع تدریس :</label>
                         <select  onchange="show_confirm_key() "  name="syllabus" data-form-field="syllabus" class="form-control"  id="syll">
+
                             {% for syllabus in syllabuses %}
+
                                 <option value="{{ category.category }}">
                                     {% if  student_profile.syllabus.syllabus == syllabus.syllabus %}selected{% endif %}
                                   {{ syllabus.syllabus_name }}</option>
@@ -67,7 +70,7 @@
                                 {% endfor %}
                             </select>
                         </div><br>
-                        <input  id="confirm_edit_key" type="submit" class="btn btn-primary  container w-50" value=" جستجو">
+                        <input  id="confirm_edit_key" type="submit" class="btn btn-primary  container w-50 d-none"  value=" جستجو">
                 </form>
             </div>
 
@@ -115,6 +118,17 @@
       {% if student_profile.learn_type %}
         $("#learn_type-form7-v").val({{ student_profile.learn_type }})
      {% endif %}
+  function show_confirm_key(){
+       $('#category-form7-v')
+      if ($('#category-form7-v').val()){
+         $('#confirm_edit_key').removeClass('d-none');
+         $('#confirm_edit_key').addClass('d-block');
+        }
+      else {
+          $('#confirm_edit_key').removeClass('d-block');
+          $('#confirm_edit_key').addClass('d-none');
+          }
+      }
   </script>
- <script src="{% static 'accounts/assets/accounts.js' %}"></script>
+
 {% endblock %}
