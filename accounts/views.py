@@ -126,9 +126,9 @@ def login_view(request):
                 return HttpResponseRedirect(reverse('accounts:teacher_edit'))
             elif hasattr(user, 'studentsubmit'):
                 return HttpResponseRedirect(reverse('accounts:student_edit'))
-            if teacher_id:
-                from_login = 'login'
-                return render(request, 'teachme/teacher_detail.html', {'teacher_id': teacher_id,'from_login': from_login,})
+            # if teacher_id:
+            #     from_login = 'login'
+            #     return render(request, 'teachme/teacher_detail.html', {'teacher_id': teacher_id,'from_login': from_login,})
             else:
                 return render(request,'accounts/user_create.html',{'user_saved': 1})
         else:
@@ -176,22 +176,33 @@ def student_edit(request):
         student_profile = None
         error = None
         if  request.method == 'POST':
-            student_edit_form = StudentEditForm(request.POST)
-            # if student_edit_form.is_valid():
             learn_type_to_show = None
-            student_city = student_edit_form.data['city']
-            city_to_show = student_city
-            student_learn_type =int( student_edit_form.data['learn_type'])
+            if request.POST.get('category_from_detail'):
+                student_category = request.POST.get('category_from_detail')
+                student_syllabus = request.POST.get('syllabus_from_detail')
+                student_price_range = request.POST.get('price_range_from_detail')
+                student_city = request.POST.get('city_from_detail')
+                city_to_show = student_city
+                student_learn_type = 0
+            else:
 
+
+                student_edit_form = StudentEditForm(request.POST)
+                # if student_edit_form.is_valid():
+
+                student_city = student_edit_form.data['city']
+                city_to_show = student_city
+                student_learn_type =int( student_edit_form.data['learn_type'])
+                student_category = student_edit_form.data['category']
+                student_syllabus = student_edit_form.data['syllabus']
+                student_price_range = student_edit_form.data['price_range']
             if student_learn_type == 0:
                 learn_type_to_show = 'آنلاین یا حضوری'
             if student_learn_type == 1:
                 learn_type_to_show = 'آنلاین '
             if student_learn_type == 2:
                 learn_type_to_show = 'حضوری'
-            student_category = student_edit_form.data['category']
-            student_syllabus = student_edit_form.data['syllabus']
-            student_price_range = student_edit_form.data['price_range']
+
             # student_mobile_number = student_selected.mobile_number
             if student_learn_type < 2:
                 teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
@@ -314,7 +325,8 @@ def teacher_edit(request):
                     else:
                         error = " شماره ملی معتبر نیست"
             elif hasattr(request.user, 'studentsubmit'):
-                return HttpResponse("مشخصات شما به عنوان دانش آموز ثبت شده لطفا با نام کاربری دیگری به عنوان معلم ثبت نام کنید ")
+                return
+                # return HttpResponse("مشخصات شما به عنوان دانش آموز ثبت شده است ")
 
             if request.method == 'POST' and hasattr(request.user, 'teacher') == False:
                 teacher_edit_form = TeacherEditForm(request.POST, request.FILES)

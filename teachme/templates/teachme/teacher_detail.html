@@ -57,7 +57,15 @@
             <input type="hidden" name="student_user_id" value="{{ student_user_id }}">
            <a > <button type="submit" id="submit_form" class="btn btn-primary " >پذیرفتن قوانین سایت و ثبت درخواست استاد </button></a>
         </form><br><br>
-        <button class="btn btn-dark" onclick="history.back()" >بازگشت  >></button><br><br>
+        <form action="{% url 'accounts:student_edit' %}" method="post">
+            <input type="hidden" name="category_from_detail" value="{{ teacher_selected.category }}">
+            <input type="hidden" name="syllabus_from_detail" value="{{ teacher_selected.syllabus }}">
+            <input type="hidden" name="price_range_from_detail" value="{{ teacher_selected.price_range.price_range }}">
+            <input type="hidden" name="city_from_detail" value="{{ teacher_selected.city }}">
+            <input type="hidden" name="learn_type_from_detail" value="{{ teacher_selected.learn_type }}">
+            <input type="submit" class="btn btn-dark"  value="بازگشت به لیست"   ><br><br>
+        </form>
+
     </div>
  </div>
 <script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>

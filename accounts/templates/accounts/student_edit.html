@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-lg-6 col-md-12 col-sm-12 form-group " data-for="syllabus">
                         <label for="syll">موضوع تدریس :</label>
-                        <select  onchange="show_confirm_key() "  name="syllabus" data-form-field="syllabus" class="form-control"  id="syll">
+                        <select    name="syllabus" data-form-field="syllabus" class="form-control"  id="syll">
 
                             {% for syllabus in syllabuses %}
 
@@ -44,7 +44,7 @@
                         </div>
                         <div class="col-lg-6 col-md-12 col-sm-12 form-group " data-for="price_range">
                             <label for="price-form7-v">محدوده قیمت :</label>
-                            <select  name="price_range" onchange="show_confirm_key()" data-form-field="price" class="form-control" id="price-form7-v">
+                            <select  name="price_range"  data-form-field="price" class="form-control" id="price-form7-v">
                                 {% for price_range in price_ranges %}
                                     <option value="{{ price_range.price_range }}"
                                         {% if  student_profile.price_range.price_range == price_range.price_range %}selected{% endif %}>
@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 form-group " data-for="learn_type">
                             <label for="learn_type-form7-v">نوع آموزش :</label><br>
-                            <select  name="learn_type" onchange="show_confirm_key()" data-form-field="experience" class="form-control"  id="learn_type-form7-v">
+                            <select  name="learn_type"  data-form-field="experience" class="form-control"  id="learn_type-form7-v">
                                     <option value=0 selected>آنلاین یا حضوری</option>
                                     <option value=1>آنلاین </option>
                                     <option value=2>حضوری</option>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 form-group " data-for="city" id="city_div">
                             <label for="city-form7-v">شهر:</label>
-                            <select  name="city" onchange="show_confirm_key()" data-form-field="city" class="form-control" id="city-form7-v">
+                            <select  name="city" data-form-field="city" class="form-control" id="city-form7-v">
                                 {% for city in cities %}
                                     <option value="{{ city.city }}"
                                         {% if  student_profile.city.city == city.city %}selected{% endif %}>
@@ -70,7 +70,7 @@
                                 {% endfor %}
                             </select>
                         </div><br>
-                        <input  id="confirm_edit_key" type="submit" class="btn btn-primary  container w-50 d-none"  value=" جستجو">
+                        <input  id="confirm_edit_key"  type="submit" class="btn btn-primary  container w-50 "  value=" جستجو">
                 </form>
             </div>
 
@@ -118,8 +118,9 @@
       {% if student_profile.learn_type %}
         $("#learn_type-form7-v").val({{ student_profile.learn_type }})
      {% endif %}
+show_confirm_key()
   function show_confirm_key(){
-       $('#category-form7-v')
+
       if ($('#category-form7-v').val()){
          $('#confirm_edit_key').removeClass('d-none');
          $('#confirm_edit_key').addClass('d-block');
@@ -129,6 +130,16 @@
           $('#confirm_edit_key').addClass('d-none');
           }
       }
+{#      call show_confirm_key on back #}
+window.addEventListener( "pageshow", function ( event ) {
+  var historyTraversal = event.persisted ||
+                         ( typeof window.performance != "undefined" &&
+                              window.performance.navigation.type === 2 );
+  if ( historyTraversal ) {
+
+    show_confirm_key()
+  }
+});
   </script>
 
 {% endblock %}
