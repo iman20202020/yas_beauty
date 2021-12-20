@@ -36,8 +36,8 @@ def index_accounts(request):
     teacher_music = Teacher.objects.filter(category='موسیقی',is_confirmed=True)
     syllabuses_art = Syllabus.objects.filter(learn_category='هنرهای تجسمی')
     teacher_art = Teacher.objects.filter(category='هنرهای تجسمی',is_confirmed=True)
-    syllabuses_sport = Syllabus.objects.filter(learn_category='ورزش')
-    teacher_sport = Teacher.objects.filter(category='ورزش',is_confirmed=True)
+    syllabuses_sport = Syllabus.objects.filter(learn_category='ورزش و بدنسازی')
+    teacher_sport = Teacher.objects.filter(category='ورزش و بدنسازی',is_confirmed=True)
     syllabuses_cinema = Syllabus.objects.filter(learn_category='سینما و بازیگری')
     teacher_cinema = Teacher.objects.filter(category='سینما و بازیگری',is_confirmed=True)
     syllabuses_tech = Syllabus.objects.filter(learn_category='کارهای فنی')
@@ -173,7 +173,8 @@ def student_edit(request):
         # languages = list(Language.objects.all().values())
         categories = list(LearnCategory.objects.all().values())
         syllabuses = None
-        student_profile = None
+        category_selected = request.GET.get('cat')
+        syllabus_selected = request.GET.get('syl')
         error = None
         if  request.method == 'POST':
             learn_type_to_show = None
@@ -227,13 +228,14 @@ def student_edit(request):
             return render(request, 'teachme/teacher_list.html', context)
 
         context = {
-            'student_profile' : student_profile,
             'student_edit_form': student_edit_form,
             'error': error,
             'cities': cities,
             'price_ranges' : price_ranges,
             'categories' : categories,
             'syllabuses' : syllabuses,
+            'category_selected' : category_selected,
+            'syllabus_selected' : syllabus_selected,
             }
 
         return render(request, 'accounts/student_edit.html', context)
