@@ -69,9 +69,11 @@ else {
     function check_number (submit_id,mobile_inputted) {
 
         let num1 = $("#"+mobile_inputted).val();
-        const pattern = /(0)([ ]|-|[()]){0,2}9[0|1|2|3|4]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/ig;
-        if (pattern.test(num1) ) {
+        const pattern = /(0)([ ]|-|[()]){0,2}9[0|1|2|3|4|9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/ig;
+        if (pattern.test(num1) && num1.length == 11) {
+
             $('#'+submit_id).removeAttr("disabled")
+
         }
         else{
              $('#'+submit_id ).prop( "disabled", true )

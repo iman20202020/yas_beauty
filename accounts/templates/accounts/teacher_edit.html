@@ -64,7 +64,7 @@
                     </select>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="price_range">
-                    <label for="price-form7-v" dir="rtl"> هزینه کلاس :</label>
+                    <label for="price-form7-v" dir="rtl"> هزینه هرساعت کلاس  :</label>
                     <select  name="price_range"onchange="show_confirm_key()" data-form-field="price" class="form-control"  id="price-form7-v">
                         {% for price_range in price_ranges %}
                             <option dir="rtl" value="{{ price_range.price_range }}"
@@ -98,15 +98,15 @@
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="experience" >
                     <label for="experience-form7-v " class="inline_label" dir="rtl">سابقه تدریس :</label>
                     <select  name="experience" onchange="show_confirm_key()" data-form-field="experience" class="form-control"  id="experience-form7-v">
-                        <option value="1" selected>۱ سال یا کمتر</option>
-                        <option value="2">۲ سال </option>
-                        <option value="3">۳ سال</option>
+{#                        <option value="1" selected>۱ سال یا کمتر</option>#}
+                        <option value="2" selected>۲ سال </option>
+{#                        <option value="3">۳ سال</option>#}
                         <option value="4">۴ سال </option>
-                        <option value="5">۵ سال </option>
+{#                        <option value="5">۵ سال </option>#}
                         <option value="6">۶ سال </option>
-                        <option value="7">۷ سال </option>
+{#                        <option value="7">۷ سال </option>#}
                         <option value="8">۸ سال </option>
-                        <option value="9">۹ سال </option>
+{#                        <option value="9">۹ سال </option>#}
                         <option value="10">۱۰ سال و بیشتر</option>
                     </select>
                 </div>

@@ -254,7 +254,8 @@ def student_submit(request):
                 teacher_id = request.POST.get('teacher_id', None)
                 if teacher_id:
                     return render(request, 'teachme/teacher_detail.html', {'teacher_id': teacher_id})
-                # return render(request,'accounts/student_edit.html',{'message':message})
+                else:
+                    return HttpResponseRedirect(reverse('accounts:index_accounts'))
             else:
                 if student_submit_form.errors['national_id']:
                     message = 'این شماره ملی قبلا ثبت شده'

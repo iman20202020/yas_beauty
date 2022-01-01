@@ -20,12 +20,15 @@
         <div class="  col-lg-3 col-md-3 col-sm-12" >
             <img  src="{{ teacher_selected.image.url }}"  id="teacher_image" class="img-thumbnail">
         </div>
+
         <div class="embed-responsive embed-responsive-4by3  col-lg-3 col-md-3 col-sm-12 " >
-             <video class="embed-responsive-item " src="{{ teacher_selected.sample_video.url }}" controls></video>
+
+             <video class="embed-responsive-item " src="{{ teacher_selected.sample_video.url }}" controls
+             poster = {% static 'accounts/images/poster.PNG' %}></video>
         </div>
         <div class="   col-lg-5 col-md-5 col-sm-12 m-2    " >
-            <textarea class="form-control bg-secondary  text-white" id="exampleFormControlTextarea1" disabled rows="6" dir="auto">
-                اطلاعات استاد :&#13;
+            <textarea class="form-control   " id="exampleFormControlTextarea1" disabled rows="6" dir="rtl">
+                درباره استاد :&#13;
                 {{ teacher_selected.qualification }}
             </textarea>
         </div>
@@ -37,7 +40,7 @@
                 <th>نام معلم</th>
                 <th>موضوع تدریس</th>
                 <th> سابقه تدریس </th>
-                <th>محدوده قیمت کلاس </th>
+                <th>هزینه کلاس هر ساعت </th>
             </tr>
             </thead>
             <tr>

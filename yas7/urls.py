@@ -15,15 +15,27 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.sitemaps import GenericSitemap
+from django.contrib.sitemaps.views import sitemap
 from django.urls import path, include
 
+from accounts.models import Teacher
 from yas7 import settings
+
+
+
+info_dict = {
+    'queryset': Teacher.objects.all(),
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
     path('teachme/', include('teachme.urls')),
     path('blog/', include('blog.urls')),
+path('sitemap.xml', sitemap, # new
+        {'sitemaps': {'accounts': GenericSitemap(info_dict, priority=0.6)}},
+        name='django.contrib.sitemaps.views.sitemap'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

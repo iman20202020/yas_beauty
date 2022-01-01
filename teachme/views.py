@@ -56,6 +56,26 @@ def teacher_request(request):
 
     return render(request,'teachme/message_viewer.html', {'message': message})
 
+
+def teacher_list(request):
+
+    category_selected = request.GET.get('cat')
+    syllabus_selected = request.GET.get('syl')
+
+
+    teachers = Teacher.objects.filter(category=category_selected,syllabus=syllabus_selected,is_confirmed=True)
+    teachers = Paginator(teachers, 25)
+    page_number = request.GET.get('page')
+    page_obj = teachers.get_page(page_number)
+    context = {
+        'teachers': teachers,
+        'page_obj': page_obj,
+        'student_category': category_selected,
+        'student_syllabus': syllabus_selected,
+
+    }
+    return render(request, 'teachme/teacher_list.html', context)
+
     # response = send_otp(mobile_number)
 # def message_viewer(request,message_get):
 #     message = message_get

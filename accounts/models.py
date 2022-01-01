@@ -85,6 +85,9 @@ class Teacher(models.Model):
     def __str__(self):
         return self.last_name+","+self.user.phone_number
 
+    def get_absolute_url(self):
+        return "/p/%i/" % self.id
+
 class Student(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE, blank=True)
     price_range = models.ForeignKey('PriceRange', on_delete=models.CASCADE)

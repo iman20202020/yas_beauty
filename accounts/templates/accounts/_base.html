@@ -13,7 +13,7 @@
 }
     @keyframes example {
 100% {
-        margin-top: -3em;
+        margin-top: -5em;
     }
 }
 .not-visible{display: none;}
@@ -67,19 +67,24 @@ li{font-size: 18px;color: black;}
 
 {% block title %}{% endblock %}
 <body >
+
+
 <div class="text-right alert ">
+
     <ul>
     {% for result in results %}
         <li>{{ result }} </li>
     {% endfor %}
     </ul>
     <p class="alert ">{{ search_message }}</p>
+{% if alerts %}
     <ul>
     {% for teacher_result in results_teachers %}
         <li><a href="{% url 'teachme:teacher_detail' teacher_result.id %}">{{ teacher_result }} </a></li>
     {% endfor %}
     </ul>
 </div>
+{% endif %}
     {% block contents %}{% endblock %}
 </body>
     {% block footer %}
