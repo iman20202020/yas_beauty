@@ -32,6 +32,8 @@ li{font-size: 18px;color: black;}
 </head>
 <nav class="  navbar navbar-expand-lg navbar-dark   bg-dark  ">
     <div class="container justify-content-start text-right">
+       <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid pr-2" src="{% static 'accounts/images/logo1.png' %}"> </a>
+
        <button class="navbar-toggler " aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation" type="button" data-target="#navbar" data-toggle="collapse">
            <span class="navbar-toggler-icon"></span>
        </button>
@@ -46,6 +48,8 @@ li{font-size: 18px;color: black;}
                        </a>
                    </li>
 {#                    <li ><a href="#" class="nav nav-link text textr-white  "><i class="fas fa-support "></i> پشتیبانی</a></li >#}
+{#                    <li ><a href="{% url 'accounts:teacher_edit' %}" class="nav nav-link text text-white  "> ثبت نام اساتید</a></li >#}
+
                     <li ><a href="{% url 'show_blog' 1 %}" class="nav nav-link text text-white  "><i class="fas fa-blog "></i> مجله </a></li >
                     <li class="nav-item dropdown">
                         <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'accounts:contact_us' %}" ><i class="fas fa-phone "></i>   تماس با ما</a>
@@ -58,9 +62,10 @@ li{font-size: 18px;color: black;}
                </ul>
            </div>
         <form class="   " action="{% url 'accounts:search_view' %}" method="get" >
+
             <input class="  " aria-label="Search" type="search" placeholder=" جستجو" name="search_text">
             <button type="submit" class=" " ><i class='fa fa-search ' ></i></button>
-            <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid pr-2" src="{% static 'accounts/images/logo1.png' %}"> </a>
+
         </form>
     </div>
 </nav>

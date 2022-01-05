@@ -149,7 +149,7 @@
 {#                    <img id="degree_image_preview" src="{% static teacher_profile.degree_image %} " class="img-rounded col-lg-6 col-md-6 col-sm-12"  >#}
 {#                </div>#}
                 <div class="col-lg-4 col-md-4 col-sm-12  text-right " data-for="sample_video">
-                    <label for="sample_video">ویدیوی نمونه تدریس* :</label>
+                    <label for="sample_video">ویدیوی نمونه تدریس(حدود 5 دقیقه)* :</label>
                     <input name="sample_video" id="sample_video" type="file" onchange="show_confirm_key() " class="-file-video"  {% if teacher_profile.sample_video %}{% else %}required{% endif %}>
                         {% if teacher_profile.sample_video %}
                             <video  src="{{ teacher_profile.sample_video.url }}" class="col-lg-6 col-md-12 col-sm-12 "controls></video>

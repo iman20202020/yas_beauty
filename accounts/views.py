@@ -295,7 +295,6 @@ def teacher_edit(request):
                 error = str(request.user)+" "+'خوش آمدید'
                 if request.method == 'POST':
                     teacher_edit_form = TeacherEditForm(request.POST, request.FILES,instance=teacher_profile)
-
                     national_id_entered = teacher_edit_form.data['national_id']
                     if is_valid_iran_code(national_id_entered):
                         if teacher_edit_form.is_valid():
@@ -327,9 +326,6 @@ def teacher_edit(request):
                              error = "خطا:"
                     else:
                         error = " شماره ملی معتبر نیست"
-            elif hasattr(request.user, 'studentsubmit'):
-                return
-                # return HttpResponse("مشخصات شما به عنوان دانش آموز ثبت شده است ")
 
             if request.method == 'POST' and hasattr(request.user, 'teacher') == False:
                 teacher_edit_form = TeacherEditForm(request.POST, request.FILES)
@@ -501,3 +497,10 @@ def pass_reset_confirmed(request):
 
 def site_laws(request):
     return render(request,'accounts/sit_laws.html',{})
+
+def how_use(request):
+    return render(request,'accounts/how_use.html',{})
+
+def how_use2(request):
+    return render(request,'accounts/how_use2.html',{})
+

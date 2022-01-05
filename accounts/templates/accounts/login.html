@@ -19,14 +19,14 @@
 
         </div>
 
-    <form class="form-signin " method="post">
+    <form class="form-signin text-center " method="post">
         {% csrf_token %}
         {% if teacher_id %}<input type="hidden" name="teacher_id" value="{{ teacher_id }}">{% endif %}
 
         <h1 class="h3 mb-3 font-weight-normal">ورود</h1>
         <label for="inputUsername" class="sr-only">ایمیل</label>
         <input type="text" id="inputUsername" class="form-control" placeholder="ایمیل" name="username"
-              oninvalid="setCustomValidity('لطفاً ایمیل را وارد کنید')" oninput="setCustomValidity('')"
+              oninvalid="setCustomValidity('لطفاً ایمیل خود را وارد کنید')" oninput="setCustomValidity('')"
               value="{{ username }}" required autofocus>
         <label for="inputPassword" class="sr-only">رمز عبور</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="رمز عبور" name="password" required
@@ -38,7 +38,7 @@
         <br>
             <a href="{% url 'accounts:pass_reset' %}">بازیابی رمز عبور</a>
 
-        <p class="mt-5 mb-3 text-muted">yasacademy&copy; 2020 </p>
+        <p class="mt-5 mb-3 text-muted">ostadbaz&copy; 2020 </p>
 
     </form>
 </div>

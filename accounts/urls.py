@@ -19,6 +19,8 @@ urlpatterns = [
     path('pass-reset/',views.pass_reset, name='pass_reset' ),
     path('pass-reset-conf/',views.pass_reset_confirmed, name='pass_reset_confirmed' ),
     path('site/laws/',views.site_laws, name='site_laws' ),
+    path('how/use/',views.how_use, name='how_use' ),
+    path('how/use2/',views.how_use2, name='how_use2' ),
 
 
 ]

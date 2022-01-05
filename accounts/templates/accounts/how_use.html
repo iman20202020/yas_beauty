@@ -1,0 +1,24 @@
+{% extends 'accounts/_base.html' %}
+{% load static %}
+{% block title %}
+<div class="row ">
+    <div class="container ">
+       <div class="col text-center"> <br>
+           <button type="button" onclick="element_viewer('register_help_video')" class="btn btn-lg btn-outline-dark " >
+               <i class="fas fa-edit"></i>&nbsp; راهنمای ثبت نام اساتید</button>  <br><br>
+           <a href="{% url 'accounts:how_use2' %}" type="button"  onclick="element_viewer('record_help_video')" class="btn btn-lg btn-outline-dark" >
+               <i class="fas fa-video"></i>&nbsp;راهنمای ضبط ویدئوی نمونه تدریس </a><br><br>
+           <video id="register_help_video" src="{% static 'accounts/register_teacher_help.mp4' %}" class="col-lg-6 col-md-12 col-sm-12 d-none"controls ></video>
+     <br><br>
+            <button class="btn btn-primary" onclick="history.back()">بازگشت</button>
+            </div>
+    </div>
+</div>
+<script>
+ function element_viewer(id) {
+     var el1 = $('#'+id)
+     el1.removeClass('d-none')
+
+ }
+</script>
+{% endblock %}
