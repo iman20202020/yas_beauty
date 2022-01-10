@@ -1,16 +1,12 @@
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
-from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
+from accounts.models import Teacher
 
-from accounts.forms import TeacherEditForm
-from accounts.models import LearnCategory, Syllabus, City, PriceRange, Teacher
-
-#
 
 def show_blog(request, blog_num):
-    blog_template = 'blog'+ str(blog_num)+'.html'
+    blog_template = 'blog' + str(blog_num)+'.html'
     return render(request, blog_template, {})
 
+def view_all_teachers(request):
+    teachers = Teacher.objects.filter(is_confirmed=True)
+    number_of_teachers = teachers.count()
+    return render(request, 'all_teachers.html', {'teachers': teachers, 'num_teachers': number_of_teachers, })

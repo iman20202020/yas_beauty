@@ -1,0 +1,24 @@
+
+{% extends 'accounts/_base.html' %}
+{% load static %}
+
+{% block contents %}
+    <header>
+      <h1 class="text-right">معرفی معلم خصوصی</h1><br><br>
+    </header>
+
+<div class=" container  border-secondary" >
+<p  class="text-primary"> تعداد کل اساتید تایید شده : {{ num_teachers }} عدد</p>
+<ul>
+    {% if teachers %}
+        {% for teacher in teachers %}
+            <li class="small">کلاس خصوصی {{ teacher.first_name }} {{ teacher.last_name }} {{ teacher.syllabus.syllabus_name }} ساعتی {{ teacher.price_range.price_range_name }}</li>
+        {% endfor %}
+    {% endif %}
+</ul>
+<h2 class="small"></h2>
+
+</div>
+
+
+{% endblock %}
