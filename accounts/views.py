@@ -1,5 +1,6 @@
 from itertools import chain
 
+from django.contrib import messages
 from django.core.paginator import Paginator
 
 from accounts.otp import *
@@ -250,7 +251,9 @@ def student_submit(request):
                 student_submit = student_submit_form.save(commit=False)
                 student_submit.user = request.user
                 student_submit.save()
-                message = 'ثبت نام شما با موفقیت انجام شد'
+
+                messages.success(request,'ثبت نام شما با موفقیت انجام شد','success')
+
                 teacher_id = request.POST.get('teacher_id', None)
                 if teacher_id:
                     return render(request, 'teachme/teacher_detail.html', {'teacher_id': teacher_id})

@@ -22,8 +22,7 @@
         <div class="col-lg-8 mx-auto mbr-form" data-form-type="">
             <form action="" id="teacher_edit_form" name="teacher_edit_form" method="POST" class="mbr-form form-with-styler mx-auto" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="">
-                    <div  data-form-alert="" class="alert text-center {% if  "successfully" in error  %} alert-success {% else %}alert-danger{% endif %} col-12 mbr-fonts-style align-center mb-0
+                 <div  data-form-alert="" class="alert text-center {% if  "successfully" in error  %} alert-success {% else %}alert-danger{% endif %} col-12 mbr-fonts-style align-center mb-0
                         {% if  error  %} d-block {% else %}d-none {% endif %}d-none ">{{ error }}<br>
                         {% if teacher_edit_form.errors.sample_video %} <span>خطا در بارگذاری ویدئو</span><br>
                             {{ teacher_edit_form.errors.sample_video }}
@@ -32,15 +31,14 @@
                         {{ teacher_edit_form.errors.national_card_image }}
                         {{ teacher_edit_form.errors.image }}
                         {{ teacher_edit_form.errors.image }}
-                    </div>
-                </div>
+                 </div>
+
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group text-center" data-for="image">
-                     <label for="degree_image">عکس خود را اینجا بارگذاری کنید :</label>
-                     <input name="image" id="image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'image_preview')"
-                            onerror="this.style.display='none'" class="file-upload"
-                            {% if teacher_profile.image %}{% else %}required{% endif %}>
+                    <label for="degree_image">عکس خود را اینجا بارگذاری کنید :</label>
+                    <input name="image" id="image" type="file" onchange="show_confirm_key()" onfocus="image_upload_preview(this.id,'image_preview')"
+                           onerror="this.style.display='none'" class="file-upload" {% if teacher_profile.image %}{% else %}required{% endif %}>
                     {% if teacher_profile.image %}
-                          <img id="image_preview" src="{{ teacher_profile.image.url }} " class="img-rounded col-lg-6 col-md-6 col-sm-12"  >
+                        <img id="image_preview" src="{{ teacher_profile.image.url }} " class="img-rounded col-lg-6 col-md-6 col-sm-12"  >
                     {% endif %}
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group" data-for="first_name">
@@ -53,7 +51,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="national_id">
                     <label for="national_id-form7-v ">کد ملی* :</label>
-                    <input type="text" onchange="show_confirm_key()" name="national_id" data-form-field="national_id"
+                    <input type="text" onchange="show_confirm_key()" name="national_id" data-form-field="national_id" onkeyup="num_to_english(this.id)"
                         class="form-control"  value="{{ teacher_profile.national_id }}" id="national_id-form7-v" required>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="learn_type">
@@ -120,9 +118,12 @@
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="learn_type">
                     <label for="learn_type-form7-v">نوع آموزش :</label><br>
                     <select  name="learn_type" onchange="show_confirm_key()" data-form-field="experience" class="form-control"  id="learn_type-form7-v">
-                        <option value=0 selected>آنلاین یا حضوری</option>
-                        <option value=1>آنلاین </option>
-                        <option value=2>حضوری</option>
+                        <option value=0 selected>خصوصی آنلاین یا حضوری</option>
+                        <option value=1>خصوصی فقط آنلاین </option>
+                        <option value=2>خصوصی فقط حضوری</option>
+                        <option value=3>دوره ای (ورکشاپ) آنلاین و حضوری</option>
+                        <option value=4>دوره ای (ورکشاپ) فقط حضوری</option>
+                        <option value=5>دوره ای (ورکشاپ) فقط آنلاین</option>
                     </select>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="city" id="city_div">
@@ -154,11 +155,11 @@
 {#                        {% if teacher_profile.sample_video %}#}
 {#                            <video  src="{{ teacher_profile.sample_video.url }}" class="col-lg-6 col-md-12 col-sm-12 "controls></video>#}
 {#                        {% endif %}#}
-                    <div  id="spinner-box" class="m-5 text-center  " style="display: none" >
+                <div  id="spinner-box" class="m-5 text-center  " style="display: none" >
 {#                        <span>در حال بارگذاری . . . </span><br>#}
-                         <div class="spinner-border ml-auto no" role="status" aria-hidden="true"></div>
-                    </div>
+                    <div class="spinner-border ml-auto no" role="status" aria-hidden="true"></div>
                 </div>
+
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group  text-center" >
                     <input  id="confirm_edit_key" type="submit" onclick="show2(),window.scrollTo(0,document.body.scrollHeight);" class="btn btn-primary  form-control" value="تایید و ثبت ">
                 </div>
@@ -292,7 +293,19 @@ function show2() {
     $('#spinner-box').css('display','block')
 
 }
+function num_to_english(input_id) {
 
+    var pn = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+    var en = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+    var cache =  $('#'+input_id).val();
+    for (var i = 0; i < 10; i++) {
+        var regex_fa = new RegExp(pn[i], 'g');
+        cache = cache.replace(regex_fa, en[i]);
+    }
+    {#alert(cache)#}
+    $('#'+input_id).val(cache);
+}
 </script>
 
 
