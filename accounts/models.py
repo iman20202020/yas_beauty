@@ -66,18 +66,17 @@ class Teacher(models.Model):
     syllabus = models.ForeignKey('Syllabus', on_delete=models.CASCADE, )
     category = models.ForeignKey('LearnCategory', on_delete=models.CASCADE, default='uni')
     image = models.ImageField(upload_to='images/', blank=True,validators=[validate_image_size])
-    national_card_image = models.ImageField(upload_to='images/',blank=True,validators=[validate_image_size],
-                                            help_text='عکس خود را اینجا بارگذاری کنید')
-    degree_image = models.ImageField(upload_to="images/", validators=[validate_image_size],blank=True,
-                                     help_text='عکس مدرک تحصیلی خود را بارگذاری کنید')
-    qualification = models.CharField(max_length=200,blank=True, help_text='مدرک تحصیلی و گرایش تحصیلی خود را ذکر کنید')
+    national_card_image = models.ImageField(upload_to='images/',blank=True,validators=[validate_image_size],)
+    degree_image = models.ImageField(upload_to="images/", validators=[validate_image_size],blank=True,)
+    # jozveh = models.FileField(upload_to="jozveh/", blank=True,)
+    workshop_number =models.CharField(max_length=30, blank=True)
+    workshop_detail = models.CharField(max_length=30, blank=True)
+    workshop_price = models.CharField(max_length=30, blank=True)
+    qualification = models.CharField(max_length=200,blank=True,)
     experience = models.CharField(max_length=3, default='3', blank=True)
     points = models.IntegerField(default=3, blank=True)
     sample_video = models.FileField(verbose_name='ویدیوی نمونه',upload_to='videos/',blank=True,
-                                    validators=[FileExtensionValidator(
-                                        allowed_extensions=['mp4', 'wmv','mov','3gp'])
-                                        ,validate_video_size],
-                                    help_text='یک ویدیو حداکثر سه دقیقه از تدریس خود بارگذاری کنید')
+          validators=[FileExtensionValidator( allowed_extensions=['mp4', 'wmv','mov','3gp']),validate_video_size],)
     learn_type = models.IntegerField( default=0,blank=True)
     is_confirmed = models.BooleanField(default=False)
     gender = models.IntegerField(default=1,blank=True)

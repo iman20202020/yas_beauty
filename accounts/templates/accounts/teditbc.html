@@ -50,7 +50,7 @@
                         data-form-field="last_name" class="form-control" value="{{ teacher_profile.last_name }}"  id="last_name-form7-v" required>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="national_id">
-  <label for="national_id-form7-v ">     کد ملی * </label> <br><span class="small"> ( قابل مشاهده نیست و در اختیار کسی قرار نمی گیرد):</span>
+                    <label for="national_id-form7-v ">     کد ملی * </label> <br><span class="small"> ( قابل مشاهده نیست و در اختیار کسی قرار نمی گیرد):</span>
                     <input type="text" onchange="show_confirm_key()" name="national_id" data-form-field="national_id" onkeyup="num_to_english(this.id)"
                         class="form-control"  value="{{ teacher_profile.national_id }}" id="national_id-form7-v" required>
                 </div>
@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="category">
-                     <label for="category-form7-v">زیرگروه تدریس شما :</label>
+                     <label for="category-form7-v">زیرمجموعه تدریس شما:</label>
                      <select name="category" onchange="show_confirm_key(),learn_type_based_view()" data-form-field="category" class="form-control" id="category-form7-v">
                           {% for category in categories %}
                                <option value="{{ category.category }}" {% if  teacher_profile.category.category == category.category %}selected{% endif %}>
@@ -86,16 +86,25 @@
                          </select>
                 </div>
 
-                <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="price_range" id="hourly_price_div">
-                    <label for="price-form7-v" dir="rtl"> هزینه هرساعت کلاس شما  :</label>
-                    <select  name="price_range"onchange="show_confirm_key()" data-form-field="price" class="form-control"  id="price-form7-v">
+                <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="learn_type">
+                    <label for="learn_type-form7-v">نوع آموزش :</label><br>
+                    <select  name="learn_type" onchange="show_confirm_key()" data-form-field="experience" class="form-control"  id="learn_type-form7-v">
+                        <option value=0 selected> آنلاین یا حضوری</option>
+                        <option value=1> فقط آنلاین </option>
+                        <option value=2> فقط حضوری</option>
+
+                    </select>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right " id="hourly_price_div" data-for="price_range">
+                    <label for="price-form7-v" dir="rtl"> هزینه هرساعت کلاس  :</label>
+                    <select  name="price_range" onchange="show_confirm_key()" data-form-field="price" class="form-control"  id="price-form7-v" >
                         {% for price_range in price_ranges %}
                             <option dir="rtl" value="{{ price_range.price_range }}"
                                 {% if  teacher_profile.price_range.price_range == price_range.price_range %}selected{% endif %} >{{ price_range.price_range_name }}</option>
                         {% endfor %}
                     </select>
                 </div>
-                             <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right  d-none" id="workshop_number_div" data-for="price_range">
+                <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right  d-none" id="workshop_number_div" data-for="price_range">
                     <label for="workshop_number" dir="rtl"> تعداد نفرات هر ورکشاپ  :</label>
                       <input   type="text" name="workshop_number" class="form-control" id="workshop_number" value="{{ teacher_profile.workshop_number }}"
                                placeholder="مثال: 3 تا 5 نفر" onchange="show_confirm_key()"  >
@@ -116,33 +125,28 @@
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="experience" >
                     <label for="experience-form7-v " class="inline_label" dir="rtl">سابقه تدریس :</label>
                     <select  name="experience" onchange="show_confirm_key()" data-form-field="experience" class="form-control"  id="experience-form7-v">
-                        <option value="2" selected>۲ سال </option>
-                        <option value="4">۴ سال </option>
-                        <option value="6">۶ سال </option>
-                        <option value="8">۸ سال </option>
-                        <option value="10">۱۰ سال </option>
-                        <option value="12">۱۲سال </option>
-                        <option value="14">۱۴ سال </option>
-                        <option value="16">۱۶ سال </option>
-                        <option value="18">۱۸ سال </option>
-                        <option value="20">۲۰ سال و بیشتر</option>
+{#                        <option value="1" selected>۱ سال یا کمتر</option>#}
+                        <option value="۲" selected>۲ سال </option>
+                        <option value="۴">۴ سال</option>
+                        <option value="۶">۶ سال </option>
+                        <option value="۸">۸ سال </option>
+                        <option value="۱۰">۱۰ سال </option>
+                        <option value="۱۲">۱۲ سال </option>
+                        <option value="۱۴">۱۴ سال </option>
+                        <option value="۱۶">۱۶ سال </option>
+                        <option value="۱۸">۱۸ سال </option>
+                        <option value="۲۰">۲۰ سال و بیشتر</option>
                     </select>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group text-right" data-for="qualification">
-                    <label for="qualification-form7-v" class="label"> خود را برای مخاطب شرح دهید*(حداکثر200 حرف) :</label>
-                   <textarea   name="qualification" onchange="show_confirm_key()"
+                    <label for="qualification-form7-v" class="label small"> مدارک و افتخارات و سوابق خود را شرح دهید<br>(حداکثر200 حرف) :</label>
+                   <textarea   name="qualification" onchange="show_confirm_key()" placeholder="مثال: دارای مدرک بین المللی ... از دانشگاه ... مدرس موسسات ..."
                         class="form-control" id="qualification-form7-v"  rows="5" maxlength="200" onchange="show_confirm_key()" required >
                        {% if teacher_profile.qualification %}{{ teacher_profile.qualification }}{% endif %}
                     </textarea>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="learn_type">
-                    <label for="learn_type-form7-v">نوع آموزش :</label><br>
-                    <select  name="learn_type" onchange="show_confirm_key()" data-form-field="experience" class="form-control"  id="learn_type-form7-v">
-                        <option value=0 selected>آنلاین یا حضوری</option>
-                        <option value=1>آنلاین </option>
-                        <option value=2>حضوری</option>
-                    </select>
-                </div>
+
+
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="city" id="city_div">
                     <label for="city-form7-v">شهر:</label>
                     <select  name="city" onchange="show_confirm_key()" data-form-field="city" class="form-control" id="city-form7-v">
@@ -154,18 +158,19 @@
                     </select>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="national_card_image">
-                         <label for="national_card_image">تصویر کارت ملی *</label><br><span class="small"> ( قابل مشاهده نیست و در اختیار کسی قرار نمی گیرد):</span>
-
-                           <input name="national_card_image" id="national_card_image" type="file" onchange="show_confirm_key()"onfocus="image_upload_preview(this.id,'national_card_image_preview')" class="file-upload"  {% if teacher_profile.national_card_image %}{% else %}required{% endif %}>
+                    <label for="national_card_image">تصویر کارت ملی *</label><br><span class="small"> ( قابل مشاهده نیست و در اختیار کسی قرار نمی گیرد):</span>
+                           <input name="national_card_image" id="national_card_image" type="file" onchange="show_confirm_key()"onfocus="image_upload_preview(this.id,'national_card_image_preview')" class="file-upload"  {% if teacher_profile.national_card_image %}{% else %}{% endif %}>
                     {% if teacher_profile.national_card_image %}
                         <img id="national_card_image_preview" src="{{ teacher_profile.national_card_image.url }}" class="img-rounded col-lg-6 col-md-6 col-sm-12 "  >
                     {% endif %}
                 </div>
 
-
-
-
-
+{#                <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="jozveh">#}
+{#                    <label for="jozveh">جزوه آموزشی با فرمت pdf  :</label><span class="small"> توسط آموزنده ها دیده می شود و احتمال درخواست شما بیشتر می شود(اختیاری):</span>#}
+{#                    <input name="jozveh" id="jozveh" type="file" onchange="show_confirm_key()"  class="file-upload"#}
+{#                        {% if teacher_profile.jozveh %} {% else %} {% endif %}>#}
+{##}
+{#                </div>#}
 
 
 {#                <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image">#}
@@ -201,6 +206,7 @@
 <script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>
 {#<script src="{% static 'accounts/assets/accounts.js' %}"></script>#}
 <script type="text/javascript"  >
+
     function points_progress(p)
     {
         var points_ratio = p/5 ;
@@ -234,7 +240,7 @@
         }});
     }
     $(document).ready(function(){
-        learn_type_based_view()
+
         points_progress({{ teacher_profile.points }});
         {% if error %}
         $('#confirm_edit_key').css('display','none');
@@ -332,9 +338,6 @@ function num_to_english(input_id) {
     {#alert(cache)#}
     $('#'+input_id).val(cache);
 }
-
-
-
 
 function learn_type_based_view() {
     var category = $('#category-form7-v').val()
