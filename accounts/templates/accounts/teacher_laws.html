@@ -1,34 +1,27 @@
 {% extends 'accounts/_base.html' %}
 {% load static %}
-{% block title %}
-<div class="row ">
-    <div class="container ">
-       <div class="col text-right">
-           <h4>نحوه معرفی شاگرد به معلم و میزان پرداخت معلم به سایت:</h4>
+
+{% block contents %}
+
+    <div class="text-right small "  style="width: 400px; height: 600px" >
+   <h4>نحوه معرفی شاگرد به معلم و میزان پرداخت معلم به سایت:</h4>
            <p>پس از درخواست شما توسط شاگرد در سایت ، ما با شما و شاگرد تماس می گیریم و جلسه اول را هماهنگ می کنیم . اگر شاگرد از تدریس شما راضی بود مبلغ جلسه اول را پرداخت می کند و قرار بر ادامه کلاس می گذارد و در غیر اینصورت می تواند بدون پرداخت هیچ وجهی انصراف دهد.</p>
            <p>در مورد کلاس هایی که مبلغ بصورت دوره ای یکجا پرداخت می شود هم شاگرد جلسه اول را رایگان در دوره شرکت می کند و اگر پسندید مبلغ دوره را به استاد یا موسسه مورد نظر پرداخت می کند.</p>
-           <p>گلیه پرداخت ها توسط شاگرد مستقیما به استاد انجام می شود و سایت هیچ مبلغی از شاگرد دریافت نمی کند.</p>
+           <p>کلیه پرداخت ها توسط شاگرد مستقیما به استاد انجام می شود و سایت هیچ مبلغی از شاگرد دریافت نمی کند.</p>
            <p>در صورت پرداخت جلسه اول یا مبلغ کل دوره توسط شاگرد،استاد مبلغ 200 هزار تومان بابت معرفی به حساب سایت استادباز واریز می کند . </p>
            <p>اینکه کلاس چند جلسه دیگر ادامه می یابد یا مبلغ کل دوره چقدر می شود به سایت مربوط نیست و معلم دیگر هیچ وجهی به سایت پرداخت نمی کند </p>
-           <br>
+        <p><strong>سایت استادیاز هیچگونه مسئولیتی در قبال رفتار شاگرد ها و مسائل احتمالی که در طی آموزش ممکن است پیش آید به عهده نمی گیرد و وظیفه حفاظت از حریم شخصی استاد و شاگرد به عهده خود آن ها یا ولی قانونی آن ها می باشد .  </strong></p>
 
-            </div>
     </div>
-<div class="col text-center">
-     <button type="button" onclick="element_viewer('register_help_video')" class="btn btn-lg btn-outline-dark " >
-               <i class="fas fa-edit"></i>&nbsp; راهنمای ثبت نام اساتید</button>  <br><br>
-           <button  type="button"  onclick="element_viewer('record_help_video')" class="btn btn-lg btn-outline-dark" >
-            <a href="{% url 'accounts:how_use2' %}" >  <i class="fas fa-video"></i>&nbsp; راهنمای ضبط ویدئوی نمونه تدریس    </a></button><br><br>
-           <video id="register_help_video" src="{% static 'accounts/register_teacher_help.mp4' %}" class="col-lg-6 col-md-12 col-sm-12 d-none"controls ></video>
-     <br><br>
-            <button class="btn btn-primary" onclick="history.back()">بازگشت</button>
-</div>
-</div>
-<script>
- function element_viewer(id) {
-     var el1 = $('#'+id)
-     el1.removeClass('d-none')
+     <div class=" text-center  ">
+     <button class="btn btn-outline-secondary" onclick="goBack()">بازگشت</button>
+    </div>
 
- }
+
+
+<script>
+function goBack() {
+  window.history.back();
+}
 </script>
 {% endblock %}

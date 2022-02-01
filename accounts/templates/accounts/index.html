@@ -17,10 +17,11 @@
     </head>
 <header>
     <div  class="content border-secondary  border-top text-center pt-4 " style="height: 50px">
-        <h1 id="title_1" style="font-size: xx-large;" >استادباز معرفی معلم خصوصی </h1>
-        <h1 id="title_2" style="font-size: xx-large; display: none;" >کاملا رایگان </h1>
-        <h2 id="title_3" style="display: none;font-size: x-large; ">کیفیت تدریس استادها رو قبلا چک کردیم</h2>
-        <h2 id="title_4" style="display: none;font-size: x-large" >جلسه اول خوشت نیومد پول نده</h2>
+        <h1 id="title_1" style="font-size: xx-large;" >استادباز معرفی معلم خصوصی   </h1>
+        <h1 id="title_2" style="font-size: xx-large; display: none;" >ورکشاپ های آموزشی  </h1>
+        <h1 id="title_3" style="font-size: xx-large; display: none;" >کاملا رایگان </h1>
+        <h2 id="title_4" style="display: none;font-size: x-large; ">جلسه اول خوشت نیومد پول نده</h2>
+
     </div><br>
 </header>
 {% endblock %}
@@ -32,7 +33,7 @@
 
                 <div class="mbr-section-btn mt-1  text text-center">
                     <br>
-                    <a class="btn btn-primary "  {% if user.is_authenticated %} hidden {% endif %} href="{% url 'accounts:user_verify' %}">کاربر جدیدم &nbsp;
+                    <a class="btn btn-primary "  {% if user.is_authenticated %} hidden {% endif %} href="{% url 'accounts:user_verify' %}"> &nbsp;ثبت نام&nbsp;
                     <i class="fas fa-user" ></i>
                     </a>
                     <a class="btn btn-primary " {% if user.is_authenticated %} hidden {% endif %}  href="{% url 'accounts:login_view' %}">&nbsp; &nbsp;ورود&nbsp; &nbsp;<i class="fas fa-user-graduate" ></i>&nbsp;</a>
@@ -474,21 +475,26 @@
     var m=1;
     var n=2;
     var p=3;
-    function change_title(m,n,p){
+    var q=4;
+    function change_title(m,n,p,q){
          $('#title_'+m).css('display','block')
          $('#title_'+m).addClass("roll_anim")
          $('#title_'+n).css('display','none')
          $('#title_'+p).css('display','none')
+         $('#title_'+q).css('display','none')
+         $('#title_'+q).css('display','none')
      };
     ;
          setInterval(function(){
-             change_title(m,n,p)
+             change_title(m,n,p,q)
              m++
              n++
              p++
-             if (m>3){m=1}
-             if (n>3){n=1}
-             if (p>3){p=1}
+             q++
+             if (m>4){m=1}
+             if (n>4){n=1}
+             if (p>4){p=1}
+             if (q>4){q=1}
               },4000);
      function avail_list_toggle(list_name) {
          $("#"+list_name).toggle()

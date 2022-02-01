@@ -504,3 +504,6 @@ def how_use(request):
 def how_use2(request):
     return render(request,'accounts/how_use2.html',{})
 
+def teacher_laws(request):
+    return render(request,'accounts/teacher_laws.html',{})
+

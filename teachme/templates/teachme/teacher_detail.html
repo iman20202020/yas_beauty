@@ -20,15 +20,17 @@
         <div class="  col-lg-3 col-md-3 col-sm-12" >
             <img  src="{{ teacher_selected.image.url }}"  id="teacher_image" class="img-thumbnail">
         </div>
-
+{% if teacher_selected.sample_video %}
         <div class="embed-responsive embed-responsive-4by3  col-lg-3 col-md-3 col-sm-12 " >
 
              <video class="embed-responsive-item " src="{{ teacher_selected.sample_video.url }}" controls
+
              poster = {% static 'accounts/images/poster.PNG' %}></video>
         </div>
+{% endif %}
         <div class="   col-lg-5 col-md-5 col-sm-12 m-2    " >
-            <textarea class="form-control   " id="exampleFormControlTextarea1" disabled rows="6" dir="rtl">
-                درباره استاد :&#13;
+            <textarea class="form-control text-right " id="exampleFormControlTextarea1" disabled rows="6" dir="rtl" style="font-size: small">
+
                 {{ teacher_selected.qualification }}
             </textarea>
         </div>
@@ -36,19 +38,39 @@
     <div class=" col justify-content-center">
         <table class="table table-striped ">
             <thead>
+        {% if student_category == 'آرایش و زیبایی' or student_category == 'آشپزی' or student_category == 'هنرهای تجسمی' or student_category == 'سینما و بازیگری' or student_category == 'کارهای فنی' %}
             <tr>
-                <th>نام معلم</th>
-                <th>موضوع تدریس</th>
-                <th> سابقه تدریس </th>
-                <th>هزینه کلاس هر ساعت </th>
+                <th ><sub>نام استاد</sub></th>
+                <th><sub>موضوع تدریس</sub></th>
+                <th>  <sub>سابقه تدریس</sub></th>
+                <th><sub>تعداد نفرات کلاس</sub> </th>
+                <th><sub>تعداد روز و ساعت </sub></th>
+                <th><sub>کل مبلغ دوره</sub></th>
             </tr>
             </thead>
             <tr>
-                <td> {{ teacher_selected.first_name }}  {{ teacher_selected.last_name }}</td>
-                <td>{{ teacher_selected.syllabus.syllabus_name }}</td>
-                <td>{{ teacher_selected.experience }}</td>
-                <td>{{ teacher_selected.price_range.price_range_name }}</td>
+                <td><sub> {{ teacher_selected.first_name }}  {{ teacher_selected.last_name }}</sub></td>
+                <td><sub>{{ teacher_selected.syllabus.syllabus_name }}</sub></td>
+                <td><sub>{{ teacher_selected.experience }}</sub></td>
+                <td><sub>{{ teacher_selected.workshop_number }}</sub></td>
+                <td><sub>{{ teacher_selected.workshop_detail }}</sub></td>
+                <td><sub>{{ teacher_selected.workshop_price }}</sub></td>
             </tr>
+        {% else %}
+            <tr>
+                <th><sub>نام استاد </sub></th>
+                <th><sub>موضوع تدریس</sub></th>
+                <th> <sub>سابقه تدریس </sub></th>
+                <th><sub>هزینه کلاس هر ساعت </sub></th>
+            </tr>
+            </thead>
+            <tr>
+                <td><sub> {{ teacher_selected.first_name }}  {{ teacher_selected.last_name }}</sub></td>
+                <td><sub>{{ teacher_selected.syllabus.syllabus_name }}</sub></td>
+                <td><sub>{{ teacher_selected.experience }}</sub></td>
+                <td><sub>{{ teacher_selected.price_range.price_range_name }}</sub></td>
+            </tr>
+            {% endif %}
         </table>
     </div>
  </div>

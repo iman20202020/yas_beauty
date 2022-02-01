@@ -59,7 +59,7 @@ class Teacher(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE, )
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    national_id = models.PositiveIntegerField(unique=True)
+    national_id = models.PositiveIntegerField(unique=True,blank=True)
     price_range = models.ForeignKey('PriceRange', on_delete=models.CASCADE)
     # language = models.ForeignKey('Language', on_delete=models.CASCADE)
     city = models.ForeignKey('City', on_delete=models.CASCADE, default='تهران')
@@ -72,7 +72,7 @@ class Teacher(models.Model):
     workshop_number =models.CharField(max_length=30, blank=True)
     workshop_detail = models.CharField(max_length=30, blank=True)
     workshop_price = models.CharField(max_length=30, blank=True)
-    qualification = models.CharField(max_length=200,blank=True,)
+    qualification = models.CharField(max_length=300,blank=True,)
     experience = models.CharField(max_length=3, default='3', blank=True)
     points = models.IntegerField(default=3, blank=True)
     sample_video = models.FileField(verbose_name='ویدیوی نمونه',upload_to='videos/',blank=True,

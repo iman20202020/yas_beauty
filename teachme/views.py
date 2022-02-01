@@ -23,12 +23,14 @@ def teacher_detail(request, teacher_id):
 
     student_user_id = request.user.id
     teacher_selected = Teacher.objects.get(pk=teacher_id)
+    student_category = teacher_selected.category_id
 
     #     return HttpResponseRedirect(reverse('teachme:message_viewer',args=['شما به عنوان معلم ثبت شده اید برای درخواست استاد دوباره با شماره تلفن و ایمیل جدید به عنوان دانش آموز ثبت نام کنید']))
 
     context = {
         'teacher_selected': teacher_selected,
         'student_user_id': student_user_id,
+        'student_category': student_category,
     }
     return render(request, 'teachme/teacher_detail.html', context)
 

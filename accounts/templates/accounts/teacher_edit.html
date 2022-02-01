@@ -18,7 +18,9 @@
                     </label>
                     <input type="hidden"   name="points"  data-form-field="points" id="points-form7-v"   {% if teacher_profile %} value={{ teacher_profile.points }} {% else %} value=3 {% endif %} >
                 </div>
+
             </div>
+
         <div class="col-lg-8 mx-auto mbr-form" data-form-type="">
             <form action="" id="teacher_edit_form" name="teacher_edit_form" method="POST" class="mbr-form form-with-styler mx-auto" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -129,7 +131,7 @@
                     </select>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group text-right" data-for="qualification">
-                    <label for="qualification-form7-v" class="label"> خود را برای مخاطب شرح دهید*(حداکثر200 حرف) :</label>
+                    <label for="qualification-form7-v" class="label"> خود را برای مخاطب شرح دهید*(حداکثر300 حرف) :</label>
                    <textarea   name="qualification" onchange="show_confirm_key()"
                         class="form-control" id="qualification-form7-v"  rows="5" maxlength="200" onchange="show_confirm_key()" required >
                        {% if teacher_profile.qualification %}{{ teacher_profile.qualification }}{% endif %}
@@ -153,14 +155,14 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="national_card_image">
-                         <label for="national_card_image">تصویر کارت ملی *</label><br><span class="small"> ( قابل مشاهده نیست و در اختیار کسی قرار نمی گیرد):</span>
-
-                           <input name="national_card_image" id="national_card_image" type="file" onchange="show_confirm_key()"onfocus="image_upload_preview(this.id,'national_card_image_preview')" class="file-upload"  {% if teacher_profile.national_card_image %}{% else %}required{% endif %}>
-                    {% if teacher_profile.national_card_image %}
-                        <img id="national_card_image_preview" src="{{ teacher_profile.national_card_image.url }}" class="img-rounded col-lg-6 col-md-6 col-sm-12 "  >
-                    {% endif %}
-                </div>
+{#                <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="national_card_image">#}
+{#                         <label for="national_card_image">تصویر کارت ملی *</label><br><span class="small"> ( قابل مشاهده نیست و در اختیار کسی قرار نمی گیرد):</span>#}
+{##}
+{#                           <input name="national_card_image" id="national_card_image" type="file" onchange="show_confirm_key()"onfocus="image_upload_preview(this.id,'national_card_image_preview')" class="file-upload"  {% if teacher_profile.national_card_image %}{% else %}required{% endif %}>#}
+{#                    {% if teacher_profile.national_card_image %}#}
+{#                        <img id="national_card_image_preview" src="{{ teacher_profile.national_card_image.url }}" class="img-rounded col-lg-6 col-md-6 col-sm-12 "  >#}
+{#                    {% endif %}#}
+{#                </div>#}
 
 
 
@@ -186,7 +188,8 @@
                 </div>
 
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group  text-center" >
-                    <input  id="confirm_edit_key" type="submit" onclick="show2(),window.scrollTo(0,document.body.scrollHeight);" class="btn btn-primary  form-control" value="تایید و ثبت ">
+                    <div><a href="{% url 'accounts:teacher_laws' %}">قوانین و نحوه پرداخت</a></div> <br>
+                    <input  id="confirm_edit_key" type="submit" onclick="show2(),window.scrollTo(0,document.body.scrollHeight);" class="btn btn-primary  form-control" value="پذیرش قوانین و ثبت ">
                 </div>
             </form>
 
