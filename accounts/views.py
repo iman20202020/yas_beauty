@@ -1,7 +1,7 @@
 from itertools import chain
 
 from django.core.paginator import Paginator
-
+from django.shortcuts import redirect
 from accounts.otp import *
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -97,7 +97,7 @@ def user_create(request):
                 login(request, user)
                 teacher_id = request.POST.get('teacher_id', None)
                 if teacher_id:
-                    return render(request, 'teachme/teacher_detail.html', {'teacher_id': teacher_id})
+                    return redirect('teachme:teacher_request', teacher_id=teacher_id)
             except:
                 user_saved = None
         else:
@@ -154,7 +154,7 @@ def profile_edit(request):
     # if hasattr(request.user, 'student'):
     #     return HttpResponseRedirect(reverse('accounts:student_edit'))
     else:
-        return HttpResponseRedirect(reverse('accounts:student_edit'))
+        return HttpResponseRedirect(reverse('accounts:user_create'))
 
 @csrf_exempt
 def student_edit(request):
@@ -390,11 +390,16 @@ def search_view(request):
 
 
 def user_verify(request):
+    teacher_id = None
     response = {}
+    if 'teacher_selected_id' in request.POST:
+        teacher_id = request.POST.get('teacher_selected_id')
+
     if request.method == 'POST':
         user_verified = None
         otp_code = None
         mobile_number = None
+
         if 'input_mobile' in request.POST:
             mobile_number = request.POST.get('input_mobile')
             response = send_otp(mobile_number)
@@ -418,6 +423,7 @@ def user_verify(request):
                     'user_create_form':user_create_form,
                     'user_verified':user_verified,
                     'mobile_number': mobile_number,
+                    'teacher_id': teacher_id,
                 }
                 return render(request, 'accounts/user_create.html', context)
             else:
@@ -431,6 +437,7 @@ def user_verify(request):
      'user_verified': user_verified,
      'response': response,
      'otp_code': otp_code,
+     'teacher_id': teacher_id,
      }
     return render(request, 'accounts/user_verify.html', context )
 

@@ -76,11 +76,17 @@
  </div>
     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
         <a href="{% url 'accounts:site_laws' %}" class="p-4">  قوانین سایت </a><br><br>
-        <form class=" text-center" action="{% url 'teachme:teacher_request' teacher_selected.id %}" method="post">
+        <form class=" text-center" method="post"
+              action="{% if request.user.is_authenticated %}{% url 'teachme:teacher_request' teacher_selected.id %}
+                  {% else %}{% url 'accounts:user_verify' %}">
+
             {% csrf_token %}
             <input type="hidden" name="teacher_selected_id" value="{{ teacher_selected.id }}">
             <input type="hidden" name="student_user_id" value="{{ student_user_id }}">
-           <a > <button type="submit" id="submit_form" class="btn btn-primary " >پذیرفتن قوانین سایت و ثبت درخواست استاد </button></a>
+
+            <a > <button type="submit" id="submit_form" class="btn btn-primary " >پذیرفتن قوانین سایت و ثبت درخواست استاد </button></a>
+
+            {% endif %}
         </form><br><br>
         <form action="{% url 'accounts:student_edit' %}" method="post">
             <input type="hidden" name="category_from_detail" value="{{ teacher_selected.category }}">

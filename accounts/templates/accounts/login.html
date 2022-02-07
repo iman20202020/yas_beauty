@@ -18,7 +18,7 @@
              {% if  error  %} d-block {% else %}d-none {% endif %}d-none ">{{ error }}<br>
 
         </div>
-
+<div class="text-center">
     <form class="form-signin text-center " method="post">
         {% csrf_token %}
         {% if teacher_id %}<input type="hidden" name="teacher_id" value="{{ teacher_id }}">{% endif %}
@@ -35,13 +35,20 @@
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">ورود</button><br>
 
-        <a href="{% url 'accounts:user_verify' %}"> <button class="btn btn-lg btn-info btn-block" type="button">ثبت نام</button></a>
+
+    </form>
+<form method="post" action="{% url 'accounts:user_verify' %}">
+{% csrf_token %}
+{% if teacher_id %}<input type="hidden" name="teacher_id" value="{{ teacher_id }}">{% endif %}
+
+ <button type="submit" class="btn btn-lg btn-info btn-block" >ثبت نام</button>
+
+    </form>
         <br>
             <a href="{% url 'accounts:pass_reset' %}">بازیابی رمز عبور</a>
 
         <p class="mt-5 mb-3 text-muted">ostadbaz&copy; 2020 </p>
-
-    </form>
+</div>
 </div>
 </body>
 

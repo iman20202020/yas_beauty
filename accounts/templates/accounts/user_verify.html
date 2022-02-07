@@ -16,6 +16,8 @@
                 <strong>لطفا شماره همراه خود را وارد کنید</strong><br><br>
                 <form action="" class="" method="post" autocomplete="off">
                     {% csrf_token %}
+                    <input type="hidden" id="teacher_selected_id" name="teacher_selected_id" value="{{ teacher_id }}">
+
                     <input type="text" name="input_mobile"  id="input_mobile"
                            onkeyup="check_number('input_mobile_submit','input_mobile')" autofocus  autocomplete="new-password" placeholder="09123456789">
                     <input type="submit"  id="input_mobile_submit" class="btn btn-dark " value="ثبت"  disabled>
@@ -31,6 +33,7 @@
                     <input type="text" id="veri_code_input" name="veri_code_input" autofocus placeholder="_   _   _   _" class="text-center" onkeyup="check_length()" >
                     <input type="hidden" id="otp_code_generated" name="otp_code_generated" value="{{ otp_code }}">
                     <input type="hidden" id="mobile_number" name="mobile_number" value="{{ mobile_number }}">
+                    <input type="hidden" id="teacher_selected_id" name="teacher_selected_id" value="{{ teacher_id }}">
                     <input type="submit"  id="code_register" class="btn btn-dark" value="ثبت کد" disabled >
                 </form>
                 <br>

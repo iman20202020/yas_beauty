@@ -6,7 +6,7 @@
 <div class="row ">
     <div class="container">
         <div class="col text-center just pt-4  " >
-            {% if user_saved == None %}
+            {% if user_saved == None and request.user.is_anonymous %}
                 <div class="mbr-section-head  " id="get_user_info">
                     <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 text-primary">
                         <strong>ثبت نام</strong></h4>
@@ -34,7 +34,7 @@
                     </form>
                 </div>
             {% endif %}
-            {% if user_saved %}
+            {% if user_saved or request.user.is_authenticated %}
                 <div class="mbr-section-head " id="get_user_type" >
                     <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 ">
                         <strong>خوش آمدید</strong></h4>
