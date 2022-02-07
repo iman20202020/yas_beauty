@@ -76,7 +76,7 @@
  </div>
     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
         <a href="{% url 'accounts:site_laws' %}" class="p-4">  قوانین سایت </a><br><br>
-        <form class=" text-center" action="{% url 'teachme:teacher_request'  %}" method="post">
+        <form class=" text-center" action="{% url 'teachme:teacher_request' teacher_selected.id %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="teacher_selected_id" value="{{ teacher_selected.id }}">
             <input type="hidden" name="student_user_id" value="{{ student_user_id }}">
