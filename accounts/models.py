@@ -10,7 +10,7 @@ from accounts.validators import validate_video_size, validate_image_size
 
 
 class MyUser(AbstractUser):
-    phone_number = models.CharField(verbose_name='شماره همراه',max_length=13,blank=False,unique=True,)
+    phone_number = models.CharField(verbose_name='شماره همراه',max_length=13,blank=True,)
 
 
     username = models.CharField(
@@ -59,7 +59,7 @@ class Teacher(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE, )
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    national_id = models.PositiveIntegerField(unique=True,blank=True)
+    national_id = models.PositiveIntegerField(blank=True)
     price_range = models.ForeignKey('PriceRange', on_delete=models.CASCADE)
     # language = models.ForeignKey('Language', on_delete=models.CASCADE)
     city = models.ForeignKey('City', on_delete=models.CASCADE, default='تهران')
