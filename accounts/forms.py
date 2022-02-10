@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from accounts.models import Student, Teacher, MyUser, StudentSubmit
+from accounts.models import Student, Teacher, MyUser
 
 
 class MyUserCreate(UserCreationForm):
@@ -37,10 +37,10 @@ class StudentEditForm(forms.ModelForm):
         model = Student
         exclude = ['user','email']
 
-class StudentSubmitForm(forms.ModelForm):
-    class Meta:
-        model = StudentSubmit
-        exclude = ['user','email']
+# class StudentSubmitForm(forms.ModelForm):
+#     class Meta:
+#         model = StudentSubmit
+#         exclude = ['user','email']
 
 
 class TeacherEditForm(forms.ModelForm):

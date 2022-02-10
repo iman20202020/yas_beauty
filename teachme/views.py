@@ -8,7 +8,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.urls import reverse
 
-from accounts.models import  Teacher, MyUser, StudentSubmit
+from accounts.models import  Teacher, MyUser
 from teachme.send_sms import *
 
 

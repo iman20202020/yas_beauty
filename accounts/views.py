@@ -1,5 +1,6 @@
 from itertools import chain
 
+from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
 from accounts.otp import *
@@ -11,7 +12,7 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from accounts.forms import MyUserCreate, StudentEditForm, TeacherEditForm, StudentSubmitForm
+from accounts.forms import MyUserCreate, StudentEditForm, TeacherEditForm
 from accounts.models import LearnCategory, Syllabus, PriceRange, Student, Teacher, City, MyUser
 from accounts.validators import is_valid_iran_code
 
@@ -239,33 +240,33 @@ def student_edit(request):
             }
 
         return render(request, 'accounts/student_edit.html', context)
-
-def student_submit(request):
-    message = None
-    if request.method == 'POST':
-        student_submit_form = StudentSubmitForm(request.POST)
-        national_id_entered = student_submit_form.data['national_id']
-        if is_valid_iran_code(national_id_entered):
-            if student_submit_form.is_valid():
-                student_submit = student_submit_form.save(commit=False)
-                student_submit.user = request.user
-                student_submit.save()
-                message = 'ثبت نام شما با موفقیت انجام شد'
-                teacher_id = request.POST.get('teacher_id', None)
-                if teacher_id:
-                    return render(request, 'teachme/teacher_detail.html', {'teacher_id': teacher_id})
-                else:
-                    return HttpResponseRedirect(reverse('accounts:index_accounts'))
-            else:
-                if student_submit_form.errors['national_id']:
-                    message = 'این شماره ملی قبلا ثبت شده'
-                return render(request, 'accounts/student_submit.html', {'message': message})
-        else:
-            message = " شماره ملی معتبر نیست"
-    else:
-        student_submit_form = StudentSubmitForm()
-        message = None
-    return render(request,'accounts/student_submit.html', {'student_submit_form': student_submit_form,'message': message})
+#
+# def student_submit(request):
+#     message = None
+#     if request.method == 'POST':
+#         student_submit_form = StudentSubmitForm(request.POST)
+#         national_id_entered = student_submit_form.data['national_id']
+#         if is_valid_iran_code(national_id_entered):
+#             if student_submit_form.is_valid():
+#                 student_submit = student_submit_form.save(commit=False)
+#                 student_submit.user = request.user
+#                 student_submit.save()
+#                 messages.success(request, 'ثبت نام شما با موفقیت انجام شد', 'success')
+#                 teacher_id = request.POST.get('teacher_id', None)
+#                 if teacher_id:
+#                     return render(request, 'teachme/teacher_detail.html', {'teacher_id': teacher_id})
+#                 else:
+#                     return HttpResponseRedirect(reverse('accounts:index_accounts'))
+#             else:
+#                 if student_submit_form.errors['national_id']:
+#                     message = 'این شماره ملی قبلا ثبت شده'
+#                 return render(request, 'accounts/student_submit.html', {'message': message})
+#         else:
+#             message = " شماره ملی معتبر نیست"
+#     else:
+#         student_submit_form = StudentSubmitForm()
+#         message = None
+#     return render(request,'accounts/student_submit.html', {'student_submit_form': student_submit_form,'message': message})
 
 @login_required
 @csrf_exempt
