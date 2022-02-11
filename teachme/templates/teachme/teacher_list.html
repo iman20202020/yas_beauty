@@ -36,33 +36,38 @@
                     </tr>
                 {% if student_category == 'آرایش و زیبایی' or student_category == 'آشپزی' or student_category == 'هنرهای تجسمی' or student_category == 'سینما و بازیگری' or student_category == 'کارهای فنی' %}
                     <tr>
-                        <th class="p-2 " id="workshop_number_th">  <sub> تعداد نفرات ورکشاپ</sub> </th>
-                        <th class="p-2 " id="workshop_detail_th">  <sub> تعداد روز وساعت</sub> </th>
-                        <th class="p-2 " id="workshop_price_th">  <sub>هزینه کل دوره (تومان)</sub> </th>
+                        <th class="p-2 " id="workshop_number_th">  <sub>  نفرات ورکشاپ</sub> </th>
+                        <th class="p-2 " id="workshop_detail_th">  <sub>  روز وساعت</sub> </th>
+                        <th class="p-2 " id="workshop_price_th">  <sub>  دوره (تومان)</sub> </th>
+                        <th class="p-2 " id="workshop_describe_th">  <sub>جزئیات</sub> </th>
                         <th class="p-2">  <sub>سابقه</sub> </th>
                         <th class="p-2">  <sub>نوع</sub> </th>
-                        <th class="p-2">  <sub>شهر</sub> </th>
+                         {% if teacher.learn_type == 0 or teacher.learn_type == 2 %}<th class="p-2">  <sub>شهر</sub> </th>{% endif %}
                         <th class="p-2">  <sub>امتیاز</sub> </th>
                     </tr>
                     <tr>
                         <td class="p-2 " id="workshop_number_td"><sub>{{ teacher.workshop_number }}</sub></td>
                         <td class="p-2 " id="workshop_detail_td"><sub>{{ teacher.workshop_detail }}</sub></td>
                         <td class="p-2 " id="workshop_price_td"><sub>{{ teacher.workshop_price }}</sub></td>
+                        <td class="p-2 " id="workshop_describe_td"><sub>{{ teacher.qualification|truncatewords:4 }}</sub></td>
                         <td class="p-2"><sub>{{ teacher.experience }}سال</sub></td>
                         <td class="p-2">
                             {% if teacher.learn_type == 0 %}<sub>آنلاین یا حضوری</sub>{% endif %}
                             {% if teacher.learn_type == 1 %}<sub>آنلاین</sub>{% endif %}
                             {% if teacher.learn_type == 2 %}<sub> حضوری</sub>{% endif %}
                         </td>
-                        <td class="p-2"><sub>{{ teacher.city.city}}</sub></td>
+                         {% if teacher.learn_type == 0 or teacher.learn_type == 2 %} <td class="p-2"><sub>{{ teacher.city.city}}</sub></td>{% endif %}
                         <td class="p-2"><sub>{{ teacher.points}}</sub></td>
                     </tr>
                 {% else %}
                     <tr>
-                        <th class="p-2 " >  <sub> هزینه کلاس هر ساعت</sub> </th>
+                        <th class="p-2 " >  <sub>  کلاس هر ساعت</sub> </th>
                         <th class="p-2">  <sub>سابقه</sub> </th>
                         <th class="p-2">  <sub>نوع</sub> </th>
-                        <th class="p-2">  <sub>شهر</sub> </th>
+                    <th class="p-2 " id="workshop_describe_th">  <sub>جزئیات</sub> </th>
+                         {% if teacher.learn_type == 0 or teacher.learn_type == 2 %}<th class="p-2">  <sub>شهر</sub> </th>{% endif %}
+
+
                         <th class="p-2">  <sub>امتیاز</sub> </th>
                     </tr>
 
@@ -74,7 +79,9 @@
                             {% if teacher.learn_type == 1 %}<sub>آنلاین</sub>{% endif %}
                             {% if teacher.learn_type == 2 %}<sub> حضوری</sub>{% endif %}
                         </td>
-                        <td class="p-2"><sub>{{ teacher.city.city}}</sub></td>
+                        <td class="p-2 " id="describe_td"><sub>{{ teacher.qualification|truncatewords:4 }}</sub></td>
+
+                        {% if teacher.learn_type == 0 or teacher.learn_type == 2 %}  <td class="p-2"><sub>{{ teacher.city.city}}</sub></td>{% endif %}
                         <td class="p-2"><sub>{{ teacher.points}}</sub></td>
                     </tr>
             {% endif %}

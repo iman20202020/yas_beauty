@@ -139,10 +139,10 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="learn_type">
                     <label for="learn_type-form7-v">نوع آموزش :</label><br>
-                    <select  name="learn_type" onchange="show_confirm_key()" data-form-field="experience" class="form-control"  id="learn_type-form7-v">
+                    <select  name="learn_type"  onchange="show_confirm_key(),hide_city_when_online()" data-form-field="experience" class="form-control"  id="learn_type-form7-v">
                         <option value=0 selected>آنلاین یا حضوری</option>
-                        <option value=1>آنلاین </option>
-                        <option value=2>حضوری</option>
+                        <option value=1>فقط آنلاین </option>
+                        <option value=2>فقط حضوری</option>
                     </select>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="city" id="city_div">
@@ -232,6 +232,7 @@
         }});
     }
     $(document).ready(function(){
+        hide_city_when_online()
         learn_type_based_view()
         points_progress({{ teacher_profile.points }});
         {% if error %}
@@ -349,6 +350,18 @@ function learn_type_based_view() {
         $('#workshop_detail_div').addClass('d-none')
         $('#workshop_price_div').addClass('d-none')
     }
+}
+
+function hide_city_when_online() {
+    var learn_type = $('#learn_type-form7-v').val()
+    if(learn_type == 1 ){
+       $('#city_div').css('display','none')
+    }
+    else {
+         $('#city_div').css('display','block')
+    }
+
+
 }
 
 </script>

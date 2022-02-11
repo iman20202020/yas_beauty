@@ -2,6 +2,7 @@
 {% extends 'accounts/_base.html' %}
 {% load static %}
 {% block contents %}
+
  <div class="container p-4">
     <div class="mbr-section-head text-center">
         <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-6">
@@ -67,7 +68,7 @@
             <tr>
                 <td><sub> {{ teacher_selected.first_name }}  {{ teacher_selected.last_name }}</sub></td>
                 <td><sub>{{ teacher_selected.syllabus.syllabus_name }}</sub></td>
-                <td><sub>{{ teacher_selected.experience }}</sub></td>
+                <td><sub>{{ teacher_selected.experience }}سال</sub></td>
                 <td><sub>{{ teacher_selected.price_range.price_range_name }}</sub></td>
             </tr>
             {% endif %}
@@ -75,27 +76,29 @@
     </div>
  </div>
     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+
         <a href="{% url 'accounts:site_laws' %}" class="p-4">  قوانین سایت </a><br><br>
         <form class=" text-center" method="post"
               action="{% if request.user.is_authenticated %}{% url 'teachme:teacher_request' teacher_selected.id %}
-                  {% else %}{% url 'accounts:user_verify' %}">
+                  {% else %}{% url 'accounts:user_verify' %}{% endif %}">
 
             {% csrf_token %}
             <input type="hidden" name="teacher_selected_id" value="{{ teacher_selected.id }}">
-            <input type="hidden" name="student_user_id" value="{{ student_user_id }}">
+{#            <input type="hidden" name="student_user_id" value="{{ student_user_id }}">#}
 
-            <a > <button type="submit" id="submit_form" class="btn btn-primary " >پذیرفتن قوانین سایت و ثبت درخواست استاد </button></a>
+             <input type="submit" id="submit_form" class="btn btn-primary " value = 'پذیرفتن قوانین سایت و ثبت درخواست استاد' >
 
-            {% endif %}
+
         </form><br><br>
-        <form action="{% url 'accounts:student_edit' %}" method="post">
-            <input type="hidden" name="category_from_detail" value="{{ teacher_selected.category }}">
-            <input type="hidden" name="syllabus_from_detail" value="{{ teacher_selected.syllabus }}">
-            <input type="hidden" name="price_range_from_detail" value="{{ teacher_selected.price_range.price_range }}">
-            <input type="hidden" name="city_from_detail" value="{{ teacher_selected.city }}">
-            <input type="hidden" name="learn_type_from_detail" value="{{ teacher_selected.learn_type }}">
-            <input type="submit" class="btn btn-dark"  value="بازگشت به لیست"   ><br><br>
-        </form>
+        <a href="{% url 'teachme:teacher_list'  %}?cat={{ teacher_selected.category }}&syl={{ teacher_selected.syllabus }}" type="button" class="btn btn-dark" > بازگشت به لیست</a><br><br>
+{#        <form action="{% url 'accounts:student_edit' %}" method="post">#}
+{#            <input type="hidden" name="category_from_detail" value="{{ teacher_selected.category }}">#}
+{#            <input type="hidden" name="syllabus_from_detail" value="{{ teacher_selected.syllabus }}">#}
+{#            <input type="hidden" name="price_range_from_detail" value="{{ teacher_selected.price_range.price_range }}">#}
+{#            <input type="hidden" name="city_from_detail" value="{{ teacher_selected.city }}">#}
+{#            <input type="hidden" name="learn_type_from_detail" value="{{ teacher_selected.learn_type }}">#}
+{#            <input type="submit" class="btn btn-dark"  value="بازگشت به لیست"   ><br><br>#}
+{#        </form>#}
 
     </div>
  </div>

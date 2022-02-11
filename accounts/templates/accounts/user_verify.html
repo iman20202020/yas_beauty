@@ -14,6 +14,7 @@
 
             <div id="send_mobile_div" {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: none" {% endif %}>
                 <strong>لطفا شماره همراه خود را وارد کنید</strong><br><br>
+
                 <form action="" class="" method="post" autocomplete="off">
                     {% csrf_token %}
                     <input type="hidden" id="teacher_selected_id" name="teacher_selected_id" value="{{ teacher_id }}">
@@ -21,7 +22,8 @@
                     <input type="text" name="input_mobile"  id="input_mobile"
                            onkeyup="check_number('input_mobile_submit','input_mobile')" autofocus  autocomplete="new-password" placeholder="09123456789">
                     <input type="submit"  id="input_mobile_submit" class="btn btn-dark " value="ثبت"  disabled>
-                </form>
+                </form><br><br>
+               <p> کیبورد دستگاه روی زبان فارسی یا انگلیسی باشد</p>
             </div>
 
             <div id="send_otp_div"   {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: block"
@@ -103,8 +105,8 @@ else {
 
 
         let num1 = $("#"+mobile_inputted).val();
-        const pattern = /(0)([ ]|-|[()]){0,2}9[0|1|2|3|4|9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/ig;
-        if (pattern.test(num1) && num1.length == 11) {
+        const pattern = /(0|)([ ]|-|[()]){0,2}9[0|1|2|3|4|9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/ig;
+        if (pattern.test(num1) && 9<num1.length < 12) {
 
             $('#'+submit_id).removeAttr("disabled")
 
