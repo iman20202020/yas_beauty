@@ -51,11 +51,11 @@
                     <input type="text"  name="last_name" onchange="show_confirm_key()" placeholder="نام خانوادگی*"
                         data-form-field="last_name" class="form-control" value="{{ teacher_profile.last_name }}"  id="last_name-form7-v" required>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="national_id">
-  <label for="national_id-form7-v ">     کد ملی * </label> <br><span class="small"> ( قابل مشاهده نیست و در اختیار کسی قرار نمی گیرد):</span>
-                    <input type="text" onchange="show_confirm_key()" name="national_id" data-form-field="national_id" onkeyup="num_to_english(this.id)"
-                        class="form-control"  value="{{ teacher_profile.national_id }}" id="national_id-form7-v" required>
-                </div>
+{#                <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="national_id">#}
+{#  <label for="national_id-form7-v ">     کد ملی * </label> <br><span class="small"> ( قابل مشاهده نیست و در اختیار کسی قرار نمی گیرد):</span>#}
+{#                    <input type="text" onchange="show_confirm_key()" name="national_id" data-form-field="national_id" onkeyup="num_to_english(this.id)"#}
+{#                        class="form-control"  value="{{ teacher_profile.national_id }}" id="national_id-form7-v" required>#}
+{#                </div>#}
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="learn_type">
                     <label for="learn_type-form7-v"> جنسیت :</label><br>
                     <select  name="learn_type" onchange="show_confirm_key()" data-form-field="gender" class="form-control"  id="gender-form7-v">
@@ -131,7 +131,7 @@
                     </select>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group text-right" data-for="qualification">
-                    <label for="qualification-form7-v" class="label"> خود را برای مخاطب شرح دهید*(حداکثر300 حرف) :</label>
+                    <label for="qualification-form7-v" class="label"> خود را برای مخاطب شرح دهید و جزییات دوره آموزشی را شرح دهید*(حداکثر500 حرف) :</label>
                    <textarea   name="qualification" onchange="show_confirm_key()"
                         class="form-control" id="qualification-form7-v"  rows="5" maxlength="200" onchange="show_confirm_key()" required >
                        {% if teacher_profile.qualification %}{{ teacher_profile.qualification }}{% endif %}
@@ -163,11 +163,6 @@
 {#                        <img id="national_card_image_preview" src="{{ teacher_profile.national_card_image.url }}" class="img-rounded col-lg-6 col-md-6 col-sm-12 "  >#}
 {#                    {% endif %}#}
 {#                </div>#}
-
-
-
-
-
 
 
 {#                <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image">#}
@@ -299,6 +294,7 @@
             type: 'GET',
             url: uploadForm.action,
             success:function (response) {
+
                 setTimeout(()=>{
                     spinnerBox.css('display','none');
                 console.log('response',response);

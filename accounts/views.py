@@ -240,33 +240,7 @@ def student_edit(request):
             }
 
         return render(request, 'accounts/student_edit.html', context)
-#
-# def student_submit(request):
-#     message = None
-#     if request.method == 'POST':
-#         student_submit_form = StudentSubmitForm(request.POST)
-#         national_id_entered = student_submit_form.data['national_id']
-#         if is_valid_iran_code(national_id_entered):
-#             if student_submit_form.is_valid():
-#                 student_submit = student_submit_form.save(commit=False)
-#                 student_submit.user = request.user
-#                 student_submit.save()
-#                 messages.success(request, 'ثبت نام شما با موفقیت انجام شد', 'success')
-#                 teacher_id = request.POST.get('teacher_id', None)
-#                 if teacher_id:
-#                     return render(request, 'teachme/teacher_detail.html', {'teacher_id': teacher_id})
-#                 else:
-#                     return HttpResponseRedirect(reverse('accounts:index_accounts'))
-#             else:
-#                 if student_submit_form.errors['national_id']:
-#                     message = 'این شماره ملی قبلا ثبت شده'
-#                 return render(request, 'accounts/student_submit.html', {'message': message})
-#         else:
-#             message = " شماره ملی معتبر نیست"
-#     else:
-#         student_submit_form = StudentSubmitForm()
-#         message = None
-#     return render(request,'accounts/student_submit.html', {'student_submit_form': student_submit_form,'message': message})
+
 
 @login_required
 @csrf_exempt
@@ -296,24 +270,24 @@ def teacher_edit(request):
                 error = str(request.user)+" "+'خوش آمدید'
                 if request.method == 'POST':
                     teacher_edit_form = TeacherEditForm(request.POST, request.FILES,instance=teacher_profile)
-                    national_id_entered = teacher_edit_form.data['national_id']
-                    if is_valid_iran_code(national_id_entered):
-                        if teacher_edit_form.is_valid():
-                            teacher_edit_form.user = request.user
-                            teacher_edit_form.pk = teacher_profile.id
-                            teacher = teacher_edit_form.save(commit=False)
-                            teacher.is_confirmed = False
-                            teacher.save()
-                            error = "مشخصات شما با موفقیت تغییر کرد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
-                            clerk_phone = '09361164819'
-                            teacher_user_id = request.user.id
-                            teacher_requested = MyUser.objects.get(id=request.user.id)
-                            teacher_email = request.user.username
-                            teacher_phone = teacher_requested.phone_number
-                            sms_token = 'user_id:{},name:{}'.format(teacher_user_id, teacher.last_name)
-                            sms_token2 = teacher_phone
-                            sms_token3 = teacher_email
-                            send_sms_teacher_edit(clerk_phone,sms_token, sms_token2,sms_token3)
+                    # national_id_entered = teacher_edit_form.data['national_id']
+                    # if is_valid_iran_code(national_id_entered):
+                    if teacher_edit_form.is_valid():
+                        teacher_edit_form.user = request.user
+                        teacher_edit_form.pk = teacher_profile.id
+                        teacher = teacher_edit_form.save(commit=False)
+                        teacher.is_confirmed = False
+                        teacher.save()
+                        error = "مشخصات شما با موفقیت تغییر کرد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
+                        clerk_phone = '09361164819'
+                        teacher_user_id = request.user.id
+                        teacher_requested = MyUser.objects.get(id=request.user.id)
+                        teacher_email = request.user.username
+                        teacher_phone = teacher_requested.phone_number
+                        sms_token = 'user_id:{},name:{}'.format(teacher_user_id, teacher.last_name)
+                        sms_token2 = teacher_phone
+                        sms_token3 = teacher_email
+                        send_sms_teacher_edit(clerk_phone,sms_token, sms_token2,sms_token3)
                             # if os.path.isfile(teacher_profile.sample_video.path) :
                             #     os.remove(teacher_profile.sample_video.path)
                             # if os.path.isfile(teacher_profile.image.path) :
@@ -323,35 +297,35 @@ def teacher_edit(request):
                             # if os.path.isfile(teacher_profile.national_card_image.path) :
                             #     os.remove(teacher_profile.national_card_image.path)
 
-                        else :
-                             error = "خطا:"
-                    else:
-                        error = " شماره ملی معتبر نیست"
+                    else :
+                         error = "خطا:"
+                    # else:
+                    #     error = " شماره ملی معتبر نیست"
 
             if request.method == 'POST' and hasattr(request.user, 'teacher') == False:
                 teacher_edit_form = TeacherEditForm(request.POST, request.FILES)
-                national_id_entered = teacher_edit_form.data['national_id']
-                if is_valid_iran_code(national_id_entered):
-                    if teacher_edit_form.is_valid():
-                        teacher = teacher_edit_form.save(commit=False)
-                        teacher.user = request.user
-                        teacher.save()
-                        error = "مشخصات شما ثبت شد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
-                        teacher_profile = request.user
-                        clerk_phone = '09361164819'
-                        teacher_user_id = request.user.id
-                        teacher_requested = MyUser.objects.get(id=request.user.id)
-                        teacher_email = request.user.username
-                        teacher_phone = teacher_requested.phone_number
-                        sms_token = 'user_id:{},name:{}'.format(teacher_user_id, teacher.last_name)
-                        sms_token2 = teacher_phone
-                        sms_token3 = teacher_email
-                        send_sms_teacher_edit(clerk_phone, sms_token, sms_token2, sms_token3)
-                    else:
-                        error = 'خطا:'
-
+                # national_id_entered = teacher_edit_form.data['national_id']
+                # if is_valid_iran_code(national_id_entered):
+                if teacher_edit_form.is_valid():
+                    teacher = teacher_edit_form.save(commit=False)
+                    teacher.user = request.user
+                    teacher.save()
+                    error = "مشخصات شما ثبت شد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
+                    teacher_profile = Teacher.objects.get(user_id=request.user.id)
+                    clerk_phone = '09361164819'
+                    teacher_user_id = request.user.id
+                    teacher_requested = MyUser.objects.get(id=request.user.id)
+                    teacher_email = request.user.username
+                    teacher_phone = teacher_requested.phone_number
+                    sms_token = 'user_id:{},name:{}'.format(teacher_user_id, teacher.last_name)
+                    sms_token2 = teacher_phone
+                    sms_token3 = teacher_email
+                    send_sms_teacher_edit(clerk_phone, sms_token, sms_token2, sms_token3)
                 else:
-                    error = " شماره ملی معتبر نیست"
+                    error = 'خطا:'
+
+                # else:
+                #     error = " شماره ملی معتبر نیست"
 
             context = {
                 'teacher_profile' : teacher_profile,

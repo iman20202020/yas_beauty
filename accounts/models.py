@@ -24,15 +24,15 @@ class MyUser(AbstractUser):
         },
     )
 class City(models.Model):
-    city = models.CharField(primary_key=True, max_length=15, default='تهران', unique=True)
-    city_name = models.CharField(max_length=30, )
+    city = models.CharField(primary_key=True, max_length=50, default='تهران', unique=True)
+    city_name = models.CharField(max_length=50, )
     def __str__(self):
         return self.city_name
 
 
 class LearnCategory(models.Model):
-    category = models.CharField(primary_key=True, max_length=15, )
-    category_name = models.CharField(max_length=30, )
+    category = models.CharField(primary_key=True, max_length=50, )
+    category_name = models.CharField(max_length=50, )
 
     def __str__(self):
         return self.category_name
@@ -40,16 +40,16 @@ class LearnCategory(models.Model):
 
 class Syllabus(models.Model):
     learn_category = models.ForeignKey('LearnCategory', on_delete=models.CASCADE)
-    syllabus = models.CharField(primary_key=True, max_length=15, )
-    syllabus_name = models.CharField(max_length=20, )
+    syllabus = models.CharField(primary_key=True, max_length=50, )
+    syllabus_name = models.CharField(max_length=50, )
 
     def __str__(self):
         return self.syllabus_name
 
 
 class PriceRange(models.Model):
-    price_range = models.CharField(primary_key=True, max_length=10,  unique=True)
-    price_range_name = models.CharField(max_length=30,)
+    price_range = models.CharField(primary_key=True, max_length=50,  unique=True)
+    price_range_name = models.CharField(max_length=50,)
 
     def __str__(self):
         return self.price_range_name
@@ -57,9 +57,9 @@ class PriceRange(models.Model):
 
 class Teacher(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE, )
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    national_id = models.PositiveIntegerField(blank=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    national_id = models.PositiveIntegerField(blank=True,null=True)
     price_range = models.ForeignKey('PriceRange', on_delete=models.CASCADE)
     # language = models.ForeignKey('Language', on_delete=models.CASCADE)
     city = models.ForeignKey('City', on_delete=models.CASCADE, default='تهران')
@@ -69,10 +69,10 @@ class Teacher(models.Model):
     national_card_image = models.ImageField(upload_to='images/',blank=True,validators=[validate_image_size],)
     degree_image = models.ImageField(upload_to="images/", validators=[validate_image_size],blank=True,)
     # jozveh = models.FileField(upload_to="jozveh/", blank=True,)
-    workshop_number =models.CharField(max_length=30, blank=True)
-    workshop_detail = models.CharField(max_length=30, blank=True)
-    workshop_price = models.CharField(max_length=30, blank=True)
-    qualification = models.CharField(max_length=300,blank=True,)
+    workshop_number =models.CharField(max_length=50, blank=True)
+    workshop_detail = models.CharField(max_length=50, blank=True)
+    workshop_price = models.CharField(max_length=50, blank=True)
+    qualification = models.CharField(max_length=500,blank=True,)
     experience = models.CharField(max_length=3, default='3', blank=True)
     points = models.IntegerField(default=3, blank=True)
     sample_video = models.FileField(verbose_name='ویدیوی نمونه',upload_to='videos/',blank=True,
@@ -84,8 +84,7 @@ class Teacher(models.Model):
     def __str__(self):
         return self.last_name+","+self.user.phone_number
 
-    def get_absolute_url(self):
-        return "/p/%i/" % self.id
+
 
 class Student(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE, blank=True)
@@ -95,32 +94,3 @@ class Student(models.Model):
     category = models.ForeignKey('LearnCategory', on_delete=models.CASCADE, default='uni')
     city = models.ForeignKey('City', on_delete=models.CASCADE, default='تهران')
 
-
-# class StudentSubmit(models.Model):
-#     user = models.OneToOneField(MyUser, on_delete=models.CASCADE,blank=True)
-#     first_name = models.CharField(verbose_name='نام', max_length=30)
-#     last_name = models.CharField(verbose_name='نام خانوادگی', max_length=30)
-#     national_id = models.PositiveIntegerField(unique=True)
-#
-#     gender = models.IntegerField(default=1, blank=True,  verbose_name='جنسیت')
-#
-#     def __str__(self):
-#         return self.last_name+','+self.user.phone_number
-
-# class RequestClass(models.Model):
-#     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE,blank=True)
-#     student = models.ForeignKey(StudentSubmit, on_delete=models.CASCADE,blank=True)
-#     start_date = models.DateField(auto_now_add=True)
-#     is_confirmed = models.BooleanField(default=False)
-#     is_started = models.BooleanField(default=False)
-#     number_of_sessions = models.PositiveIntegerField(blank=True,null=True)
-#     price = models.PositiveIntegerField(blank=True,null=True)
-#     class_type_choices = (
-#         ('حضوری', 'حضوری'),
-#         ('آنلاین', 'آنلاین'),
-#         ('حضوری و آنلاین', 'حضوری و آنلاین'),
-#                        )
-#     type_of_class = models.CharField(max_length=20,choices=class_type_choices,default='حضوری')
-#
-#     def __str__(self):
-#         return "t:"+self.teacher.user.phone_number+" ,s: "+self.student.user.phone_number
