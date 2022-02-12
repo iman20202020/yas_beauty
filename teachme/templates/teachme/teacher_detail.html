@@ -3,7 +3,7 @@
 {% load static %}
 {% block contents %}
 
- <div class="container p-4">
+<div class="container p-4">
     <div class="mbr-section-head text-center">
         <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-6">
             <strong> مشخصات استاد</strong></h4>
@@ -11,32 +11,53 @@
     <div class="row justify-content-center mt-4">
         <div class="col-lg-12 col-md-12 col-sm-12 form-group" data-for="points">
             <label  id="label_points"   for="points-form7-v" class="label ">امتیاز استاد  {{ teacher_selected.points }}از 5
-            <div class="progress">
-                <div id="points_progress_bar" class="progress-bar  " style="width: 50%" >
+                <div class="progress">
+                    <div id="points_progress_bar" class="progress-bar  " style="width: 50%" >
+                    </div>
                 </div>
+            </label>
         </div>
-        </label>
-    </div>
-    <div class=" d-flex   align-items-center row bg-secondary ">
+
         <div class="  col-lg-3 col-md-3 col-sm-12" >
             <img  src="{{ teacher_selected.image.url }}"  id="teacher_image" class="img-thumbnail">
         </div>
-{% if teacher_selected.sample_video %}
-        <div class="embed-responsive embed-responsive-4by3  col-lg-3 col-md-3 col-sm-12 " >
-
+    {% if teacher_selected.sample_video %}
+        <div class="embed-responsive embed-responsive-4by3  col-lg-6 col-md-6 col-sm-12 " >
              <video class="embed-responsive-item " src="{{ teacher_selected.sample_video.url }}" controls
-
-             poster = {% static 'accounts/images/poster.PNG' %}></video>
+                 poster = {% static 'accounts/images/poster.PNG' %}></video>
         </div>
-{% endif %}
-        <div class="   col-lg-5 col-md-5 col-sm-12 m-2    " >
-            <textarea class="form-control text-right " id="exampleFormControlTextarea1" disabled rows="6" dir="rtl" style="font-size: small">
+    {% endif %}
+   {% if teacher_selected.video_channel_link %}
+       <a  target="_blank" href="{{ teacher_selected.video_channel_link }}" class="p-4 text-white">  ویدئوهای بیشتر از این استاد</a><br><br>
+   {% endif %}
+        <div class="   col-lg-9 col-md-9 col-sm-12 m-2    " >
+            <label for="text-describe">توضیحات</label>
+            <textarea class="form-control text-right " id="text-describe" disabled rows="8" dir="rtl" style="font-size: small">
 
                 {{ teacher_selected.qualification }}
             </textarea>
         </div>
+
+
+   {% if teacher_selected.degree_image %}
+        <div class="  col-lg-3 col-md-3 col-sm-12" >
+            <img  src="{{ teacher_selected.degree_image.url }}"  id="teacher_degree_image" class="img-thumbnail">
+        </div>
+   {% endif %}
+
+   {% if teacher_selected.degree_image2 %}
+        <div class="  col-lg-3 col-md-3 col-sm-12" >
+            <img  src="{{ teacher_selected.degree_image2.url }}"  id="teacher_degree_image2" class="img-thumbnail">
+        </div>
+   {% endif %}
+
+   {% if teacher_selected.degree_image3 %}
+        <div class="  col-lg-3 col-md-3 col-sm-12" >
+           <img  src="{{ teacher_selected.degree_image3.url }}"  id="teacher_degree_image3" class="img-thumbnail">
+        </div>
+   {% endif %}
     </div>
-    <div class=" col justify-content-center">
+    <div class=" col text-center">
         <table class="table table-striped ">
             <thead>
         {% if student_category == 'آرایش و زیبایی' or student_category == 'آشپزی' or student_category == 'هنرهای تجسمی' or student_category == 'سینما و بازیگری' or student_category == 'کارهای فنی' %}
@@ -59,12 +80,12 @@
             </tr>
         {% else %}
             <tr>
-                <th><sub>نام استاد </sub></th>
+                <th><sub> استاد </sub></th>
                 <th><sub>موضوع تدریس</sub></th>
                 <th> <sub>سابقه تدریس </sub></th>
-                <th><sub>هزینه کلاس هر ساعت </sub></th>
+                <th><sub> کلاس هر ساعت </sub></th>
             </tr>
-            </thead>
+
             <tr>
                 <td><sub> {{ teacher_selected.first_name }}  {{ teacher_selected.last_name }}</sub></td>
                 <td><sub>{{ teacher_selected.syllabus.syllabus_name }}</sub></td>
@@ -74,31 +95,22 @@
             {% endif %}
         </table>
     </div>
- </div>
+
     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
 
+
         <a href="{% url 'accounts:site_laws' %}" class="p-4">  قوانین سایت </a><br><br>
-        <form class=" text-center" method="post"
+        <form class=" " method="post"
               action="{% if request.user.is_authenticated %}{% url 'teachme:teacher_request' teacher_selected.id %}
                   {% else %}{% url 'accounts:user_verify' %}{% endif %}">
 
             {% csrf_token %}
             <input type="hidden" name="teacher_selected_id" value="{{ teacher_selected.id }}">
-{#            <input type="hidden" name="student_user_id" value="{{ student_user_id }}">#}
-
-             <input type="submit" id="submit_form" class="btn btn-primary " value = 'پذیرفتن قوانین سایت و ثبت درخواست استاد' >
+            <input type="submit" id="submit_form" class="btn btn-primary ml-4 " value = 'پذیرفتن قوانین سایت و ثبت درخواست استاد' >
 
 
         </form><br><br>
         <a href="{% url 'teachme:teacher_list'  %}?cat={{ teacher_selected.category }}&syl={{ teacher_selected.syllabus }}" type="button" class="btn btn-dark" > بازگشت به لیست</a><br><br>
-{#        <form action="{% url 'accounts:student_edit' %}" method="post">#}
-{#            <input type="hidden" name="category_from_detail" value="{{ teacher_selected.category }}">#}
-{#            <input type="hidden" name="syllabus_from_detail" value="{{ teacher_selected.syllabus }}">#}
-{#            <input type="hidden" name="price_range_from_detail" value="{{ teacher_selected.price_range.price_range }}">#}
-{#            <input type="hidden" name="city_from_detail" value="{{ teacher_selected.city }}">#}
-{#            <input type="hidden" name="learn_type_from_detail" value="{{ teacher_selected.learn_type }}">#}
-{#            <input type="submit" class="btn btn-dark"  value="بازگشت به لیست"   ><br><br>#}
-{#        </form>#}
 
     </div>
  </div>

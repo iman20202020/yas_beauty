@@ -3,6 +3,8 @@ from itertools import chain
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
+from django.utils.text import slugify
+
 from accounts.otp import *
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -276,7 +278,7 @@ def teacher_edit(request):
                         teacher_edit_form.user = request.user
                         teacher_edit_form.pk = teacher_profile.id
                         teacher = teacher_edit_form.save(commit=False)
-                        teacher.is_confirmed = False
+                        # teacher.slug = f"{teacher.syllabus}-{teacher.last_name}"
                         teacher.save()
                         error = "مشخصات شما با موفقیت تغییر کرد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
                         clerk_phone = '09361164819'
@@ -288,14 +290,6 @@ def teacher_edit(request):
                         sms_token2 = teacher_phone
                         sms_token3 = teacher_email
                         send_sms_teacher_edit(clerk_phone,sms_token, sms_token2,sms_token3)
-                            # if os.path.isfile(teacher_profile.sample_video.path) :
-                            #     os.remove(teacher_profile.sample_video.path)
-                            # if os.path.isfile(teacher_profile.image.path) :
-                            #     os.remove(teacher_profile.image.path)
-                            # if os.path.isfile(teacher_profile.degree_image.path):
-                            #     os.remove(teacher_profile.degree_image.path)
-                            # if os.path.isfile(teacher_profile.national_card_image.path) :
-                            #     os.remove(teacher_profile.national_card_image.path)
 
                     else :
                          error = "خطا:"
@@ -309,6 +303,7 @@ def teacher_edit(request):
                 if teacher_edit_form.is_valid():
                     teacher = teacher_edit_form.save(commit=False)
                     teacher.user = request.user
+                    # teacher.slug = f"{teacher.syllabus}-{teacher.last_name}"
                     teacher.save()
                     error = "مشخصات شما ثبت شد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
                     teacher_profile = Teacher.objects.get(user_id=request.user.id)
