@@ -8,7 +8,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.urls import reverse
 
-from accounts.models import  Teacher, MyUser
+from accounts.models import Teacher, MyUser, ClassRequest, Student
 from teachme.send_sms import *
 
 
@@ -27,11 +27,34 @@ def teacher_request(request,teacher_id):
     clerk_phone = '09361164819'
 
     teacher_requested = Teacher.objects.get(id=teacher_id)
+    student = MyUser.objects.get(pk=request.user.id)
+    student_object = Student.objects.create(student_phone=student.phone_number, student_email=student.username)
+    student_object.save()
+
+    class_request = ClassRequest.objects.create(
+        teacher=teacher_requested,
+        student=student_object,
+        teacher_email=teacher_requested.user.username,
+        student_email=student_object.student_email,
+        teacher_phone=teacher_requested.user.phone_number,
+        student_phone=student_object.student_phone,
+        teacher_last_name=teacher_requested.last_name,
+        price=teacher_requested.price_range,
+        workshop_price=teacher_requested.workshop_price,
+        category=teacher_requested.category,
+        syllabus=teacher_requested.syllabus,
+        city=teacher_requested.city,
+        )
+    class_request.save()
+
     teacher_requested_user_id = getattr(teacher_requested,'user_id')
     teacher_requested_user_params = MyUser.objects.get(id=teacher_requested_user_id)
     teacher_phone = teacher_requested_user_params.phone_number
 
-    student = MyUser.objects.get(pk=request.user.id)
+
+
+
+
     student_phone = student.phone_number
     clerk_sms_token = 'id:{},uid{}'.format(teacher_id, teacher_requested_user_id)
     clerk_sms_token2 = teacher_phone

@@ -99,7 +99,33 @@ class Teacher(models.Model):
     def __str__(self):
         return f"uid:{self.user_id}/{self.last_name}/{self.user.phone_number}/{self.syllabus}"
 
+class Student(models.Model):
+    student_email = models.CharField(max_length=100)
+    student_phone = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.student_phone
+
+class ClassRequest(models.Model):
+    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE)
+    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    teacher_email = models.CharField(max_length=100,)
+    student_email = models.CharField(max_length=100,)
+    teacher_phone = models.CharField(max_length=20,)
+    student_phone = models.CharField(max_length=20,)
+    teacher_last_name = models.CharField(max_length=100,)
+    category = models.ForeignKey('LearnCategory', on_delete=models.CASCADE)
+    syllabus = models.ForeignKey('Syllabus', on_delete=models.CASCADE)
+    price = models.ForeignKey('PriceRange', on_delete=models.CASCADE)
+    workshop_price = models.CharField(max_length=30)
+    city = models.ForeignKey('City', on_delete=models.CASCADE)
+    is_confirmed = models.BooleanField(default=False)
+
+    request_time = models.DateTimeField(auto_now=True,)
+
+
+    def __str__(self):
+        return f"teacher:{self.teacher.last_name}/uid:{self.teacher.user_id} - stu:{self.student}"
 
 
 
