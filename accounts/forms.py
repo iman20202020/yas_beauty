@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from accounts.models import Student, Teacher, MyUser
+from accounts.models import Teacher, MyUser
 
 
 class MyUserCreate(UserCreationForm):
@@ -31,16 +31,6 @@ class MyUserCreate(UserCreationForm):
 
     phone_number = forms.CharField(required=True,label="شماره همراه", widget=forms.TextInput(attrs={'readonly':'readonly'}) )
 
-
-class StudentEditForm(forms.ModelForm):
-    class Meta:
-        model = Student
-        exclude = ['user','email']
-
-# class StudentSubmitForm(forms.ModelForm):
-#     class Meta:
-#         model = StudentSubmit
-#         exclude = ['user','email']
 
 
 class TeacherEditForm(forms.ModelForm):

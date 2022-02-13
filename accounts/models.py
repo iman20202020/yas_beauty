@@ -24,16 +24,26 @@ class MyUser(AbstractUser):
             'unique':"یک کاربر با این ایمیل وجود دارد .",
         },
     )
+
+class State(models.Model):
+    state = models.CharField(primary_key=True, max_length=50,unique=True)
+
+    def __str__(self):
+        return self.state
+
+
 class City(models.Model):
-    city = models.CharField(primary_key=True, max_length=15, default='تهران', unique=True)
-    city_name = models.CharField(max_length=30, )
+    state = models.ForeignKey('State', on_delete=models.CASCADE)
+    city = models.CharField(primary_key=True, max_length=50, default='تهران', unique=True)
+    city_name = models.CharField(max_length=50, )
+
     def __str__(self):
         return self.city_name
 
 
 class LearnCategory(models.Model):
-    category = models.CharField(primary_key=True, max_length=15, )
-    category_name = models.CharField(max_length=30, )
+    category = models.CharField(primary_key=True, max_length=50, )
+    category_name = models.CharField(max_length=50, )
 
     def __str__(self):
         return self.category_name
@@ -41,16 +51,16 @@ class LearnCategory(models.Model):
 
 class Syllabus(models.Model):
     learn_category = models.ForeignKey('LearnCategory', on_delete=models.CASCADE)
-    syllabus = models.CharField(primary_key=True, max_length=15, )
-    syllabus_name = models.CharField(max_length=20, )
+    syllabus = models.CharField(primary_key=True, max_length=50, )
+    syllabus_name = models.CharField(max_length=50, )
 
     def __str__(self):
         return self.syllabus_name
 
 
 class PriceRange(models.Model):
-    price_range = models.CharField(primary_key=True, max_length=10,  unique=True)
-    price_range_name = models.CharField(max_length=30,)
+    price_range = models.CharField(primary_key=True, max_length=50,  unique=True)
+    price_range_name = models.CharField(max_length=50,)
 
     def __str__(self):
         return self.price_range_name
@@ -64,8 +74,9 @@ class Teacher(models.Model):
     price_range = models.ForeignKey('PriceRange', on_delete=models.CASCADE)
     video_channel_link = models.URLField(blank=True, null=True)
     city = models.ForeignKey('City', on_delete=models.CASCADE, default='تهران')
+    state = models.ForeignKey('State', on_delete=models.CASCADE, default='تهران')
     syllabus = models.ForeignKey('Syllabus', on_delete=models.CASCADE, )
-    category = models.ForeignKey('LearnCategory', on_delete=models.CASCADE, default='uni')
+    category = models.ForeignKey('LearnCategory', on_delete=models.CASCADE,)
     image = models.ImageField(upload_to='images/', blank=True,validators=[validate_image_size])
     national_card_image = models.ImageField(upload_to='images/',blank=True,validators=[validate_image_size],)
     degree_image = models.ImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True)
@@ -80,7 +91,7 @@ class Teacher(models.Model):
     points = models.IntegerField(default=3, blank=True)
     sample_video = models.FileField(verbose_name='ویدیوی نمونه',upload_to='videos/',blank=True,
           validators=[FileExtensionValidator( allowed_extensions=['mp4', 'wmv','mov','3gp']),validate_video_size],)
-    learn_type = models.IntegerField( default=0,blank=True)
+    learn_type = models.IntegerField(default=0,blank=True)
     is_confirmed = models.BooleanField(default=False)
     gender = models.IntegerField(default=1,blank=True)
     slug = models.SlugField(blank=True,null=True)
@@ -90,12 +101,5 @@ class Teacher(models.Model):
 
 
 
-class Student(models.Model):
-    user = models.OneToOneField(MyUser, on_delete=models.CASCADE, blank=True)
-    price_range = models.ForeignKey('PriceRange', on_delete=models.CASCADE)
-    learn_type = models.IntegerField(blank=True,default=0)
-    syllabus = models.ForeignKey('Syllabus', on_delete=models.CASCADE, default='phys')
-    category = models.ForeignKey('LearnCategory', on_delete=models.CASCADE, default='uni')
-    city = models.ForeignKey('City', on_delete=models.CASCADE, default='تهران')
 
 

@@ -14,25 +14,13 @@ from teachme.send_sms import *
 
 
 def teacher_detail(request, teacher_id):
-    # teacher_selected = None
-    # student_user_id = None
-    # if hasattr(request.user, 'studentsubmit') ==False and  hasattr(request.user, 'teacher') == False:
-    # if request.user.is_anonymous:
-    #     return render(request,'accounts/login.html',context={'teacher_id':teacher_id})
-
-
-    # student_user_id = request.user.id
     teacher_selected = Teacher.objects.get(pk=teacher_id)
-    # student_category = teacher_selected.category_id
-
-    #     return HttpResponseRedirect(reverse('teachme:message_viewer',args=['شما به عنوان معلم ثبت شده اید برای درخواست استاد دوباره با شماره تلفن و ایمیل جدید به عنوان دانش آموز ثبت نام کنید']))
 
     context = {
         'teacher_selected': teacher_selected,
-        # 'student_user_id': student_user_id,
-        # 'student_category': student_category,
     }
     return render(request, 'teachme/teacher_detail.html', context)
+
 
 @login_required
 def teacher_request(request,teacher_id):
@@ -44,11 +32,6 @@ def teacher_request(request,teacher_id):
     teacher_phone = teacher_requested_user_params.phone_number
 
     student = MyUser.objects.get(pk=request.user.id)
-    # if hasattr(request.user, 'studentsubmit'):
-    #     student = StudentSubmit.objects.get(user_id=student_user_id)
-    # if hasattr(request.user, 'teacher'):
-    #     student = Teacher.objects.get(user_id=student_user_id)
-    # student_user_params = MyUser.objects.get(id=student_user_id)
     student_phone = student.phone_number
     clerk_sms_token = 'id:{},uid{}'.format(teacher_id, teacher_requested_user_id)
     clerk_sms_token2 = teacher_phone
@@ -61,10 +44,8 @@ def teacher_request(request,teacher_id):
 
 
 def teacher_list(request):
-
     category_selected = request.GET.get('cat')
     syllabus_selected = request.GET.get('syl')
-
 
     teachers = Teacher.objects.filter(category=category_selected,syllabus=syllabus_selected,is_confirmed=True)
     teachers = Paginator(teachers, 25)
@@ -79,7 +60,3 @@ def teacher_list(request):
     }
     return render(request, 'teachme/teacher_list.html', context)
 
-    # response = send_otp(mobile_number)
-# def message_viewer(request,message_get):
-#     message = message_get
-#     return render(request, 'teachme/message_viewer.html', {'message':message})

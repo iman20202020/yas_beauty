@@ -1,22 +1,15 @@
 from itertools import chain
-
-from django.contrib import messages
-from django.core.paginator import Paginator
 from django.shortcuts import redirect
-from django.utils.text import slugify
-
 from accounts.otp import *
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from accounts.forms import MyUserCreate, StudentEditForm, TeacherEditForm
-from accounts.models import LearnCategory, Syllabus, PriceRange, Student, Teacher, City, MyUser
-from accounts.validators import is_valid_iran_code
+from accounts.forms import MyUserCreate,TeacherEditForm
+from accounts.models import LearnCategory, Syllabus, PriceRange, Teacher, City, MyUser, State
 
 
 def base_view(request):
@@ -127,11 +120,7 @@ def login_view(request):
                 return HttpResponseRedirect(request.GET.get('next'))
             if hasattr(user, 'teacher'):
                 return HttpResponseRedirect(reverse('accounts:teacher_edit'))
-            elif hasattr(user, 'studentsubmit'):
-                return HttpResponseRedirect(reverse('accounts:student_edit'))
-            # if teacher_id:
-            #     from_login = 'login'
-            #     return render(request, 'teachme/teacher_detail.html', {'teacher_id': teacher_id,'from_login': from_login,})
+
             else:
                 return render(request,'accounts/user_create.html',{'user_saved': 1})
         else:
@@ -154,112 +143,38 @@ def logout_view(request):
 def profile_edit(request):
     if hasattr(request.user, 'teacher'):
         return HttpResponseRedirect(reverse('accounts:teacher_edit'))
-    # if hasattr(request.user, 'student'):
-    #     return HttpResponseRedirect(reverse('accounts:student_edit'))
     else:
         return HttpResponseRedirect(reverse('accounts:user_create'))
 
-@csrf_exempt
-def student_edit(request):
-    if request.is_ajax():
-        category = request.GET.get('category',None)
-        category_list = request.GET.get('category_list', None)
-        if category_list:
-            category_list = list(LearnCategory.objects.all().values())
-            return JsonResponse(category_list, safe=False)
-        syll = list(Syllabus.objects.filter(learn_category=category).values())
-        return JsonResponse(syll, safe=False)
-    else:
-        student_edit_form = StudentEditForm()
-        cities = list(City.objects.all().values())
-        price_ranges = list(PriceRange.objects.all().values())
-        # languages = list(Language.objects.all().values())
-        categories = list(LearnCategory.objects.all().values())
-        syllabuses = None
-        category_selected = request.GET.get('cat')
-        syllabus_selected = request.GET.get('syl')
-        error = None
-        if  request.method == 'POST':
-            learn_type_to_show = None
-            if request.POST.get('category_from_detail'):
-                student_category = request.POST.get('category_from_detail')
-                student_syllabus = request.POST.get('syllabus_from_detail')
-                student_price_range = request.POST.get('price_range_from_detail')
-                student_city = request.POST.get('city_from_detail')
-                city_to_show = student_city
-                student_learn_type = 0
-            else:
 
-
-                student_edit_form = StudentEditForm(request.POST)
-                # if student_edit_form.is_valid():
-
-                student_city = student_edit_form.data['city']
-                city_to_show = student_city
-                student_learn_type =int( student_edit_form.data['learn_type'])
-                student_category = student_edit_form.data['category']
-                student_syllabus = student_edit_form.data['syllabus']
-                student_price_range = student_edit_form.data['price_range']
-            if student_learn_type == 0:
-                learn_type_to_show = 'آنلاین یا حضوری'
-            if student_learn_type == 1:
-                learn_type_to_show = 'آنلاین '
-            if student_learn_type == 2:
-                learn_type_to_show = 'حضوری'
-
-            # student_mobile_number = student_selected.mobile_number
-            if student_learn_type < 2:
-                teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
-                                                  price_range=student_price_range,is_confirmed=True)
-            else:
-                teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
-                                                  price_range=student_price_range, city=student_city,
-                                                  learn_type=student_learn_type,is_confirmed=True)
-
-            teachers = Paginator(teachers, 15)
-            page_number = request.GET.get('page')
-            page_obj = teachers.get_page(page_number)
-            context = {
-                        'teachers': teachers,
-                        'page_obj': page_obj,
-                        'student_category': student_category,
-                        'learn_type_to_show': learn_type_to_show,
-                        'student_price_range': student_price_range,
-                        'student_syllabus': student_syllabus,
-                        'city_to_show': city_to_show,
-                    }
-            return render(request, 'teachme/teacher_list.html', context)
-
-        context = {
-            'student_edit_form': student_edit_form,
-            'error': error,
-            'cities': cities,
-            'price_ranges' : price_ranges,
-            'categories' : categories,
-            'syllabuses' : syllabuses,
-            'category_selected' : category_selected,
-            'syllabus_selected' : syllabus_selected,
-            }
-
-        return render(request, 'accounts/student_edit.html', context)
 
 
 @login_required
 @csrf_exempt
 def teacher_edit(request):
         if request.is_ajax():
-            category = request.GET.get('category',None)
-            category_list = request.GET.get('category_list', None)
-            if category_list:
-                category_list = list(LearnCategory.objects.all().values())
-                return JsonResponse(category_list, safe=False)
-            syll = list(Syllabus.objects.filter(learn_category=category).values())
-            return JsonResponse(syll,safe=False)
+            if 'category' in request.GET :
+                category = request.GET.get('category',None)
+                category_list = request.GET.get('category_list', None)
+                if category_list:
+                    category_list = list(LearnCategory.objects.all().values())
+                    return JsonResponse(category_list, safe=False)
+                syll = list(Syllabus.objects.filter(learn_category=category).values())
+                return JsonResponse(syll, safe=False)
+            if 'state' in request.GET:
+                state = request.GET.get('state', None)
+                state_list = request.GET.get('state_list', None)
+                if state_list:
+                    state_list = list(State.objects.all().values())
+                    return JsonResponse(state_list, safe=False)
+                city = list(City.objects.filter(state=state).values())
+                return JsonResponse(city,safe=False)
+
         else:
             teacher_edit_form = TeacherEditForm()
             cities = list(City.objects.all().values())
+            states = list(State.objects.all().values())
             price_ranges=list(PriceRange.objects.all().values())
-            # languages=list(Language.objects.all().values())
             categories=list(LearnCategory.objects.all().values())
             syllabuses = list(Syllabus.objects.all().values())
             first_name = None
@@ -327,6 +242,7 @@ def teacher_edit(request):
                 'teacher_edit_form': teacher_edit_form,
                 'error': error,
                 'cities': cities,
+                'states': states,
                 'price_ranges' : price_ranges,
                 # 'teacher_edited' : teacher_edited,
                 'categories' : categories,
