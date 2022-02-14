@@ -13,11 +13,15 @@ from teachme.send_sms import *
 
 
 
-def teacher_detail(request, teacher_id):
+def teacher_detail(request):
+    teacher_id = request.GET.get('teacher_id')
+    student_category = request.GET.get('student_category')
     teacher_selected = Teacher.objects.get(pk=teacher_id)
+
 
     context = {
         'teacher_selected': teacher_selected,
+        'student_category': student_category,
     }
     return render(request, 'teachme/teacher_detail.html', context)
 

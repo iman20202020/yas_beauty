@@ -20,7 +20,7 @@
                     <input type="hidden" id="teacher_selected_id" name="teacher_selected_id" value="{{ teacher_id }}">
 
                     <input type="text" name="input_mobile"  id="input_mobile"
-                           onkeyup="check_number('input_mobile_submit','input_mobile')" autofocus  autocomplete="new-password" placeholder="09123456789">
+                           onkeyup="check_number('input_mobile_submit','input_mobile')"   autocomplete="new-password" placeholder="09123456789">
                     <input type="submit"  id="input_mobile_submit" class="btn btn-dark " value="ثبت"  disabled>
                 </form><br><br>
                <p> کیبورد دستگاه روی زبان فارسی یا انگلیسی باشد</p>
@@ -60,62 +60,16 @@
     </div>
 </div>
 <script >
-{#forced refresh for back#}
+
 window.addEventListener( "pageshow", function ( event ) {
   var historyTraversal = event.persisted ||
                          ( typeof window.performance != "undefined" &&
                               window.performance.navigation.type === 2 );
   if ( historyTraversal ) {
-    // Handle page restore.
     window.location.reload(true);
   }
 });
-function check_length() {
 
-    var pn = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-    var en = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-
-    var cache =  $('#veri_code_input').val();
-    for (var i = 0; i < 10; i++) {
-        var regex_fa = new RegExp(pn[i], 'g');
-        cache = cache.replace(regex_fa, en[i]);
-    }
-    $('#veri_code_input').val(cache);
-
-if($('#veri_code_input').val().length === 4){
-    $('#code_register').removeAttr("disabled")
-}
-else {
-     $('#code_register').prop( "disabled", true )
-}
-}
-
-{#        regex for mobile number iranian validate#}
-    function check_number (submit_id,mobile_inputted) {
-
-    var pn = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-    var en = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-
-    var cache =  $('#input_mobile').val();
-    for (var i = 0; i < 10; i++) {
-        var regex_fa = new RegExp(pn[i], 'g');
-        cache = cache.replace(regex_fa, en[i]);
-    }
-    $('#input_mobile').val(cache);
-
-
-        let num1 = $("#"+mobile_inputted).val();
-        const pattern = /(0|)([ ]|-|[()]){0,2}9[0|1|2|3|4|9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/ig;
-        if (pattern.test(num1) && 9<num1.length < 12) {
-
-            $('#'+submit_id).removeAttr("disabled")
-
-        }
-        else{
-             $('#'+submit_id ).prop( "disabled", true )
-            }
-    }
-    {#countdown and resend verification ode#}
 
 var timeleft = 60;
 var downloadTimer = setInterval(function(){
@@ -128,7 +82,6 @@ var downloadTimer = setInterval(function(){
   }
   timeleft -= 1;
 }, 1000);
-
 
 </script>
 

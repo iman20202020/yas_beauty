@@ -1,0 +1,37 @@
+{% extends 'accounts/_base.html' %}
+{% block contents %}
+<div class="container ">
+    <div class="row ">
+        <div class="text-center">
+        {% if this_user %}
+            <form class="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="this_user" value="{{ this_user.username }}">
+                <label for="">رمز عبور جدید:</label>
+                <input type="text" id="pass_1" name="pass_1" class="form-control" value="">
+                <label for=""> تکرار رمز عبور جدید:</label>
+                <input type="text" id="pass_2" name="pass_2" class="form-control" value="" onkeyup="check_pass_reset_match()">
+                <input type="submit" class="form-control btn btn-info mt-3 d-none"  id="submit_pass_match" value="ثبت" >
+
+            </form>
+        {% else %}
+            <form class="" method="post">
+                {% csrf_token %}
+                <label for="">شماره همراه:</label>
+                <input type="text" id="mobile_number" name="mobile_number" class="form-control" onkeyup="check_number('change_pass_submit_btn','mobile_number')">
+                <label for="">ایمیل:</label>
+                <input type="text" id="email" name="email" class="form-control" value="">
+
+                <input type="submit" id="change_pass_submit_btn" class=" btn btn-primary form-control mt-3" value="درخواست تغییر رمز" disabled>
+            </form>
+        {% endif %}
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+</script>
+{% endblock %}

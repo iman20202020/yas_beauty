@@ -1,4 +1,6 @@
 from itertools import chain
+
+from django.contrib import messages
 from django.shortcuts import redirect
 from accounts.otp import *
 from django.contrib.auth import logout, login, authenticate
@@ -288,6 +290,9 @@ def user_verify(request):
 
         if 'input_mobile' in request.POST:
             mobile_number = request.POST.get('input_mobile')
+            if len(mobile_number) == 10:
+                mobile_number = '0'+mobile_number
+
             response = send_otp(mobile_number)
             if response[0]['status'] == 5:
                 user_verified = 'code_sent'
@@ -299,6 +304,8 @@ def user_verify(request):
             otp_code = request.POST.get('otp_code_generated')
             veri_code_input = request.POST.get('veri_code_input')
             mobile_number = request.POST.get('mobile_number')
+            if len(mobile_number) == 10:
+                mobile_number = '0'+mobile_number
             if otp_code == veri_code_input:
                 user_verified = 'code_checked'
                 user_create_form = MyUserCreate()
@@ -329,64 +336,38 @@ def user_verify(request):
 
 
 def pass_reset(request):
-    error = None
-    user_verified = None
-    otp_code = None
-    mobile_number = None
-    email = None
+    this_user = None
     if request.method == 'POST':
-        if 'input_mobile' in request.POST:
-            mobile_number = request.POST.get('input_mobile')
-            response = send_otp(mobile_number)
-            if response[0]['status'] == 5:
-                user_verified = 'code_sent'
-                otp_code = response[1]
+        if 'pass_1' in request.POST:
+            pass_1 = request.POST.get('pass_1')
+            pass_2 = request.POST.get('pass_2')
+            if pass_1 == pass_2:
+                this_user_username = request.POST.get('this_user')
+                user = MyUser.objects.get(username=this_user_username)
+                user.set_password(pass_1)
+                user.save()
+                login(request, user)
+                messages.success(request, 'رمزعبور با موفقیت تغییر یافت', 'success')
+                return redirect(reverse('accounts:index_accounts'))
             else:
-                user_verified = 'code_not_sent'
-                otp_code = None
-        if 'veri_code_input' in request.POST and 'mobile_number' in request.POST:
-            otp_code = request.POST.get('otp_code_generated')
-            veri_code_input = request.POST.get('veri_code_input')
-            mobile_number = request.POST.get('mobile_number')
-            if otp_code == veri_code_input:
-                user =MyUser.objects.filter(phone_number=mobile_number,)
-                if not user:
-                    error = 'چنین کاربری وجود ندارد لطفا دوباره شماره خود را وارد کنید'
-                    return render(request, 'accounts/user_verify.html',{'error':error})
-                user_verified = 'code_checked'
-                user_create_form = MyUserCreate()
-                user_create_form.fields['phone_number'].initial = mobile_number
-                # user_create_form.fields['username'].initial = user_email
-                reset_pass_request = True
-                context = {
-                    'user_verified': user_verified,
-                    'otp_code': otp_code,
-                    'reset_pass_request': reset_pass_request,
-                    'mobile_number': mobile_number,
-                    'user_create_form': user_create_form,
-                }
-                return render(request,'accounts/user_create.html',context)
-    context = {
-        'user_verified':user_verified,
-        'otp_code':otp_code,
-        'mobile_number':mobile_number,
-    }
-    return render(request,'accounts/user_verify.html',context)
+                messages.error(request, 'رمز عبور با تکرار آن مطابق نیست','danger')
 
-
-def pass_reset_confirmed(request):
-        mobile_number =request.POST.get('phone_number')
-        entered_email =request.POST.get('username')
-        user = MyUser.objects.get(phone_number=mobile_number)
-        user_email = getattr(user,'username')
-        if entered_email == user_email:
-            new_password = request.POST.get('password1')
-            user.set_password(new_password)
-            user.save()
-            login(request, user)
+        email = request.POST.get('email')
+        mobile_number = request.POST.get('mobile_number')
+        if len(mobile_number) == 10:
+            mobile_number = '0' + mobile_number
+        mobile_number_exists = MyUser.objects.filter(phone_number=mobile_number).exists()
+        if mobile_number_exists:
+            check_user_exists = MyUser.objects.filter(phone_number=mobile_number,username=email,).exists()
+            if check_user_exists:
+                this_user = MyUser.objects.get(phone_number=mobile_number,username=email)
+            else:
+                messages.error(request, 'چنین کاربری وجود ندارد', 'danger')
         else:
-            return HttpResponse('ایمیل وارد شده با شماره همراه مطابق نیست')
-        return render(request, 'accounts/pass_reset-confirmed.html',{})
+            messages.error(request, 'کاربری با این شماره همراه موجود نیست', 'danger')
+
+    return render(request, 'accounts/pass_reset.html', {'this_user': this_user})
+
 
 def site_laws(request):
     return render(request,'accounts/sit_laws.html',{})
@@ -394,9 +375,13 @@ def site_laws(request):
 def how_use(request):
     return render(request,'accounts/how_use.html',{})
 
+
 def how_use2(request):
     return render(request,'accounts/how_use2.html',{})
 
+
 def teacher_laws(request):
     return render(request,'accounts/teacher_laws.html',{})
+
+
 
