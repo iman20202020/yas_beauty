@@ -18,7 +18,8 @@
             <form class="" method="post">
                 {% csrf_token %}
                 <label for="">شماره همراه:</label>
-                <input type="text" id="mobile_number" name="mobile_number" class="form-control" onkeyup="check_number('change_pass_submit_btn','mobile_number')">
+                <input type="text" id="mobile_number" name="mobile_number" class="form-control" autocomplete="new-password" placeholder="09123456789"
+                       onkeyup="check_number('change_pass_submit_btn','mobile_number')">
                 <label for="">ایمیل:</label>
                 <input type="text" id="email" name="email" class="form-control" value="">
 
