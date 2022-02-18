@@ -55,10 +55,6 @@ def teacher_request(request,teacher_id):
     teacher_requested_user_params = MyUser.objects.get(id=teacher_requested_user_id)
     teacher_phone = teacher_requested_user_params.phone_number
 
-
-
-
-
     student_phone = student.phone_number
     clerk_sms_token = 'id:{},uid{}'.format(teacher_id, teacher_requested_user_id)
     clerk_sms_token2 = teacher_phone

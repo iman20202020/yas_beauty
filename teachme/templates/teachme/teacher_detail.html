@@ -27,11 +27,13 @@
                  poster = {% static 'accounts/images/poster.PNG' %}></video>
         </div>
     {% endif %}
+
    {% if teacher_selected.video_channel_link %}
-       <a  target="_blank" href="{{ teacher_selected.video_channel_link }}" class="p-4 text-white">  ویدئوهای بیشتر از این استاد</a><br><br>
+
+       <a  target="_blank" href="{{ teacher_selected.video_channel_link }}" class="p-4 ">  ویدئوهای بیشتر از این استاد</a><br><br>
    {% endif %}
         <div class="   col-lg-9 col-md-9 col-sm-12 m-2    " >
-            <label for="text-describe">توضیحات</label>
+            <label for="text-describe" class="">توضیحات</label>
             <textarea class="form-control text-right " id="text-describe" disabled rows="8" dir="rtl" style="font-size: small">
 
                 {{ teacher_selected.qualification }}

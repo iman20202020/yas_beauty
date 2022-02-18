@@ -262,12 +262,12 @@ def search_view(request):
     if request.method == "GET":
         search_query = request.GET.get('search_text',None)
         if search_query:
-            result1 = Syllabus.objects.filter(syllabus__icontains= search_query)
+            result1 = Syllabus.objects.filter(syllabus__contains= search_query)
             result1_teachers = Teacher.objects.filter(syllabus__syllabus_name__contains=search_query,is_confirmed=True)
-            result2 = LearnCategory.objects.filter(category_name__icontains=search_query)
+            result2 = LearnCategory.objects.filter(category_name__contains=search_query)
             result2_teachers = Teacher.objects.filter(category__category__contains=search_query,is_confirmed=True)
 
-            result3_teachers = Teacher.objects.filter(Q(last_name__icontains=search_query,is_confirmed=True)|Q(first_name__icontains=search_query,is_confirmed=True))
+            result3_teachers = Teacher.objects.filter(Q(last_name__contains=search_query,is_confirmed=True)|Q(first_name__contains=search_query,is_confirmed=True)|Q(qualification__contains=search_query,is_confirmed=True))
             results = list(chain(result1, result2, ))
             results_teachers = list(chain(result1_teachers,result2_teachers,result3_teachers ))
             if  results_teachers :
