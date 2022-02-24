@@ -33,7 +33,7 @@
        <a  target="_blank" href="{{ teacher_selected.video_channel_link }}" class="p-4 ">  ویدئوهای بیشتر از این استاد</a><br><br>
    {% endif %}
         <div class="   col-lg-9 col-md-9 col-sm-12 m-2    " >
-            <label for="text-describe" class="">توضیحات</label>
+            <label for="text-describe" class=""></label>
             <textarea class="form-control text-right " id="text-describe" disabled rows="8" dir="rtl" style="font-size: small">
 
                 {{ teacher_selected.qualification }}
@@ -77,7 +77,7 @@
             <tr>
                 <td><sub> {{ teacher_selected.first_name }}  {{ teacher_selected.last_name }}</sub></td>
                 <td><sub>{{ teacher_selected.syllabus.syllabus_name }}</sub></td>
-                <td><sub>{{ teacher_selected.experience }}</sub></td>
+                <td><sub>{{ teacher_selected.experience }}سال</sub></td>
                 <td><sub>{{ teacher_selected.workshop_number }}</sub></td>
                 <td><sub>{{ teacher_selected.workshop_detail }}</sub></td>
                 <td><sub>{{ teacher_selected.workshop_price }}</sub></td>

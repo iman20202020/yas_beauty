@@ -70,7 +70,7 @@ def teacher_list(request):
     category_selected = request.GET.get('cat')
     syllabus_selected = request.GET.get('syl')
 
-    teachers = Teacher.objects.filter(category=category_selected,syllabus=syllabus_selected,is_confirmed=True)
+    teachers = Teacher.objects.filter(category=category_selected,syllabus=syllabus_selected,is_confirmed=True).order_by('_points')
     teachers = Paginator(teachers, 25)
     page_number = request.GET.get('page')
     page_obj = teachers.get_page(page_number)
