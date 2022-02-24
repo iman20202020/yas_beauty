@@ -11,17 +11,33 @@ from django.urls import reverse
 from accounts.models import Teacher, MyUser, ClassRequest, Student
 from teachme.send_sms import *
 
+def teacher_list(request,category_id,syllabus_id):
+    # category_selected = request.GET.get('cat')
+    # syllabus_selected = request.GET.get('syl')
+
+    teachers = Teacher.objects.filter(category=category_id,syllabus=syllabus_id,is_confirmed=True).reverse().order_by('points')
+    teachers = Paginator(teachers, 25)
+    page_number = request.GET.get('page')
+    page_obj = teachers.get_page(page_number)
+    context = {
+        'teachers': teachers,
+        'page_obj': page_obj,
+        'category_id': category_id,
+        'syllabus_id': syllabus_id,
+
+    }
+    return render(request, 'teachme/teacher_list.html', context)
 
 
-def teacher_detail(request):
-    teacher_id = request.GET.get('teacher_id')
-    student_category = request.GET.get('student_category')
+def teacher_detail(request,teacher_id,teacher_cat):
+    # teacher_id = request.GET.get('teacher_id')
+    # student_category = request.GET.get('student_category')
     teacher_selected = Teacher.objects.get(pk=teacher_id)
 
 
     context = {
         'teacher_selected': teacher_selected,
-        'student_category': student_category,
+        'teacher_cat': teacher_cat,
     }
     return render(request, 'teachme/teacher_detail.html', context)
 
@@ -66,20 +82,4 @@ def teacher_request(request,teacher_id):
     return render(request,'teachme/message_viewer.html', {'message': message})
 
 
-def teacher_list(request):
-    category_selected = request.GET.get('cat')
-    syllabus_selected = request.GET.get('syl')
-
-    teachers = Teacher.objects.filter(category=category_selected,syllabus=syllabus_selected,is_confirmed=True).order_by('_points')
-    teachers = Paginator(teachers, 25)
-    page_number = request.GET.get('page')
-    page_obj = teachers.get_page(page_number)
-    context = {
-        'teachers': teachers,
-        'page_obj': page_obj,
-        'student_category': category_selected,
-        'student_syllabus': syllabus_selected,
-
-    }
-    return render(request, 'teachme/teacher_list.html', context)
 

@@ -64,7 +64,7 @@
             <thead>
 
 
-        {% if student_category == 'آرایش و زیبایی' or student_category == 'آشپزی' or student_category == 'هنرهای تجسمی' or student_category == 'سینما و بازیگری' or student_category == 'کارهای فنی' %}
+        {% if teacher_cat == 'آرایش و زیبایی' or teacher_cat == 'آشپزی' or teacher_cat == 'هنرهای تجسمی' or teacher_cat == 'سینما و بازیگری' or teacher_cat == 'کارهای فنی' %}
             <tr>
                 <th ><sub>نام استاد</sub></th>
                 <th><sub>موضوع تدریس</sub></th>
@@ -114,7 +114,7 @@
 
 
         </form><br><br>
-        <a href="{% url 'teachme:teacher_list'  %}?cat={{ teacher_selected.category }}&syl={{ teacher_selected.syllabus }}" type="button" class="btn btn-dark" > بازگشت به لیست</a><br><br>
+        <a href="{% url 'teachme:teacher_list' teacher_selected.category teacher_selected.syllabus %}" type="button" class="btn btn-dark" > بازگشت به لیست</a><br><br>
 
     </div>
  </div>

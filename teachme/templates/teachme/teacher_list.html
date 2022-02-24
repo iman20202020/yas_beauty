@@ -19,11 +19,11 @@
 
 {% endblock %}
 {% block contents %}
-
+{{ category_id  }} {{ syllabus_id }}
 <div class="container p-4">
     <div class="row">
             <div class="  col-lg-12 col-md-12 col-sm-12 alert text-center alert-info text-dark mt-2 mb-0 py-1 px-3  ">
-                <p>برای درس {{ student_syllabus }} در زیرگروه &nbsp;{{ student_category }}</p>
+                <p>برای درس {{ syllabus_id }} در زیرگروه &nbsp;{{ category_id }}</p>
                 {{ teachers.count }}
                 استاد پیدا شد
             </div><br>
@@ -31,10 +31,10 @@
     <div class=" col-lg-12 col-md-12 col-sm-12 text-right  " id="hourly_based_table_div ">
                 <table class=" ">
                     <tr>
-                        <td class="w-25 "><a href="{% url 'teachme:teacher_detail' %}?teacher_id={{ teacher.id }}&student_category={{student_category}}"><img src="{{ teacher.image.url }}" class="img-thumbnail " alt=""></a></td>
-                         <td class="p-1"><a href="{% url 'teachme:teacher_detail' %}?teacher_id={{ teacher.id }}&student_category={{student_category}}"> {{ teacher.first_name }}  {{ teacher.last_name }}</a></td>
+                        <td class="w-25 "><a href="{% url 'teachme:teacher_detail' teacher.id category_id  %}"><img src="{{ teacher.image.url }}" class="img-thumbnail " alt=""></a></td>
+                         <td class="p-1"><a href="{% url 'teachme:teacher_detail' teacher.id category_id  %}"> {{ teacher.first_name }}  {{ teacher.last_name }}</a></td>
                     </tr>
-                {% if student_category == 'آرایش و زیبایی' or student_category == 'آشپزی' or student_category == 'هنرهای تجسمی' or student_category == 'سینما و بازیگری' or student_category == 'کارهای فنی' %}
+                {% if category_id == 'آرایش و زیبایی' or category_id == 'آشپزی' or category_id == 'هنرهای تجسمی' or category_id == 'سینما و بازیگری' or category_id == 'کارهای فنی' %}
                     <tr>
                         <th class="p-2 " id="workshop_number_th">  <sub>  نفرات ورکشاپ</sub> </th>
                         <th class="p-2 " id="workshop_detail_th">  <sub>  روز وساعت</sub> </th>
