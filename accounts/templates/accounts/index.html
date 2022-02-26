@@ -33,10 +33,10 @@
 
                 <div class="mbr-section-btn mt-1  text text-center">
                     <br>
-                    <a class="btn btn-primary "  {% if user.is_authenticated %} hidden {% endif %} href="{% url 'accounts:user_verify' %}"> &nbsp;ثبت نام&nbsp;
+                    <a class="btn btn-primary "  {% if user.is_authenticated %} hidden {% endif %} href="{% url 'accounts:user_verify' %}"> &nbsp;ثبت نام اساتید&nbsp;
                     <i class="fas fa-user" ></i>
                     </a>
-                    <a class="btn btn-primary " {% if user.is_authenticated %} hidden {% endif %}  href="{% url 'accounts:login_view' %}">&nbsp; &nbsp;ورود&nbsp; &nbsp;<i class="fas fa-user-graduate" ></i>&nbsp;</a>
+                    <a class="btn btn-primary " {% if user.is_authenticated %} hidden {% endif %}  href="{% url 'accounts:login_view' %}">&nbsp; &nbsp; ورود اساتید&nbsp; &nbsp;<i class="fas fa-chalkboard-teacher" ></i>&nbsp;</a>
                 </div>
             </div>
         </div>
@@ -62,7 +62,7 @@
                                     {% endif %}
                                 {% endfor %}
                                     if (count>0){
-                                        document.write(" <a href=\"{% url 'teachme:teacher_list' 'آرایش و زیبایی'  syllabus %}\">")
+                                        document.write(" <a href=\"{% url 'teachme:teacher_list'  %}?cat=آرایش و زیبایی&syl={{syllabus}}\">")
                                         document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
                                         document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                                         document.write("</li>")
@@ -95,7 +95,7 @@
                                     {% endif %}
                                 {% endfor %}
                                     if (count>0){
-                                        document.write(" <a href=\"{% url 'teachme:teacher_list' 'زبان های خارجی' syllabus %}\">")
+                                         document.write(" <a href=\"{% url 'teachme:teacher_list'  %}?cat=زبان های خارجی&syl={{syllabus}}\">")
                                         document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
                                         document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                                         document.write("</li>")
@@ -128,7 +128,7 @@
                                     {% endif %}
                                 {% endfor %}
                                     if (count>0){
-                                        document.write(" <a href=\"{% url 'teachme:teacher_list' 'کامپیوتر' syllabus %}\">")
+                                        document.write(" <a href=\"{% url 'teachme:teacher_list'  %}?cat=کامپیوتر&syl={{syllabus}}\">")
                                         document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
                                         document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                                         document.write("</li>")
@@ -161,7 +161,7 @@
                                     {% endif %}
                                 {% endfor %}
                                     if (count>0){
-                                        document.write(" <a href=\"{% url 'teachme:teacher_list' 'موسیقی' syllabus %}\">")
+                                        document.write(" <a href=\"{% url 'teachme:teacher_list'  %}?cat=موسیقی&syl={{syllabus}}\">")
                                         document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
                                         document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                                         document.write("</li>")
@@ -194,7 +194,7 @@
                                     {% endif %}
                                 {% endfor %}
                                     if (count>0){
-                                        document.write(" <a href=\"{% url 'teachme:teacher_list' 'سینما و بازیگری' syllabus %}\">")
+                                        document.write(" <a href=\"{% url 'teachme:teacher_list'  %}?cat=سینما و بازیگری&syl={{syllabus}}\">")
                                         document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
                                         document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                                         document.write("</li>")
@@ -208,6 +208,7 @@
 
     </section>
 </div>
+
 <div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 {% if teacher_art %}d-block{% else %}d-none{% endif %}"
          onclick="avail_list_toggle('art_available_teachers')">
     <section>
@@ -226,7 +227,7 @@
                                     {% endif %}
                                 {% endfor %}
                                     if (count>0){
-                                        document.write(" <a href=\"{% url 'teachme:teacher_list' 'هنرهای تجسمی' syllabus %}\">")
+                                        document.write(" <a href=\"{% url 'teachme:teacher_list'  %}?cat=هنرهای تجسمی&syl={{syllabus}}\">")
                                         document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
                                         document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                                         document.write("</li>")
@@ -259,7 +260,7 @@
                                     {% endif %}
                                 {% endfor %}
                                     if (count>0){
-                                        document.write(" <a href=\"{% url 'teachme:teacher_list' 'دانشگاهی' syllabus %}\">")
+                                        document.write(" <a href=\"{% url 'teachme:teacher_list'  %}?cat=دانشگاهی&syl={{syllabus}}\">")
                                         document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
                                         document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                                         document.write("</li>")
@@ -292,7 +293,7 @@
                                     {% endif %}
                                 {% endfor %}
                                     if (count>0){
-                                        document.write(" <a href=\"{% url 'teachme:teacher_list' 'متوسطه دوم' syllabus %}\">")
+                                        document.write(" <a href=\"{% url 'teachme:teacher_list'  %}?cat=متوسطه دوم&syl={{syllabus}}\">")
                                         document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
                                         document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                                         document.write("</li>")
@@ -325,7 +326,7 @@
                                     {% endif %}
                                 {% endfor %}
                                     if (count>0){
-                                        document.write(" <a href=\"{% url 'teachme:teacher_list' 'متوسطه اول' syllabus %}\">")
+                                        document.write(" <a href=\"{% url 'teachme:teacher_list'  %}?cat=متوسطه اول&syl={{syllabus}}\">")
                                         document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
                                         document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                                         document.write("</li>")
@@ -358,7 +359,7 @@
                                     {% endif %}
                                 {% endfor %}
                                     if (count>0){
-                                        document.write(" <a href=\"{% url 'teachme:teacher_list' 'دبستان' syllabus %}\">")
+                                        document.write(" <a href=\"{% url 'teachme:teacher_list'  %}?cat=دبستان&syl={{syllabus}}\">")
                                         document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
                                         document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                                         document.write("</li>")
@@ -377,7 +378,7 @@
          onclick="avail_list_toggle('cooking_available_teachers')">
     <section>
         <img src="{% static 'accounts/images/cooking.png' %}"><br>
-        <h6> آشپزی</h6>
+        <h6> آشپزی و شیرینی پزی</h6>
 
             <div id="cooking_available_teachers" style="display: none ;">
                 <ul  class="list-group d-lg-inline-flex" style="" >
@@ -391,7 +392,7 @@
                                     {% endif %}
                                 {% endfor %}
                                     if (count>0){
-                                        document.write(" <a href=\"{% url 'teachme:teacher_list' 'آشپزی' syllabus  %}\">")
+                                        ocument.write(" <a href=\"{% url 'teachme:teacher_list'  %}?cat=آشپزی&syl={{syllabus}}\">")
                                         document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
                                         document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                                         document.write("</li>")
@@ -424,7 +425,7 @@
                                     {% endif %}
                                 {% endfor %}
                                     if (count>0){
-                                        document.write(" <<a href=\"{% url 'teachme:teacher_list' 'ورزش و بدنسازی' syllabus %}\">")
+                                        ddocument.write(" <<a href=\"{% url 'teachme:teacher_list'  %}?cat=ورزش و بدنسازی&syl={{syllabus}}\">")
                                         document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
                                         document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                                         document.write("</li>")
@@ -457,7 +458,7 @@
                                     {% endif %}
                                 {% endfor %}
                                     if (count>0){
-                                        document.write(" <a href=\"{% url 'teachme:teacher_list' 'کارهای فنی' syllabus %}\">")
+                                        document.write(" <a href=\"{% url 'teachme:teacher_list'  %}?cat=کارهای فنی&syl={{syllabus}}\">")
                                         document.write("<li class='list-group-item d-flex justify-content-between align-items-center  small '>{{ syllabus }}")
                                         document.write("<span class='badge badge-info badge-pill'>"+count+" استاد</span>")
                                         document.write("</li>")
@@ -470,7 +471,7 @@
             </div>
 
     </section>
-    </div>
+</div>
 
 
 {% endblock %}

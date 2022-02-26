@@ -19,9 +19,25 @@
 
 {% endblock %}
 {% block contents %}
-{{ category_id  }} {{ syllabus_id }}
+
+<div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="state_filter_select  " id="state_div">
 <div class="container p-4">
     <div class="row">
+
+     <label for="state_filter_select">استان:</label>
+                    <select  name="state_filter_select" onchange="filter_state()" data-form-field="state_filter_select" class="form-control" id="state_filter_select">
+                        <option value="">همه استان ها</option>
+                    {% if state_filter %}
+                        <option value="{{ state_filter }}" selected>{{ state_filter }}</option>
+                    {% endif %}
+                        {% for state in states %}
+                            <option value="{{ state.state }}"
+                                {% if  teacher_profile.state.state == state.state %}selected{% endif %}>{{ state.state }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
             <div class="  col-lg-12 col-md-12 col-sm-12 alert text-center alert-info text-dark mt-2 mb-0 py-1 px-3  ">
                 <p>برای درس {{ syllabus_id }} در زیرگروه &nbsp;{{ category_id }}</p>
                 {{ teachers.count }}
@@ -31,8 +47,8 @@
     <div class=" col-lg-12 col-md-12 col-sm-12 text-right  " id="hourly_based_table_div ">
                 <table class=" ">
                     <tr>
-                        <td class="w-25 "><a href="{% url 'teachme:teacher_detail' teacher.id category_id  %}"><img src="{{ teacher.image.url }}" class="img-thumbnail " alt=""></a></td>
-                         <td class="p-1"><a href="{% url 'teachme:teacher_detail' teacher.id category_id  %}"> {{ teacher.first_name }}  {{ teacher.last_name }}</a></td>
+                        <td class="w-25 "><a href="{% url 'teachme:teacher_detail' teacher.id   %}"><img src="{{ teacher.image.url }}" class="img-thumbnail " alt=""></a></td>
+                         <td class="p-1"><a href="{% url 'teachme:teacher_detail' teacher.id   %}"> {{ teacher.first_name }}  {{ teacher.last_name }}</a></td>
                     </tr>
                 {% if category_id == 'آرایش و زیبایی' or category_id == 'آشپزی' or category_id == 'هنرهای تجسمی' or category_id == 'سینما و بازیگری' or category_id == 'کارهای فنی' %}
                     <tr>
@@ -107,15 +123,20 @@
 </div>
 
  </div>
-
-<div class="justify-content-center" id="fake"></div>
-     <a class="btn btn-dark  " href="{% url 'accounts:index_accounts' %}">
-       بازگشت به صفحه اصلی>>
+<div class="text-center">
+     <a class="btn btn-primary  " href="{% url 'accounts:index_accounts' %}">
+       بازگشت به صفحه اصلی
     </a>
+    </div>
 </div><br>
 
 <script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>
     <script>
 
+function filter_state() {
+    let state_filter = $('#state_filter_select').val();
+   window.location.replace("{% url 'teachme:teacher_list' %}"+"?cat="+"{{ category_id }}"+"&syl="+"{{ syllabus_id }}"+"&st="+state_filter);
+
+}
     </script>
  {% endblock %}

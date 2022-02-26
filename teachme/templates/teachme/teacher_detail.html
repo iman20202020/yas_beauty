@@ -104,17 +104,12 @@
 
 
         <a href="{% url 'accounts:site_laws' %}" class="p-4">  قوانین سایت </a><br><br>
-        <form class=" " method="post"
-              action="{% if request.user.is_authenticated %}{% url 'teachme:teacher_request' teacher_selected.id %}
-                  {% else %}{% url 'accounts:user_verify' %}{% endif %}">
 
-            {% csrf_token %}
-            <input type="hidden" name="teacher_selected_id" value="{{ teacher_selected.id }}">
-            <input type="submit" id="submit_form" class="btn btn-primary ml-4 " value = 'پذیرفتن قوانین سایت و ثبت درخواست استاد' >
+            <a href="{% url 'teachme:teacher_request_send' teacher_selected.id %}" class="btn btn-primary ml-4 text-white" >پذیرفتن قوانین سایت و ثبت درخواست استاد</a>
 
 
-        </form><br><br>
-        <a href="{% url 'teachme:teacher_list' teacher_selected.category teacher_selected.syllabus %}" type="button" class="btn btn-dark" > بازگشت به لیست</a><br><br>
+       <br><br>
+        <a href="{% url 'teachme:teacher_list' %}?cat={{ teacher_selected.category }}&syl={{ teacher_selected.syllabus }}" type="button" class="btn btn-dark" > بازگشت به لیست</a><br><br>
 
     </div>
  </div>

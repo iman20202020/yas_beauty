@@ -26,14 +26,4 @@ class MyUserAdmin(UserAdmin):
 
 
 admin.site.register(MyUser, MyUserAdmin)
-# UserAdmin.fieldsets += ('Custom fields set', {'fields': ('phone_number', )}),
 
-#
-# class SoftwareVersionAdmin(ModelAdmin):
-#     def get_form(self, request, obj=None, **kwargs):
-#         # Proper kwargs are form, fields, exclude, formfield_callback
-#         if obj: # obj is not None, so this is a change page
-#             kwargs['exclude'] = []
-#         else: # obj is None, so this is an add page
-#             kwargs['fields'] = ['phone_number',]
-#         return super(SoftwareVersionAdmin, self).get_form(request, obj, **kwargs)

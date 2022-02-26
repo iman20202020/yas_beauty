@@ -20,11 +20,11 @@ function check_length() {
 
 function check_number (submit_id,mobile_inputted) {
 
-    var pn = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-    var en = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    var pn = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹","٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+    var en = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9","0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
     var cache =  $('#'+mobile_inputted).val();
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 20; i++) {
         var regex_fa = new RegExp(pn[i], 'g');
         cache = cache.replace(regex_fa, en[i]);
     }
@@ -32,8 +32,9 @@ function check_number (submit_id,mobile_inputted) {
 
 
         let num1 = $("#"+mobile_inputted).val();
+
         const pattern = /(0|)([ ]|-|[()]){0,2}9[0|1|2|3|4|9]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/ig;
-        if (pattern.test(num1) && 9<num1.length < 12) {
+        if (pattern.test(num1) && num1.length > 9 && num1.length < 12) {
             $('#'+submit_id).removeAttr("disabled")
         }
         else{

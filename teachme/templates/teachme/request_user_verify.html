@@ -3,19 +3,14 @@
 <div class="row ">
     <div class="container">
         <div class=" text-center"  >
-            <div  data-form-alert="" class="alert text-center alert-danger col-12 mbr-fonts-style align-center mb-0
-                {% if  error  %} d-block {% else %}d-none {% endif %}d-none ">{{ error }}<br>
-                    {{ teacher_edit_form.errors }}
-            </div>
             <div class="mbr-section-head ">
                 <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 "><strong>خوش آمدید</strong></h4>
             </div><br>
 
-
             <div id="send_mobile_div" {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: none" {% endif %}>
                 <strong>لطفا شماره همراه خود را وارد کنید</strong><br><br>
 
-                <form action="" class="" method="post" autocomplete="off">
+                <form action="{% url 'teachme:request_user_verify' teacher_id %}" class="" method="post" autocomplete="off">
                     {% csrf_token %}
                     <input type="hidden" id="teacher_selected_id" name="teacher_selected_id" value="{{ teacher_id }}">
 
@@ -43,7 +38,7 @@
 
             <div id="resend_otp_div" {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: block"{% else %}style="display: none" {% endif %} >
                 {% if user_verified == 'code_check_error' %} <strong class="text-danger"> کد وارد شده صحیح نیست</strong><br><br>{% endif %}
-                <form method="post" action="">
+                <form method="post" action="{% url 'teachme:request_user_verify' teacher_id %}">
                     {% csrf_token %}
                     <input type="hidden" id="input_mobile" name="input_mobile" value="{{ mobile_number }}">
 

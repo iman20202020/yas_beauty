@@ -93,9 +93,9 @@ def user_create(request):
                 user_saved = user
                 user.save()
                 login(request, user)
-                teacher_id = request.POST.get('teacher_id', None)
-                if teacher_id:
-                    return redirect('teachme:teacher_request', teacher_id=teacher_id)
+                # teacher_id = request.POST.get('teacher_id', None)
+
+                return redirect('accounts:teacher_edit')
             except:
                 user_saved = None
         else:
@@ -124,7 +124,7 @@ def login_view(request):
                 return HttpResponseRedirect(reverse('accounts:teacher_edit'))
 
             else:
-                return render(request,'accounts/user_create.html',{'user_saved': 1})
+                return redirect('accounts:teacher_edit')
         else:
             context = {
                 'username': username,

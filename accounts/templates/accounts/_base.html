@@ -88,7 +88,7 @@ li{font-size: 18px;color: black;}
 
     <ul>
     {% for teacher_result in results_teachers %}
-        <li><a href="{% url 'teachme:teacher_detail' %}?teacher_id={{ teacher_result.id }}">
+        <li><a href="{% url 'teachme:teacher_detail'  teacher_result.id  %}">
             {{ teacher_result.first_name }} {{ teacher_result.last_name }} {{ teacher_result.syllabus }} {{ teacher_result.experience }} سال سابقه
                 </a></li>
     {% endfor %}
@@ -96,6 +96,7 @@ li{font-size: 18px;color: black;}
 </div>
 
     {% block contents %}{% endblock %}
+
 
 </body>
     {% block footer %}
