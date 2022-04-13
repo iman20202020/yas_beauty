@@ -133,10 +133,19 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group text-right" data-for="qualification">
                     <label for="qualification-form7-v" class="label"> خود را برای مخاطب شرح دهید و جزییات دوره آموزشی را بنویسید*(حداکثر500 حرف) :</label>
                    <textarea   name="qualification" onchange="show_confirm_key()"
-                        class="form-control" id="qualification-form7-v"  rows="5" maxlength="200" onchange="show_confirm_key()" required >
+                        class="form-control" id="qualification-form7-v"  rows="5" maxlength="500" onchange="show_confirm_key()" required >
                        {% if teacher_profile.qualification %}{{ teacher_profile.qualification }}{% endif %}
                     </textarea>
                 </div>
+
+{#            <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right " data-for="first_free">#}
+{#                    <label for="first_free-form7-v">  جلسه اول رایگان :<sub>در انتخاب شما توسط مخاطب بسیار موثر است</sub></label><br>#}
+{#                    <select  name="first_free" onchange="show_confirm_key()" data-form-field="first_free" class="form-control"  id="first_free-form7-v">#}
+{#                        <option value=True selected class="text text-info">می پذیرم </option>#}
+{#                        <option value=False class="text-danger">نمی پذیرم</option>#}
+{#                    </select>#}
+{#                </div>#}
+
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="learn_type">
                     <label for="learn_type-form7-v">نوع آموزش :</label><br>
                     <select  name="learn_type"  onchange="show_confirm_key(),hide_city_when_online()" data-form-field="experience" class="form-control"  id="learn_type-form7-v">
