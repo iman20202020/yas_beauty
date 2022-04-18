@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from accounts.otp import *
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q, F
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -19,61 +19,88 @@ def base_view(request):
 
 
 def index_accounts(request):
-#slect syllabuses for each category on index
     syllabuses_university = Syllabus.objects.filter(learn_category='دانشگاهی')
     teacher_university = Teacher.objects.filter(category='دانشگاهی',is_confirmed=True)
+    teacher_university_bests = teacher_university.order_by('-points')[:15]
     syllabuses_high_school = Syllabus.objects.filter(learn_category='متوسطه دوم')
     teacher_high_school = Teacher.objects.filter(category='متوسطه دوم',is_confirmed=True)
+    teacher_high_school_bests = teacher_high_school.order_by('-points')[:15]
     syllabuses_mid_school = Syllabus.objects.filter(learn_category='متوسطه اول')
     teacher_mid_school = Teacher.objects.filter(category='متوسطه اول',is_confirmed=True)
+    teacher_mid_school_bests = teacher_mid_school.order_by('-points')[:15]
     syllabuses_primary_school = Syllabus.objects.filter(learn_category='دبستان')
     teacher_primary_school = Teacher.objects.filter(category='دبستان',is_confirmed=True)
+    teacher_primary_school_bests = teacher_primary_school.order_by('-points')[:15]
     syllabuses_computer = Syllabus.objects.filter(learn_category='کامپیوتر')
     teacher_computer = Teacher.objects.filter(category='کامپیوتر',is_confirmed=True)
+    teacher_computer_bests = teacher_computer.order_by('-points')[:15]
     syllabuses_music = Syllabus.objects.filter(learn_category='موسیقی')
     teacher_music = Teacher.objects.filter(category='موسیقی',is_confirmed=True)
+    teacher_music_bests = teacher_music.order_by('-points')[:15]
     syllabuses_art = Syllabus.objects.filter(learn_category='هنرهای تجسمی')
     teacher_art = Teacher.objects.filter(category='هنرهای تجسمی',is_confirmed=True)
+    teacher_art_bests = teacher_art.order_by('-points')[:15]
     syllabuses_sport = Syllabus.objects.filter(learn_category='ورزش و بدنسازی')
     teacher_sport = Teacher.objects.filter(category='ورزش و بدنسازی',is_confirmed=True)
+    teacher_sport_bests = teacher_sport.order_by('-points')[:15]
     syllabuses_cinema = Syllabus.objects.filter(learn_category='سینما و بازیگری')
     teacher_cinema = Teacher.objects.filter(category='سینما و بازیگری',is_confirmed=True)
+    teacher_cinema_bests = teacher_cinema.order_by('-points')[:15]
     syllabuses_tech = Syllabus.objects.filter(learn_category='کارهای فنی')
     teacher_tech = Teacher.objects.filter(category='کارهای فنی',is_confirmed=True)
+    teacher_tech_bests = teacher_tech.order_by('-points')[:15]
     syllabuses_cooking = Syllabus.objects.filter(learn_category='آشپزی')
     teacher_cooking = Teacher.objects.filter(category='آشپزی',is_confirmed=True)
+    teacher_cooking_bests = teacher_cooking.order_by('-points')[:15]
     syllabuses_makeup = Syllabus.objects.filter(learn_category='آرایش و زیبایی')
     teacher_makeup = Teacher.objects.filter(category='آرایش و زیبایی',is_confirmed=True)
+    teacher_makeup_bests = teacher_makeup.order_by('-points')[:15]
     syllabuses_language = Syllabus.objects.filter(learn_category='زبان های خارجی')
     teacher_language = Teacher.objects.filter(category='زبان های خارجی',is_confirmed=True)
+    teacher_language_bests = teacher_language.order_by('-points')[:15]
+    all_teacher_bests = Teacher.objects.all().order_by('-points')[:30]
 
     context = {
         'syllabuses_university': syllabuses_university,
         'teacher_university': teacher_university,
+        'teacher_university_bests': teacher_university_bests,
         'syllabuses_high_school': syllabuses_high_school,
         'teacher_high_school': teacher_high_school,
+        'teacher_high_school_bests': teacher_high_school_bests,
         'syllabuses_mid_school': syllabuses_mid_school,
         'teacher_mid_school': teacher_mid_school,
+        'teacher_mid_school_bests': teacher_mid_school_bests,
         'syllabuses_sport': syllabuses_sport,
         'teacher_sport': teacher_sport,
+        'teacher_sport_bests': teacher_sport_bests,
         'syllabuses_music': syllabuses_music,
         'teacher_music': teacher_music,
+        'teacher_music_bests': teacher_music_bests,
         'syllabuses_art': syllabuses_art,
         'teacher_art': teacher_art,
+        'teacher_art_bests': teacher_art_bests,
         'syllabuses_computer': syllabuses_computer,
         'teacher_computer': teacher_computer,
+        'teacher_computer_bests': teacher_computer_bests,
         'syllabuses_primary_school': syllabuses_primary_school,
         'teacher_primary_school': teacher_primary_school,
+        'teacher_primary_school_bests': teacher_primary_school_bests,
         'syllabuses_cinema': syllabuses_cinema,
         'teacher_cinema': teacher_cinema,
+        'teacher_cinema_bests': teacher_cinema_bests,
         'syllabuses_tech': syllabuses_tech,
         'teacher_tech': teacher_tech,
+        'teacher_tech_bests': teacher_tech_bests,
         'syllabuses_cooking': syllabuses_cooking,
         'teacher_cooking': teacher_cooking,
+        'teacher_cooking_bests': teacher_cooking_bests,
         'syllabuses_makeup': syllabuses_makeup,
         'teacher_makeup': teacher_makeup,
+        'teacher_makeup_bests': teacher_makeup_bests,
         'syllabuses_language': syllabuses_language,
         'teacher_language': teacher_language,
+        'teacher_language_bests': teacher_language_bests,
+        'all_teacher_bests': all_teacher_bests,
     }
     return render(request, 'accounts/index.html', context)
 
