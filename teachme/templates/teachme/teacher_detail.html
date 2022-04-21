@@ -17,6 +17,9 @@
                 </div>
             </label>
         </div>
+    <div>
+        <p  class=""><strong>{{ teacher_selected.first_name }} {{ teacher_selected.last_name }}</strong></p>
+    </div>
 
         <div class="  col-lg-3 col-md-3 col-sm-12" >
             <img  src="{{ teacher_selected.image.url }}"  id="teacher_image" class="img-thumbnail">
@@ -59,57 +62,46 @@
         </div>
    {% endif %}
     </div>
-    <div class=" col text-center">
-        <table class="table table-striped ">
-            <thead>
+       <div class=" col-lg-6 col-md-6 col-sm-12 text-right border  " id="teacher_selected_div ">
 
 
-        {% if teacher_cat == 'آرایش و زیبایی' or teacher_cat == 'آشپزی' or teacher_cat == 'هنرهای تجسمی' or teacher_cat == 'سینما و بازیگری' or teacher_cat == 'کارهای فنی' %}
-            <tr>
-                <th ><sub>نام استاد</sub></th>
-                <th><sub>موضوع تدریس</sub></th>
-                <th>  <sub>سابقه تدریس</sub></th>
-                <th><sub>تعداد نفرات کلاس</sub> </th>
-                <th><sub>تعداد روز و ساعت </sub></th>
-                <th><sub>کل مبلغ دوره</sub></th>
-            </tr>
-            </thead>
-            <tr>
-                <td><sub> {{ teacher_selected.first_name }}  {{ teacher_selected.last_name }}</sub></td>
-                <td><sub>{{ teacher_selected.syllabus.syllabus_name }}</sub></td>
-                <td><sub>{{ teacher_selected.experience }}سال</sub></td>
-                <td><sub>{{ teacher_selected.workshop_number }}</sub></td>
-                <td><sub>{{ teacher_selected.workshop_detail }}</sub></td>
-                <td><sub>{{ teacher_selected.workshop_price }}</sub></td>
-            </tr>
-        {% else %}
-            <tr>
-                <th><sub> استاد </sub></th>
-                <th><sub>موضوع تدریس</sub></th>
-                <th> <sub>سابقه تدریس </sub></th>
-                <th><sub> کلاس هر ساعت </sub></th>
-            </tr>
+            <ul>
 
-            <tr>
-                <td><sub> {{ teacher_selected.first_name }}  {{ teacher_selected.last_name }}</sub></td>
-                <td><sub>{{ teacher_selected.syllabus.syllabus_name }}</sub></td>
-                <td><sub>{{ teacher_selected.experience }}سال</sub></td>
-                <td><sub>{{ teacher_selected.price_range.price_range_name }}</sub></td>
-            </tr>
+                <li style="word-break: break-word" class="text-right small">موضوع تدریس: {{ teacher_selected.category_id }} {{ teacher_selected.syllabus_id }}</li>
+                <li style="word-break: break-word" class="text-right small"> شهر: {{ teacher_selected.city_id }} </li>
+                <li style="word-break: break-word" class="text-right small"> سابقه تدریس: {{ teacher_selected.experience }}سال  </li>
+
+                <li style="word-break: break-word" class="text-right small">نوع تدریس:
+                    {% if teacher_selected.learn_type == 0 %}آنلاین یا حضوری{% endif %}
+                            {% if teacher_selected.learn_type == 1 %}آنلاین{% endif %}
+                            {% if teacher_selected.learn_type == 2 %} حضوری{% endif %}
+                </li>
+            {% if teacher_selected.category_id == 'آرایش و زیبایی' or teacher_selected.category_id == 'آشپزی' or teacher_selected.category_id == 'هنرهای تجسمی' or teacher_selected.category_id == 'سینما و بازیگری' or teacher_selected.category_id == 'کارهای فنی' %}
+                 <li style="word-break: break-word" class="text-right small"> ورکشاپ {{ teacher_selected.workshop_number }} {{ teacher_selected.workshop_detail }} </li>
+                <li style="word-break: break-word" class="text-right small">  {{ teacher_selected.workshop_price }}  </li>
+            {% else %}
+                <li style="word-break: break-word" class="text-right small"> هر ساعت تدریس : {{ teacher_selected.price_range.price_range_name }} هزار تومان </li>
             {% endif %}
-        </table>
-    </div>
+
+
+            </ul>
+        </div>
+
+
+
+
+
 
     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
 
 
-        <a href="{% url 'accounts:site_laws' %}" class="p-4">  قوانین سایت </a><br><br>
+        <a href="{% url 'accounts:site_laws' %}" class="p-4">  قوانین درخواست استاد </a><br><br>
 
-            <a href="{% url 'teachme:teacher_request_send' teacher_selected.id %}" class="btn btn-primary ml-4 text-white" >پذیرفتن قوانین سایت و ثبت درخواست استاد</a>
+            <a href="{% url 'teachme:teacher_request_send' teacher_selected.id %}" class="btn btn-primary  text-white" >پذیرفتن قوانین  و ثبت درخواست استاد</a>
 
 
        <br><br>
-        <a href="{% url 'teachme:teacher_list' %}?cat={{ teacher_selected.category }}&syl={{ teacher_selected.syllabus }}" type="button" class="btn btn-dark" > بازگشت به لیست</a><br><br>
+        <a href="{% url 'teachme:teacher_list' %}?cat={{ teacher_selected.category }}&syl={{ teacher_selected.syllabus }}" type="button" class="btn btn-dark text-center" > بازگشت به لیست</a><br><br>
 
     </div>
  </div>

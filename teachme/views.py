@@ -13,12 +13,9 @@ def teacher_list(request):
     state_filter = request.GET.get('st')
     if state_filter:
         teachers = teachers.filter(state=state_filter)
-    teachers = Paginator(teachers, 25)
-    page_number = request.GET.get('page')
-    page_obj = teachers.get_page(page_number)
+
     context = {
         'teachers': teachers,
-        'page_obj': page_obj,
         'category_id': category_id,
         'syllabus_id': syllabus_id,
         'states': states,

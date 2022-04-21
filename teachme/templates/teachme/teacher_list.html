@@ -43,84 +43,41 @@
                 {{ teachers.count }}
                 استاد پیدا شد
             </div><br>
-{% for teacher in page_obj %}
-    <div class=" col-lg-12 col-md-12 col-sm-12 text-right  " id="hourly_based_table_div ">
-                <table class=" ">
-                    <tr>
-                        <td class="w-25 "><a href="{% url 'teachme:teacher_detail' teacher.id   %}"><img src="{{ teacher.image.url }}" class="img-thumbnail " alt=""></a></td>
-                         <td class="p-1"><a href="{% url 'teachme:teacher_detail' teacher.id   %}"> {{ teacher.first_name }}  {{ teacher.last_name }}</a></td>
-                    </tr>
-                {% if category_id == 'آرایش و زیبایی' or category_id == 'آشپزی' or category_id == 'هنرهای تجسمی' or category_id == 'سینما و بازیگری' or category_id == 'کارهای فنی' %}
-                    <tr>
-                        <th class="p-2 " id="workshop_number_th">  <sub>  نفرات ورکشاپ</sub> </th>
-                        <th class="p-2 " id="workshop_detail_th">  <sub>  روز وساعت</sub> </th>
-                        <th class="p-2 " id="workshop_price_th">  <sub>  دوره (تومان)</sub> </th>
-                        <th class="p-2 " id="workshop_describe_th">  <sub>جزئیات</sub> </th>
-                        <th class="p-2">  <sub>سابقه</sub> </th>
-                        <th class="p-2">  <sub>نوع</sub> </th>
-                         {% if teacher.learn_type == 0 or teacher.learn_type == 2 %}<th class="p-2">  <sub>شهر</sub> </th>{% endif %}
-                        <th class="p-2">  <sub>امتیاز</sub> </th>
-                    </tr>
-                    <tr>
-                        <td class="p-2 " id="workshop_number_td"><sub>{{ teacher.workshop_number }}</sub></td>
-                        <td class="p-2 " id="workshop_detail_td"><sub>{{ teacher.workshop_detail }}</sub></td>
-                        <td class="p-2 " id="workshop_price_td"><sub>{{ teacher.workshop_price }}</sub></td>
-                        <td class="p-2 " id="workshop_describe_td"><sub>{{ teacher.qualification|truncatewords:4 }}</sub></td>
-                        <td class="p-2"><sub>{{ teacher.experience }}سال</sub></td>
-                        <td class="p-2">
-                            {% if teacher.learn_type == 0 %}<sub>آنلاین یا حضوری</sub>{% endif %}
-                            {% if teacher.learn_type == 1 %}<sub>آنلاین</sub>{% endif %}
-                            {% if teacher.learn_type == 2 %}<sub> حضوری</sub>{% endif %}
-                        </td>
-                         {% if teacher.learn_type == 0 or teacher.learn_type == 2 %} <td class="p-2"><sub>{{ teacher.city.city}}</sub></td>{% endif %}
-                        <td class="p-2"><sub>{{ teacher.points}}</sub></td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <th class="p-2 " >  <sub>  کلاس هر ساعت</sub> </th>
-                        <th class="p-2">  <sub>سابقه</sub> </th>
-                        <th class="p-2">  <sub>نوع</sub> </th>
-                    <th class="p-2 " id="workshop_describe_th">  <sub>جزئیات</sub> </th>
-                         {% if teacher.learn_type == 0 or teacher.learn_type == 2 %}<th class="p-2">  <sub>شهر</sub> </th>{% endif %}
+{% for teacher in teachers %}
+    <div class=" col-lg-6 col-md-6 col-sm-12 text-right border  " id="teacher_div ">
 
-
-                        <th class="p-2">  <sub>امتیاز</sub> </th>
-                    </tr>
-
-                    <tr>
-                        <td class="p-2 " id="price_range_td"><sub>{{ teacher.price_range.price_range_name }}</sub></td>
-                        <td class="p-2"><sub>{{ teacher.experience }}سال</sub></td>
-                        <td class="p-2">
-                            {% if teacher.learn_type == 0 %}<sub>آنلاین یا حضوری</sub>{% endif %}
-                            {% if teacher.learn_type == 1 %}<sub>آنلاین</sub>{% endif %}
-                            {% if teacher.learn_type == 2 %}<sub> حضوری</sub>{% endif %}
-                        </td>
-                        <td class="p-2 " id="describe_td"><sub>{{ teacher.qualification|truncatewords:4 }}</sub></td>
-
-                        {% if teacher.learn_type == 0 or teacher.learn_type == 2 %}  <td class="p-2"><sub>{{ teacher.city.city}}</sub></td>{% endif %}
-                        <td class="p-2"><sub>{{ teacher.points}}</sub></td>
-                    </tr>
+            <a href="{% url 'teachme:teacher_detail' teacher.id   %}"><img style="max-width:35%; " src="{{ teacher.image.url }}"></a>
+            <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher.id   %}">{{ teacher.first_name }} {{ teacher.last_name }}
+                 ({{ teacher.city_id }})</a></p>
+            <ul>
+                <li style="word-break: break-word" class="text-right small"> {{ teacher.qualification|truncatewords:7 }} </li>
+                <li style="word-break: break-word" class="text-right small"> {{ teacher.experience }}سال سابقه تدریس </li>
+                <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher.points }} </li>
+                <li style="word-break: break-word" class="text-right small">
+                    {% if teacher.learn_type == 0 %}آنلاین یا حضوری{% endif %}
+                            {% if teacher.learn_type == 1 %}آنلاین{% endif %}
+                            {% if teacher.learn_type == 2 %} حضوری{% endif %}
+                </li>
+            {% if teacher.category_id == 'آرایش و زیبایی' or teacher.category_id == 'آشپزی' or teacher.category_id == 'هنرهای تجسمی' or teacher.category_id == 'سینما و بازیگری' or teacher.category_id == 'کارهای فنی' %}
+                 <li style="word-break: break-word" class="text-right small"> ورکشاپ {{ teacher.workshop_number }} {{ teacher.workshop_detail }} </li>
+                <li style="word-break: break-word" class="text-right small">  {{ teacher.workshop_price }}  </li>
+            {% else %}
+                <li style="word-break: break-word" class="text-right small"> ساعتی {{ teacher.price_range.price_range_name }} هزار تومان </li>
             {% endif %}
-        </table><hr>
+
+
+            </ul>
+        </div>
+
+
+
+
+
+
+      {% endfor %}
     </div>
-{% endfor %}
 
-    <div class="pagination fixed-bottom justify-content-center alert-info" >
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <button type="button" class="btn  "><a href="?page=1">&laquo; first</a></button>
-            <button type="button" class="btn  "><a href="?page={{ page_obj.previous_page_number }}">previous</a></button>
-        {% endif %}
 
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-        {% if page_obj.has_next %}
-           <button type="button" class="btn  "> <a href="?page={{ page_obj.next_page_number }}">next</a></button>
-            <button type="button" class="btn  "><a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></button>
-        {% endif %}
-    </span>
-</div>
 
  </div>
 <div class="text-center">

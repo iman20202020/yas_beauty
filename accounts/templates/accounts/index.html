@@ -42,7 +42,7 @@
 <div class=" container ">
     <div class=" row  justify-content-center ">
 
-<div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 {% if teacher_makeup %}d-block{% else %}d-none{% endif %}">
+<div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 {% if teacher_makeup %}d-block{% else %}d-none{% endif %}">
     <section>
     <div onclick="avail_list_toggle('makeup_available_teachers')">
         <img src="{% static 'accounts/images/makeup.png' %}" ><br>
@@ -71,7 +71,11 @@
                         </script>
                 {% endif %}
                 </ul>
+
             {% if teacher_makeup_bests %}
+                    <div class="bg-secondary text-center m-3" id="">
+    <p class=" text-white p-3 "> جمعی از اساتید آرایش و زیبایی :</p>
+    </div>
                 {% for teacher_makeup_best in teacher_makeup_bests %}
                     <div class="border ">
                         <a href="{% url 'teachme:teacher_detail' teacher_makeup_best.id   %}"><img style="max-width:25%; " src="{{ teacher_makeup_best.image.url }}"></a>
@@ -92,7 +96,7 @@
     </section>
 </div>
 
-<div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 {% if teacher_language %}d-block{% else %}d-none{% endif %}"
+<div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 {% if teacher_language %}d-block{% else %}d-none{% endif %}"
          onclick="avail_list_toggle('language_available_teachers')">
     <section>
         <img src="{% static 'accounts/images/computer.png' %}"><br>
@@ -121,6 +125,9 @@
                 {% endif %}
                 </ul>
             {% if teacher_language_bests %}
+                <div class="bg-secondary text-center m-3" id="">
+    <p class=" text-white p-3 "> جمعی از اساتید زبان های خارجی :</p>
+    </div>
                 {% for teacher_language_best in teacher_language_bests %}
                     <div class="border ">
                         <a href="{% url 'teachme:teacher_detail' teacher_language_best.id   %}"><img style="max-width:25%; " src="{{ teacher_language_best.image.url }}"></a>
@@ -140,7 +147,7 @@
     </section>
 </div>
 
-<div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 {% if teacher_computer %}d-block{% else %}d-none{% endif %}"
+<div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 {% if teacher_computer %}d-block{% else %}d-none{% endif %}"
          onclick="avail_list_toggle('computer_available_teachers')">
     <section>
         <img src="{% static 'accounts/images/computer.png' %}"><br>
@@ -169,6 +176,9 @@
                 {% endif %}
                 </ul>
             {% if teacher_computer_bests %}
+                <div class="bg-secondary text-center m-3" id="">
+    <p class=" text-white p-3 "> جمعی از اساتید کامپیوتر و برنامه نویسی :</p>
+    </div>
                 {% for teacher_computer_best in teacher_computer_bests %}
                     <div class="border ">
                         <a href="{% url 'teachme:teacher_detail' teacher_computer_best.id   %}"><img style="max-width:25%; " src="{{ teacher_computer_best.image.url }}"></a>
@@ -188,7 +198,7 @@
     </section>
 </div>
 
-<div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 {% if teacher_music %}d-block{% else %}d-none{% endif %}"
+<div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 {% if teacher_music %}d-block{% else %}d-none{% endif %}"
          onclick="avail_list_toggle('music_available_teachers')">
     <section>
         <img src="{% static 'accounts/images/music.png' %}"><br>
@@ -217,6 +227,9 @@
                 {% endif %}
                 </ul>
             {% if teacher_music_bests %}
+                <div class="bg-secondary text-center m-3" id="">
+    <p class=" text-white p-3 "> جمعی از اساتید موسیقی :</p>
+    </div>
                 {% for teacher_music_best in teacher_music_bests %}
                     <div class="border ">
                         <a href="{% url 'teachme:teacher_detail' teacher_music_best.id   %}"><img style="max-width:25%; " src="{{ teacher_music_best.image.url }}"></a>
@@ -236,7 +249,7 @@
     </section>
 </div>
 
-<div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 {% if teacher_cinema %}d-block{% else %}d-none{% endif %}"
+<div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 {% if teacher_cinema %}d-block{% else %}d-none{% endif %}"
          onclick="avail_list_toggle('cinema_available_teachers')">
     <section>
         <img src="{% static 'accounts/images/cinema.png' %}"><br>
@@ -265,6 +278,9 @@
                 {% endif %}
                 </ul>
             {% if teacher_cinema_bests %}
+                <div class="bg-secondary text-center m-3" id="">
+    <p class=" text-white p-3 "> جمعی از اساتید سینما و بازیگری :</p>
+    </div>
                 {% for teacher_cinema_best in teacher_cinema_bests %}
                     <div class="border ">
                         <a href="{% url 'teachme:teacher_detail' teacher_cinema_best.id   %}"><img style="max-width:25%; " src="{{ teacher_cinema_best.image.url }}"></a>
@@ -285,7 +301,7 @@
     </section>
 </div>
 
-<div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 {% if teacher_art %}d-block{% else %}d-none{% endif %}"
+<div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 {% if teacher_art %}d-block{% else %}d-none{% endif %}"
          onclick="avail_list_toggle('art_available_teachers')">
     <section>
         <img src="{% static 'accounts/images/art.png' %}"><br>
@@ -314,6 +330,9 @@
                 {% endif %}
                 </ul>
             {% if teacher_art_bests %}
+                <div class="bg-secondary text-center m-3" id="">
+    <p class=" text-white p-3 "> جمعی از اساتید هنر های تجسمی :</p>
+    </div>
                 {% for teacher_art_best in teacher_art_bests %}
                     <div class="border ">
                         <a href="{% url 'teachme:teacher_detail' teacher_art_best.id   %}"><img style="max-width:25%; " src="{{ teacher_art_best.image.url }}"></a>
@@ -334,7 +353,7 @@
     </section>
     </div>
 
-<div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 {% if teacher_university %}d-block{% else %}d-none{% endif %}"
+<div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 {% if teacher_university %}d-block{% else %}d-none{% endif %}"
          onclick="avail_list_toggle('university_available_teachers')">
     <section>
         <img src="{% static 'accounts/images/university.png' %}"><br>
@@ -363,6 +382,9 @@
                 {% endif %}
                 </ul>
             {% if teacher_university_bests %}
+                <div class="bg-secondary text-center m-3" id="">
+    <p class=" text-white p-3 "> جمعی از اساتید دانشگاهی :</p>
+    </div>
                 {% for teacher_university_best in teacher_university_bests %}
                     <div class="border ">
                         <a href="{% url 'teachme:teacher_detail' teacher_university_best.id   %}"><img style="max-width:25%; " src="{{ teacher_university_best.image.url }}"></a>
@@ -382,7 +404,7 @@
     </section>
     </div>
 
-<div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 {% if teacher_high_school %}d-block{% else %}d-none{% endif %}"
+<div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 {% if teacher_high_school %}d-block{% else %}d-none{% endif %}"
          onclick="avail_list_toggle('high_available_teachers')">
     <section>
         <img src="{% static 'accounts/images/high-school.png' %}"><br>
@@ -411,6 +433,9 @@
                 {% endif %}
                 </ul>
             {% if teacher_high_school_bests %}
+                <div class="bg-secondary text-center m-3" id="">
+    <p class=" text-white p-3 "> جمعی از اساتید متوسطه دوم و کنکور :</p>
+    </div>
                 {% for teacher_high_school_best in teacher_high_school_bests %}
                     <div class="border ">
                         <a href="{% url 'teachme:teacher_detail' teacher_high_school_best.id   %}"><img style="max-width:25%; " src="{{ teacher_high_school_best.image.url }}"></a>
@@ -430,7 +455,7 @@
     </section>
 </div>
 
-        <div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 {% if teacher_mid_school %}d-block{% else %}d-none{% endif %}"
+        <div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 {% if teacher_mid_school %}d-block{% else %}d-none{% endif %}"
          onclick="avail_list_toggle('mid_available_teachers')">
     <section>
         <img src="{% static 'accounts/images/mid-school.png' %}"><br>
@@ -459,6 +484,9 @@
                 {% endif %}
                 </ul>
             {% if teacher_mid_school_bests %}
+                <div class="bg-secondary text-center m-3" id="">
+    <p class=" text-white p-3 "> جمعی از اساتید متوسطه اول :</p>
+    </div>
                 {% for teacher_mid_school_best in teacher_mid_school_bests %}
                     <div class="border ">
                         <a href="{% url 'teachme:teacher_detail' teacher_mid_school_best.id   %}"><img style="max-width:25%; " src="{{ teacher_mid_school_best.image.url }}"></a>
@@ -478,7 +506,7 @@
     </section>
     </div>
 
-<div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 {% if teacher_primary_school %}d-block{% else %}d-none{% endif %}"
+<div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 {% if teacher_primary_school %}d-block{% else %}d-none{% endif %}"
          onclick="avail_list_toggle('primary_available_teachers')">
     <section>
         <img src="{% static 'accounts/images/primary-school.png' %}"><br>
@@ -507,6 +535,9 @@
                 {% endif %}
                 </ul>
             {% if teacher_primary_school_bests %}
+                <div class="bg-secondary text-center m-3" id="">
+    <p class=" text-white p-3 "> جمعی از اساتید دبستان :</p>
+    </div>
                 {% for teacher_primary_school_best in teacher_primary_school_bests %}
                     <div class="border ">
                         <a href="{% url 'teachme:teacher_detail' teacher_primary_school_best.id   %}"><img style="max-width:25%; " src="{{ teacher_primary_school_best.image.url }}"></a>
@@ -526,7 +557,7 @@
     </section>
     </div>
 
-<div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 {% if teacher_cooking %}d-block{% else %}d-none{% endif %}"
+<div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 {% if teacher_cooking %}d-block{% else %}d-none{% endif %}"
          onclick="avail_list_toggle('cooking_available_teachers')">
     <section>
         <img src="{% static 'accounts/images/cooking.png' %}"><br>
@@ -554,7 +585,13 @@
                         </script>
                 {% endif %}
                 </ul>
+
+
+
             {% if teacher_cooking_bests %}
+                <div class="bg-secondary text-center m-3" id="">
+    <p class=" text-white p-3 "> جمعی از اساتید آشپزی و شیرینی پزی :</p>
+    </div>
                 {% for teacher_cooking_best in teacher_cooking_bests %}
                     <div class="border ">
                         <a href="{% url 'teachme:teacher_detail' teacher_cooking_best.id   %}"><img style="max-width:25%; " src="{{ teacher_cooking_best.image.url }}"></a>
@@ -570,12 +607,12 @@
                     </div>
                 {% endfor %}
              {% endif %}
-            </div>
 
+  </div>
     </section>
     </div>
 
-    <div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 {% if teacher_sport %}d-block{% else %}d-none{% endif %}"
+    <div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 {% if teacher_sport %}d-block{% else %}d-none{% endif %}"
          onclick="avail_list_toggle('sport_available_teachers')">
     <section>
         <img src="{% static 'accounts/images/sport.png' %}"><br>
@@ -604,6 +641,9 @@
                 {% endif %}
                 </ul>
             {% if teacher_sport_bests %}
+                <div class="bg-secondary text-center m-3" id="">
+    <p class=" text-white p-3 "> جمعی از اساتید ورزش و بدنسازی :</p>
+    </div>
                 {% for teacher_sport_best in teacher_sport_bests %}
                     <div class="border ">
                         <a href="{% url 'teachme:teacher_detail' teacher_sport_best.id   %}"><img style="max-width:25%; " src="{{ teacher_sport_best.image.url }}"></a>
@@ -623,7 +663,7 @@
     </section>
     </div>
 
-<div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 {% if teacher_tech %}d-block{% else %}d-none{% endif %}"
+<div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 {% if teacher_tech %}d-block{% else %}d-none{% endif %}"
          onclick="avail_list_toggle('tech_available_teachers')">
     <section>
         <img src="{% static 'accounts/images/tech.png' %}"><br>
@@ -652,6 +692,9 @@
                 {% endif %}
                 </ul>
             {% if teacher_tech_bests %}
+                <div class="bg-secondary text-center m-3" id="">
+    <p class=" text-white p-3 "> جمعی از اساتید فنی :</p>
+    </div>
                 {% for teacher_tech_best in teacher_tech_bests %}
                     <div class="border ">
                         <a href="{% url 'teachme:teacher_detail' teacher_tech_best.id   %}"><img style="max-width:25%; " src="{{ teacher_tech_best.image.url }}"></a>
@@ -671,10 +714,16 @@
 
     </section>
 </div>
+    </div>
 
-<div class=" col-lg-2 col-md-3 col-sm-12 text-center mt-1 " id="all_teacher_best_div">
+
+    <div class="bg-dark text-center m-3" id="all_teacher_best_title_div">
+    <p class=" text-white p-3 "> جمعی از اساتید استادباز :</p>
+    </div>
+
+<div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 " id="all_teacher_best_div">
     {% for teacher_best in all_teacher_bests %}
-        <div class="border ">
+        <div class="border text-center">
             <a href="{% url 'teachme:teacher_detail' teacher_best.id   %}"><img style="max-width:25%; " src="{{ teacher_best.image.url }}"></a>
             <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_best.id   %}">{{ teacher_best.first_name }} {{ teacher_best.last_name }}
                 ( {{ teacher_best.syllabus.syllabus_name }}) {{ teacher_best.city_id }}</a></p>
@@ -692,24 +741,12 @@
             </ul>
         </div>
     {% endfor %}
-
+</div>
 </div>
 
 {% endblock %}
 
 {% block footer %}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <script>
@@ -740,7 +777,8 @@
     function avail_list_toggle(list_name) {
         $("#"+list_name).toggle()
         $("#all_teacher_best_div").css('display','none')
-        window.scrollBy(0, 420);
+        $("#all_teacher_best_title_div").css('display','none')
+        window.scrollBy(0, 300);
     }
 </script>
 {% endblock %}
