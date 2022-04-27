@@ -76,7 +76,7 @@ li{font-size: 18px;color: black;}
 {% block title %}{% endblock %}
 <body >
 
-
+{% if results %}
 <div class="text-right alert " >
 {% include "accounts/messages.html" %}
     <ul>
@@ -95,6 +95,7 @@ li{font-size: 18px;color: black;}
     </ul>
 </div>
 
+{% endif %}
     {% block contents %}{% endblock %}
 
 
@@ -111,7 +112,7 @@ li{font-size: 18px;color: black;}
         <p class="small "> <img src=""> <a href="https://www.instagram.com/ostadbaz/">  <span class=""> اینستاگرام : ostadbaz </span></a></p>
         <p class="small">  <a href="https://www.aparat.com/ostadbaz">  <span> آپارات :</span><span> ostadbaz </span></a></p>
         <p class="small">  <a href="https://www.youtube.com/channel/UCK3CnpPtXgOoz9oS1QEuX5A">  <span> یوتیوب :</span><span> ostadbaz </span></a></p>
-        <p class="small">کلیه حقوق مادی و معنوی این اثر متعلق به شرکت  صدف سپید آریان (سهامی خاص) می باشد</p>
+
         <p class="small">copyright 2022<i class="fa fa-copyright"></i> </p>
 
     </div>

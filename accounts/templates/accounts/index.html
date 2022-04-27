@@ -77,7 +77,7 @@
     <p class=" text-white p-3 "> جمعی از اساتید آرایش و زیبایی :</p>
     </div>
                 {% for teacher_makeup_best in teacher_makeup_bests %}
-                    <div class="border ">
+                    <div class="border  m-3 rounded ">
                         <a href="{% url 'teachme:teacher_detail' teacher_makeup_best.id   %}"><img style="max-width:25%; " src="{{ teacher_makeup_best.image.url }}"></a>
                         <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_makeup_best.id   %}">{{ teacher_makeup_best.first_name }} {{ teacher_makeup_best.last_name }}
                             ( {{ teacher_makeup_best.syllabus.syllabus_name }}) {{ teacher_makeup_best.city_id }}</a></p>
@@ -99,7 +99,7 @@
 <div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 {% if teacher_language %}d-block{% else %}d-none{% endif %}"
          onclick="avail_list_toggle('language_available_teachers')">
     <section>
-        <img src="{% static 'accounts/images/computer.png' %}"><br>
+        <img src="{% static 'accounts/images/language.png' %}"><br>
         <h6> زبان های خارجی</h6>
 
             <div id="language_available_teachers" style="display: none ;">
@@ -129,7 +129,7 @@
     <p class=" text-white p-3 "> جمعی از اساتید زبان های خارجی :</p>
     </div>
                 {% for teacher_language_best in teacher_language_bests %}
-                    <div class="border ">
+                    <div class="border  m-3 rounded">
                         <a href="{% url 'teachme:teacher_detail' teacher_language_best.id   %}"><img style="max-width:25%; " src="{{ teacher_language_best.image.url }}"></a>
                         <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_language_best.id   %}">{{ teacher_language_best.first_name }} {{ teacher_language_best.last_name }}
                             ( {{ teacher_language_best.syllabus.syllabus_name }}) {{ teacher_language_best.city_id }}</a></p>
@@ -180,7 +180,7 @@
     <p class=" text-white p-3 "> جمعی از اساتید کامپیوتر و برنامه نویسی :</p>
     </div>
                 {% for teacher_computer_best in teacher_computer_bests %}
-                    <div class="border ">
+                    <div class="border  m-3 rounded">
                         <a href="{% url 'teachme:teacher_detail' teacher_computer_best.id   %}"><img style="max-width:25%; " src="{{ teacher_computer_best.image.url }}"></a>
                         <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_computer_best.id   %}">{{ teacher_computer_best.first_name }} {{ teacher_computer_best.last_name }}
                             ( {{ teacher_computer_best.syllabus.syllabus_name }}) {{ teacher_computer_best.city_id }}</a></p>
@@ -231,7 +231,7 @@
     <p class=" text-white p-3 "> جمعی از اساتید موسیقی :</p>
     </div>
                 {% for teacher_music_best in teacher_music_bests %}
-                    <div class="border ">
+                    <div class="border  m-3 rounded">
                         <a href="{% url 'teachme:teacher_detail' teacher_music_best.id   %}"><img style="max-width:25%; " src="{{ teacher_music_best.image.url }}"></a>
                         <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_music_best.id   %}">{{ teacher_music_best.first_name }} {{ teacher_music_best.last_name }}
                             ( {{ teacher_music_best.syllabus.syllabus_name }}) {{ teacher_music_best.city_id }} </a></p>
@@ -282,7 +282,7 @@
     <p class=" text-white p-3 "> جمعی از اساتید سینما و بازیگری :</p>
     </div>
                 {% for teacher_cinema_best in teacher_cinema_bests %}
-                    <div class="border ">
+                    <div class="border  m-3 rounded">
                         <a href="{% url 'teachme:teacher_detail' teacher_cinema_best.id   %}"><img style="max-width:25%; " src="{{ teacher_cinema_best.image.url }}"></a>
                         <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_cinema_best.id   %}">{{ teacher_cinema_best.first_name }} {{ teacher_cinema_best.last_name }}
                             ( {{ teacher_cinema_best.syllabus.syllabus_name }})  {{ teacher_cinema_best.city_id }} </a></p>
@@ -334,7 +334,7 @@
     <p class=" text-white p-3 "> جمعی از اساتید هنر های تجسمی :</p>
     </div>
                 {% for teacher_art_best in teacher_art_bests %}
-                    <div class="border ">
+                    <div class="border  m-3 rounded">
                         <a href="{% url 'teachme:teacher_detail' teacher_art_best.id   %}"><img style="max-width:25%; " src="{{ teacher_art_best.image.url }}"></a>
                         <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_art_best.id   %}">{{ teacher_art_best.first_name }} {{ teacher_art_best.last_name }}
                             ( {{ teacher_art_best.syllabus.syllabus_name }}) {{ teacher_art_best.city_id }}</a></p>
@@ -386,7 +386,7 @@
     <p class=" text-white p-3 "> جمعی از اساتید دانشگاهی :</p>
     </div>
                 {% for teacher_university_best in teacher_university_bests %}
-                    <div class="border ">
+                    <div class=" border  m-3 rounded">
                         <a href="{% url 'teachme:teacher_detail' teacher_university_best.id   %}"><img style="max-width:25%; " src="{{ teacher_university_best.image.url }}"></a>
                         <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_university_best.id   %}">{{ teacher_university_best.first_name }} {{ teacher_university_best.last_name }}
                             ( {{ teacher_university_best.syllabus.syllabus_name }}) {{ teacher_university_best.city_id }}</a></p>
@@ -437,7 +437,7 @@
     <p class=" text-white p-3 "> جمعی از اساتید متوسطه دوم و کنکور :</p>
     </div>
                 {% for teacher_high_school_best in teacher_high_school_bests %}
-                    <div class="border ">
+                    <div class="border  m-3 rounded ">
                         <a href="{% url 'teachme:teacher_detail' teacher_high_school_best.id   %}"><img style="max-width:25%; " src="{{ teacher_high_school_best.image.url }}"></a>
                         <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_high_school_best.id   %}">{{ teacher_high_school_best.first_name }} {{ teacher_high_school_best.last_name }}
                             ( {{ teacher_high_school_best.syllabus.syllabus_name }}) {{ teacher_high_school_best.city_id }}</a></p>
@@ -488,7 +488,7 @@
     <p class=" text-white p-3 "> جمعی از اساتید متوسطه اول :</p>
     </div>
                 {% for teacher_mid_school_best in teacher_mid_school_bests %}
-                    <div class="border ">
+                    <div class="border  m-3 rounded">
                         <a href="{% url 'teachme:teacher_detail' teacher_mid_school_best.id   %}"><img style="max-width:25%; " src="{{ teacher_mid_school_best.image.url }}"></a>
                         <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_mid_school_best.id   %}">{{ teacher_mid_school_best.first_name }} {{ teacher_mid_school_best.last_name }}
                             ( {{ teacher_mid_school_best.syllabus.syllabus_name }}) {{ teacher_mid_school_best.city_id }}</a></p>
@@ -539,7 +539,7 @@
     <p class=" text-white p-3 "> جمعی از اساتید دبستان :</p>
     </div>
                 {% for teacher_primary_school_best in teacher_primary_school_bests %}
-                    <div class="border ">
+                    <div class="border  m-3 rounded">
                         <a href="{% url 'teachme:teacher_detail' teacher_primary_school_best.id   %}"><img style="max-width:25%; " src="{{ teacher_primary_school_best.image.url }}"></a>
                         <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_primary_school_best.id   %}">{{ teacher_primary_school_best.first_name }}
                             {{ teacher_primary_school_best.last_name }} ( {{ teacher_primary_school_best.syllabus.syllabus_name }}) {{ teacher_primary_school_best.city_id }}</a></p>
@@ -593,7 +593,7 @@
     <p class=" text-white p-3 "> جمعی از اساتید آشپزی و شیرینی پزی :</p>
     </div>
                 {% for teacher_cooking_best in teacher_cooking_bests %}
-                    <div class="border ">
+                    <div class="border  m-3 rounded">
                         <a href="{% url 'teachme:teacher_detail' teacher_cooking_best.id   %}"><img style="max-width:25%; " src="{{ teacher_cooking_best.image.url }}"></a>
                         <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_cooking_best.id   %}">{{ teacher_cooking_best.first_name }} {{ teacher_cooking_best.last_name }}
                             ( {{ teacher_cooking_best.syllabus.syllabus_name }}) {{ teacher_cooking_best.city_id }}</a></p>
@@ -645,7 +645,7 @@
     <p class=" text-white p-3 "> جمعی از اساتید ورزش و بدنسازی :</p>
     </div>
                 {% for teacher_sport_best in teacher_sport_bests %}
-                    <div class="border ">
+                    <div class="border  m-3 rounded">
                         <a href="{% url 'teachme:teacher_detail' teacher_sport_best.id   %}"><img style="max-width:25%; " src="{{ teacher_sport_best.image.url }}"></a>
                         <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_sport_best.id   %}">{{ teacher_sport_best.first_name }} {{ teacher_sport_best.last_name }}
                             ( {{ teacher_sport_best.syllabus.syllabus_name }}) {{ teacher_sport_best.city_id }}</a></p>
@@ -696,7 +696,7 @@
     <p class=" text-white p-3 "> جمعی از اساتید فنی :</p>
     </div>
                 {% for teacher_tech_best in teacher_tech_bests %}
-                    <div class="border ">
+                    <div class="border  m-3 rounded">
                         <a href="{% url 'teachme:teacher_detail' teacher_tech_best.id   %}"><img style="max-width:25%; " src="{{ teacher_tech_best.image.url }}"></a>
                         <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_tech_best.id   %}">{{ teacher_tech_best.first_name }} {{ teacher_tech_best.last_name }}
                             ( {{ teacher_tech_best.syllabus.syllabus_name }}) {{ teacher_tech_best.city_id }}</a></p>
@@ -723,7 +723,7 @@
 
 <div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 " id="all_teacher_best_div">
     {% for teacher_best in all_teacher_bests %}
-        <div class="border text-center">
+        <div class="border text-center m-3 rounded ">
             <a href="{% url 'teachme:teacher_detail' teacher_best.id   %}"><img style="max-width:25%; " src="{{ teacher_best.image.url }}"></a>
             <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_best.id   %}">{{ teacher_best.first_name }} {{ teacher_best.last_name }}
                 ( {{ teacher_best.syllabus.syllabus_name }}) {{ teacher_best.city_id }}</a></p>

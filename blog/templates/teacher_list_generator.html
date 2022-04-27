@@ -1,0 +1,46 @@
+
+
+{% extends 'accounts/_base.html' %}
+{% load static %}
+
+{% block contents %}
+    <header>
+      <h1 class="text-center">معرفی کلاس و استاد</h1><br><br>
+    </header>
+    <article class="text-right small m-3">
+    {% for syllabus in syllabuses %}
+    <span>آموزش {{ syllabus }}</span>-
+{% endfor %}
+    <hr>
+    </article>
+    {% for teacher in teachers %}
+
+        <article class="text-center col-lg-4 col-md-6 col-sm-12">
+        <a href="{% url 'teachme:teacher_detail' teacher.id %}">
+        <h5 class="text-dark">استاد {{ teacher.first_name }} {{ teacher.last_name }} {{ teacher.syllabus_id }} {{ teacher.city_id }} :
+        </h5>
+            <p class="text-dark">{{ teacher.qualification }}</p>
+        {% if teacher.degree_image %}
+            <figure>
+                <img src="{{ teacher.degree_image.url }}" class="img-thumbnail w-25 "  alt="{{ teacher.syllabus_id }}-{{ teacher.city_id }}">
+                <figcaption class="small">آموزش {{ teacher.syllabus_id }} {{ teacher.city_id }}</figcaption>
+            </figure>
+
+        {% endif %}
+        <hr>
+
+        </a>
+        </article>
+
+    {% endfor %}
+
+<footer>
+<article class="text-right small">
+{% for syllabus in syllabuses %}
+    <span>آموزش {{ syllabus }}</span>-
+{% endfor %}
+  <span>استادباز</span>
+</article>
+</footer>
+
+{% endblock %}
