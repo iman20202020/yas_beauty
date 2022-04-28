@@ -119,3 +119,15 @@ def request_user_verify(request, teacher_id):
      'teacher_id': teacher_id,
      }
     return render(request, 'teachme/request_user_verify.html', context )
+
+
+
+def nakhon_list(request):
+    teachers = Teacher.objects.filter(syllabus='خدمات ناخن',is_confirmed=True).reverse().order_by('points')
+    state_filter = request.GET.get('st')
+
+    context = {
+        'teachers': teachers,
+        'state_filter': state_filter,
+    }
+    return render(request, 'teachme/nakhon_list.html', context)

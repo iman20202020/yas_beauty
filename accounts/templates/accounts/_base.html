@@ -25,17 +25,24 @@ li{font-size: 18px;color: black;}
     <title> کلاس خصوصی ورکشاپ فنی و هنری استادباز </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" charset=utf-8>
+    <meta name="description" content="آموزش خدمات موی بانوان- آموزش تتوی بدن- آموزش خدمات ناخن- آموزش میکاپ- آموزش انگلیسی- آموزش آلمانی- آموزش فیزیک- آموزش ریاضی- آموزش خدمات ابرو و مژه و لب- آموزش پاکسازی پوست- آموزش تار- آموزش پیانو- آموزش ارگ (کیبورد)- آموزش دف- آموزش ویولون- آموزش گیتار- آموزش تنبک">
+<meta name="keywords" content="آموزش خدمات موی بانوان- آموزش تتوی بدن- آموزش خدمات ناخن- آموزش میکاپ- آموزش انگلیسی- آموزش آلمانی- آموزش فیزیک- آموزش ریاضی- آموزش خدمات ابرو و مژه و لب- آموزش پاکسازی پوست- آموزش تار- آموزش پیانو- آموزش ارگ (کیبورد)- آموزش دف- آموزش ویولون- آموزش گیتار- آموزش تنبک">
+<meta property="og:site_name" content="معرفی کلاس و استاد">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ارتباط با اساتید ">
+<meta property="og:url" content="https://ostadbaz.com/">
+<meta name="news_keywords" content="آموزش خدمات موی بانوان- آموزش تتوی بدن- آموزش خدمات ناخن- آموزش میکاپ- آموزش انگلیسی- آموزش آلمانی- آموزش فیزیک- آموزش ریاضی- آموزش خدمات ابرو و مژه و لب- آموزش پاکسازی پوست- آموزش تار- آموزش پیانو- آموزش ارگ (کیبورد)- آموزش دف- آموزش ویولون- آموزش گیتار- آموزش تنبک">
+{#<meta property="og:image" content="https:">#}
+<meta property="og:description" content="معرفی استاد و کلاس درسی هنری و فنی در تمامی زمینه ها شامل آرایشگری-موسیقی-درسی-دانشگاهی-زبان-سینما-کامپیوتر-کارهای فنی">
     <link rel="stylesheet" href="{% static "accounts/assets/bootstrap/css/bootstrap.min.css" %}">
     <link rel="stylesheet" href="{% static "accounts/assets/farsi/farsi.css" %}">
     <link rel="stylesheet" href="{% static 'accounts/fa5/css/all.css' %}">
     <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">
-
 </head>
-
 <nav class="  navbar navbar-expand-lg navbar-dark   bg-dark  ">
 <p class="text-right text text-white small">سوالی دارید؟ پیام دهید: 09361164819</p>
     <div class="container justify-content-start text-right">
-       <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid pr-2" src="{% static 'accounts/images/logo1.png' %}"> </a>
+       <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid pr-2" src="{% static 'accounts/images/logo1.png' %}" alt="استادباز معرفی استاد و کلاس"> </a>
 
        <button class="navbar-toggler " aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation" type="button" data-target="#navbar" data-toggle="collapse">
            <span class="navbar-toggler-icon"></span>
@@ -50,10 +57,7 @@ li{font-size: 18px;color: black;}
                        {% if user.is_authenticated %}  نمایه کاربری {{ user }}{% else %}ورود و  ثبت نام{% endif %}
                        </a>
                    </li>
-{#                    <li ><a href="#" class="nav nav-link text textr-white  "><i class="fas fa-support "></i> پشتیبانی</a></li >#}
-{#                    <li ><a href="{% url 'accounts:teacher_edit' %}" class="nav nav-link text text-white  "> ثبت نام اساتید</a></li >#}
-
-                    <li ><a href="{% url 'show_blog' 1 %}" class="nav nav-link text text-white  "><i class="fas fa-blog "></i> مجله </a></li >
+                    <li ><a href="{% url 'blog:show_blog' 1 %}" class="nav nav-link text text-white  "><i class="fas fa-blog "></i> مجله </a></li >
                     <li class="nav-item dropdown">
                         <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'accounts:contact_us' %}" ><i class="fas fa-phone "></i>   تماس با ما</a>
                     </li>
@@ -68,14 +72,11 @@ li{font-size: 18px;color: black;}
 
             <input class="  " aria-label="Search" type="search" placeholder=" جستجوی موضوع،استاد..." name="search_text">
             <button type="submit" class=" " ><i class='fa fa-search ' ></i></button>
-
         </form>
     </div>
 </nav>
-
 {% block title %}{% endblock %}
 <body >
-
 {% if results %}
 <div class="text-right alert " >
 {% include "accounts/messages.html" %}
@@ -94,30 +95,28 @@ li{font-size: 18px;color: black;}
     {% endfor %}
     </ul>
 </div>
-
 {% endif %}
     {% block contents %}{% endblock %}
-
-
 </body>
-
-
 <footer>
-        {% block footer %}
+<article class="small text-right m-2 ">
+    <a class="text-dark" href="{% url 'teachme:nakhon_list' %}"> آموزش کاشت ناخن</a>-
+<a class="text-dark" href=""> آموزش کوتاهی مو - آموزش بافت شینیون اکستنشن براشینگ کرلی مو - آموزش رنگ و مش و لایت  </a>-
+<a class="text-dark" href=""> آموزش تتو ابرو - میکروبلیدینگ - لیفت - کاشت مژه - تتو لب - آرایش دائم  </a>-
+<a class="text-dark" href=""> آموزش میکاپ   </a>-
+<a class="text-dark" href=""> آموزش پاکسازی پوست - پاکسازی صورت   </a>-
+</article>
+    {% block footer %}
     {% endblock %}
     <div class="text-right  " style="background-color: #DDDDDD">
         <p class="small ">با ما در تماس باشید و ما را در شبکه های اجتماعی دنبال کنید</p>
         <p class="small">  <i class="fa fa-phone"></i> <span>تلفن و واتساپ : 09361164819 و 02177874750</span></p>
         <p class="small">   <i class="fa fa-envelope" aria-hidden="true"></i> <span>ایمیل: ostadbazir@gmail.com</span></p>
-        <p class="small "> <img src=""> <a href="https://www.instagram.com/ostadbaz/">  <span class=""> اینستاگرام : ostadbaz </span></a></p>
+        <p class="small ">  <a href="https://www.instagram.com/ostadbaz/" >  <span class=""> اینستاگرام : ostadbaz </span></a></p>
         <p class="small">  <a href="https://www.aparat.com/ostadbaz">  <span> آپارات :</span><span> ostadbaz </span></a></p>
         <p class="small">  <a href="https://www.youtube.com/channel/UCK3CnpPtXgOoz9oS1QEuX5A">  <span> یوتیوب :</span><span> ostadbaz </span></a></p>
-
-        <p class="small">copyright 2022<i class="fa fa-copyright"></i> </p>
-
+        <p class="small">copyright 2022 ostadbaz.com alright reserved <i class="fa fa-copyright"></i> </p>
     </div>
-
-
    </footer>
 <script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>
 <script src="{% static 'accounts/assets/bootstrap/js/bootstrap.min.js' %}"></script>
