@@ -122,7 +122,7 @@ def request_user_verify(request, teacher_id):
 
 
 
-def nakhon_list(request):
+def nail_implants(request):
     teachers = Teacher.objects.filter(syllabus='خدمات ناخن',is_confirmed=True).reverse().order_by('points')
     state_filter = request.GET.get('st')
 
@@ -130,4 +130,4 @@ def nakhon_list(request):
         'teachers': teachers,
         'state_filter': state_filter,
     }
-    return render(request, 'teachme/nakhon_list.html', context)
+    return render(request, 'teachme/nail_implants.html', context)

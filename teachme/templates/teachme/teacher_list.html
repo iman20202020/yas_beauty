@@ -50,7 +50,7 @@
             <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher.id   %}">{{ teacher.first_name }} {{ teacher.last_name }}
                  ({{ teacher.city_id }})</a></p>
             <ul>
-                <li style="word-break: break-word" class="text-right small"> {{ teacher.qualification|truncatewords:7 }} </li>
+                <li style="word-break: break-word" class="text-right small"> {{ teacher.qualification|truncatewords:20 }} </li>
                 <li style="word-break: break-word" class="text-right small"> {{ teacher.experience }}سال سابقه تدریس </li>
                 <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher.points }} </li>
                 <li style="word-break: break-word" class="text-right small">
@@ -59,7 +59,7 @@
                             {% if teacher.learn_type == 2 %} حضوری{% endif %}
                 </li>
             {% if teacher.category_id == 'آرایش و زیبایی' or teacher.category_id == 'آشپزی' or teacher.category_id == 'هنرهای تجسمی' or teacher.category_id == 'سینما و بازیگری' or teacher.category_id == 'کارهای فنی' %}
-                 <li style="word-break: break-word" class="text-right small"> ورکشاپ {{ teacher.workshop_number }} {{ teacher.workshop_detail }} </li>
+                 <li style="word-break: break-word" class="text-right small"> کلاس {{ teacher.workshop_number }} {{ teacher.workshop_detail }} </li>
                 <li style="word-break: break-word" class="text-right small">  {{ teacher.workshop_price }}  </li>
             {% else %}
                 <li style="word-break: break-word" class="text-right small"> ساعتی {{ teacher.price_range.price_range_name }} هزار تومان </li>

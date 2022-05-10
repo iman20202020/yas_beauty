@@ -39,7 +39,7 @@
             <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher.id   %}">{{ teacher.first_name }} {{ teacher.last_name }}
                  ({{ teacher.city_id }})</a></p>
             <ul>
-                <li style="word-break: break-word" class="text-right small"> {{ teacher.qualification|truncatewords:7 }} </li>
+                <li style="word-break: break-word" class="text-right small"> {{ teacher.qualification|truncatewords:20 }} </li>
                 <li style="word-break: break-word" class="text-right small"> {{ teacher.experience }}سال سابقه تدریس </li>
                 <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher.points }} </li>
                 <li style="word-break: break-word" class="text-right small">

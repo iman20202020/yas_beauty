@@ -77,7 +77,7 @@
                             {% if teacher_selected.learn_type == 2 %} حضوری{% endif %}
                 </li>
             {% if teacher_selected.category_id == 'آرایش و زیبایی' or teacher_selected.category_id == 'آشپزی' or teacher_selected.category_id == 'هنرهای تجسمی' or teacher_selected.category_id == 'سینما و بازیگری' or teacher_selected.category_id == 'کارهای فنی' %}
-                 <li style="word-break: break-word" class="text-right small"> ورکشاپ {{ teacher_selected.workshop_number }} {{ teacher_selected.workshop_detail }} </li>
+                 <li style="word-break: break-word" class="text-right small"> کلاس {{ teacher_selected.workshop_number }} {{ teacher_selected.workshop_detail }} </li>
                 <li style="word-break: break-word" class="text-right small">  {{ teacher_selected.workshop_price }}  </li>
             {% else %}
                 <li style="word-break: break-word" class="text-right small"> هر ساعت تدریس : {{ teacher_selected.price_range.price_range_name }} هزار تومان </li>

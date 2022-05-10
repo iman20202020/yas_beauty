@@ -9,16 +9,16 @@ from iran_mobile_va import mobile
 def validate_video_size(value):
     file_size = value.size
 
-    if file_size > 82428800:
-        raise ValidationError("حجم فایل ویدیو حداگثر 80 مگابایت می تواند باشد")
+    if file_size > 32428800:
+        raise ValidationError("حجم فایل ویدیو حداگثر 30 مگابایت می تواند باشد")
     else:
         return value
 
 def validate_image_size(value):
     file_size = value.size
 
-    if file_size > 5242880:
-        raise ValidationError("حجم فبیل تصاویر حداکثر 5 مگابایت می تواند باشد ")
+    if file_size > 342880:
+        raise ValidationError("حجم فایل تصویر حداکثر 320 کیلوبایت می تواند باشد ")
     else:
         return value
 

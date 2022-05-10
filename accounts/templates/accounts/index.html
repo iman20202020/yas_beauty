@@ -72,25 +72,7 @@
                 {% endif %}
                 </ul>
 
-            {% if teacher_makeup_bests %}
-                    <div class="bg-secondary text-center m-3" id="">
-    <p class=" text-white p-3 "> جمعی از اساتید آرایش و زیبایی :</p>
-    </div>
-                {% for teacher_makeup_best in teacher_makeup_bests %}
-                    <div class="border  m-3 rounded ">
-                        <a href="{% url 'teachme:teacher_detail' teacher_makeup_best.id   %}"><img style="max-width:25%; " src="{{ teacher_makeup_best.image.url }}"></a>
-                        <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_makeup_best.id   %}">{{ teacher_makeup_best.first_name }} {{ teacher_makeup_best.last_name }}
-                            ( {{ teacher_makeup_best.syllabus.syllabus_name }}) {{ teacher_makeup_best.city_id }}</a></p>
-                        <ul>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_makeup_best.qualification|truncatewords:6 }} </li>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_makeup_best.experience }}سال سابقه تدریس </li>
-                            <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_makeup_best.points }} </li>
-                            <li style="word-break: break-word" class="text-right small"> ورکشاپ {{ teacher_makeup_best.workshop_number }} {{ teacher_makeup_best.workshop_detail }} </li>
-                            <li style="word-break: break-word" class="text-right small">  {{ teacher_makeup_best.workshop_price }}  </li>
-                        </ul>
-                    </div>
-                {% endfor %}
-             {% endif %}
+
             </div>
 
     </section>
@@ -124,24 +106,7 @@
                         </script>
                 {% endif %}
                 </ul>
-            {% if teacher_language_bests %}
-                <div class="bg-secondary text-center m-3" id="">
-    <p class=" text-white p-3 "> جمعی از اساتید زبان های خارجی :</p>
-    </div>
-                {% for teacher_language_best in teacher_language_bests %}
-                    <div class="border  m-3 rounded">
-                        <a href="{% url 'teachme:teacher_detail' teacher_language_best.id   %}"><img style="max-width:25%; " src="{{ teacher_language_best.image.url }}"></a>
-                        <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_language_best.id   %}">{{ teacher_language_best.first_name }} {{ teacher_language_best.last_name }}
-                            ( {{ teacher_language_best.syllabus.syllabus_name }}) {{ teacher_language_best.city_id }}</a></p>
-                        <ul>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_language_best.qualification|truncatewords:6 }} </li>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_language_best.experience }}سال سابقه تدریس </li>
-                            <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_language_best.points }} </li>
-                            <li style="word-break: break-word" class="text-right small"> ساعتی {{ teacher_language_best.price_range.price_range_name }}  هزارتومان</li>
-                        </ul>
-                    </div>
-                {% endfor %}
-            {% endif %}
+
             </div>
 
     </section>
@@ -175,24 +140,7 @@
                         </script>
                 {% endif %}
                 </ul>
-            {% if teacher_computer_bests %}
-                <div class="bg-secondary text-center m-3" id="">
-    <p class=" text-white p-3 "> جمعی از اساتید کامپیوتر و برنامه نویسی :</p>
-    </div>
-                {% for teacher_computer_best in teacher_computer_bests %}
-                    <div class="border  m-3 rounded">
-                        <a href="{% url 'teachme:teacher_detail' teacher_computer_best.id   %}"><img style="max-width:25%; " src="{{ teacher_computer_best.image.url }}"></a>
-                        <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_computer_best.id   %}">{{ teacher_computer_best.first_name }} {{ teacher_computer_best.last_name }}
-                            ( {{ teacher_computer_best.syllabus.syllabus_name }}) {{ teacher_computer_best.city_id }}</a></p>
-                        <ul>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_computer_best.qualification|truncatewords:6 }} </li>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_computer_best.experience }}سال سابقه تدریس </li>
-                            <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_computer_best.points }} </li>
-                            <li style="word-break: break-word" class="text-right small"> ساعتی {{ teacher_computer_best.price_range.price_range_name }}  هزارتومان</li>
-                        </ul>
-                    </div>
-                {% endfor %}
-             {% endif %}
+
             </div>
 
     </section>
@@ -226,24 +174,7 @@
                         </script>
                 {% endif %}
                 </ul>
-            {% if teacher_music_bests %}
-                <div class="bg-secondary text-center m-3" id="">
-    <p class=" text-white p-3 "> جمعی از اساتید موسیقی :</p>
-    </div>
-                {% for teacher_music_best in teacher_music_bests %}
-                    <div class="border  m-3 rounded">
-                        <a href="{% url 'teachme:teacher_detail' teacher_music_best.id   %}"><img style="max-width:25%; " src="{{ teacher_music_best.image.url }}"></a>
-                        <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_music_best.id   %}">{{ teacher_music_best.first_name }} {{ teacher_music_best.last_name }}
-                            ( {{ teacher_music_best.syllabus.syllabus_name }}) {{ teacher_music_best.city_id }} </a></p>
-                        <ul>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_music_best.qualification|truncatewords:6 }} </li>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_music_best.experience }}سال سابقه تدریس </li>
-                            <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_music_best.points }} </li>
-                            <li style="word-break: break-word" class="text-right small"> ساعتی {{ teacher_music_best.price_range.price_range_name }}  هزارتومان</li>
-                        </ul>
-                    </div>
-                {% endfor %}
-             {% endif %}
+
             </div>
 
     </section>
@@ -277,25 +208,7 @@
                         </script>
                 {% endif %}
                 </ul>
-            {% if teacher_cinema_bests %}
-                <div class="bg-secondary text-center m-3" id="">
-    <p class=" text-white p-3 "> جمعی از اساتید سینما و بازیگری :</p>
-    </div>
-                {% for teacher_cinema_best in teacher_cinema_bests %}
-                    <div class="border  m-3 rounded">
-                        <a href="{% url 'teachme:teacher_detail' teacher_cinema_best.id   %}"><img style="max-width:25%; " src="{{ teacher_cinema_best.image.url }}"></a>
-                        <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_cinema_best.id   %}">{{ teacher_cinema_best.first_name }} {{ teacher_cinema_best.last_name }}
-                            ( {{ teacher_cinema_best.syllabus.syllabus_name }})  {{ teacher_cinema_best.city_id }} </a></p>
-                        <ul>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_cinema_best.qualification|truncatewords:6 }} </li>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_cinema_best.experience }}سال سابقه تدریس </li>
-                            <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_cinema_best.points }} </li>
-                            <li style="word-break: break-word" class="text-right small"> ورکشاپ {{ teacher_cinema_best.workshop_number }} {{ teacher_cinema_best.workshop_detail }} </li>
-                            <li style="word-break: break-word" class="text-right small">  {{ teacher_cinema_best.workshop_price }}  </li>
-                        </ul>
-                    </div>
-                {% endfor %}
-             {% endif %}
+
             </div>
 
     </section>
@@ -329,25 +242,7 @@
                         </script>
                 {% endif %}
                 </ul>
-            {% if teacher_art_bests %}
-                <div class="bg-secondary text-center m-3" id="">
-    <p class=" text-white p-3 "> جمعی از اساتید هنر های تجسمی :</p>
-    </div>
-                {% for teacher_art_best in teacher_art_bests %}
-                    <div class="border  m-3 rounded">
-                        <a href="{% url 'teachme:teacher_detail' teacher_art_best.id   %}"><img style="max-width:25%; " src="{{ teacher_art_best.image.url }}"></a>
-                        <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_art_best.id   %}">{{ teacher_art_best.first_name }} {{ teacher_art_best.last_name }}
-                            ( {{ teacher_art_best.syllabus.syllabus_name }}) {{ teacher_art_best.city_id }}</a></p>
-                        <ul>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_art_best.qualification|truncatewords:6 }} </li>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_art_best.experience }}سال سابقه تدریس </li>
-                            <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_art_best.points }} </li>
-                            <li style="word-break: break-word" class="text-right small"> ورکشاپ {{ teacher_art_best.workshop_number }} {{ teacher_art_best.workshop_detail }} </li>
-                            <li style="word-break: break-word" class="text-right small">  {{ teacher_art_best.workshop_price }}  </li>
-                        </ul>
-                    </div>
-                {% endfor %}
-             {% endif %}
+
             </div>
 
     </section>
@@ -381,24 +276,7 @@
                         </script>
                 {% endif %}
                 </ul>
-            {% if teacher_university_bests %}
-                <div class="bg-secondary text-center m-3" id="">
-    <p class=" text-white p-3 "> جمعی از اساتید دانشگاهی :</p>
-    </div>
-                {% for teacher_university_best in teacher_university_bests %}
-                    <div class=" border  m-3 rounded">
-                        <a href="{% url 'teachme:teacher_detail' teacher_university_best.id   %}"><img style="max-width:25%; " src="{{ teacher_university_best.image.url }}"></a>
-                        <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_university_best.id   %}">{{ teacher_university_best.first_name }} {{ teacher_university_best.last_name }}
-                            ( {{ teacher_university_best.syllabus.syllabus_name }}) {{ teacher_university_best.city_id }}</a></p>
-                        <ul>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_university_best.qualification|truncatewords:6 }} </li>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_university_best.experience }}سال سابقه تدریس </li>
-                            <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_university_best.points }} </li>
-                            <li style="word-break: break-word" class="text-right small"> ساعتی {{ teacher_university_best.price_range.price_range_name }}  هزارتومان</li>
-                        </ul>
-                    </div>
-                {% endfor %}
-             {% endif %}
+
             </div>
 
     </section>
@@ -432,24 +310,7 @@
                         </script>
                 {% endif %}
                 </ul>
-            {% if teacher_high_school_bests %}
-                <div class="bg-secondary text-center m-3" id="">
-    <p class=" text-white p-3 "> جمعی از اساتید متوسطه دوم و کنکور :</p>
-    </div>
-                {% for teacher_high_school_best in teacher_high_school_bests %}
-                    <div class="border  m-3 rounded ">
-                        <a href="{% url 'teachme:teacher_detail' teacher_high_school_best.id   %}"><img style="max-width:25%; " src="{{ teacher_high_school_best.image.url }}"></a>
-                        <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_high_school_best.id   %}">{{ teacher_high_school_best.first_name }} {{ teacher_high_school_best.last_name }}
-                            ( {{ teacher_high_school_best.syllabus.syllabus_name }}) {{ teacher_high_school_best.city_id }}</a></p>
-                        <ul>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_high_school_best.qualification|truncatewords:6 }} </li>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_high_school_best.experience }}سال سابقه تدریس </li>
-                            <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_high_school_best.points }} </li>
-                            <li style="word-break: break-word" class="text-right small"> ساعتی {{ teacher_high_school_best.price_range.price_range_name }} هزار تومان </li>
-                        </ul>
-                    </div>
-                {% endfor %}
-             {% endif %}
+
             </div>
 
     </section>
@@ -483,24 +344,7 @@
                         </script>
                 {% endif %}
                 </ul>
-            {% if teacher_mid_school_bests %}
-                <div class="bg-secondary text-center m-3" id="">
-    <p class=" text-white p-3 "> جمعی از اساتید متوسطه اول :</p>
-    </div>
-                {% for teacher_mid_school_best in teacher_mid_school_bests %}
-                    <div class="border  m-3 rounded">
-                        <a href="{% url 'teachme:teacher_detail' teacher_mid_school_best.id   %}"><img style="max-width:25%; " src="{{ teacher_mid_school_best.image.url }}"></a>
-                        <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_mid_school_best.id   %}">{{ teacher_mid_school_best.first_name }} {{ teacher_mid_school_best.last_name }}
-                            ( {{ teacher_mid_school_best.syllabus.syllabus_name }}) {{ teacher_mid_school_best.city_id }}</a></p>
-                        <ul>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_mid_school_best.qualification|truncatewords:6 }} </li>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_mid_school_best.experience }}سال سابقه تدریس </li>
-                            <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_mid_school_best.points }} </li>
-                            <li style="word-break: break-word" class="text-right small"> ساعتی {{ teacher_mid_school_best.price_range.price_range_name }} هزار تومان </li>
-                        </ul>
-                    </div>
-                {% endfor %}
-             {% endif %}
+
             </div>
 
     </section>
@@ -534,24 +378,7 @@
                         </script>
                 {% endif %}
                 </ul>
-            {% if teacher_primary_school_bests %}
-                <div class="bg-secondary text-center m-3" id="">
-    <p class=" text-white p-3 "> جمعی از اساتید دبستان :</p>
-    </div>
-                {% for teacher_primary_school_best in teacher_primary_school_bests %}
-                    <div class="border  m-3 rounded">
-                        <a href="{% url 'teachme:teacher_detail' teacher_primary_school_best.id   %}"><img style="max-width:25%; " src="{{ teacher_primary_school_best.image.url }}"></a>
-                        <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_primary_school_best.id   %}">{{ teacher_primary_school_best.first_name }}
-                            {{ teacher_primary_school_best.last_name }} ( {{ teacher_primary_school_best.syllabus.syllabus_name }}) {{ teacher_primary_school_best.city_id }}</a></p>
-                        <ul>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_primary_school_best.qualification|truncatewords:6 }} </li>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_primary_school_best.experience }}سال سابقه تدریس </li>
-                            <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_primary_school_best.points }} </li>
-                            <li style="word-break: break-word" class="text-right small"> ساعتی {{ teacher_primary_school_best.price_range.price_range_name }} هزار تومان </li>
-                        </ul>
-                    </div>
-                {% endfor %}
-             {% endif %}
+
             </div>
 
     </section>
@@ -588,25 +415,7 @@
 
 
 
-            {% if teacher_cooking_bests %}
-                <div class="bg-secondary text-center m-3" id="">
-    <p class=" text-white p-3 "> جمعی از اساتید آشپزی و شیرینی پزی :</p>
-    </div>
-                {% for teacher_cooking_best in teacher_cooking_bests %}
-                    <div class="border  m-3 rounded">
-                        <a href="{% url 'teachme:teacher_detail' teacher_cooking_best.id   %}"><img style="max-width:25%; " src="{{ teacher_cooking_best.image.url }}"></a>
-                        <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_cooking_best.id   %}">{{ teacher_cooking_best.first_name }} {{ teacher_cooking_best.last_name }}
-                            ( {{ teacher_cooking_best.syllabus.syllabus_name }}) {{ teacher_cooking_best.city_id }}</a></p>
-                        <ul>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_cooking_best.qualification|truncatewords:6 }} </li>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_cooking_best.experience }}سال سابقه تدریس </li>
-                            <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_cooking_best.points }} </li>
-                            <li style="word-break: break-word" class="text-right small"> ورکشاپ {{ teacher_cooking_best.workshop_number }} {{ teacher_cooking_best.workshop_detail }} </li>
-                            <li style="word-break: break-word" class="text-right small">  {{ teacher_cooking_best.workshop_price }}  </li>
-                        </ul>
-                    </div>
-                {% endfor %}
-             {% endif %}
+
 
   </div>
     </section>
@@ -640,24 +449,7 @@
                         </script>
                 {% endif %}
                 </ul>
-            {% if teacher_sport_bests %}
-                <div class="bg-secondary text-center m-3" id="">
-    <p class=" text-white p-3 "> جمعی از اساتید ورزش و بدنسازی :</p>
-    </div>
-                {% for teacher_sport_best in teacher_sport_bests %}
-                    <div class="border  m-3 rounded">
-                        <a href="{% url 'teachme:teacher_detail' teacher_sport_best.id   %}"><img style="max-width:25%; " src="{{ teacher_sport_best.image.url }}"></a>
-                        <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_sport_best.id   %}">{{ teacher_sport_best.first_name }} {{ teacher_sport_best.last_name }}
-                            ( {{ teacher_sport_best.syllabus.syllabus_name }}) {{ teacher_sport_best.city_id }}</a></p>
-                        <ul>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_sport_best.qualification|truncatewords:6 }} </li>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_sport_best.experience }}سال سابقه تدریس </li>
-                            <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_sport_best.points }} </li>
-                            <li style="word-break: break-word" class="text-right small"> ساعتی {{ teacher_sport_best.price_range.price_range_name }} هزار تومان </li>
-                        </ul>
-                    </div>
-                {% endfor %}
-             {% endif %}
+
             </div>
 
     </section>
@@ -691,25 +483,7 @@
                         </script>
                 {% endif %}
                 </ul>
-            {% if teacher_tech_bests %}
-                <div class="bg-secondary text-center m-3" id="">
-    <p class=" text-white p-3 "> جمعی از اساتید فنی :</p>
-    </div>
-                {% for teacher_tech_best in teacher_tech_bests %}
-                    <div class="border  m-3 rounded">
-                        <a href="{% url 'teachme:teacher_detail' teacher_tech_best.id   %}"><img style="max-width:25%; " src="{{ teacher_tech_best.image.url }}"></a>
-                        <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_tech_best.id   %}">{{ teacher_tech_best.first_name }} {{ teacher_tech_best.last_name }}
-                            ( {{ teacher_tech_best.syllabus.syllabus_name }}) {{ teacher_tech_best.city_id }}</a></p>
-                        <ul>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_tech_best.qualification|truncatewords:6 }} </li>
-                            <li style="word-break: break-word" class="text-right small"> {{ teacher_tech_best.experience }}سال سابقه تدریس </li>
-                            <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_tech_best.points }} </li>
-                            <li style="word-break: break-word" class="text-right small"> ورکشاپ {{ teacher_tech_best.workshop_number }} {{ teacher_tech_best.workshop_detail }} </li>
-                            <li style="word-break: break-word" class="text-right small">  {{ teacher_tech_best.workshop_price }}  </li>
-                        </ul>
-                    </div>
-                {% endfor %}
-             {% endif %}
+
             </div>
 
     </section>
@@ -776,9 +550,8 @@
               },4000);
     function avail_list_toggle(list_name) {
         $("#"+list_name).toggle()
-        $("#all_teacher_best_div").css('display','none')
-        $("#all_teacher_best_title_div").css('display','none')
-        window.scrollBy(0, 300);
+
+        window.scrollBy(0, 100);
     }
 </script>
 {% endblock %}
