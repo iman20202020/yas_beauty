@@ -120,14 +120,31 @@ def request_user_verify(request, teacher_id):
      }
     return render(request, 'teachme/request_user_verify.html', context )
 
-
-
+# create pages for direct search
 def nail_implants(request):
-    teachers = Teacher.objects.filter(syllabus='خدمات ناخن',is_confirmed=True).reverse().order_by('points')
+    teachers = Teacher.objects.filter(syllabus='کاشت ناخن',is_confirmed=True).reverse().order_by('points')
+    states = State.objects.all()
     state_filter = request.GET.get('st')
-
+    if state_filter:
+        teachers = teachers.filter(state=state_filter)
     context = {
         'teachers': teachers,
         'state_filter': state_filter,
+        'states': states,
     }
     return render(request, 'teachme/nail_implants.html', context)
+
+
+def eyebrow_beuty_training(request):
+    teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب',is_confirmed=True).reverse().order_by('points')
+    states = State.objects.all()
+    state_filter = request.GET.get('st')
+    if state_filter:
+        teachers = teachers.filter(state=state_filter)
+    context = {
+        'teachers': teachers,
+        'state_filter': state_filter,
+        'states': states,
+    }
+    return render(request, 'teachme/eyebrow-microblading-training.html', context)
+
