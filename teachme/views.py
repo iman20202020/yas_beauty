@@ -135,7 +135,7 @@ def nail_implants(request):
     return render(request, 'teachme/nail_implants.html', context)
 
 
-def eyebrow_beuty_training(request):
+def eyebrow_microblading_training(request):
     teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب',is_confirmed=True).reverse().order_by('points')
     states = State.objects.all()
     state_filter = request.GET.get('st')
@@ -148,3 +148,110 @@ def eyebrow_beuty_training(request):
     }
     return render(request, 'teachme/eyebrow-microblading-training.html', context)
 
+
+def eyebrow_lift_training(request):
+    teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب',is_confirmed=True).reverse().order_by('points')
+    states = State.objects.all()
+    state_filter = request.GET.get('st')
+    if state_filter:
+        teachers = teachers.filter(state=state_filter)
+    context = {
+        'teachers': teachers,
+        'state_filter': state_filter,
+        'states': states,
+    }
+    return render(request, 'teachme/eyebrow-lift-training.html', context)
+
+
+def eyebrow_permanent_makeup_training(request):
+    teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب',is_confirmed=True).reverse().order_by('points')
+    states = State.objects.all()
+    state_filter = request.GET.get('st')
+    if state_filter:
+        teachers = teachers.filter(state=state_filter)
+    context = {
+        'teachers': teachers,
+        'state_filter': state_filter,
+        'states': states,
+    }
+    return render(request, 'teachme/permanent-makeup-training.html', context)
+
+
+def haircut_training(request):
+    teachers = Teacher.objects.filter(syllabus='کوتاهی موی بانوان',is_confirmed=True).reverse().order_by('points')
+    states = State.objects.all()
+    state_filter = request.GET.get('st')
+    if state_filter:
+        teachers = teachers.filter(state=state_filter)
+    context = {
+        'teachers': teachers,
+        'state_filter': state_filter,
+        'states': states,
+    }
+    return render(request, 'teachme/haircut-training.html', context)
+
+def hair_coloring_training(request):
+    teachers = Teacher.objects.filter(syllabus='آموزش رنگ و مش مو',is_confirmed=True).reverse().order_by('points')
+    states = State.objects.all()
+    state_filter = request.GET.get('st')
+    if state_filter:
+        teachers = teachers.filter(state=state_filter)
+    context = {
+        'teachers': teachers,
+        'state_filter': state_filter,
+        'states': states,
+    }
+    return render(request, 'teachme/hair-coloring-training.html', context)
+
+def face_balancing_training(request):
+    teachers = Teacher.objects.filter(syllabus='میکاپ',is_confirmed=True).reverse().order_by('points')
+    states = State.objects.all()
+    state_filter = request.GET.get('st')
+    if state_filter:
+        teachers = teachers.filter(state=state_filter)
+    context = {
+        'teachers': teachers,
+        'state_filter': state_filter,
+        'states': states,
+    }
+    return render(request, 'teachme/face-balancing-training.html', context)
+
+def extension_training_for_eylashes(request):
+    teachers = Teacher.objects.filter(syllabus='کاشت مژه',is_confirmed=True).reverse().order_by('points')
+    states = State.objects.all()
+    state_filter = request.GET.get('st')
+    if state_filter:
+        teachers = teachers.filter(state=state_filter)
+    context = {
+        'teachers': teachers,
+        'state_filter': state_filter,
+        'states': states,
+    }
+    return render(request, 'teachme/extension-training-for-eyelashes.html', context)
+
+def face_cleaning_training(request):
+    teachers = Teacher.objects.filter(syllabus='پاکسازی پوست',is_confirmed=True).reverse().order_by('points')
+    states = State.objects.all()
+    state_filter = request.GET.get('st')
+    if state_filter:
+        teachers = teachers.filter(state=state_filter)
+    context = {
+        'teachers': teachers,
+        'state_filter': state_filter,
+        'states': states,
+    }
+    return render(request, 'teachme/face-cleaning-training.html', context)
+
+
+def hair_dress_training(request):
+    teachers = Teacher.objects.filter(syllabus='شینیون و بافت مو', is_confirmed=True).reverse().order_by('points')
+    states = State.objects.all()
+    state_filter = request.GET.get('st')
+    if state_filter:
+        teachers = teachers.filter(state=state_filter)
+    context = {
+        'teachers': teachers,
+        'state_filter': state_filter,
+        'states': states,
+    }
+    return render(request, 'teachme/hair-dress-training.html', context)

@@ -1,30 +1,76 @@
 
-{% extends 'accounts/_base.html' %}
 {% load static %}
-{% block title %}
+<!DOCTYPE html>
+<html dir="rtl" lang="fa-IR">
 <style>
-.text-wrap {
-
-    text-align: center;
-    font-size: small;
-  display: block;
-  width: 150px;
-    height: 130px;
-    word-wrap: break-word;
-  overflow: hidden;
-  {#white-space: nowrap;#}
-  text-overflow: ellipsis;
-}
+li{font-size: 18px;color: black;}
 </style>
+<head dir="rtl">
+    <title>آموزش میکروبلیدینگ | آموزش میکروپیگمنتیشن |معرفی اساتید برتراستادباز </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset=utf-8>
+    <meta name="description" content=" معرفی اساتید برتر و ورکشاپ و کلاسهای  آموزش میکروبلیدینگ- آموزش لیفت و لمینیت ابرو-آموزش کانتورینگ لب-آموزش آرایش دائم-آموزش آرایش دائم ابرو چشم و لب-آموزش فیبروز ابرو
+آموزش لیفت و لمینیت مژه- آموزش میکروپیگمنتیشن">
+<meta name="keywords" content="  آموزش میکروبلیدینگ- آموزش لیفت و لمینیت ابرو-آموزش کانتورینگ لب-آموزش آرایش دائم-آموزش آرایش دائم ابرو چشم و لب-آموزش فیبروز ابرو
+آموزش لیفت و لمینیت مژه- آموزش میکروپیگمنتیشن ">
+<meta property="og:site_name" content="استادباز">
+<meta property="og:type" content="article">
+<meta property="og:title" content="معرفی بهترین اساتید آرایش دائم کشور ">
+<meta property="og:url" content="https://ostadbaz.com/">
+<meta name="new_keywords" content=" آموزش میکروبلیدینگ- آموزش لیفت و لمینیت ابرو-آموزش کانتورینگ لب-آموزش آرایش دائم-آموزش آرایش دائم ابرو چشم و لب-آموزش فیبروز ابرو
+آموزش لیفت و لمینیت مژه- آموزش میکروپیگمنتیشن">
+{#<meta property="og:image" content="https:">#}
+<meta property="og:description" content=" معرفی اساتید برتر و ورکشاپ و کلاسهای  آموزش میکروبلیدینگ- آموزش لیفت و لمینیت ابرو-آموزش کانتورینگ لب-آموزش آرایش دائم-آموزش آرایش دائم ابرو چشم و لب-آموزش فیبروز ابرو
+آموزش لیفت و لمینیت مژه- آموزش میکروپیگمنتیشن">
+    <link rel="stylesheet" href="{% static "accounts/assets/bootstrap/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "accounts/assets/farsi/farsi.css" %}">
+    <link rel="stylesheet" href="{% static 'accounts/fa5/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">
+</head>
+<nav class="  navbar navbar-expand-lg navbar-dark   bg-dark  ">
+<p class="text-right text text-white small">سوالی دارید؟ پیام دهید: 09361164819</p>
+    <div class="container justify-content-start text-right">
+       <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid pr-2" src="{% static 'accounts/images/logo1.png' %}" alt="استادباز معرفی استاد و کلاس"> </a>
 
-{% endblock %}
-{% block contents %}
+       <button class="navbar-toggler " aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation" type="button" data-target="#navbar" data-toggle="collapse">
+           <span class="navbar-toggler-icon"></span>
+       </button>
+           <div id="navbar" class="navbar-collapse collapse">
+               <ul class="nav navbar-nav">
+                   <li><a  class="nav nav-link text text-white  " href="{% url 'accounts:index_accounts' %}"> صفحه اصلی   </a>
+                   </li>
+                   <li><a  id="user_key"  class="nav nav-link  text text-white "
+                                 href=" {% if user.is_authenticated %}{% url 'accounts:profile_edit' %}
+                                        {% else %}{% url 'accounts:login_view' %}{% endif %}" >
+                       {% if user.is_authenticated %}  نمایه کاربری {{ user }}{% else %}ورود و  ثبت نام{% endif %}
+                       </a>
+                   </li>
+{#                    <li ><a href="{% url 'blog:show_blog' 1 %}" class="nav nav-link text text-white  "><i class="fas fa-blog "></i> مجله </a></li >#}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'accounts:contact_us' %}" ><i class="fas fa-phone "></i>   تماس با ما</a>
+                    </li>
+               {% if  user.is_authenticated %}
+                    <li   >
+                        <a class="nav nav-link text text-white " href="{% url 'accounts:logout_view' %}" >خروج</a>
+                    </li>
+               {% endif %}
+               </ul>
+           </div>
+        <div>
+            <p class="text-white pr-4">سامانه معرفی استاد استادباز </p>
+        </div>
+    </div>
+</nav>
+
 
 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="state_filter_select  " id="state_div">
 <div class="container p-4">
     <div class="row">
     <article class="">
-        <h2 class="small">آموزش کاشت ناخن - کلاس کاشت ناخن - آموزش کاشت ناخن صفر تا صد -آموزش طراحی ناخن - مانیکور - پدیکور - </h2>
+        <h2 class="small"> معرفی اساتید برتر و ورکشاپ و کلاسهای  آموزش میکروبلیدینگ- آموزش لیفت و لمینیت ابرو
+            -آموزش کانتورینگ لب-آموزش آرایش دائم-آموزش آرایش دائم ابرو چشم و لب-آموزش فیبروز ابرو
+آموزش لیفت و لمینیت مژه- آموزش میکروپیگمنتیشن
+</h2>
     </article>
 </div>
 <div class="row">
@@ -45,14 +91,13 @@
 
 
         <div class="  col-lg-12 col-md-12 col-sm-12 alert text-center alert-info text-dark mt-2 mb-0 py-1 px-3  ">
-            <p>
-            {{ teachers.count }}
-            استاد  </p>
+           <p>   آموزش میکروبلیدینگ  : {{ teachers.count }}   استاد مورد تایید  </p>
+               <p class="text-primary">   1 ساعت اول کلیه کلاس ها رایگان است </p>
         </div><br>
 {% for teacher in teachers %}
     <div class=" col-lg-6 col-md-6 col-sm-12 text-right border m-3 rounded " id="teacher_div  ">
 
-            <a href="{% url 'teachme:teacher_detail' teacher.id   %}"><img style="max-width:35%; " src="{{ teacher.image.url }}"></a>
+            <a href="{% url 'teachme:teacher_detail' teacher.id   %}"><img style="max-width:35%; " src="{{ teacher.image.url }}" alt="{{ teacher.last_name }}"></a>
             <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher.id   %}">{{ teacher.first_name }} {{ teacher.last_name }}
                  ({{ teacher.city_id }})</a></p>
             <ul>
@@ -78,7 +123,12 @@
       {% endfor %}
     </div>
 
-
+ <article class="">
+        <h2 class="small"> معرفی اساتید برتر و ورکشاپ و کلاسهای  آموزش میکروبلیدینگ- آموزش لیفت و لمینیت ابرو
+            -آموزش کانتورینگ لب-آموزش آرایش دائم-آموزش آرایش دائم ابرو چشم و لب-آموزش فیبروز ابرو
+آموزش لیفت و لمینیت مژه- آموزش میکروپیگمنتیشن
+</h2>
+    </article>
 
  </div>
 <div class="text-center">
@@ -89,13 +139,13 @@
 <br>
 
 <script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>
+<script src="{% static 'accounts/assets/bootstrap/js/bootstrap.min.js' %}"></script>
      <script>
 
 function filter_state() {
     let state_filter = $('#state_filter_select').val();
-   window.location.replace("{% url 'teachme:eyebrow_beuty_training' %}"+"?st="+state_filter);
+   window.location.replace("{% url 'teachme:eyebrow_microblading_training' %}"+"?st="+state_filter);
 
 }
     </script>
 
- {% endblock %}

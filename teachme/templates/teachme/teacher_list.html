@@ -42,11 +42,12 @@
                 <p>برای درس {{ syllabus_id }} در زیرگروه &nbsp;{{ category_id }}</p>
                 {{ teachers.count }}
                 استاد پیدا شد
+                 <p class="text-primary">   1 ساعت اول کلیه کلاس ها رایگان است </p>
             </div><br>
 {% for teacher in teachers %}
     <div class=" col-lg-6 col-md-6 col-sm-12 text-right border m-3 rounded " id="teacher_div  ">
 
-            <a href="{% url 'teachme:teacher_detail' teacher.id   %}"><img style="max-width:35%; " src="{{ teacher.image.url }}"></a>
+            <a href="{% url 'teachme:teacher_detail' teacher.id   %}"><img style="max-width:35%; " src="{{ teacher.image.url }}" alt="{{ teacher.last_name }}-{{ teacher.syllabus }}"></a>
             <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher.id   %}">{{ teacher.first_name }} {{ teacher.last_name }}
                  ({{ teacher.city_id }})</a></p>
             <ul>
