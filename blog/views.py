@@ -14,3 +14,5 @@ def teacher_list_generator(request):
     teachers = Teacher.objects.filter(is_confirmed=True).order_by('-points')
     syllabuses = Syllabus.objects.all()
     return render(request,'teacher_list_generator.html',{'teachers': teachers, 'syllabuses': syllabuses})
+
+

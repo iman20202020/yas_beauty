@@ -255,3 +255,6 @@ def hair_dress_training(request):
         'states': states,
     }
     return render(request, 'teachme/hair-dress-training.html', context)
+
+
+

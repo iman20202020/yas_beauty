@@ -106,6 +106,18 @@ def index_accounts(request):
     return render(request, 'accounts/index.html', context)
 
 
+def beauty_trainings(request):
+    syllabuses_makeup = Syllabus.objects.filter(learn_category='آرایش و زیبایی')
+    teacher_makeup = Teacher.objects.filter(category='آرایش و زیبایی',is_confirmed=True)
+    teacher_makeup_bests = teacher_makeup.order_by('-points')[:15]
+    context = {
+        'syllabuses_makeup': syllabuses_makeup,
+        'teacher_makeup': teacher_makeup,
+        'teacher_makeup_bests': teacher_makeup_bests,
+    }
+    return render(request, 'accounts/beauty-trainings.html', context)
+
+
 def contact_us(request):
     return render(request, 'accounts/contact_us.html', {})
 

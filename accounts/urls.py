@@ -21,6 +21,8 @@ urlpatterns = [
     path('how/use2/',views.how_use2, name='how_use2'),
     path('teacher/laws/', views.teacher_laws, name='teacher_laws'),
 
+    path('beauty-trainings/', views.beauty_trainings, name='beauty_trainings'),
+
 
 ]
 
