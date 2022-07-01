@@ -14,13 +14,18 @@
 
     </head>
 <header>
+
     <div  class="content border-secondary  border-top text-center pt-4 " style="height: 100px; background-color:#9fcdff  ">
-        <h1 id="title_1" style="font-size: xx-large;" >استادباز معرفی استاد   </h1>
-        <h1 id="title_2" style="font-size: xx-large; display: none;" >ورکشاپ های آموزشی  </h1>
-        <h1 id="title_3" style="font-size: xx-large; display: none;" >خدمات رایگان </h1>
-        <h2 id="title_4" style="display: none;font-size: x-large; ">جلسه اول خوشت نیومد پول نده</h2>
+
+        <h1 id="title_1" style="font-size: x-large;" > سامانه معرفی استاد و کلاس استادباز   </h1>
+        <h1 id="title_2" style="font-size: xx-large; display: none;" >  ساعت اول کلاس ها رایگان  </h1>
+        <h1 id="title_3" style="font-size: xx-large; display: none;" > معرفی استاد(رایگان) </h1>
+        <h2 id="title_4" style="display: none;font-size: x-large; ">معرفی کلاس های آموزشی (رایگان)</h2>
 
     </div><br>
+    <div class="text-center">
+        <img src="{% static 'accounts/images/استادباز-معرفی کلاس و استاد.jpeg' %}" class="img-fluid" alt="سامانه معرفی استاد و کلاس استادباز">
+        </div>
 </header>
 {% endblock %}
 {% block contents %}
@@ -490,11 +495,12 @@
 </div>
     </div>
 
-
+  {% if results or results_teachers %} {% else %}
     <div class="bg-dark text-center m-3" id="all_teacher_best_title_div">
+
     <p class=" text-white p-3 "> جمعی از اساتید استادباز :</p>
     </div>
-
+{% endif %}
 <div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 " id="all_teacher_best_div">
     {% for teacher_best in all_teacher_bests %}
         <div class="border text-center m-3 rounded ">

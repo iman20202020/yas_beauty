@@ -225,7 +225,7 @@ def teacher_edit(request):
                         teacher = teacher_edit_form.save(commit=False)
                         # teacher.slug = f"{teacher.syllabus}-{teacher.last_name}"
                         teacher.save()
-                        error = "مشخصات شما با موفقیت تغییر کرد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
+                        error = "مشخصات شما با موفقیت تغییر کرد.پس از بررسی در سایت قرار می گیرد"
                         clerk_phone = '09361164819'
                         teacher_user_id = request.user.id
                         teacher_requested = MyUser.objects.get(id=request.user.id)
@@ -250,7 +250,7 @@ def teacher_edit(request):
                     teacher.user = request.user
                     # teacher.slug = f"{teacher.syllabus}-{teacher.last_name}"
                     teacher.save()
-                    error = "مشخصات شما ثبت شد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
+                    error = "مشخصات شما ثبت شد.پس از بررسی در سایت قرار می گیرد"
                     teacher_profile = Teacher.objects.get(user_id=request.user.id)
                     clerk_phone = '09361164819'
                     teacher_user_id = request.user.id
