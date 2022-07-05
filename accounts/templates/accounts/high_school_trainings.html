@@ -3,6 +3,7 @@
 
 {% block title %}
 <head>
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-224804857-1"></script>
     <script>
@@ -12,16 +13,15 @@
 
       gtag('config', 'UA-224804857-1');
     </script>
-    <title>معرفی استاد آموزش آرایشگری استادباز</title>
+    <title>معرفی استاد آموزش دبیرستان و کنکور استادباز</title>
 </head>
 <header>
-    <div  class="content border-secondary  border-top text-center pt-4 " style="height: 100px; background-color:#9fcdff  ">
-        <h1 id="title_1" style="font-size: x-large;" > سامانه معرفی استاد و کلاس استادباز   </h1>
-        <h1 id="title_2" style="font-size: xx-large; display: none;" >  ساعت اول کلاس ها رایگان  </h1>
-        <h1 id="title_3" style="font-size: xx-large; display: none;" > معرفی استاد(رایگان) </h1>
-        <h2 id="title_4" style="display: none;font-size: x-large; ">معرفی کلاس های آموزشی (رایگان)</h2>
-    </div><br>
-
+<div  class="content border-secondary  border-top text-center pt-4 " style="height: 100px; background-color:#9fcdff  ">
+    <h1 id="title_1" style="font-size: x-large;" > سامانه معرفی استاد و کلاس استادباز   </h1>
+    <h1 id="title_2" style="font-size: xx-large; display: none;" >  ساعت اول کلاس ها رایگان  </h1>
+    <h1 id="title_3" style="font-size: xx-large; display: none;" > معرفی استاد(رایگان) </h1>
+    <h2 id="title_4" style="display: none;font-size: x-large; ">معرفی کلاس های آموزشی (رایگان)</h2>
+</div><br>
     <div class="text-center">
         <img src="{% static 'accounts/images/استادباز-معرفی کلاس و استاد.jpeg' %}" class="img-fluid" alt="سامانه معرفی استاد و کلاس استادباز">
     </div>
@@ -41,59 +41,68 @@
                 </div>
             </div>
         </div>
-    </div><hr>
-
+</div><hr>
 <div class=" container ">
     <div class=" row  justify-content-center ">
         <div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1">
             <section>
                 <div >
-                    <img src="{% static 'accounts/images/makeup.png' %}" alt="آموزش آرایشگری" ><br>
-                    <h6> آموزش آرایش و زیبایی</h6>
+                    <img src="{% static 'accounts/images/high-school.png' %}" alt="آموزش متوسطه دوم و کنکور"><br>
+                    <h6> آموزش متوسطه دوم و کنکور</h6>
                 </div>
-                <div id="makeup_available_teachers" style="display: block ;">
+                <div id="high_school_available_teachers" style="display: block ;">
                     <ul  class="list-group d-lg-inline-flex"  >
-                    {% for teacher_count in teacher_counts %}
-                        <li class='badge badge-info badge-pill p-2 m-2'>
-                        {% for syll_count in teacher_count%}
-                            {% if  syll_count in syllabuses_makeup  %}
-                                <a class="text-white" href="{% url 'teachme:teacher_list'  %}?cat=آرایش و زیبایی&syl={{syll_count}}">
-                            {% endif %}
-                            <span >{{ syll_count }}</span>
-                        {% endfor %}استاد
-                         </a>
-                        </li>
-                    {% endfor %}
+                        {% for teacher_count in teacher_counts %}
+                            <li class='badge badge-info badge-pill p-2 m-2'>
+                            {% for syll_count in teacher_count%}
+                                {% if  syll_count in syllabuses_high_school  %}
+                                    <a class="text-white" href="{% url 'teachme:teacher_list'  %}?cat=متوسطه دوم&syl={{syll_count}}">
+                                {% endif %}
+                                <span >{{ syll_count }}</span>
+                            {% endfor %}استاد
+                                     </a>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </section>
         </div>
+
+
     </div>
 
-          <div class="bg-dark text-center m-3" id="all_teacher_best_title_div">
-             <p class=" text-white p-3 "> جمعی از اساتید استادباز :</p>
-          </div>
 
+<div class="bg-dark text-center m-3" id="all_teacher_best_title_div">
+    <p class=" text-white p-3 "> جمعی از اساتید استادباز :</p>
+</div>
 
-    <div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 " id="all_teacher_best_div">
-        {% for teacher_best in teacher_makeup_bests %}
-            <div class="border text-center m-3 rounded ">
-                <a href="{% url 'teachme:teacher_detail' teacher_best.id   %}"><img style="max-width:25%; " src="{{ teacher_best.image.url }}" alt="آموزش آرایشگری"></a>
-                <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_best.id   %}">{{ teacher_best.first_name }} {{ teacher_best.last_name }}
-                    ( {{ teacher_best.syllabus.syllabus_name }}) {{ teacher_best.city_id }}</a></p>
-                <ul>
+<div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 " id="all_teacher_best_div">
+    {% for teacher_best in teacher_high_school_bests %}
+        <div class="border text-center m-3 rounded ">
+            <a href="{% url 'teachme:teacher_detail' teacher_best.id   %}"><img style="max-width:25%; " src="{{ teacher_best.image.url }}" alt="آموزش متوسطه دوم و کنکور"></a>
+            <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_best.id   %}">{{ teacher_best.first_name }} {{ teacher_best.last_name }}
+                ( {{ teacher_best.syllabus.syllabus_name }}) {{ teacher_best.city_id }}</a></p>
+             <ul>
                     <li style="word-break: break-word" class="text-right small"> {{ teacher_best.qualification|truncatewords:6 }} </li>
                     <li style="word-break: break-word" class="text-right small"> {{ teacher_best.experience }}سال سابقه تدریس </li>
+                    <li style="word-break: break-word" class="text-right small">
+                     {% if teacher.learn_type == 0 %}آنلاین یا حضوری{% endif %}
+                        {% if teacher.learn_type == 1 %}آنلاین{% endif %}
+                        {% if teacher.learn_type == 2 %} حضوری{% endif %}
+                    </li>
                     <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_best.points }} </li>
-                    <li style="word-break: break-word" class="text-right small"> ورکشاپ {{ teacher_best.workshop_number }} {{ teacher_best.workshop_detail }} </li>
-                    <li style="word-break: break-word" class="text-right small">  {{ teacher_best.workshop_price }}  </li>
+                    <li style="word-break: break-word" class="text-right small"> ساعتی {{ teacher.price_range.price_range_name }} هزار تومان </li>
                 </ul>
-            </div>
-        {% endfor %}
-    </div>
+        </div>
+    {% endfor %}
 </div>
+</div>
+
 {% endblock %}
+
 {% block footer %}
+
+
 <script>
     var m=1;
     var n=2;
@@ -119,5 +128,6 @@
              if (p>4){p=1}
              if (q>4){q=1}
               },4000);
+
 </script>
 {% endblock %}

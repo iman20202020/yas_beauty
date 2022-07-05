@@ -22,7 +22,8 @@ urlpatterns = [
     path('teacher/laws/', views.teacher_laws, name='teacher_laws'),
 
     path('beauty-trainings/', views.beauty_trainings, name='beauty_trainings'),
-
-
+    path('high-school-trainings/', views.high_school_trainings, name='high_school_trainings'),
+    path('music-trainings/', views.music_trainings, name='music_trainings'),
+    path('language-trainings/', views.language_trainings, name='language_trainings'),
 ]
 

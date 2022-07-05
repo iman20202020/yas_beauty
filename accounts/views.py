@@ -19,103 +19,102 @@ def base_view(request):
 
 
 def index_accounts(request):
-    syllabuses_university = Syllabus.objects.filter(learn_category='دانشگاهی')
-    teacher_university = Teacher.objects.filter(category='دانشگاهی',is_confirmed=True)
-    # teacher_university_bests = teacher_university.order_by('-points')[:15]
-    syllabuses_high_school = Syllabus.objects.filter(learn_category='متوسطه دوم')
-    teacher_high_school = Teacher.objects.filter(category='متوسطه دوم',is_confirmed=True)
-    # teacher_high_school_bests = teacher_high_school.order_by('-points')[:15]
-    syllabuses_mid_school = Syllabus.objects.filter(learn_category='متوسطه اول')
-    teacher_mid_school = Teacher.objects.filter(category='متوسطه اول',is_confirmed=True)
-    # teacher_mid_school_bests = teacher_mid_school.order_by('-points')[:15]
-    syllabuses_primary_school = Syllabus.objects.filter(learn_category='دبستان')
-    teacher_primary_school = Teacher.objects.filter(category='دبستان',is_confirmed=True)
-    # teacher_primary_school_bests = teacher_primary_school.order_by('-points')[:15]
-    syllabuses_computer = Syllabus.objects.filter(learn_category='کامپیوتر')
-    teacher_computer = Teacher.objects.filter(category='کامپیوتر',is_confirmed=True)
-    # teacher_computer_bests = teacher_computer.order_by('-points')[:15]
-    syllabuses_music = Syllabus.objects.filter(learn_category='موسیقی')
-    teacher_music = Teacher.objects.filter(category='موسیقی',is_confirmed=True)
-    # teacher_music_bests = teacher_music.order_by('-points')[:15]
-    syllabuses_art = Syllabus.objects.filter(learn_category='هنرهای تجسمی')
-    teacher_art = Teacher.objects.filter(category='هنرهای تجسمی',is_confirmed=True)
-    # teacher_art_bests = teacher_art.order_by('-points')[:15]
-    syllabuses_sport = Syllabus.objects.filter(learn_category='ورزش و بدنسازی')
-    teacher_sport = Teacher.objects.filter(category='ورزش و بدنسازی',is_confirmed=True)
-    # teacher_sport_bests = teacher_sport.order_by('-points')[:15]
-    syllabuses_cinema = Syllabus.objects.filter(learn_category='سینما و بازیگری')
-    teacher_cinema = Teacher.objects.filter(category='سینما و بازیگری',is_confirmed=True)
-    # teacher_cinema_bests = teacher_cinema.order_by('-points')[:15]
-    syllabuses_tech = Syllabus.objects.filter(learn_category='کارهای فنی')
-    teacher_tech = Teacher.objects.filter(category='کارهای فنی',is_confirmed=True)
-    # teacher_tech_bests = teacher_tech.order_by('-points')[:15]
-    syllabuses_cooking = Syllabus.objects.filter(learn_category='آشپزی')
-    teacher_cooking = Teacher.objects.filter(category='آشپزی',is_confirmed=True)
-    # teacher_cooking_bests = teacher_cooking.order_by('-points')[:15]
-    syllabuses_makeup = Syllabus.objects.filter(learn_category='آرایش و زیبایی')
-    teacher_makeup = Teacher.objects.filter(category='آرایش و زیبایی',is_confirmed=True)
-    # teacher_makeup_bests = teacher_makeup.order_by('-points')[:15]
-    syllabuses_language = Syllabus.objects.filter(learn_category='زبان های خارجی')
-    teacher_language = Teacher.objects.filter(category='زبان های خارجی',is_confirmed=True)
-    # teacher_language_bests = teacher_language.order_by('-points')[:15]
+    teacher_university_count = Teacher.objects.filter(category='دانشگاهی',is_confirmed=True).count()
+    teacher_high_school_count = Teacher.objects.filter(category='متوسطه دوم',is_confirmed=True).count()
+    teacher_mid_school_count = Teacher.objects.filter(category='متوسطه اول',is_confirmed=True).count()
+    teacher_primary_school_count = Teacher.objects.filter(category='دبستان',is_confirmed=True).count()
+    teacher_computer_count = Teacher.objects.filter(category='کامپیوتر',is_confirmed=True).count()
+    teacher_music_count = Teacher.objects.filter(category='موسیقی',is_confirmed=True).count()
+    teacher_art_count = Teacher.objects.filter(category='هنرهای تجسمی',is_confirmed=True).count()
+    teacher_sport_count = Teacher.objects.filter(category='ورزش و بدنسازی',is_confirmed=True).count()
+    teacher_cinema_count = Teacher.objects.filter(category='سینما و بازیگری',is_confirmed=True).count()
+    teacher_tech_count = Teacher.objects.filter(category='کارهای فنی',is_confirmed=True).count()
+    teacher_cooking_count = Teacher.objects.filter(category='آشپزی',is_confirmed=True).count()
+    teacher_makeup_count = Teacher.objects.filter(category='آرایش و زیبایی',is_confirmed=True).count()
+    teacher_language_count = Teacher.objects.filter(category='زبان های خارجی',is_confirmed=True).count()
     all_teacher_bests = Teacher.objects.all().order_by('-points')[:10]
 
     context = {
-
-        'syllabuses_university': syllabuses_university,
-        'teacher_university': teacher_university,
-        # 'teacher_university_bests': teacher_university_bests,
-        'syllabuses_high_school': syllabuses_high_school,
-        'teacher_high_school': teacher_high_school,
-        # 'teacher_high_school_bests': teacher_high_school_bests,
-        'syllabuses_mid_school': syllabuses_mid_school,
-        'teacher_mid_school': teacher_mid_school,
-        # 'teacher_mid_school_bests': teacher_mid_school_bests,
-        'syllabuses_sport': syllabuses_sport,
-        'teacher_sport': teacher_sport,
-        # 'teacher_sport_bests': teacher_sport_bests,
-        'syllabuses_music': syllabuses_music,
-        'teacher_music': teacher_music,
-        # 'teacher_music_bests': teacher_music_bests,
-        'syllabuses_art': syllabuses_art,
-        'teacher_art': teacher_art,
-        # 'teacher_art_bests': teacher_art_bests,
-        'syllabuses_computer': syllabuses_computer,
-        'teacher_computer': teacher_computer,
-        # 'teacher_computer_bests': teacher_computer_bests,
-        'syllabuses_primary_school': syllabuses_primary_school,
-        'teacher_primary_school': teacher_primary_school,
-        # 'teacher_primary_school_bests': teacher_primary_school_bests,
-        'syllabuses_cinema': syllabuses_cinema,
-        'teacher_cinema': teacher_cinema,
-        # 'teacher_cinema_bests': teacher_cinema_bests,
-        'syllabuses_tech': syllabuses_tech,
-        'teacher_tech': teacher_tech,
-        # 'teacher_tech_bests': teacher_tech_bests,
-        'syllabuses_cooking': syllabuses_cooking,
-        'teacher_cooking': teacher_cooking,
-        # 'teacher_cooking_bests': teacher_cooking_bests,
-        'syllabuses_makeup': syllabuses_makeup,
-        'teacher_makeup': teacher_makeup,
-        # 'teacher_makeup_bests': teacher_makeup_bests,
-        'syllabuses_language': syllabuses_language,
-        'teacher_language': teacher_language,
-        # 'teacher_language_bests': teacher_language_bests,
+        'teacher_university_count': teacher_university_count,
+        'teacher_high_school_count': teacher_high_school_count,
+        'teacher_mid_school_count': teacher_mid_school_count,
+        'teacher_sport_count': teacher_sport_count,
+        'teacher_music_count': teacher_music_count,
+        'teacher_art_count': teacher_art_count,
+        'teacher_computer_count': teacher_computer_count,
+        'teacher_primary_school_count': teacher_primary_school_count,
+        'teacher_cinema_count': teacher_cinema_count,
+        'teacher_tech_count': teacher_tech_count,
+        'teacher_cooking_count': teacher_cooking_count,
+        'teacher_makeup_count': teacher_makeup_count,
+        'teacher_language_count': teacher_language_count,
         'all_teacher_bests': all_teacher_bests,
     }
     return render(request, 'accounts/index.html', context)
 
 
 def beauty_trainings(request):
+    teacher_counts = []
+    teacher_makeup_bests = Teacher.objects.filter(category='آرایش و زیبایی', is_confirmed=True).order_by('-points')[:15]
     syllabuses_makeup = Syllabus.objects.filter(learn_category='آرایش و زیبایی')
-    teacher_makeup = Teacher.objects.filter(category='آرایش و زیبایی',is_confirmed=True)
-    teacher_makeup_bests = teacher_makeup.order_by('-points')[:15]
+    for syllabus in syllabuses_makeup:
+        teacher_count = Teacher.objects.filter(category='آرایش و زیبایی', syllabus_id=syllabus, is_confirmed=True).count()
+        if teacher_count is not 0:
+            teacher_counts.append([syllabus,teacher_count])
     context = {
         'syllabuses_makeup': syllabuses_makeup,
-        'teacher_makeup': teacher_makeup,
+        'teacher_counts': teacher_counts,
         'teacher_makeup_bests': teacher_makeup_bests,
     }
     return render(request, 'accounts/beauty-trainings.html', context)
+
+
+def high_school_trainings(request):
+    teacher_counts = []
+    teacher_high_school_bests = Teacher.objects.filter(category='متوسطه دوم', is_confirmed=True ).order_by('-points')[:15]
+    syllabuses_high_school = Syllabus.objects.filter(learn_category_id='متوسطه دوم')
+    for syllabus in syllabuses_high_school:
+        teacher_count = Teacher.objects.filter(category='متوسطه دوم', syllabus_id=syllabus, is_confirmed=True).count()
+        if teacher_count is not 0:
+            teacher_counts.append([syllabus,teacher_count])
+    context = {
+        'syllabuses_high_school': syllabuses_high_school,
+        'teacher_counts': teacher_counts,
+        'teacher_high_school_bests': teacher_high_school_bests,
+    }
+    return render(request, 'accounts/high_school_trainings.html', context)
+
+
+def music_trainings(request):
+    teacher_counts = []
+    teacher_music_bests = Teacher.objects.filter(category='موسیقی', is_confirmed=True ).order_by('-points')[:15]
+    syllabuses_music = Syllabus.objects.filter(learn_category_id='موسیقی')
+    for syllabus in syllabuses_music:
+        teacher_count = Teacher.objects.filter(category='موسیقی', syllabus_id=syllabus, is_confirmed=True).count()
+        if teacher_count is not 0:
+            teacher_counts.append([syllabus,teacher_count])
+    context = {
+        'syllabuses_music': syllabuses_music,
+        'teacher_counts': teacher_counts,
+        'teacher_music_bests': teacher_music_bests,
+    }
+    return render(request, 'accounts/music-trainings.html', context)
+
+
+def language_trainings(request):
+    teacher_counts = []
+    teacher_language_bests = Teacher.objects.filter(category='زبان های خارجی', is_confirmed=True ).order_by('-points')[:15]
+    syllabuses_language = Syllabus.objects.filter(learn_category_id='زبان های خارجی')
+    for syllabus in syllabuses_language:
+        teacher_count = Teacher.objects.filter(category='زبان های خارجی', syllabus_id=syllabus, is_confirmed=True).count()
+        if teacher_count is not 0:
+            teacher_counts.append([syllabus,teacher_count])
+    context = {
+        'syllabuses_language': syllabuses_language,
+        'teacher_counts': teacher_counts,
+        'teacher_language_bests': teacher_language_bests,
+    }
+    return render(request, 'accounts/language-trainings.html', context)
 
 
 def contact_us(request):
