@@ -22,7 +22,7 @@
     </div>
 
         <div class="  col-lg-3 col-md-3 col-sm-12" >
-            <img  src="{{ teacher_selected.image.url }}"  id="teacher_image" class="img-thumbnail">
+            <img  src="{{ teacher_selected.image.url }}"  id="teacher_image" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
         </div>
     {% if teacher_selected.sample_video %}
         <div class="embed-responsive embed-responsive-4by3  col-lg-6 col-md-6 col-sm-12 " >
@@ -46,63 +46,70 @@
 
    {% if teacher_selected.degree_image %}
         <div class="  col-lg-3 col-md-3 col-sm-12" >
-            <img  src="{{ teacher_selected.degree_image.url }}"  id="teacher_degree_image" class="img-thumbnail">
+            <img  src="{{ teacher_selected.degree_image.url }}"  id="teacher_degree_image" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
         </div>
    {% endif %}
 
    {% if teacher_selected.degree_image2 %}
         <div class="  col-lg-3 col-md-3 col-sm-12" >
-            <img  src="{{ teacher_selected.degree_image2.url }}"  id="teacher_degree_image2" class="img-thumbnail">
+            <img  src="{{ teacher_selected.degree_image2.url }}"  id="teacher_degree_image2" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
         </div>
    {% endif %}
 
    {% if teacher_selected.degree_image3 %}
         <div class="  col-lg-3 col-md-3 col-sm-12" >
-           <img  src="{{ teacher_selected.degree_image3.url }}"  id="teacher_degree_image3" class="img-thumbnail">
+           <img  src="{{ teacher_selected.degree_image3.url }}"  id="teacher_degree_image3" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
+        </div>
+   {% endif %}
+
+       {% if teacher_selected.degree_image4 %}
+        <div class="  col-lg-3 col-md-3 col-sm-12" >
+           <img  src="{{ teacher_selected.degree_image4.url }}"  id="teacher_degree_image4" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
+        </div>
+   {% endif %}
+
+       {% if teacher_selected.degree_image5 %}
+        <div class="  col-lg-3 col-md-3 col-sm-12" >
+           <img  src="{{ teacher_selected.degree_image5.url }}"  id="teacher_degree_image5" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
+        </div>
+   {% endif %}
+
+       {% if teacher_selected.degree_image6 %}
+        <div class="  col-lg-3 col-md-3 col-sm-12" >
+           <img  src="{{ teacher_selected.degree_image6.url }}"  id="teacher_degree_image6" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
+        </div>
+   {% endif %}
+
+       {% if teacher_selected.degree_image7 %}
+        <div class="  col-lg-3 col-md-3 col-sm-12" >
+           <img  src="{{ teacher_selected.degree_image7.url }}"  id="teacher_degree_image7" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
         </div>
    {% endif %}
     </div>
-       <div class=" col-lg-6 col-md-6 col-sm-12 text-right border  " id="teacher_selected_div ">
-
-
+        <div class=" col-lg-6 col-md-6 col-sm-12 text-right border  " id="teacher_selected_div ">
             <ul>
-
                 <li style="word-break: break-word" class="text-right small">موضوع تدریس: {{ teacher_selected.category_id }} {{ teacher_selected.syllabus_id }}</li>
                 <li style="word-break: break-word" class="text-right small"> شهر: {{ teacher_selected.city_id }} </li>
                 <li style="word-break: break-word" class="text-right small"> سابقه تدریس: {{ teacher_selected.experience }}سال  </li>
-
                 <li style="word-break: break-word" class="text-right small">نوع تدریس:
                     {% if teacher_selected.learn_type == 0 %}آنلاین یا حضوری{% endif %}
                             {% if teacher_selected.learn_type == 1 %}آنلاین{% endif %}
                             {% if teacher_selected.learn_type == 2 %} حضوری{% endif %}
                 </li>
-            {% if teacher_selected.category_id == 'آرایش و زیبایی' or teacher_selected.category_id == 'آشپزی' or teacher_selected.category_id == 'هنرهای تجسمی' or teacher_selected.category_id == 'سینما و بازیگری' or teacher_selected.category_id == 'کارهای فنی' %}
-                 <li style="word-break: break-word" class="text-right small"> کلاس {{ teacher_selected.workshop_number }} {{ teacher_selected.workshop_detail }} </li>
+                {% if teacher_selected.category_id == 'آرایش و زیبایی' or teacher_selected.category_id == 'آشپزی' or teacher_selected.category_id == 'هنرهای تجسمی' or teacher_selected.category_id == 'سینما و بازیگری' or teacher_selected.category_id == 'کارهای فنی' %}
+                <li style="word-break: break-word" class="text-right small"> کلاس {{ teacher_selected.workshop_number }} {{ teacher_selected.workshop_detail }} </li>
                 <li style="word-break: break-word" class="text-right small">  {{ teacher_selected.workshop_price }}  </li>
-            {% else %}
+                {% else %}
                 <li style="word-break: break-word" class="text-right small"> هر ساعت تدریس : {{ teacher_selected.price_range.price_range_name }} هزار تومان </li>
-            {% endif %}
-
-
+                {% endif %}
             </ul>
         </div>
 
-
-
-
-
-
     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-
-
         <a href="{% url 'accounts:site_laws' %}" class="p-4">  قوانین درخواست استاد </a><br><br>
-
-            <a href="{% url 'teachme:teacher_request_send' teacher_selected.id %}" class="btn btn-primary  text-white" >پذیرفتن قوانین  و ثبت درخواست استاد</a>
-
-
+        <a href="{% url 'teachme:teacher_request_send' teacher_selected.id %}" class="btn btn-primary  text-white" >پذیرفتن قوانین  و ثبت درخواست استاد</a>
        <br><br>
         <a href="{% url 'teachme:teacher_list' %}?cat={{ teacher_selected.category }}&syl={{ teacher_selected.syllabus }}" type="button" class="btn btn-dark text-center" > بازگشت به لیست</a><br><br>
-
     </div>
  </div>
 <script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>

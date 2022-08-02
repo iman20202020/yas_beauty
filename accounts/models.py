@@ -4,6 +4,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import FileExtensionValidator, validate_email
 from django.db import models
+from django_resized import ResizedImageField
 
 
 from accounts.validators import validate_video_size, validate_image_size
@@ -72,21 +73,25 @@ class Teacher(models.Model):
     national_id = models.PositiveIntegerField(blank=True, null=True)
     price_range = models.ForeignKey('PriceRange', on_delete=models.CASCADE,)
     video_channel_link = models.URLField(blank=True, null=True)
-    city = models.ForeignKey('City', on_delete=models.CASCADE, default='تهران')
     state = models.ForeignKey('State', on_delete=models.CASCADE, default='تهران')
-    syllabus = models.ForeignKey('Syllabus', on_delete=models.CASCADE, )
+    city = models.ForeignKey('City', on_delete=models.CASCADE, default='تهران')
     category = models.ForeignKey('LearnCategory', on_delete=models.CASCADE,)
-    image = models.ImageField(upload_to='images/', blank=True,validators=[validate_image_size])
-    national_card_image = models.ImageField(upload_to='images/',blank=True,validators=[validate_image_size],)
-    degree_image = models.ImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True)
-    degree_image2 = models.ImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True)
-    degree_image3 = models.ImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True)
+    syllabus = models.ForeignKey('Syllabus', on_delete=models.CASCADE, )
+    image = ResizedImageField(upload_to='images/', blank=True,validators=[validate_image_size], size=[300,300])
+    national_card_image = ResizedImageField(upload_to='images/',blank=True,validators=[validate_image_size],)
+    degree_image = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
+    degree_image2 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
+    degree_image3 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
+    degree_image4 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
+    degree_image5 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
+    degree_image6 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
+    degree_image7 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
     # jozveh = models.FileField(upload_to="jozveh/", blank=True,)
-    workshop_number =models.CharField(max_length=30, blank=True)
-    workshop_detail = models.CharField(max_length=30, blank=True)
-    workshop_price = models.CharField(max_length=30, blank=True)
-    qualification = models.CharField(max_length=300,blank=True,)
-    experience = models.CharField(max_length=3, default='3', blank=True)
+    workshop_number =models.CharField(max_length=100, blank=True)
+    workshop_detail = models.CharField(max_length=100, blank=True)
+    workshop_price = models.CharField(max_length=100, blank=True)
+    qualification = models.TextField(max_length=1000,blank=True,)
+    experience = models.CharField(max_length=3, default='6', blank=True)
     points = models.FloatField(default=3, blank=True)
     sample_video = models.FileField(verbose_name='ویدیوی نمونه',upload_to='videos/',blank=True,
           validators=[FileExtensionValidator( allowed_extensions=['mp4', 'wmv','mov','3gp']),validate_video_size],)
