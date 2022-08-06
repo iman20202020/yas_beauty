@@ -105,6 +105,8 @@ li{font-size: 18px;color: black;}
     </ul>
 </div>
 {% endif %}
+
+{#{% include 'accounts/messages.html' %}#}
     {% block contents %}{% endblock %}
 </body>
 <footer>
@@ -126,6 +128,8 @@ li{font-size: 18px;color: black;}
 <a class="text-dark" href="{% url 'accounts:language_trainings' %}" > آموزش زبان انگلیسی  </a>-
 <a class="text-dark" href="{% url 'accounts:language_trainings' %}" > آموزش زبان آلمانی   </a>-
 <a class="text-dark" href="{% url 'accounts:high_school_trainings' %}" > آموزش فیزیک   </a>-
+<a class="text-dark" href="{% url 'accounts:high_school_trainings' %}" > آموزش ریاضی متوسطه دوم  </a>-
+<a class="text-dark" href="{% url 'accounts:mid_school_trainings' %}" > آموزش ریاضی متوسطه اول  </a>-
 <a class="text-dark" href="{% url 'accounts:high_school_trainings' %}" > آموزش ریاضی   </a>-
 <a class="text-dark" href="{% url 'accounts:high_school_trainings' %}" > آموزش شیمی   </a>-
 

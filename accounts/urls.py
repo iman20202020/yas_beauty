@@ -23,6 +23,7 @@ urlpatterns = [
 
     path('beauty-trainings/', views.beauty_trainings, name='beauty_trainings'),
     path('high-school-trainings/', views.high_school_trainings, name='high_school_trainings'),
+    path('mid-school-trainings/', views.mid_school_trainings, name='mid_school_trainings'),
     path('music-trainings/', views.music_trainings, name='music_trainings'),
     path('language-trainings/', views.language_trainings, name='language_trainings'),
 ]

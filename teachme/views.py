@@ -1,8 +1,11 @@
+from django.contrib import messages
 from django.core.paginator import Paginator
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from accounts.models import Teacher, MyUser, ClassRequest, Student, State
 from accounts.otp import send_otp
 from teachme.send_sms import *
+from accounts import phone_vrify
 
 
 def teacher_list(request):
@@ -36,45 +39,45 @@ def teacher_detail(request, teacher_id):
     return render(request, 'teachme/teacher_detail.html', context)
 
 
+def like_teacher(request):
+
+    if request.is_ajax():
+        liked_teacher_id = request.GET.get('teacher_selected_id')
+        teacher_for_like = Teacher.objects.get(id=liked_teacher_id)
+        teacher_for_like.likes += 1
+        teacher_for_like.save()
+        liked = True
+
+        return JsonResponse(liked, safe=False)
+    else:
+        pass
+
 def teacher_requst_send(request, teacher_id):
-    return render(request, 'teachme/request_user_verify.html', {'teacher_id': teacher_id})
+    context = {'teacher_id': teacher_id,}
+    return render(request, 'teachme/request_user_verify.html', context)
 
 
 def request_user_verify(request, teacher_id):
+
     clerk_phone = '09361164819'
-    response = {}
-    if 'teacher_selected_id' in request.POST:
-        teacher_id = request.POST.get('teacher_selected_id')
-
     if request.method == 'POST':
-        user_verified = None
-        otp_code = None
-        mobile_number = None
-
         if 'input_mobile' in request.POST:
             mobile_number = request.POST.get('input_mobile')
-            if len(mobile_number) == 10:
-                mobile_number = '0'+mobile_number
-
-            response = send_otp(mobile_number)
-            if response[0]['status'] == 5:
-                user_verified = 'code_sent'
-                otp_code = response[1]
-            else:
-                user_verified = 'code_not_sent'
-                otp_code = None
-        if 'veri_code_input' in request.POST and 'mobile_number'in request.POST:
-            otp_code = request.POST.get('otp_code_generated')
-            veri_code_input = request.POST.get('veri_code_input')
+        elif 'mobile_number' in request.POST:
             mobile_number = request.POST.get('mobile_number')
-            if len(mobile_number) == 10:
-                mobile_number = '0'+mobile_number
-            if otp_code == veri_code_input:
+        else:
+            mobile_number = None
+
+
+
+        if 'veri_code_input' in request.POST and 'otp_code_generated' in request.POST:
+            veri_code_input = request.POST.get('veri_code_input')
+            otp_code = request.POST.get('otp_code_generated')
+            if phone_vrify.code_otp_check(otp_code, veri_code_input):
                 teacher_requested = Teacher.objects.get(id=teacher_id)
                 student_object = Student.objects.create(student_phone=mobile_number,
                                                         student_email='')
                 student_object.save()
-
                 class_request = ClassRequest.objects.create(
                     teacher=teacher_requested,
                     student=student_object,
@@ -101,24 +104,32 @@ def request_user_verify(request, teacher_id):
                 clerk_sms_token3 = student_phone
                 send_sms_stu(student_phone, teacher_requested.last_name)
                 send_sms_clerk(clerk_phone, clerk_sms_token, clerk_sms_token2, clerk_sms_token3)
-                message = 'درخواست شما ثبت شد بزودی جهت هماهنگی با شما تماس می گیریم'
-
-                return render(request, 'teachme/message_viewer.html', {'message': message})
+                messages.success(request, 'درخواست شما ثبت شد بزودی جهت هماهنگی با شما تماس می گیریم', 'success')
+                return render(request, 'teachme/message_viewer.html')
 
             else:
-                user_verified = 'code_check_error'
+                otp_code = None
+                user_verified = None
+
+
+        else:
+
+            otp_code = phone_vrify.code_send(mobile_number)
+            user_verified = 'code_sent'
+
     else:
         user_verified = None
         otp_code = None
         mobile_number = None
+
     context = {
      'mobile_number': mobile_number,
      'user_verified': user_verified,
-     'response': response,
      'otp_code': otp_code,
      'teacher_id': teacher_id,
      }
     return render(request, 'teachme/request_user_verify.html', context )
+
 
 # create pages for direct search
 def nail_implants(request):
@@ -258,3 +269,7 @@ def hair_dress_training(request):
 
 
 
+
+
+    # else:
+    #     return HttpResponse('notajax')

@@ -85,6 +85,23 @@ def high_school_trainings(request):
     return render(request, 'accounts/high_school_trainings.html', context)
 
 
+def mid_school_trainings(request):
+    teacher_counts = []
+    teacher_mid_school_bests = Teacher.objects.filter(category='متوسطه اول', is_confirmed=True ).order_by('-points')[:15]
+    syllabuses_mid_school = Syllabus.objects.filter(learn_category_id='متوسطه اول')
+    for syllabus in syllabuses_mid_school:
+        teacher_count = Teacher.objects.filter(category='متوسطه اول', syllabus_id=syllabus, is_confirmed=True).count()
+        if teacher_count is not 0:
+            teacher_counts.append([syllabus,teacher_count])
+    context = {
+        'syllabuses_mid_school': syllabuses_mid_school,
+        'teacher_counts': teacher_counts,
+        'teacher_mid_school_bests': teacher_mid_school_bests,
+    }
+    return render(request, 'accounts/mid_school_trainings.html', context)
+
+
+
 def music_trainings(request):
     teacher_counts = []
     teacher_music_bests = Teacher.objects.filter(category='موسیقی', is_confirmed=True ).order_by('-points')[:15]

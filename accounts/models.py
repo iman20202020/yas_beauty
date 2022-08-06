@@ -97,12 +97,13 @@ class Teacher(models.Model):
           validators=[FileExtensionValidator( allowed_extensions=['mp4', 'wmv','mov','3gp']),validate_video_size],)
     learn_type = models.IntegerField(default=0,blank=True)
     is_confirmed = models.BooleanField(default=False)
-    # first_free = models.BooleanField(default=False,null=True)
     gender = models.IntegerField(default=1,blank=True)
     slug = models.SlugField(blank=True,null=True)
+    likes = models.IntegerField(default=0)
 
     def __str__(self):
         return f"uid:{self.user_id}/{self.last_name}/{self.user.phone_number}/{self.syllabus}"
+
 
 class Student(models.Model):
     student_email = models.CharField(max_length=100)
