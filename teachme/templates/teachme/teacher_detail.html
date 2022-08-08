@@ -45,47 +45,49 @@
 
 
    {% if teacher_selected.degree_image %}
-        <div class="  col-lg-3 col-md-3 col-sm-12" >
+        <div class="  col-lg-3 col-md-3 col-sm-12 text-center" >
             <img  src="{{ teacher_selected.degree_image.url }}"  id="teacher_degree_image" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
         </div>
    {% endif %}
 
    {% if teacher_selected.degree_image2 %}
-        <div class="  col-lg-3 col-md-3 col-sm-12" >
+        <div class="  col-lg-3 col-md-3 col-sm-12 text-center" >
             <img  src="{{ teacher_selected.degree_image2.url }}"  id="teacher_degree_image2" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
         </div>
    {% endif %}
 
    {% if teacher_selected.degree_image3 %}
-        <div class="  col-lg-3 col-md-3 col-sm-12" >
+        <div class="  col-lg-3 col-md-3 col-sm-12 text-center" >
            <img  src="{{ teacher_selected.degree_image3.url }}"  id="teacher_degree_image3" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
         </div>
    {% endif %}
 
        {% if teacher_selected.degree_image4 %}
-        <div class="  col-lg-3 col-md-3 col-sm-12" >
+        <div class="  col-lg-3 col-md-3 col-sm-12 text-center" >
            <img  src="{{ teacher_selected.degree_image4.url }}"  id="teacher_degree_image4" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
         </div>
    {% endif %}
 
        {% if teacher_selected.degree_image5 %}
-        <div class="  col-lg-3 col-md-3 col-sm-12" >
+        <div class="  col-lg-3 col-md-3 col-sm-12 text-center" >
            <img  src="{{ teacher_selected.degree_image5.url }}"  id="teacher_degree_image5" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
         </div>
    {% endif %}
 
        {% if teacher_selected.degree_image6 %}
-        <div class="  col-lg-3 col-md-3 col-sm-12" >
+        <div class="  col-lg-3 col-md-3 col-sm-12 text-center" >
            <img  src="{{ teacher_selected.degree_image6.url }}"  id="teacher_degree_image6" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
         </div>
    {% endif %}
 
        {% if teacher_selected.degree_image7 %}
-        <div class="  col-lg-3 col-md-3 col-sm-12" >
+        <div class="  col-lg-3 col-md-3 col-sm-12 text-center" >
            <img  src="{{ teacher_selected.degree_image7.url }}"  id="teacher_degree_image7" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
         </div>
    {% endif %}
+
     </div>
+<br>
         <div class=" col-lg-6 col-md-6 col-sm-12 text-right border  " id="teacher_selected_div ">
             <ul>
                 <li style="word-break: break-word" class="text-right small"> زیرگروه:{{ teacher_selected.category_id }}</li>
@@ -104,18 +106,13 @@
                 <li style="word-break: break-word" class="text-right small"> هر ساعت تدریس : {{ teacher_selected.price_range.price_range_name }}  </li>
                 {% endif %}
             </ul>
-        </div>
+        </div><br>
 
-  <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-         <button style="background-color:white; border: white " class="btn " > <i class="fa fa-comment" aria-hidden="true" style="color: red;font-size:30px;"></i></button>
-    <button style="background-color:white; border: white " class="btn " onclick="ajax_like() " id="like_btn">
-        <i id="like_icon" class="fa fa-heart " aria-hidden="true" style="color: red;font-size:30px;"></i>
-    </button>
-{#    <p id="confirm_message" style="display: none">ثبت شد</p>#}
-</div>
-
-    <div class="col-lg-12 col-md-12 col-sm-12 text-center m-3" >
-        <a href="{% url 'accounts:site_laws' %}" class="p-4">  قوانین درخواست استاد </a><br><br>
+     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+        <a   class="btn btn-info  text-white " href="{% url 'accounts:comment_view' teacher_selected.id %}" >نظر خود را ثبت کنید
+             <i class="fa fa-comment" aria-hidden="true" style="color: white;font-size:20px;"></i></a>
+        <br><br>
+        <a href="{% url 'accounts:site_laws' %}" class="">  قوانین درخواست استاد </a><br><br>
         <a href="{% url 'teachme:teacher_request_send' teacher_selected.id %}" class="btn btn-primary  text-white" >پذیرفتن قوانین  و ثبت درخواست استاد</a>
        <br><br>
         <a href="{% url 'teachme:teacher_list' %}?cat={{ teacher_selected.category }}&syl={{ teacher_selected.syllabus }}" type="button" class="btn btn-dark text-center" > بازگشت به لیست</a><br><br>

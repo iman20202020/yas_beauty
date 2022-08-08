@@ -17,7 +17,7 @@
 
                 <form action="" class="" method="post" autocomplete="off">
                     {% csrf_token %}
-                    <input type="hidden" id="liked_field" name="liked_field" value="{{ liked }}">
+                    <input type="hidden" id="my_next" name="my_next" value="{{ my_next }}">
                     <input type="hidden" id="teacher_selected_id" name="teacher_selected_id" value="{{ teacher_id }}">
 
                     <input type="text" name="input_mobile"  id="input_mobile"
@@ -33,7 +33,7 @@
                 <form action="" class="" method="post" class="form-group text-center" >
                     {% csrf_token %}
 
-                    <input type="hidden" id="liked_field2" name="liked_field2" value="{{ liked }}">
+                    <input type="hidden" id="my_next2" name="my_next2" value="{{ my_next }}">
 
                     <label for="veri_code_input"></label>
                     <input type="text" id="veri_code_input" name="veri_code_input" autofocus placeholder="_   _   _   _" class="text-center" onkeyup="check_length()" >

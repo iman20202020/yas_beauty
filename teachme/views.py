@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from accounts.models import Teacher, MyUser, ClassRequest, Student, State
 from accounts.otp import send_otp
 from teachme.send_sms import *
@@ -105,7 +105,8 @@ def request_user_verify(request, teacher_id):
                 send_sms_stu(student_phone, teacher_requested.last_name)
                 send_sms_clerk(clerk_phone, clerk_sms_token, clerk_sms_token2, clerk_sms_token3)
                 messages.success(request, 'درخواست شما ثبت شد بزودی جهت هماهنگی با شما تماس می گیریم', 'success')
-                return render(request, 'teachme/message_viewer.html')
+                user_verified = 'code_sent'
+                return redirect('accounts:index_accounts')
 
             else:
                 otp_code = None

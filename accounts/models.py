@@ -104,6 +104,14 @@ class Teacher(models.Model):
     def __str__(self):
         return f"uid:{self.user_id}/{self.last_name}/{self.user.phone_number}/{self.syllabus}"
 
+class Comment(models.Model):
+    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE)
+    user_commenter = models.ForeignKey('MyUser',on_delete=models.CASCADE, )
+    # student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    SUGGEST_CHOICES = (('1', 'می پسندم'), ('2', ' نمی پسندم'))
+    suggest = models.CharField(verbose_name='', max_length=20, choices=SUGGEST_CHOICES, default='1')
+    content = models.TextField(max_length=500, null=True, blank=True)
+
 
 class Student(models.Model):
     student_email = models.CharField(max_length=100)

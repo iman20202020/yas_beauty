@@ -20,6 +20,8 @@ urlpatterns = [
     path('how/use/',views.how_use, name='how_use'),
     path('how/use2/',views.how_use2, name='how_use2'),
     path('teacher/laws/', views.teacher_laws, name='teacher_laws'),
+    path('comment/<int:teacher_id>', views.comment_view, name='comment_view'),
+    # path('comment-user-verify/<int:teacher_id>', views.user_comment_verify, name='comment_view'),
 
     path('beauty-trainings/', views.beauty_trainings, name='beauty_trainings'),
     path('high-school-trainings/', views.high_school_trainings, name='high_school_trainings'),

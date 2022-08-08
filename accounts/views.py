@@ -2,6 +2,8 @@ from itertools import chain
 
 from django.contrib import messages
 from django.shortcuts import redirect
+
+from accounts import phone_vrify
 from accounts.otp import *
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -10,8 +12,8 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from accounts.forms import MyUserCreate,TeacherEditForm
-from accounts.models import LearnCategory, Syllabus, PriceRange, Teacher, City, MyUser, State
+from accounts.forms import MyUserCreate, TeacherEditForm, CommentForm
+from accounts.models import LearnCategory, Syllabus, PriceRange, Teacher, City, MyUser, State, Comment, Student
 
 
 def base_view(request):
@@ -149,7 +151,9 @@ def user_create(request):
                 user_saved = user
                 user.save()
                 login(request, user)
-                # teacher_id = request.POST.get('teacher_id', None)
+                if request.POST.get('my_next'):
+                    return HttpResponseRedirect(request.POST.get('my_next'))
+
 
                 return redirect('accounts:teacher_edit')
             except:
@@ -185,10 +189,11 @@ def login_view(request):
             context = {
                 'username': username,
                 'error': "ایمیل یا رمز عبور صحیح نیست",
+                'my_next': request.GET.get('next')
             }
             return render(request, 'accounts/login.html', context)
     else:
-        context = {}
+        context = {'my_next': request.GET.get('next')}
         return render(request, 'accounts/login.html', context)
 
 
@@ -311,6 +316,78 @@ def teacher_edit(request):
             return render(request, 'accounts/teacher_edit.html', context)
 
 
+@login_required
+def comment_view(request, teacher_id,):
+    if request.method == 'POST':
+        teacher = Teacher.objects.get(id=teacher_id)
+        cf = CommentForm(request.POST or None)
+        if cf.is_valid():
+            content = request.POST.get('content')
+            comment = Comment.objects.create(teacher=teacher, content=content, user_commenter=request.user)
+            comment.save()
+
+            messages.success(request, 'پیام شما ثبت شد متشکریم', 'success')
+            return redirect(reverse('teachme:teacher_detail', None, args=(teacher_id, )))
+    else:
+        cf = CommentForm()
+
+    context = {
+        'comment_form': cf,
+    }
+    return render(request, 'accounts/comment_detail.html', context)
+
+
+
+# def user_comment_verify(request, teacher_id):
+#
+#     if request.method == 'POST':
+#         if 'input_mobile' in request.POST:
+#             mobile_number = request.POST.get('input_mobile')
+#         elif 'mobile_number' in request.POST:
+#             mobile_number = request.POST.get('mobile_number')
+#         else:
+#             mobile_number = None
+#             user_verified = None
+#
+#         if 'veri_code_input' in request.POST and 'otp_code_generated' in request.POST:
+#             veri_code_input = request.POST.get('veri_code_input')
+#             otp_code = request.POST.get('otp_code_generated')
+#             if phone_vrify.code_otp_check(otp_code, veri_code_input):
+#
+#                 student_object = Student.objects.create(student_phone=mobile_number,
+#                                                         student_email='')
+#                 student_object.save()
+#
+#                 cf = CommentForm()
+#
+#                 return render(request,'accounts/comment_detail.html', {'comment_form': cf, 'teacher_id': teacher_id, })
+#
+#
+#
+#
+#
+#             user_verified = 'code_sent'
+#
+#         else:
+#
+#             otp_code = phone_vrify.code_send(mobile_number)
+#             user_verified = 'code_sent'
+#
+#     else:
+#         user_verified = None
+#         otp_code = None
+#         mobile_number = None
+#
+#     context = {
+#         'mobile_number': mobile_number,
+#         'user_verified': user_verified,
+#         'otp_code': otp_code,
+#         'teacher_id': teacher_id,
+#         # 'comment_form': cf,
+#     }
+#     return render(request, 'accounts/user_verify.html', context)
+#
+
 def search_view(request):
     results = []
     results_teachers =[]
@@ -343,6 +420,7 @@ def user_verify(request):
         user_verified = None
         otp_code = None
         mobile_number = None
+        my_next = request.POST.get('my_next')
 
         if 'input_mobile' in request.POST:
             mobile_number = request.POST.get('input_mobile')
@@ -366,27 +444,33 @@ def user_verify(request):
                 user_verified = 'code_checked'
                 user_create_form = MyUserCreate()
                 user_create_form.fields['phone_number'].initial = mobile_number
+
                 user_saved = None
+                my_next = request.POST.get('my_next2')
                 context = {
                     'user_saved':user_saved,
                     'user_create_form':user_create_form,
                     'user_verified':user_verified,
                     'mobile_number': mobile_number,
                     'teacher_id': teacher_id,
+                    'my_next': my_next
                 }
                 return render(request, 'accounts/user_create.html', context)
             else:
                 user_verified = 'code_check_error'
+
     else:
         user_verified = None
         otp_code = None
         mobile_number = None
+
     context = {
      'mobile_number': mobile_number,
      'user_verified': user_verified,
      'response': response,
      'otp_code': otp_code,
      'teacher_id': teacher_id,
+     'my_next': my_next
      }
     return render(request, 'accounts/user_verify.html', context )
 

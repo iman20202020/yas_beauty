@@ -84,11 +84,13 @@ li{font-size: 18px;color: black;}
         </form>
     </div>
 </nav>
+{% include "accounts/messages.html" %}
 {% block title %}{% endblock %}
 <body >
+
 {% if results or results_teachers %}
 <div class="text-right alert " >
-{% include "accounts/messages.html" %}
+
     <ul>
     {% for result in results %}
         <li>{{ result }} </li>

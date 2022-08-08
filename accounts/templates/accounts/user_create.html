@@ -19,6 +19,7 @@
                         class="mbr-form form-with-styler mx-auto text-right"  method="post" >
                         {% csrf_token %}
                         {% if teacher_id %}<input type="hidden" name="teacher_id" value="{{ teacher_id }}">{% endif %}
+                        {% if my_next %}<input type="hidden" name="my_next" value="{{ my_next }}">{% endif %}
                         {% if user_create_form.errors.phone_number %}
                             <a href="{% url 'accounts:user_verify' %}" class="text-danger "><< ورود دوباره شماره همراه</a><br><br>
                         {% endif %}
