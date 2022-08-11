@@ -49,7 +49,7 @@ li{font-size: 18px;color: black;}
     <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">
 </head>
 <nav class="  navbar navbar-expand-lg navbar-dark   bg-dark  ">
-<p class="text-right text text-white small">سوالی دارید؟ پیام دهید: 09361164819</p>
+{#<p class="text-right text text-white small">سوالی دارید؟ پیام دهید: 09361164819</p>#}
     <div class="container justify-content-start text-right">
        <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid pr-2" src="{% static 'accounts/images/logo1.png' %}" alt="استادباز معرفی استاد و کلاس"> </a>
 
@@ -84,8 +84,10 @@ li{font-size: 18px;color: black;}
         </form>
     </div>
 </nav>
+
 {% include "accounts/messages.html" %}
 {% block title %}{% endblock %}
+
 <body >
 
 {% if results or results_teachers %}
@@ -107,33 +109,31 @@ li{font-size: 18px;color: black;}
     </ul>
 </div>
 {% endif %}
-
-{#{% include 'accounts/messages.html' %}#}
-    {% block contents %}{% endblock %}
+  {% block contents %}{% endblock %}
 </body>
 <footer>
 <article class="small text-right m-2 ">
-    <a class="text-dark" href="{% url 'teachme:nail_implants' %}"> آموزش کاشت ناخن</a>-
-<a class="text-dark" href="{% url 'teachme:haircut_training' %}"> آموزش کوتاهی مو - آموزش کوتاهی مو زنانه </a>-
-<a class="text-dark" href="{% url 'teachme:hair_coloring_training' %}"> آموزش رنگ و مش مو-آموزش رنگ مو-آموزش کار با مواد </a>-
-<a class="text-dark" href="{% url 'teachme:hair_dress_training' %}">  آموزش بافت شینیون اکستنشن براشینگ و کرلی مو </a>-
-<a class="text-dark" href="{% url 'teachme:face_cleaning_training' %}">  آموزش پاکسازی پوست - آموزش پاکسازی صورت </a>-
-<a class="text-dark" href="{% url 'teachme:extension_training_for_eylashes' %}">  آموزش کاشت مژه </a>-
-<a class="text-dark" href="{% url 'teachme:eyebrow_microblading_training' %}">   آموزش میکروبلیدینگ - میکروپیگمنتیشن-آکادمی فی  </a>-
-<a class="text-dark" href="{% url 'teachme:eyebrow_permanent_makeup_training' %}"> آموزش آرایش دائم ابرو چشم و لب  </a>-
-<a class="text-dark" href="{% url 'teachme:eyebrow_lift_training' %}"> آموزش لیفت و لمینیت ابرو  </a>-
-<a class="text-dark" href="{% url 'teachme:face_balancing_training' %}"> آموزش میکاپ-آموزش گریم </a>-
-<a class="text-dark" href="{% url 'accounts:music_trainings' %}" > آموزش موسیقی   </a>-
-<a class="text-dark" href="{% url 'accounts:music_trainings' %}" > آموزش 'گیتار   </a>-
-<a class="text-dark" href="{% url 'accounts:music_trainings' %}" > آموزش ویولون   </a>-
-<a class="text-dark" href="{% url 'accounts:music_trainings' %}" > آموزش پیانو   </a>-
-<a class="text-dark" href="{% url 'accounts:language_trainings' %}" > آموزش زبان انگلیسی  </a>-
-<a class="text-dark" href="{% url 'accounts:language_trainings' %}" > آموزش زبان آلمانی   </a>-
-<a class="text-dark" href="{% url 'accounts:high_school_trainings' %}" > آموزش فیزیک   </a>-
-<a class="text-dark" href="{% url 'accounts:high_school_trainings' %}" > آموزش ریاضی متوسطه دوم  </a>-
-<a class="text-dark" href="{% url 'accounts:mid_school_trainings' %}" > آموزش ریاضی متوسطه اول  </a>-
-<a class="text-dark" href="{% url 'accounts:high_school_trainings' %}" > آموزش ریاضی   </a>-
-<a class="text-dark" href="{% url 'accounts:high_school_trainings' %}" > آموزش شیمی   </a>-
+    <a class="text-secondary" href="{% url 'teachme:nail_implants' %}"> آموزش کاشت ناخن</a>-
+<a class="text-secondary" href="{% url 'teachme:haircut_training' %}"> آموزش کوتاهی مو - آموزش کوتاهی مو زنانه </a>-
+<a class="text-secondary" href="{% url 'teachme:hair_coloring_training' %}"> آموزش رنگ و مش مو-آموزش رنگ مو-آموزش کار با مواد </a>-
+<a class="text-secondary" href="{% url 'teachme:hair_dress_training' %}">  آموزش بافت شینیون اکستنشن براشینگ و کرلی مو </a>-
+<a class="text-secondary" href="{% url 'teachme:face_cleaning_training' %}">  آموزش پاکسازی پوست - آموزش پاکسازی صورت </a>-
+<a class="text-secondary" href="{% url 'teachme:extension_training_for_eylashes' %}">  آموزش کاشت مژه </a>-
+<a class="text-secondary" href="{% url 'teachme:eyebrow_microblading_training' %}">   آموزش میکروبلیدینگ - میکروپیگمنتیشن-آکادمی فی  </a>-
+<a class="text-secondary" href="{% url 'teachme:eyebrow_permanent_makeup_training' %}"> آموزش آرایش دائم ابرو چشم و لب  </a>-
+<a class="text-secondary" href="{% url 'teachme:eyebrow_lift_training' %}"> آموزش لیفت و لمینیت ابرو  </a>-
+<a class="text-secondary" href="{% url 'teachme:face_balancing_training' %}"> آموزش میکاپ-آموزش گریم </a>-
+<a class="text-secondary" href="{% url 'accounts:music_trainings' %}" > آموزش موسیقی   </a>-
+<a class="text-secondary" href="{% url 'accounts:music_trainings' %}" > آموزش 'گیتار   </a>-
+<a class="text-secondary" href="{% url 'accounts:music_trainings' %}" > آموزش ویولون   </a>-
+<a class="text-secondary" href="{% url 'accounts:music_trainings' %}" > آموزش پیانو   </a>-
+<a class="text-secondary" href="{% url 'accounts:language_trainings' %}" > آموزش زبان انگلیسی  </a>-
+<a class="text-secondary" href="{% url 'accounts:language_trainings' %}" > آموزش زبان آلمانی   </a>-
+<a class="text-secondary" href="{% url 'accounts:high_school_trainings' %}" > آموزش فیزیک   </a>-
+<a class="text-secondary" href="{% url 'accounts:high_school_trainings' %}" > آموزش ریاضی متوسطه دوم  </a>-
+<a class="text-secondary" href="{% url 'accounts:mid_school_trainings' %}" > آموزش ریاضی متوسطه اول  </a>-
+<a class="text-secondary" href="{% url 'accounts:high_school_trainings' %}" > آموزش ریاضی   </a>-
+<a class="text-secondary" href="{% url 'accounts:high_school_trainings' %}" > آموزش شیمی   </a>-
 
 
 

@@ -1,0 +1,33 @@
+{% load static %}
+<nav class="  navbar navbar-expand-lg navbar-dark   bg-dark  ">
+    <div class="container justify-content-start text-right">
+       <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid pr-2" src="{% static 'accounts/images/logo1.png' %}" alt="استادباز معرفی استاد و کلاس"> </a>
+
+       <button class="navbar-toggler " aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation" type="button" data-target="#navbar" data-toggle="collapse">
+           <span class="navbar-toggler-icon"></span>
+       </button>
+           <div id="navbar" class="navbar-collapse collapse">
+               <ul class="nav navbar-nav">
+                   <li><a  class="nav nav-link text text-white  " href="{% url 'accounts:index_accounts' %}"> صفحه اصلی   </a>
+                   </li>
+                   <li><a  id="user_key"  class="nav nav-link  text text-white "
+                                 href=" {% if user.is_authenticated %}{% url 'accounts:profile_edit' %}
+                                        {% else %}{% url 'accounts:login_view' %}{% endif %}" >
+                       {% if user.is_authenticated %}  نمایه کاربری {{ user }}{% else %}ورود و  ثبت نام{% endif %}
+                       </a>
+                   </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'accounts:contact_us' %}" ><i class="fas fa-phone "></i>   تماس با ما</a>
+                    </li>
+               {% if  user.is_authenticated %}
+                    <li   >
+                        <a class="nav nav-link text text-white " href="{% url 'accounts:logout_view' %}" >خروج</a>
+                    </li>
+               {% endif %}
+               </ul>
+           </div>
+         <div>
+            <p class="text-white pr-4">سامانه معرفی استاد استادباز </p>
+        </div>
+    </div>
+</nav>

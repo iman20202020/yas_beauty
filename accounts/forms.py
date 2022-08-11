@@ -39,12 +39,13 @@ class TeacherEditForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
-    content = forms.CharField(label="", widget=forms.Textarea(
+    content = forms.CharField(label="",required=False, widget=forms.Textarea(
     attrs ={
         'class': 'form-control',
         'placeholder': ' دیدگاه خود را بنویسید',
         'rows': 4,
-        'cols': 50
+        'cols': 50,
+
     }))
 
     class Meta:

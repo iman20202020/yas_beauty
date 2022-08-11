@@ -20,6 +20,5 @@ urlpatterns = [
     path('face-cleaning-training/', views.face_cleaning_training, name="face_cleaning_training"),
     path('hair-dress-training/', views.hair_dress_training, name="hair_dress_training"),
 
-    path('like-teacher/', views.like_teacher, name='like_teacher'),
 
 ]

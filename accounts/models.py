@@ -100,6 +100,8 @@ class Teacher(models.Model):
     gender = models.IntegerField(default=1,blank=True)
     slug = models.SlugField(blank=True,null=True)
     likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
+    comment_num = models.IntegerField(default=0)
 
     def __str__(self):
         return f"uid:{self.user_id}/{self.last_name}/{self.user.phone_number}/{self.syllabus}"
@@ -111,6 +113,10 @@ class Comment(models.Model):
     SUGGEST_CHOICES = (('1', 'می پسندم'), ('2', ' نمی پسندم'))
     suggest = models.CharField(verbose_name='', max_length=20, choices=SUGGEST_CHOICES, default='1')
     content = models.TextField(max_length=500, null=True, blank=True)
+    is_confirmed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"teacher:{self.teacher},commenter:{self.user_commenter}"
 
 
 class Student(models.Model):

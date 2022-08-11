@@ -3,7 +3,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from accounts.models import Teacher, Syllabus, PriceRange, LearnCategory, City, MyUser, State, ClassRequest, Student
+from accounts.models import Teacher, Syllabus, PriceRange, LearnCategory, City, MyUser, State, ClassRequest, Student, \
+    Comment
 
 # admin.site.register(StudentSubmit)
 # admin.site.register(RequestClass)
@@ -14,6 +15,7 @@ admin.site.register(City)
 admin.site.register(State)
 admin.site.register(Student)
 admin.site.register(ClassRequest)
+
 
 
 class MyUserAdmin(UserAdmin):
@@ -39,6 +41,12 @@ class TeacherAdmin(admin.ModelAdmin):
     search_fields = ['last_name',]
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_filter = ('is_confirmed',)
+    # search_fields = ['content',]
+
+
 admin.site.register(MyUser, MyUserAdmin)
+admin.site.register(Comment, CommentAdmin)
 
 admin.site.register(Teacher, TeacherAdmin)

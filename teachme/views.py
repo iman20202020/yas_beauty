@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-from accounts.models import Teacher, MyUser, ClassRequest, Student, State
+from accounts.models import Teacher, MyUser, ClassRequest, Student, State, Comment
 from accounts.otp import send_otp
 from teachme.send_sms import *
 from accounts import phone_vrify
@@ -31,26 +31,21 @@ def teacher_list(request):
 def teacher_detail(request, teacher_id):
 
     teacher_selected = Teacher.objects.get(pk=teacher_id)
+    teacher_likes = Comment.objects.filter(teacher_id=teacher_id,suggest=1).count()
+    teacher_dislikes = Comment.objects.filter(teacher_id=teacher_id,suggest=2).count()
+    teacher_for_comments = Comment.objects.filter(teacher_id=teacher_id, is_confirmed=True)
+
     teacher_cat = teacher_selected.category_id
     context = {
         'teacher_selected': teacher_selected,
         'teacher_cat': teacher_cat,
+        'teacher_likes': teacher_likes,
+        'teacher_dislikes': teacher_dislikes,
+        'teacher_for_comments': teacher_for_comments,
     }
     return render(request, 'teachme/teacher_detail.html', context)
 
 
-def like_teacher(request):
-
-    if request.is_ajax():
-        liked_teacher_id = request.GET.get('teacher_selected_id')
-        teacher_for_like = Teacher.objects.get(id=liked_teacher_id)
-        teacher_for_like.likes += 1
-        teacher_for_like.save()
-        liked = True
-
-        return JsonResponse(liked, safe=False)
-    else:
-        pass
 
 def teacher_requst_send(request, teacher_id):
     context = {'teacher_id': teacher_id,}

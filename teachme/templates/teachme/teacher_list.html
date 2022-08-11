@@ -48,8 +48,15 @@
     <div class=" col-lg-6 col-md-6 col-sm-12 text-right border m-3 rounded " id="teacher_div  ">
 
             <a href="{% url 'teachme:teacher_detail' teacher.id   %}"><img style="max-width:35%; " src="{{ teacher.image.url }}" alt="{{ teacher.last_name }}-{{ teacher.syllabus }}"></a>
-            <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher.id   %}">{{ teacher.first_name }} {{ teacher.last_name }}
+            <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher.id   %}" class="text-dark">{{ teacher.first_name }} {{ teacher.last_name }}
                  ({{ teacher.city_id }})</a></p>
+
+     <p  style="color: #0275d8; font-size: 14px; ">    {{ teacher.likes }}   <i class="fa fa-thumbs-up " aria-hidden="true"  ></i> &nbsp &nbsp, &nbsp
+   {{ teacher.dislikes }}   <i class="fa fa-thumbs-down" aria-hidden="true"  ></i> &nbsp &nbsp
+         {% if teacher.comment_num %},{{ teacher.comment_num }} نظر {% endif %}</p>
+
+
+
             <ul>
                 <li style="word-break: break-word" class="text-right small"> {{ teacher.qualification|truncatewords:20 }} </li>
                 <li style="word-break: break-word" class="text-right small"> {{ teacher.experience }}سال سابقه تدریس </li>

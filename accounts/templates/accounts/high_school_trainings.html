@@ -41,7 +41,10 @@
                 </div>
             </div>
         </div>
-</div><hr>
+</div>
+
+<div class="text-center m-3 "><button class="btn btn-dark"><a href="{% url 'accounts:consult_view' %}" class="text-white" >درخواست مشاوره تلفنی</a> </button> </div>
+<hr>
 <div class=" container ">
     <div class=" row  justify-content-center ">
         <div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1">
@@ -67,36 +70,9 @@
                 </div>
             </section>
         </div>
-
-
     </div>
-
-
-<div class="bg-dark text-center m-3" id="all_teacher_best_title_div">
-    <p class=" text-white p-3 "> جمعی از اساتید استادباز :</p>
 </div>
-
-<div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 " id="all_teacher_best_div">
-    {% for teacher_best in teacher_high_school_bests %}
-        <div class="border text-center m-3 rounded ">
-            <a href="{% url 'teachme:teacher_detail' teacher_best.id   %}"><img style="max-width:25%; " src="{{ teacher_best.image.url }}" alt="آموزش متوسطه دوم و کنکور"></a>
-            <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_best.id   %}">{{ teacher_best.first_name }} {{ teacher_best.last_name }}
-                ( {{ teacher_best.syllabus.syllabus_name }}) {{ teacher_best.city_id }}</a></p>
-             <ul>
-                    <li style="word-break: break-word" class="text-right small"> {{ teacher_best.qualification|truncatewords:6 }} </li>
-                    <li style="word-break: break-word" class="text-right small"> {{ teacher_best.experience }}سال سابقه تدریس </li>
-                    <li style="word-break: break-word" class="text-right small">
-                     {% if teacher.learn_type == 0 %}آنلاین یا حضوری{% endif %}
-                        {% if teacher.learn_type == 1 %}آنلاین{% endif %}
-                        {% if teacher.learn_type == 2 %} حضوری{% endif %}
-                    </li>
-                    <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_best.points }} </li>
-                    <li style="word-break: break-word" class="text-right small"> ساعتی {{ teacher.price_range.price_range_name }}  </li>
-                </ul>
-        </div>
-    {% endfor %}
-</div>
-</div>
+{% include 'accounts/best_teacher_view.html' %}
 
 {% endblock %}
 

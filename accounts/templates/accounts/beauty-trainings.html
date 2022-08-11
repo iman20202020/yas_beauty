@@ -41,8 +41,10 @@
                 </div>
             </div>
         </div>
-    </div><hr>
+    </div>
 
+<div class="text-center m-3 "><button class="btn btn-dark"><a href="{% url 'accounts:consult_view' %}" class="text-white" >درخواست مشاوره تلفنی</a> </button> </div>
+<hr>
 <div class=" container ">
     <div class=" row  justify-content-center ">
         <div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1">
@@ -51,6 +53,7 @@
                     <img src="{% static 'accounts/images/makeup.png' %}" alt="آموزش آرایشگری" ><br>
                     <h6> آموزش آرایش و زیبایی</h6>
                 </div>
+
                 <div id="makeup_available_teachers" style="display: block ;">
                     <ul  class="list-group d-lg-inline-flex"  >
                     {% for teacher_count in teacher_counts %}
@@ -69,29 +72,8 @@
             </section>
         </div>
     </div>
-
-          <div class="bg-dark text-center m-3" id="all_teacher_best_title_div">
-             <p class=" text-white p-3 "> جمعی از اساتید استادباز :</p>
-          </div>
-
-
-    <div class=" col-lg-4 col-md-6 col-sm-12 text-center mt-1 " id="all_teacher_best_div">
-        {% for teacher_best in teacher_makeup_bests %}
-            <div class="border text-center m-3 rounded ">
-                <a href="{% url 'teachme:teacher_detail' teacher_best.id   %}"><img style="max-width:25%; " src="{{ teacher_best.image.url }}" alt="آموزش آرایشگری"></a>
-                <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher_best.id   %}">{{ teacher_best.first_name }} {{ teacher_best.last_name }}
-                    ( {{ teacher_best.syllabus.syllabus_name }}) {{ teacher_best.city_id }}</a></p>
-                <ul>
-                    <li style="word-break: break-word" class="text-right small"> {{ teacher_best.qualification|truncatewords:6 }} </li>
-                    <li style="word-break: break-word" class="text-right small"> {{ teacher_best.experience }}سال سابقه تدریس </li>
-                    <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_best.points }} </li>
-                    <li style="word-break: break-word" class="text-right small"> ورکشاپ {{ teacher_best.workshop_number }} {{ teacher_best.workshop_detail }} </li>
-                    <li style="word-break: break-word" class="text-right small">  {{ teacher_best.workshop_price }}  </li>
-                </ul>
-            </div>
-        {% endfor %}
-    </div>
 </div>
+{% include 'accounts/best_teacher_view.html' %}
 {% endblock %}
 {% block footer %}
 <script>

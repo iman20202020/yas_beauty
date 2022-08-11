@@ -20,6 +20,7 @@ def base_view(request):
     return render(request, 'accounts/_base.html', {})
 
 
+
 def index_accounts(request):
     teacher_university_count = Teacher.objects.filter(category='دانشگاهی',is_confirmed=True).count()
     teacher_high_school_count = Teacher.objects.filter(category='متوسطه دوم',is_confirmed=True).count()
@@ -34,7 +35,7 @@ def index_accounts(request):
     teacher_cooking_count = Teacher.objects.filter(category='آشپزی',is_confirmed=True).count()
     teacher_makeup_count = Teacher.objects.filter(category='آرایش و زیبایی',is_confirmed=True).count()
     teacher_language_count = Teacher.objects.filter(category='زبان های خارجی',is_confirmed=True).count()
-    all_teacher_bests = Teacher.objects.all().order_by('-points')[:10]
+    teacher_bests = Teacher.objects.all().order_by('-points')[:10]
 
     context = {
         'teacher_university_count': teacher_university_count,
@@ -50,14 +51,14 @@ def index_accounts(request):
         'teacher_cooking_count': teacher_cooking_count,
         'teacher_makeup_count': teacher_makeup_count,
         'teacher_language_count': teacher_language_count,
-        'all_teacher_bests': all_teacher_bests,
+        'teacher_bests': teacher_bests,
     }
     return render(request, 'accounts/index.html', context)
 
 
 def beauty_trainings(request):
     teacher_counts = []
-    teacher_makeup_bests = Teacher.objects.filter(category='آرایش و زیبایی', is_confirmed=True).order_by('-points')[:15]
+    teacher_bests = Teacher.objects.filter(category='آرایش و زیبایی', is_confirmed=True).order_by('-points')[:15]
     syllabuses_makeup = Syllabus.objects.filter(learn_category='آرایش و زیبایی')
     for syllabus in syllabuses_makeup:
         teacher_count = Teacher.objects.filter(category='آرایش و زیبایی', syllabus_id=syllabus, is_confirmed=True).count()
@@ -66,14 +67,14 @@ def beauty_trainings(request):
     context = {
         'syllabuses_makeup': syllabuses_makeup,
         'teacher_counts': teacher_counts,
-        'teacher_makeup_bests': teacher_makeup_bests,
+        'teacher_bests': teacher_bests,
     }
     return render(request, 'accounts/beauty-trainings.html', context)
 
 
 def high_school_trainings(request):
     teacher_counts = []
-    teacher_high_school_bests = Teacher.objects.filter(category='متوسطه دوم', is_confirmed=True ).order_by('-points')[:15]
+    teacher_bests = Teacher.objects.filter(category='متوسطه دوم', is_confirmed=True ).order_by('-points')[:15]
     syllabuses_high_school = Syllabus.objects.filter(learn_category_id='متوسطه دوم')
     for syllabus in syllabuses_high_school:
         teacher_count = Teacher.objects.filter(category='متوسطه دوم', syllabus_id=syllabus, is_confirmed=True).count()
@@ -82,14 +83,14 @@ def high_school_trainings(request):
     context = {
         'syllabuses_high_school': syllabuses_high_school,
         'teacher_counts': teacher_counts,
-        'teacher_high_school_bests': teacher_high_school_bests,
+        'teacher_bests': teacher_bests,
     }
     return render(request, 'accounts/high_school_trainings.html', context)
 
 
 def mid_school_trainings(request):
     teacher_counts = []
-    teacher_mid_school_bests = Teacher.objects.filter(category='متوسطه اول', is_confirmed=True ).order_by('-points')[:15]
+    teacher_bests = Teacher.objects.filter(category='متوسطه اول', is_confirmed=True ).order_by('-points')[:15]
     syllabuses_mid_school = Syllabus.objects.filter(learn_category_id='متوسطه اول')
     for syllabus in syllabuses_mid_school:
         teacher_count = Teacher.objects.filter(category='متوسطه اول', syllabus_id=syllabus, is_confirmed=True).count()
@@ -98,7 +99,7 @@ def mid_school_trainings(request):
     context = {
         'syllabuses_mid_school': syllabuses_mid_school,
         'teacher_counts': teacher_counts,
-        'teacher_mid_school_bests': teacher_mid_school_bests,
+        'teacher_bests': teacher_bests,
     }
     return render(request, 'accounts/mid_school_trainings.html', context)
 
@@ -106,7 +107,7 @@ def mid_school_trainings(request):
 
 def music_trainings(request):
     teacher_counts = []
-    teacher_music_bests = Teacher.objects.filter(category='موسیقی', is_confirmed=True ).order_by('-points')[:15]
+    teacher_bests = Teacher.objects.filter(category='موسیقی', is_confirmed=True ).order_by('-points')[:15]
     syllabuses_music = Syllabus.objects.filter(learn_category_id='موسیقی')
     for syllabus in syllabuses_music:
         teacher_count = Teacher.objects.filter(category='موسیقی', syllabus_id=syllabus, is_confirmed=True).count()
@@ -115,14 +116,14 @@ def music_trainings(request):
     context = {
         'syllabuses_music': syllabuses_music,
         'teacher_counts': teacher_counts,
-        'teacher_music_bests': teacher_music_bests,
+        'teacher_bests': teacher_bests,
     }
     return render(request, 'accounts/music-trainings.html', context)
 
 
 def language_trainings(request):
     teacher_counts = []
-    teacher_language_bests = Teacher.objects.filter(category='زبان های خارجی', is_confirmed=True ).order_by('-points')[:15]
+    teacher_bests = Teacher.objects.filter(category='زبان های خارجی', is_confirmed=True ).order_by('-points')[:15]
     syllabuses_language = Syllabus.objects.filter(learn_category_id='زبان های خارجی')
     for syllabus in syllabuses_language:
         teacher_count = Teacher.objects.filter(category='زبان های خارجی', syllabus_id=syllabus, is_confirmed=True).count()
@@ -131,7 +132,7 @@ def language_trainings(request):
     context = {
         'syllabuses_language': syllabuses_language,
         'teacher_counts': teacher_counts,
-        'teacher_language_bests': teacher_language_bests,
+        'teacher_bests': teacher_bests,
     }
     return render(request, 'accounts/language-trainings.html', context)
 
@@ -323,10 +324,20 @@ def comment_view(request, teacher_id,):
         cf = CommentForm(request.POST or None)
         if cf.is_valid():
             content = request.POST.get('content')
-            comment = Comment.objects.create(teacher=teacher, content=content, user_commenter=request.user)
+            suggest = request.POST.get('suggest')
+            comment = Comment.objects.create(teacher=teacher, content=content, user_commenter=request.user, suggest=suggest)
             comment.save()
+            # if content:
+            #     teacher.comment_num += 1
+            if suggest == '1':
+                    teacher.likes += 1
 
-            messages.success(request, 'پیام شما ثبت شد متشکریم', 'success')
+            if suggest == '2':
+                teacher.dislikes += 1
+            if content or suggest == '1' or suggest == '2':
+                teacher.save()
+
+            messages.success(request, 'نظر شما ثبت شد متشکریم', 'success')
             return redirect(reverse('teachme:teacher_detail', None, args=(teacher_id, )))
     else:
         cf = CommentForm()
@@ -336,57 +347,6 @@ def comment_view(request, teacher_id,):
     }
     return render(request, 'accounts/comment_detail.html', context)
 
-
-
-# def user_comment_verify(request, teacher_id):
-#
-#     if request.method == 'POST':
-#         if 'input_mobile' in request.POST:
-#             mobile_number = request.POST.get('input_mobile')
-#         elif 'mobile_number' in request.POST:
-#             mobile_number = request.POST.get('mobile_number')
-#         else:
-#             mobile_number = None
-#             user_verified = None
-#
-#         if 'veri_code_input' in request.POST and 'otp_code_generated' in request.POST:
-#             veri_code_input = request.POST.get('veri_code_input')
-#             otp_code = request.POST.get('otp_code_generated')
-#             if phone_vrify.code_otp_check(otp_code, veri_code_input):
-#
-#                 student_object = Student.objects.create(student_phone=mobile_number,
-#                                                         student_email='')
-#                 student_object.save()
-#
-#                 cf = CommentForm()
-#
-#                 return render(request,'accounts/comment_detail.html', {'comment_form': cf, 'teacher_id': teacher_id, })
-#
-#
-#
-#
-#
-#             user_verified = 'code_sent'
-#
-#         else:
-#
-#             otp_code = phone_vrify.code_send(mobile_number)
-#             user_verified = 'code_sent'
-#
-#     else:
-#         user_verified = None
-#         otp_code = None
-#         mobile_number = None
-#
-#     context = {
-#         'mobile_number': mobile_number,
-#         'user_verified': user_verified,
-#         'otp_code': otp_code,
-#         'teacher_id': teacher_id,
-#         # 'comment_form': cf,
-#     }
-#     return render(request, 'accounts/user_verify.html', context)
-#
 
 def search_view(request):
     results = []
@@ -463,6 +423,7 @@ def user_verify(request):
         user_verified = None
         otp_code = None
         mobile_number = None
+        my_next = None
 
     context = {
      'mobile_number': mobile_number,
@@ -523,5 +484,45 @@ def how_use2(request):
 def teacher_laws(request):
     return render(request,'accounts/teacher_laws.html',{})
 
+def consult_view(request):
+    clerk_phone = '09361164819'
+    if request.method == 'POST':
+        if 'input_mobile' in request.POST:
+            mobile_number = request.POST.get('input_mobile')
+        elif 'mobile_number' in request.POST:
+            mobile_number = request.POST.get('mobile_number')
+        else:
+            mobile_number = None
+
+        if 'veri_code_input' in request.POST and 'otp_code_generated' in request.POST:
+            veri_code_input = request.POST.get('veri_code_input')
+            otp_code = request.POST.get('otp_code_generated')
+            if phone_vrify.code_otp_check(otp_code, veri_code_input):
+                token = str(mobile_number)
+                token2 = 'مشاوره'
+                send_sms(clerk_phone, token, token2)
+                messages.success(request, 'درخواست شما ثبت شد بزودی جهت مشاوره با شما تماس می گیریم', 'success')
+                return redirect('accounts:index_accounts')
+
+            else:
+                otp_code = None
+                user_verified = None
 
 
+        else:
+
+            otp_code = phone_vrify.code_send(mobile_number)
+            user_verified = 'code_sent'
+
+    else:
+        user_verified = None
+        otp_code = None
+        mobile_number = None
+
+    context = {
+        'mobile_number': mobile_number,
+        'user_verified': user_verified,
+        'otp_code': otp_code,
+        # 'teacher_id': teacher_id,
+    }
+    return render(request, 'accounts/user_verify.html',context)

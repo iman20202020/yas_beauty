@@ -23,41 +23,7 @@ li{font-size: 18px;color: black;}
     <link rel="stylesheet" href="{% static 'accounts/fa5/css/all.css' %}">
     <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">
 </head>
-<nav class="  navbar navbar-expand-lg navbar-dark   bg-dark  ">
-<p class="text-right text text-white small">سوالی دارید؟ پیام دهید: 09361164819</p>
-    <div class="container justify-content-start text-right">
-       <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid pr-2" src="{% static 'accounts/images/logo1.png' %}" alt="استادباز معرفی استاد و کلاس"> </a>
-
-       <button class="navbar-toggler " aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation" type="button" data-target="#navbar" data-toggle="collapse">
-           <span class="navbar-toggler-icon"></span>
-       </button>
-           <div id="navbar" class="navbar-collapse collapse">
-               <ul class="nav navbar-nav">
-                   <li><a  class="nav nav-link text text-white  " href="{% url 'accounts:index_accounts' %}"> صفحه اصلی   </a>
-                   </li>
-                   <li><a  id="user_key"  class="nav nav-link  text text-white "
-                                 href=" {% if user.is_authenticated %}{% url 'accounts:profile_edit' %}
-                                        {% else %}{% url 'accounts:login_view' %}{% endif %}" >
-                       {% if user.is_authenticated %}  نمایه کاربری {{ user }}{% else %}ورود و  ثبت نام{% endif %}
-                       </a>
-                   </li>
-{#                    <li ><a href="{% url 'blog:show_blog' 1 %}" class="nav nav-link text text-white  "><i class="fas fa-blog "></i> مجله </a></li >#}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'accounts:contact_us' %}" ><i class="fas fa-phone "></i>   تماس با ما</a>
-                    </li>
-               {% if  user.is_authenticated %}
-                    <li   >
-                        <a class="nav nav-link text text-white " href="{% url 'accounts:logout_view' %}" >خروج</a>
-                    </li>
-               {% endif %}
-               </ul>
-           </div>
-        <div>
-            <p class="text-white pr-4">سامانه معرفی استاد استادباز </p>
-        </div>
-    </div>
-</nav>
-
+{% include 'teachme/nav_for_include.html' %}
 
 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="state_filter_select  " id="state_div">
 <div class="container p-4">
@@ -67,6 +33,9 @@ li{font-size: 18px;color: black;}
 </h2>
     </article>
 </div>
+
+<div class="text-center m-3 "><button class="btn btn-dark"><a href="{% url 'accounts:consult_view' %}" class="text-white" >درخواست مشاوره تلفنی</a> </button> </div>
+
 <div class="row">
 
      <label for="state_filter_select">استان:</label>
@@ -88,35 +57,7 @@ li{font-size: 18px;color: black;}
            <p>   آموزش پاکسازی پوست  : {{ teachers.count }}   استاد مورد تایید  </p>
                <p class="text-primary">  یک ساعت اول کلیه کلاس ها رایگان است.اگر خوشتان آمد پرداخت و ادامه دهید </p>
         </div><br>
-{% for teacher in teachers %}
-    <div class=" col-lg-6 col-md-6 col-sm-12 text-right border m-3 rounded " id="teacher_div  ">
-
-            <a href="{% url 'teachme:teacher_detail' teacher.id   %}"><img style="max-width:35%; " src="{{ teacher.image.url }}" alt="{{ teacher.last_name }}"></a>
-            <p style="word-break: break-word" class="small"> <a href="{% url 'teachme:teacher_detail' teacher.id   %}">{{ teacher.first_name }} {{ teacher.last_name }}
-                 ({{ teacher.city_id }})</a></p>
-            <ul>
-                <li style="word-break: break-word" class="text-right small"> {{ teacher.qualification|truncatewords:20 }} </li>
-                <li style="word-break: break-word" class="text-right small"> {{ teacher.experience }}سال سابقه تدریس </li>
-                <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher.points }} </li>
-                <li style="word-break: break-word" class="text-right small">
-                    {% if teacher.learn_type == 0 %}آنلاین یا حضوری{% endif %}
-                            {% if teacher.learn_type == 1 %}آنلاین{% endif %}
-                            {% if teacher.learn_type == 2 %} حضوری{% endif %}
-                </li>
-            {% if teacher.category_id == 'آرایش و زیبایی' or teacher.category_id == 'آشپزی' or teacher.category_id == 'هنرهای تجسمی' or teacher.category_id == 'سینما و بازیگری' or teacher.category_id == 'کارهای فنی' %}
-                 <li style="word-break: break-word" class="text-right small"> ورکشاپ {{ teacher.workshop_number }} {{ teacher.workshop_detail }} </li>
-                <li style="word-break: break-word" class="text-right small">  {{ teacher.workshop_price }}  </li>
-            {% else %}
-                <li style="word-break: break-word" class="text-right small"> ساعتی {{ teacher.price_range.price_range_name }} هزار تومان </li>
-            {% endif %}
-
-
-            </ul>
-        </div>
-
-      {% endfor %}
-    </div>
-
+{% include 'teachme/teacher_view_for_include.html' %}
  <article class="">
      <h2 class="small">
          آموزش پاکسازی پوست و روند کامل درمانی برای بهبود ظاهر و زیبایی پوست صورت  شامل  آنالیز و بررسی ساختار پوست، پاکسازی انواع پوست، مراقبت های بعد از پاکسازی پوست و استفاده از انواع ماسک ها و اسکراب ها .آموزش رفع آلودگی‌ های سطحی و دانه‌ های سرسیاه  از سطح پوست  و رساندن مواد معدنی و اکسیژن ‌دار را به سطح درمیست (لایه زیرین پوست)  و تمام منافذ </h2>
@@ -129,7 +70,7 @@ li{font-size: 18px;color: black;}
     </a>
     </div>
 <br>
-
+</div>
 <script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>
 <script src="{% static 'accounts/assets/bootstrap/js/bootstrap.min.js' %}"></script>
      <script>
