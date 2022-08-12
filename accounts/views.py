@@ -272,7 +272,8 @@ def comment_view(request, teacher_id,):
             if content:
                 comment = Comment.objects.create(teacher=teacher, content=content, user_commenter=request.user, suggest=suggest)
                 comment.save()
-
+            # if content:
+            #     teacher.comment_num += 1
             if suggest == '1':
                     teacher.likes += 1
 
