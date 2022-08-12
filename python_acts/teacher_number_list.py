@@ -4,7 +4,7 @@ from accounts.models import Teacher, MyUser
 def generate_teachers_list():
     list1 = []
     final_list = []
-    teachers = Teacher.objects.filter(is_confirmed=True, )[163:173]
+    teachers = Teacher.objects.filter(is_confirmed=True, )[4:12]
     for teacher in teachers:
         list1.append((teacher.last_name,teacher.user_id),)
     for i in range(len(list1)):
@@ -16,4 +16,6 @@ def generate_teachers_list():
 
         final_list.append((teacher_last_name,phone_number,username))
     return final_list
+
+
 

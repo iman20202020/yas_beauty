@@ -110,7 +110,7 @@ class Comment(models.Model):
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE)
     user_commenter = models.ForeignKey('MyUser',on_delete=models.CASCADE, )
     # student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    SUGGEST_CHOICES = (('1', 'می پسندم'), ('2', ' نمی پسندم'))
+    SUGGEST_CHOICES = (('1', 'می پسندم (like)'), ('2', ' نمی پسندم(dislike)'))
     suggest = models.CharField(verbose_name='', max_length=20, choices=SUGGEST_CHOICES, default='1')
     content = models.TextField(max_length=500, null=True, blank=True)
     is_confirmed = models.BooleanField(default=False)

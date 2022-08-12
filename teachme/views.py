@@ -63,8 +63,6 @@ def request_user_verify(request, teacher_id):
         else:
             mobile_number = None
 
-
-
         if 'veri_code_input' in request.POST and 'otp_code_generated' in request.POST:
             veri_code_input = request.POST.get('veri_code_input')
             otp_code = request.POST.get('otp_code_generated')
