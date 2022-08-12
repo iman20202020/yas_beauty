@@ -31,8 +31,9 @@ def teacher_list(request):
 def teacher_detail(request, teacher_id):
 
     teacher_selected = Teacher.objects.get(pk=teacher_id)
-    teacher_likes = Comment.objects.filter(teacher_id=teacher_id,suggest=1).count()
-    teacher_dislikes = Comment.objects.filter(teacher_id=teacher_id,suggest=2).count()
+
+    teacher_likes = teacher_selected.likes
+    teacher_dislikes = teacher_selected.dislikes
     teacher_for_comments = Comment.objects.filter(teacher_id=teacher_id, is_confirmed=True)
 
     teacher_cat = teacher_selected.category_id
@@ -68,15 +69,14 @@ def request_user_verify(request, teacher_id):
             otp_code = request.POST.get('otp_code_generated')
             if phone_vrify.code_otp_check(otp_code, veri_code_input):
                 teacher_requested = Teacher.objects.get(id=teacher_id)
-                student_object = Student.objects.create(student_phone=mobile_number,
-                                                        student_email='')
+                student_object = Student.objects.create(student_phone=mobile_number,)
                 student_object.save()
                 class_request = ClassRequest.objects.create(
                     teacher=teacher_requested,
                     student=student_object,
-                    teacher_email=teacher_requested.user.username,
-                    student_email=student_object.student_email,
-                    teacher_phone=teacher_requested.user.phone_number,
+                    # teacher_email=teacher_requested.user.username,
+                    # student_email=student_object.student_email,
+                    teacher_phone=teacher_requested.user.username,
                     student_phone=student_object.student_phone,
                     teacher_last_name=teacher_requested.last_name,
                     price=teacher_requested.price_range,

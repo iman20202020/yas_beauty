@@ -12,9 +12,9 @@ class MyUserCreate(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(MyUserCreate, self).__init__(*args, **kwargs)
-        # super().__init__(*args, **kwargs)
-        # for fieldname in ['username',]:
-        #     self.fields[fieldname].help_text = None
+        super().__init__(*args, **kwargs)
+        for fieldname in ['username',]:
+            self.fields[fieldname].validator = None
 
     password1 = forms.CharField(
         label="گذر واژه",

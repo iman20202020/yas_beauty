@@ -11,19 +11,20 @@ from accounts.validators import validate_video_size, validate_image_size
 
 
 class MyUser(AbstractUser):
-    phone_number = models.CharField(verbose_name='شماره همراه',max_length=13,blank=True,)
-
-
     username = models.CharField(
-        verbose_name="ایمیل",
-        max_length=50,
+        verbose_name='شماره همراه',
+        max_length=50,blank=True,
         unique=True,
         help_text=None,
-        validators=[validate_email],
+        validators=[],
+
         error_messages={
-            'unique':"یک کاربر با این ایمیل وجود دارد .",
+            'unique': "یک کاربر با این شماره موبایل وجود دارد لطفا از شماره دیگری استفاده کنید",
         },
     )
+
+
+
 
 class State(models.Model):
     state = models.CharField(primary_key=True, max_length=50,unique=True)
@@ -104,12 +105,11 @@ class Teacher(models.Model):
     comment_num = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"uid:{self.user_id}/{self.last_name}/{self.user.phone_number}/{self.syllabus}"
+        return f"uid:{self.user_id}/{self.last_name}/{self.user.username}/{self.syllabus}"
 
 class Comment(models.Model):
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE)
     user_commenter = models.ForeignKey('MyUser',on_delete=models.CASCADE, )
-    # student = models.ForeignKey('Student', on_delete=models.CASCADE)
     SUGGEST_CHOICES = (('1', 'می پسندم (like)'), ('2', ' نمی پسندم(dislike)'))
     suggest = models.CharField(verbose_name='', max_length=20, choices=SUGGEST_CHOICES, default='1')
     content = models.TextField(max_length=500, null=True, blank=True)
@@ -120,17 +120,16 @@ class Comment(models.Model):
 
 
 class Student(models.Model):
-    student_email = models.CharField(max_length=100)
+    # student_email = models.CharField(max_length=100)
     student_phone = models.CharField(max_length=100)
 
     def __str__(self):
         return self.student_phone
 
+
 class ClassRequest(models.Model):
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE)
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    teacher_email = models.CharField(max_length=100,)
-    student_email = models.CharField(max_length=100,)
     teacher_phone = models.CharField(max_length=20,)
     student_phone = models.CharField(max_length=20,)
     teacher_last_name = models.CharField(max_length=100,)
@@ -142,7 +141,6 @@ class ClassRequest(models.Model):
     is_confirmed = models.BooleanField(default=False)
 
     request_time = models.DateTimeField(auto_now=True,)
-
 
     def __str__(self):
         return f"teacher:{self.teacher.last_name}/uid:{self.teacher.user_id} - stu:{self.student}"

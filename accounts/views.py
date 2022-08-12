@@ -141,63 +141,6 @@ def contact_us(request):
     return render(request, 'accounts/contact_us.html', {})
 
 
-def user_create(request):
-    if request.method == 'POST':
-        logout(request)
-        user_create_form = MyUserCreate(request.POST)
-        if user_create_form.is_valid:
-            try:
-                user = user_create_form.save(commit=False)
-                # user.is_active = False
-                user_saved = user
-                user.save()
-                login(request, user)
-                if request.POST.get('my_next'):
-                    return HttpResponseRedirect(request.POST.get('my_next'))
-
-
-                return redirect('accounts:teacher_edit')
-            except:
-                user_saved = None
-        else:
-            user_saved = None
-    else:
-        user_create_form = MyUserCreate()
-        user_saved = None
-    context = {
-        'user_create_form': user_create_form,
-        'user_saved': user_saved,
-    }
-    return render(request, 'accounts/user_create.html', context)
-
-
-def login_view(request):
-    if request.method == 'POST':
-        teacher_id = request.POST.get('teacher_id', None)
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            if request.GET.get('next'):
-                return HttpResponseRedirect(request.GET.get('next'))
-            if hasattr(user, 'teacher'):
-                return HttpResponseRedirect(reverse('accounts:teacher_edit'))
-
-            else:
-                return redirect('accounts:teacher_edit')
-        else:
-            context = {
-                'username': username,
-                'error': "ایمیل یا رمز عبور صحیح نیست",
-                'my_next': request.GET.get('next')
-            }
-            return render(request, 'accounts/login.html', context)
-    else:
-        context = {'my_next': request.GET.get('next')}
-        return render(request, 'accounts/login.html', context)
-
-
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('accounts:index_accounts'))
@@ -208,7 +151,7 @@ def profile_edit(request):
     if hasattr(request.user, 'teacher'):
         return HttpResponseRedirect(reverse('accounts:teacher_edit'))
     else:
-        return HttpResponseRedirect(reverse('accounts:user_create'))
+        return HttpResponseRedirect(reverse('accounts:index_accounts'))
 
 
 
@@ -259,6 +202,7 @@ def teacher_edit(request):
                         teacher = teacher_edit_form.save(commit=False)
                         # teacher.slug = f"{teacher.syllabus}-{teacher.last_name}"
                         teacher.save()
+
                         error = "مشخصات شما با موفقیت تغییر کرد.پس از بررسی در سایت قرار می گیرد"
                         clerk_phone = '09361164819'
                         teacher_user_id = request.user.id
@@ -325,10 +269,10 @@ def comment_view(request, teacher_id,):
         if cf.is_valid():
             content = request.POST.get('content')
             suggest = request.POST.get('suggest')
-            comment = Comment.objects.create(teacher=teacher, content=content, user_commenter=request.user, suggest=suggest)
-            comment.save()
-            # if content:
-            #     teacher.comment_num += 1
+            if content:
+                comment = Comment.objects.create(teacher=teacher, content=content, user_commenter=request.user, suggest=suggest)
+                comment.save()
+
             if suggest == '1':
                     teacher.likes += 1
 
@@ -371,8 +315,13 @@ def search_view(request):
 
 
 def user_verify(request):
+    return redirect(reverse('accounts:login_view'))
+
+
+def login_view(request):
     teacher_id = None
     response = {}
+    logout(request)
     if 'teacher_selected_id' in request.POST:
         teacher_id = request.POST.get('teacher_selected_id')
 
@@ -380,13 +329,12 @@ def user_verify(request):
         user_verified = None
         otp_code = None
         mobile_number = None
-        my_next = request.POST.get('my_next')
+        # my_next = request.POST.get('my_next')
 
         if 'input_mobile' in request.POST:
             mobile_number = request.POST.get('input_mobile')
             if len(mobile_number) == 10:
                 mobile_number = '0'+mobile_number
-
             response = send_otp(mobile_number)
             if response[0]['status'] == 5:
                 user_verified = 'code_sent'
@@ -402,20 +350,33 @@ def user_verify(request):
                 mobile_number = '0'+mobile_number
             if otp_code == veri_code_input:
                 user_verified = 'code_checked'
-                user_create_form = MyUserCreate()
-                user_create_form.fields['phone_number'].initial = mobile_number
+                user_exists = MyUser.objects.filter(username=mobile_number).exists()
+
+                if user_exists:
+                    user = MyUser.objects.get(username=mobile_number)
+                    user.set_password(otp_code)
+                    user.save()
+
+                else:
+                    user = MyUser.objects.create(username=mobile_number, password=otp_code, )
+
+                login(request,user)
+                # user_create_form = MyUserCreate()
+                # user_create_form.fields['phone_number'].initial = mobile_number
 
                 user_saved = None
-                my_next = request.POST.get('my_next2')
+                # my_next = request.POST.get('my_next2')
                 context = {
                     'user_saved':user_saved,
-                    'user_create_form':user_create_form,
+                    # 'user_create_form':user_create_form,
                     'user_verified':user_verified,
                     'mobile_number': mobile_number,
                     'teacher_id': teacher_id,
-                    'my_next': my_next
+                    # 'my_next': my_next
                 }
-                return render(request, 'accounts/user_create.html', context)
+                if request.GET.get('next'):
+                    return redirect(request.GET.get('next'))
+                return render(request, 'accounts/index.html', context)
             else:
                 user_verified = 'code_check_error'
 
@@ -431,7 +392,7 @@ def user_verify(request):
      'response': response,
      'otp_code': otp_code,
      'teacher_id': teacher_id,
-     'my_next': my_next
+     # 'my_next': my_next
      }
     return render(request, 'accounts/user_verify.html', context )
 
