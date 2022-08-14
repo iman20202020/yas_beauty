@@ -35,14 +35,14 @@ class MyUserCreate(UserCreationForm):
 class TeacherEditForm(forms.ModelForm):
     class Meta:
         model = Teacher
-        exclude = ['user', 'email']
+        exclude = ['likes', 'dislikes','slug', 'comment_num', ]
 
 
 class CommentForm(forms.ModelForm):
     content = forms.CharField(label="",required=False, widget=forms.Textarea(
     attrs ={
         'class': 'form-control',
-        'placeholder': ' دیدگاه خود را بنویسید',
+        'placeholder': ' نظر خود را بنویسید',
         'rows': 4,
         'cols': 50,
 

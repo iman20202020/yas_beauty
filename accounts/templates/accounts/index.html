@@ -39,10 +39,10 @@
 
             <div class="mbr-section-btn mt-1  text text-center">
                 <br>
-                <a class="btn btn-primary "  {% if user.is_authenticated %} hidden {% endif %} href="{% url 'accounts:user_verify' %}"> &nbsp;ثبت نام اساتید&nbsp;
+                <a class="btn btn-primary "  {% if user.is_authenticated %} hidden {% endif %} href="{% url 'accounts:teacher_edit' %}"> &nbsp;ثبت نام اساتید&nbsp;
                 <i class="fas fa-user" ></i>
                 </a>
-                <a class="btn btn-primary " {% if user.is_authenticated %} hidden {% endif %}  href="{% url 'accounts:login_view' %}">&nbsp; &nbsp; ورود اساتید&nbsp; &nbsp;<i class="fas fa-chalkboard-teacher" ></i>&nbsp;</a>
+                <a class="btn btn-primary " {% if user.is_authenticated %} hidden {% endif %}  href="{% url 'accounts:teacher_edit' %}">&nbsp; &nbsp; ورود اساتید&nbsp; &nbsp;<i class="fas fa-chalkboard-teacher" ></i>&nbsp;</a>
             </div>
         </div>
     </div>

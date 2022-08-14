@@ -60,7 +60,7 @@
             <ul>
                 <li style="word-break: break-word" class="text-right small"> {{ teacher.qualification|truncatewords:20 }} </li>
                 <li style="word-break: break-word" class="text-right small"> {{ teacher.experience }}سال سابقه تدریس </li>
-                <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher.points }} </li>
+                <li style="word-break: break-word" class="text-right small"> امتیاز : {{ teacher.points|floatformat:2 }} از 5</li>
                 <li style="word-break: break-word" class="text-right small">
                     {% if teacher.learn_type == 0 %}آنلاین یا حضوری{% endif %}
                             {% if teacher.learn_type == 1 %}آنلاین{% endif %}

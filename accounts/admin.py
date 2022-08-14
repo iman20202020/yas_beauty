@@ -11,8 +11,10 @@ admin.site.register(City)
 admin.site.register(State)
 admin.site.register(Student)
 admin.site.register(ClassRequest)
-admin.site.register(MyUser)
+# admin.site.register(MyUser)
 
+class MyUserAdmin(admin.ModelAdmin):
+    search_fields = ['username', ]
 
 class TeacherAdmin(admin.ModelAdmin):
     list_filter = ('is_confirmed', 'syllabus', 'state')
@@ -20,9 +22,10 @@ class TeacherAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_filter = ('is_confirmed',)
+    list_filter = ('is_confirmed',('content',admin.EmptyFieldListFilter))
 
 
+admin.site.register(MyUser, MyUserAdmin)
 admin.site.register(Comment, CommentAdmin)
 
 admin.site.register(Teacher, TeacherAdmin)

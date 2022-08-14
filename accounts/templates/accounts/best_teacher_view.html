@@ -25,7 +25,7 @@
             <ul>
                 <li style="word-break: break-word" class="text-right small"> {{ teacher_best.qualification|truncatewords:15 }} </li>
                 <li style="word-break: break-word" class="text-right small"> {{ teacher_best.experience }}سال سابقه تدریس </li>
-                <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_best.points }} </li>
+                <li style="word-break: break-word" class="text-right small"> امتیاز:{{ teacher_best.points|floatformat:2 }} </li>
             {% if teacher_best.category_id == 'آرایش و زیبایی' or teacher_best.category_id == 'آشپزی' or teacher_best.category_id == 'هنرهای تجسمی' or teacher_best.category_id == 'سینما و بازیگری' or teacher_best.category_id == 'کارهای فنی' %}
                  <li style="word-break: break-word" class="text-right small"> ورکشاپ {{ teacher_best.workshop_number }} {{ teacher_best.workshop_detail }} </li>
                 <li style="word-break: break-word" class="text-right small">  {{ teacher_best.workshop_price }}  </li>

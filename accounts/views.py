@@ -240,7 +240,7 @@ def teacher_edit(request):
                     sms_token3 = teacher_email
                     send_sms_teacher_edit(clerk_phone, sms_token, sms_token2, sms_token3)
                 else:
-                    error = 'خطا:'
+                    error = 'خطای فرم:'
 
                 # else:
                 #     error = " شماره ملی معتبر نیست"
@@ -269,26 +269,32 @@ def comment_view(request, teacher_id,):
         if cf.is_valid():
             content = request.POST.get('content')
             suggest = request.POST.get('suggest')
-            if content:
+            if Comment.objects.filter(teacher_id=teacher_id,user_commenter_id=request.user.id).exists():
+                messages.error(request,'برای هر استاد فقط یک بار می توانید نظر دهید', 'danger')
+                return redirect(reverse('teachme:teacher_detail', None, args=(teacher_id,)))
+            else:
+
                 comment = Comment.objects.create(teacher=teacher, content=content, user_commenter=request.user, suggest=suggest)
+                # teacher.comment_num +=1
                 comment.save()
-            # if content:
-            #     teacher.comment_num += 1
-            if suggest == '1':
-                    teacher.likes += 1
+                if suggest == '1':
+                        teacher.likes += 1
 
-            if suggest == '2':
-                teacher.dislikes += 1
-            if content or suggest == '1' or suggest == '2':
+                if suggest == '2':
+                    teacher.dislikes += 1
+                if content or suggest == '1' or suggest == '2':
+                    teacher_point = teacher.points+((teacher.likes-teacher.dislikes)/100/(teacher.dislikes+teacher.likes))
+                    if teacher_point < 5:
+                        teacher.points = teacher_point
                 teacher.save()
-
-            messages.success(request, 'نظر شما ثبت شد متشکریم', 'success')
-            return redirect(reverse('teachme:teacher_detail', None, args=(teacher_id, )))
+                messages.success(request, 'نظر شما ثبت شد ', 'success')
+                return redirect(reverse('teachme:teacher_detail', None, args=(teacher_id, )))
     else:
         cf = CommentForm()
 
     context = {
         'comment_form': cf,
+
     }
     return render(request, 'accounts/comment_detail.html', context)
 
