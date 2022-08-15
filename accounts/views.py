@@ -208,7 +208,7 @@ def teacher_edit(request):
                         teacher_user_id = request.user.id
                         teacher_requested = MyUser.objects.get(id=request.user.id)
                         teacher_email = request.user.username
-                        teacher_phone = teacher_requested.phone_number
+                        teacher_phone = teacher_requested.username
                         sms_token = 'user_id:{},name:{}'.format(teacher_user_id, teacher.last_name)
                         sms_token2 = teacher_phone
                         sms_token3 = teacher_email
@@ -234,7 +234,7 @@ def teacher_edit(request):
                     teacher_user_id = request.user.id
                     teacher_requested = MyUser.objects.get(id=request.user.id)
                     teacher_email = request.user.username
-                    teacher_phone = teacher_requested.phone_number
+                    teacher_phone = teacher_requested.username
                     sms_token = 'user_id:{},name:{}'.format(teacher_user_id, teacher.last_name)
                     sms_token2 = teacher_phone
                     sms_token3 = teacher_email
@@ -275,7 +275,7 @@ def comment_view(request, teacher_id,):
             else:
 
                 comment = Comment.objects.create(teacher=teacher, content=content, user_commenter=request.user, suggest=suggest)
-                # teacher.comment_num +=1
+                # teacher.comment_num += 1
                 comment.save()
                 if suggest == '1':
                         teacher.likes += 1

@@ -79,7 +79,7 @@ class Teacher(models.Model):
     category = models.ForeignKey('LearnCategory', on_delete=models.CASCADE,)
     syllabus = models.ForeignKey('Syllabus', on_delete=models.CASCADE, )
     image = ResizedImageField(upload_to='images/', blank=True,validators=[validate_image_size], size=[300,300])
-    national_card_image = ResizedImageField(upload_to='images/',blank=True,validators=[validate_image_size],)
+    # national_card_image = ResizedImageField(upload_to='images/',blank=True,validators=[validate_image_size],null=True)
     degree_image = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
     degree_image2 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
     degree_image3 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
@@ -100,9 +100,9 @@ class Teacher(models.Model):
     is_confirmed = models.BooleanField(default=False)
     gender = models.IntegerField(default=1,blank=True)
     slug = models.SlugField(blank=True,null=True)
-    likes = models.IntegerField(default=0,blank=True,)
-    dislikes = models.IntegerField(default=0, blank=True, )
-    comment_num = models.IntegerField(default=0, blank=True, )
+    likes = models.IntegerField(blank=True, null=True)
+    dislikes = models.IntegerField(blank=True, null=True)
+    comment_num = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"uid:{self.user_id}/{self.last_name}/{self.user.username}/{self.syllabus}"
