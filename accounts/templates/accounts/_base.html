@@ -63,7 +63,7 @@ li{font-size: 18px;color: black;}
                    <li><a  id="user_key"  class="nav nav-link  text text-white "
                                  href=" {% if user.is_authenticated %}{% url 'accounts:profile_edit' %}
                                         {% else %}{% url 'accounts:login_view' %}{% endif %}" >
-                       {% if user.is_authenticated %}  نمایه کاربری {{ user }}{% else %}ورود و  ثبت نام{% endif %}
+                       {% if user.is_authenticated %} تغییر/ثبت مشخصات استاد {{ user }}{% else %}ورود و  ثبت نام{% endif %}
                        </a>
                    </li>
 {#                    <li ><a href="{% url 'blog:show_blog' 1 %}" class="nav nav-link text text-white  "><i class="fas fa-blog "></i> مجله </a></li >#}
