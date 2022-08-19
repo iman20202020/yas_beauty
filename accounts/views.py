@@ -242,8 +242,6 @@ def teacher_edit(request):
                 else:
                     error = 'خطای فرم:'
 
-                # else:
-                #     error = " شماره ملی معتبر نیست"
 
             context = {
                 'teacher_profile' : teacher_profile,
@@ -284,6 +282,7 @@ def comment_view(request, teacher_id,):
                     teacher.dislikes += 1
                 if content or suggest == '1' or suggest == '2':
                     teacher_point = teacher.points+((teacher.likes-teacher.dislikes)/100/(teacher.dislikes+teacher.likes))
+                    teacher_point = round(teacher_point, 2)
                     if teacher_point < 5:
                         teacher.points = teacher_point
                 teacher.save()

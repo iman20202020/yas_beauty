@@ -3,8 +3,14 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="fa-IR">
 <style>
-li{font-size: 18px;color: black;}
+li{
+    word-break: break-word ;font-size: 14px; font-weight: normal; color: #5a6268;
+}
+a:link {
+   color:inherit;
+}
 </style>
+
 <head dir="rtl">
     <title>آموزش کاشت مژه|آموزش لیفت و لمینیت مژه |معرفی اساتید برتراستادباز </title>
     <meta charset="UTF-8">
@@ -22,6 +28,18 @@ li{font-size: 18px;color: black;}
     <link rel="stylesheet" href="{% static "accounts/assets/farsi/farsi.css" %}">
     <link rel="stylesheet" href="{% static 'accounts/fa5/css/all.css' %}">
     <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">
+
+    <!-- Font Awesome Icon Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+  <!-- Icon - IconMonster -->
+  <link rel="stylesheet" href="https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css" />
+  <!-- Mumble UI -->
+  <link rel="stylesheet" href="{% static 'uikit/styles/uikit.css' %}" />
+  <!-- Dev Search UI -->
+  <link rel="stylesheet" href="{% static 'styles/app.css' %}" />
+  <link rel="stylesheet" href="{% static 'uikit/app.css' %}" />
 </head>
 {% include 'teachme/nav_for_include.html' %}
 
@@ -41,7 +59,8 @@ li{font-size: 18px;color: black;}
 <div class="row">
 
      <label for="state_filter_select">استان:</label>
-                    <select  name="state_filter_select" onchange="filter_state()" data-form-field="state_filter_select" class="form-control" id="state_filter_select">
+                    <select  name="state_filter_select" onchange="filter_state()" data-form-field="state_filter_select"
+                             class="form-control" id="state_filter_select" style="font-size: medium">
                         <option value="">همه استان ها</option>
                     {% if state_filter %}
                         <option value="{{ state_filter }}" selected>{{ state_filter }}</option>
@@ -60,7 +79,7 @@ li{font-size: 18px;color: black;}
                <p class="text-primary">   یک ساعت اول کلیه کلاس ها رایگان است.اگر خوشتان آمد پرداخت و ادامه دهید </p>
         </div><br>
 
-{% include 'teachme/teacher_view_for_include.html' %}
+{% include 'teachme/teacher_viewer_for_workshops_inc.html' %}
 
  <article class="">
         <h2 class="small">آموزش طراحی اکستنشن مژه با توجه به فرم چشم مشتری، آموزش اکستنشن کلاسیک، آموزش اکستنشن والیوم، آموزش اکستننشن مژه مگاوالیوم، آموزش اکستنشن مژه روسی، آموزش اکستنشن مژه اسپانکی و آموزش مراقبت های بعد از اکستنشن مژه - نحوه انتخاب مدل مناسب اکستنشن مژه با توجه به فرم چشم های مشتری-آموزش شناخت مواد لیفت و ابزار انجام لیفت مژه، آموزش نحوه صحیح گذاشتن مواد لیفت، روی مژه ها، آموزش تنظیم میزان فر مژه بر اساس درخواست مشتری، آموزش نحوه پاک کردن مواد و شست و شوی مژه ها بعد از انجام لیفت و آموزش مراقبت های بعد از لیفت مژه

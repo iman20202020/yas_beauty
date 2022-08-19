@@ -1,0 +1,33 @@
+<style>
+.stars-outer {
+  display: inline-block;
+  position: relative;
+    {#right: 10%;#}
+  font-family: FontAwesome;
+}
+
+.stars-outer::before {
+    color: white;
+  content: "\f006 \f006 \f006 \f006 \f006";
+}
+    .stars-inner {
+
+  position:absolute ;
+  top: 0;
+  right: 55%;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width:{{ teacher.points }}em;
+}
+
+.stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #f8ce0b;
+}
+
+</style>
+          <div class="stars-outer ">
+              <div  class="stars-inner"></div>
+          </div>
+

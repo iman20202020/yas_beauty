@@ -1,0 +1,53 @@
+
+
+{% for teacher in teachers %}
+      <div class="column card">
+            <div class="dev">
+              <a href="{% url 'teachme:teacher_detail' teacher.id   %}" class="card__body" style="text-decoration: none">
+                <div class="dev__profile d-flex">
+                  <img class="avatar avatar--lg "  src="{{ teacher.image.url }}" alt="{{ teacher.last_name }}-{{ teacher.syllabus }}" />
+                  <div class="dev__meta p-5">
+{#                   <a href="{% url 'teachme:teacher_detail' teacher.id   %}"><img style="max-width:35%; " src="{{ teacher.image.url }}" alt="{{ teacher.last_name }}-{{ teacher.syllabus }}"></a>#}
+                      <h4 > {{ teacher.first_name }} {{ teacher.last_name }}</h4>
+                 <h6>({{ teacher.city_id }})</h6>
+
+
+                  </div>
+                </div>
+               <ul class="">
+                <li  class="text-right "> {{ teacher.qualification|truncatewords:20 }} </li>
+    <li  class="text-right "> امتیاز : {{ teacher.points|floatformat:2 }} از 5</li>
+
+                <li  class="text-right  "> {{ teacher.experience }}سال سابقه تدریس </li>
+                <li  class="text-right ">
+                    {% if teacher.learn_type == 0 %}آنلاین یا حضوری{% endif %}
+                            {% if teacher.learn_type == 1 %}آنلاین{% endif %}
+                            {% if teacher.learn_type == 2 %} حضوری{% endif %}
+                </li>
+            {% if teacher.category_id == 'آرایش و زیبایی' or teacher.category_id == 'آشپزی' or teacher.category_id == 'هنرهای تجسمی' or teacher.category_id == 'سینما و بازیگری' or teacher.category_id == 'کارهای فنی' %}
+                 <li  class="text-right "> کلاس {{ teacher.workshop_number }} {{ teacher.workshop_detail }} </li>
+                <li  class="text-right ">  {{ teacher.workshop_price }}  </li>
+            {% else %}
+                <li  class="text-right "> ساعتی {{ teacher.price_range.price_range_name }}  </li>
+            {% endif %}
+            </ul>
+{#                </p>#}
+                <div class="dev__skills">
+                  <span class="tag tag--pill tag--main">
+                     {{ teacher.likes }}   <i class="fa fa-thumbs-up " aria-hidden="true"  ></i>
+                  </span>
+                  <span class="tag tag--pill tag--main">
+                    {{ teacher.dislikes }}   <i class="fa fa-thumbs-down" aria-hidden="true"  ></i>
+                  </span>
+
+                     {% if teacher.comment_num %}
+                  <span class="tag tag--pill tag--main">
+                   {{ teacher.comment_num }} نظر
+                  </span>
+                    {% endif %}
+                </div>
+                </a>
+            </div>
+     </div>
+
+ {% endfor %}
