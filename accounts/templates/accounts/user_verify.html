@@ -1,6 +1,6 @@
 {% extends 'accounts/_base.html' %}
 {% block title %}
-<div class="row ">
+<div class="row w-100 ">
     <div class="container">
         <div class=" text-center"  >
             <div  data-form-alert="" class="alert text-center alert-danger col-12 mbr-fonts-style align-center mb-0
@@ -10,7 +10,6 @@
             <div class="mbr-section-head ">
                 <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 "><strong>خوش آمدید</strong></h4>
             </div><br>
-
 
             <div id="send_mobile_div" {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: none" {% endif %}>
                 <strong>لطفا شماره همراه خود را وارد کنید</strong><br><br>
@@ -32,9 +31,7 @@
                 <strong>کد تایید به شماره همراه شما ارسال شد لطفا آنرا وارد کنید</strong><br><br>
                 <form action="" class="" method="post" class="form-group text-center" >
                     {% csrf_token %}
-
                     <input type="hidden" id="my_next2" name="my_next2" value="{{ my_next }}">
-
                     <label for="veri_code_input"></label>
                     <input type="text" id="veri_code_input" name="veri_code_input" autofocus placeholder="_   _   _   _" class="text-center" onkeyup="check_length()" >
                     <input type="hidden" id="otp_code_generated" name="otp_code_generated" value="{{ otp_code }}">
@@ -53,7 +50,7 @@
 
                     <input type="submit" id="resend_btn" class=" container" value="ارسال مجدد" style="display: none; width: 150px">
 
-{#                    <input  type="submit" class="btn btn-outline-dark" name="resend_mobile" value="وارد کردن دوباره شماره همراه">#}
+                    <input  type="submit" class="btn btn-outline-dark" name="resend_mobile" value="وارد کردن دوباره شماره همراه">
                 </form><br>
             <div id="countdown" class="inline-group"></div>
             </div>

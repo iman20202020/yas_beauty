@@ -3,8 +3,14 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="fa-IR">
 <style>
-li{font-size: 18px;color: black;}
+li{
+    word-break: break-word ;font-size: 14px; font-weight: normal; color: #5a6268;
+}
+a:link {
+   color:inherit;
+}
 </style>
+
 <head dir="rtl">
     <title>آموزش لیفت و لمینیت ابرو  |معرفی اساتید برتر استادباز </title>
     <meta charset="UTF-8">
@@ -18,10 +24,7 @@ li{font-size: 18px;color: black;}
 <meta name="new_keywords" content=" آموزش رنگ و مش -آموزش رنگ مو - آموزش رنگ و لایت-بالیاژ - آمبره-آموزش انواع رنگ مو- آموزش ترکیب رنگ های مختلف، آموزش  رنگ ریشه- آموزش دکلره  مو- آموزش رنگساژ مو">
 {#<meta property="og:image" content="https:">#}
 <meta property="og:description" content=" معرفی اساتید برتر و ورکشاپ و کلاسهای  آموزش رنگ و مش -آموزش رنگ مو - آموزش رنگ و لایت-بالیاژ - آمبره-آموزش شناخت انواع رنگ موها، آموزش ترکیب رنگ های مختلف، آموزش نحوه صحیح گذاشتن رنگ ریشه، آموزش دکلره کردن مو، آموزش رنگساژ مو و آموزش انواع تکنیک های جدید رنگ مو">
-    <link rel="stylesheet" href="{% static "accounts/assets/bootstrap/css/bootstrap.min.css" %}">
-    <link rel="stylesheet" href="{% static "accounts/assets/farsi/farsi.css" %}">
-    <link rel="stylesheet" href="{% static 'accounts/fa5/css/all.css' %}">
-    <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">
+
 </head>
 {% include 'teachme/nav_for_include.html' %}
 
@@ -34,12 +37,12 @@ li{font-size: 18px;color: black;}
     </article>
 </div>
 
-<div class="text-center m-3 "><button class="btn btn-dark"><a href="{% url 'accounts:consult_view' %}" class="text-white" >درخواست مشاوره تلفنی</a> </button> </div>
+<div class="text-center m-3 "><button class="btn btn-dark"><a href="{% url 'accounts:consult_view' %}" class="text-dark" >درخواست مشاوره تلفنی</a> </button> </div>
 
 <div class="row">
-
      <label for="state_filter_select">استان:</label>
-                    <select  name="state_filter_select" onchange="filter_state()" data-form-field="state_filter_select" class="form-control" id="state_filter_select">
+                    <select  name="state_filter_select" onchange="filter_state()" data-form-field="state_filter_select"
+                             class="form-control" id="state_filter_select" style="font-size: medium">
                         <option value="">همه استان ها</option>
                     {% if state_filter %}
                         <option value="{{ state_filter }}" selected>{{ state_filter }}</option>
@@ -51,13 +54,11 @@ li{font-size: 18px;color: black;}
                         {% endfor %}
                     </select>
                 </div>
-
-
         <div class="  col-lg-12 col-md-12 col-sm-12 alert text-center alert-info text-dark mt-2 mb-0 py-1 px-3  ">
           <p>   آموزش رنگ و مش مو : {{ teachers.count }}   استاد مورد تایید  </p>
                <p class="text-primary">    یک ساعت اول کلیه کلاس ها رایگان است.اگر خوشتان آمد پرداخت و ادامه دهید </p>
         </div><br>
-{% include 'teachme/teacher_view_for_include.html' %}
+{% include 'teachme/teacher_viewer_for_workshops_inc.html' %}
 
  <article class="">
         <h2 class="small">معرفی اساتید برتر و ورکشاپ و کلاسهای  آموزش رنگ و مش -آموزش رنگ مو - آموزش رنگ و لایت-بالیاژ - آمبره-آموزش شناخت انواع رنگ موها، آموزش ترکیب رنگ های مختلف، آموزش نحوه صحیح گذاشتن رنگ ریشه، آموزش دکلره کردن مو، آموزش رنگساژ مو و آموزش انواع تکنیک های جدید رنگ مو-آموزش کار با مواد</h2>

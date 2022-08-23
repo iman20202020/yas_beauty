@@ -2,7 +2,12 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="fa-IR">
 <style>
-li{font-size: 18px;color: black;}
+li{
+    word-break: break-word ;font-size: 14px; font-weight: normal; color: #5a6268;
+}
+a:link {
+   color:inherit;
+}
 </style>
 <head dir="rtl">
     <title>آموزش کاشت ناخن| آموزش صفر تا صد انواع کاشت  |معرفی اساتید برتراستادباز </title>
@@ -17,10 +22,8 @@ li{font-size: 18px;color: black;}
 <meta name="new_keywords" content=" آموزش کاشت ناخن - آموزش صفر تا صد انواع کاشت ناخن - طراحی ناخن - مانیکور - پدیکور - کاشت پودر - کاشت ژل">
 {#<meta property="og:image" content="https:">#}
 <meta property="og:description" content=" معرفی برترین اساتید کشور در زمینه آموزش کاشت ناخن - آموزش صفر تا صد انواع کاشت ناخن - طراحی ناخن - مانیکور - پدیکور - کاشت پودر - کاشت ژل">
-    <link rel="stylesheet" href="{% static "accounts/assets/bootstrap/css/bootstrap.min.css" %}">
-    <link rel="stylesheet" href="{% static "accounts/assets/farsi/farsi.css" %}">
-    <link rel="stylesheet" href="{% static 'accounts/fa5/css/all.css' %}">
-    <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">
+
+
 </head>
 
 {% include 'teachme/nav_for_include.html' %}
@@ -36,12 +39,13 @@ li{font-size: 18px;color: black;}
     </article>
 </div>
 
-<div class="text-center m-3 "><button class="btn btn-dark"><a href="{% url 'accounts:consult_view' %}" class="text-white" >درخواست مشاوره تلفنی</a> </button> </div>
+<div class="text-center m-3 "><button class="btn btn-dark"><a href="{% url 'accounts:consult_view' %}" class="text-dark" >درخواست مشاوره تلفنی</a> </button> </div>
 
 
 <div class="row">
      <label for="state_filter_select">استان:</label>
-                    <select  name="state_filter_select" onchange="filter_state()" data-form-field="state_filter_select" class="form-control" id="state_filter_select">
+                    <select  name="state_filter_select" onchange="filter_state()" data-form-field="state_filter_select"
+                             class="form-control" id="state_filter_select" style="font-size: medium">
                         <option value="">همه استان ها</option>
                     {% if state_filter %}
                         <option value="{{ state_filter }}" selected>{{ state_filter }}</option>
@@ -57,7 +61,7 @@ li{font-size: 18px;color: black;}
             <p>   آموزش کاشت ناخن : {{ teachers.count }}   استاد مورد تایید  </p>
             <p class="text-primary">   یک ساعت اول کلیه کلاس ها رایگان است.اگر خوشتان آمد پرداخت کرده و ادامه دهید </p>
         </div><br>
-{% include 'teachme/teacher_view_for_include.html' %}
+{% include 'teachme/teacher_viewer_for_workshops_inc.html' %}
 <div class="row">
     <article class="">
         <h2 class="small"> معرفی اساتید برتر  کلاس و ورکشاپ های آموزش کاشت ناخن - آموزش صفر تا صد انواع کاشت ناخن - آموزش طراحی ناخن -

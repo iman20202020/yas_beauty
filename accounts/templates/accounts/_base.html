@@ -1,26 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html dir="rtl" lang="fa-IR">
-<style>
-.roll_anim
-    {
-  animation-name: example;
-    animation-duration: 2s;
-    animation-timing-function: ease;
-    animation-delay: 3s;
-    animation-fill-mode: forwards;
 
-}
-    @keyframes example {
-100% {
-        margin-top: -5em;
-    }
-}
-.not-visible{display: none;}
-.visible{display: block;}
-
-li{font-size: 18px;color: black;}
-</style>
 <head dir="rtl">
     <title> معرفی استاد و کلاس استادباز </title>
     <meta charset="UTF-8">
@@ -45,45 +26,58 @@ li{font-size: 18px;color: black;}
 <meta property="og:description" content="معرفی استاد و کلاس درسی هنری و فنی در تمامی زمینه ها شامل آرایشگری-موسیقی-درسی-دانشگاهی-زبان-سینما-کامپیوتر-کارهای فنی">
     <link rel="stylesheet" href="{% static "accounts/assets/bootstrap/css/bootstrap.min.css" %}">
     <link rel="stylesheet" href="{% static "accounts/assets/farsi/farsi.css" %}">
-    <link rel="stylesheet" href="{% static 'accounts/fa5/css/all.css' %}">
-    <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">
+{#    <link rel="stylesheet" href="{% static 'accounts/fa5/css/all.css' %}">#}
+{#    <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">#}
+    <link rel="stylesheet" href="{% static 'yas.css' %}">
+    <!-- Font Awesome Icon Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+  <!-- Icon - IconMonster -->
+{#  <link rel="stylesheet" href="https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css" />#}
+  <!-- Mumble UI -->
+  <link rel="stylesheet" href="{% static 'uikit/styles/uikit.css' %}" />
+  <!-- Dev Search UI -->
+  <link rel="stylesheet" href="{% static 'styles/app.css' %}" />
+{#  <link rel="stylesheet" href="{% static 'uikit/app.css' %}" />#}
 
 
 
 </head>
-<nav class="  navbar navbar-expand-lg navbar-dark   bg-dark  ">
-{#<p class="text-right text text-white small">سوالی دارید؟ پیام دهید: 09361164819</p>#}
-    <div class="container justify-content-start text-right">
-       <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid pr-2" src="{% static 'accounts/images/logo1.png' %}" alt="استادباز معرفی استاد و کلاس"> </a>
 
+<nav class="  navbar navbar-expand-lg navbar-dark w-100  bg-dark text-right " style="font-size: medium;">
+{#<p class="text-right text text-white small">سوالی دارید؟ پیام دهید: 09361164819</p>#}
+    <div class="container justify-content-start ">
+       <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid pr-2" src="{% static 'accounts/images/logo1.png' %}" alt="استادباز معرفی استاد و کلاس"> </a>
        <button class="navbar-toggler " aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation" type="button" data-target="#navbar" data-toggle="collapse">
-           <span class="navbar-toggler-icon"></span>
+           <span class="navbar-toggler-icon "></span>
        </button>
-           <div id="navbar" class="navbar-collapse collapse">
-               <ul class="nav navbar-nav">
-                   <li><a  class="nav nav-link text text-white  " href="{% url 'accounts:index_accounts' %}"> صفحه اصلی   </a>
-                   </li>
-                   <li><a  id="user_key"  class="nav nav-link  text text-white "
-                                 href=" {% if user.is_authenticated %}{% url 'accounts:profile_edit' %}
-                                        {% else %}{% url 'accounts:login_view' %}{% endif %}" >
+       <div id="navbar" class="navbar-collapse collapse">
+           <ul class="nav navbar-nav">
+               <li>
+                   <a  class="nav nav-link text text-white  " href="{% url 'accounts:index_accounts' %}"> صفحه اصلی   </a>
+               </li>
+               <li>
+                   <a  id="user_key"  class="nav nav-link  text text-white "
+                   href=" {% if user.is_authenticated %}{% url 'accounts:profile_edit' %}
+                       {% else %}{% url 'accounts:login_view' %}{% endif %}" >
                        {% if user.is_authenticated %} تغییر/ثبت مشخصات استاد {{ user }}{% else %}ورود و  ثبت نام{% endif %}
-                       </a>
-                   </li>
+                   </a>
+               </li>
 {#                    <li ><a href="{% url 'blog:show_blog' 1 %}" class="nav nav-link text text-white  "><i class="fas fa-blog "></i> مجله </a></li >#}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'accounts:contact_us' %}" ><i class="fas fa-phone "></i>   تماس با ما</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'accounts:contact_us' %}" ><i class="fas fa-phone "></i>   تماس با ما</a>
                     </li>
-               {% if  user.is_authenticated %}
+                    {% if  user.is_authenticated %}
                     <li   >
                         <a class="nav nav-link text text-white " href="{% url 'accounts:logout_view' %}" >خروج</a>
                     </li>
                {% endif %}
-               </ul>
-           </div>
+           </ul>
+       </div>
         <form class="   " action="{% url 'accounts:search_view' %}" method="get" >
-
-            <input class="  " aria-label="Search" type="search" placeholder=" جستجوی موضوع،استاد..." name="search_text">
-            <button type="submit" class=" " ><i class='fa fa-search ' ></i></button>
+            <input class="  " aria-label="Search" type="search" placeholder=" جستجوی موضوع،استاد..." name="search_text " style="text-align: center; margin-right: 5px;border-radius: 4px; ">
+            <button type="submit" class=" btn btn-secondary  " style="width: 50px;text-align: center; border-radius: 4px; margin-right: 5px; "><i class='fa fa-search ' ></i></button>
         </form>
     </div>
 </nav>
@@ -94,14 +88,14 @@ li{font-size: 18px;color: black;}
 <body >
 
 {% if results or results_teachers %}
-<div class="text-right alert " >
+<div class="container text-right  " >
 
     <ul>
     {% for result in results %}
         <li>{{ result }} </li>
     {% endfor %}
     </ul>
-    <p class="alert ">{{ search_message }}</p>
+    <p class="alert   ">{{ search_message }}</p>
 
     <ul>
     {% for teacher_result in results_teachers %}
@@ -111,11 +105,14 @@ li{font-size: 18px;color: black;}
     {% endfor %}
     </ul>
 </div>
+
 {% endif %}
   {% block contents %}{% endblock %}
 </body>
 <footer>
+<hr>
 <article class="small text-right m-2 ">
+    <div class="container">
     <a class="text-secondary" href="{% url 'teachme:nail_implants' %}"> آموزش کاشت ناخن</a>-
 <a class="text-secondary" href="{% url 'teachme:haircut_training' %}"> آموزش کوتاهی مو - آموزش کوتاهی مو زنانه </a>-
 <a class="text-secondary" href="{% url 'teachme:hair_coloring_training' %}"> آموزش رنگ و مش مو-آموزش رنگ مو-آموزش کار با مواد </a>-
@@ -139,11 +136,12 @@ li{font-size: 18px;color: black;}
 <a class="text-secondary" href="{% url 'accounts:high_school_trainings' %}" > آموزش شیمی   </a>-
 
 
-
+</div>
 </article>
     {% block footer %}
     {% endblock %}
-    <div class="text-right  " style="background-color: #DDDDDD">
+<div class="container">
+    <div class="row w-100 text-center    " style="background-color: #DDDDDD">
         <p class="small ">با ما در تماس باشید و ما را در شبکه های اجتماعی دنبال کنید</p>
         <p class="small">  <i class="fa fa-phone"></i> <span>تلفن و واتساپ : 09361164819 و 02177874750</span></p>
         <p class="small">   <i class="fa fa-envelope" aria-hidden="true"></i> <span>ایمیل: ostadbazir@gmail.com</span></p>
@@ -152,13 +150,15 @@ li{font-size: 18px;color: black;}
         <p class="small">  <a href="https://www.youtube.com/channel/UCK3CnpPtXgOoz9oS1QEuX5A">  <span> یوتیوب :</span><span> ostadbaz </span></a></p>
         <p class="small">copyright 2022 ostadbaz.com alright reserved <i class="fa fa-copyright"></i> </p>
     </div>
+</div>
    </footer>
+
 <script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>
 <script src="{% static 'accounts/assets/bootstrap/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'accounts/assets/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+{#<script src="{% static 'accounts/assets/bootstrap/js/bootstrap.bundle.min.js' %}"></script>#}
 <script src="{% static 'accounts/assets/dropdown/js/nav-dropdown.js' %}"></script>
 <script src="{% static 'accounts/assets/dropdown/js/navbar-dropdown.js' %}"></script>
-<script src="{% static 'accounts/assets/bootstrap/js/jquery.touch-swipe.min.js' %}"></script>
+{#<script src="{% static 'accounts/assets/bootstrap/js/jquery.touch-swipe.min.js' %}"></script>#}
 <script src="{% static 'accounts/fa5/js/all.min.js' %}"></script>
 <script src="{% static 'accounts/accounts.js' %}"></script>
 

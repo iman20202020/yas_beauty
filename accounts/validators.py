@@ -17,8 +17,8 @@ def validate_video_size(value):
 def validate_image_size(value):
     file_size = value.size
 
-    if file_size > 2342880:
-        raise ValidationError("حجم فایل تصویر حداکثر 2 مگابایت می تواند باشد ")
+    if file_size > 4342880:
+        raise ValidationError("حجم فایل تصویر حداکثر 4 مگابایت می تواند باشد ")
     else:
         return value
 

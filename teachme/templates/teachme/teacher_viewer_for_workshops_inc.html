@@ -1,9 +1,9 @@
-
+{% load static %}
 
 {% for teacher in teachers %}
-      <div class="column card">
+      <div class="column card col-sm-12 col-md-6 col-lg-4">
             <div class="dev">
-              <a href="{% url 'teachme:teacher_detail' teacher.id   %}" class="card__body" style="text-decoration: none">
+              <a href="{% url 'teachme:teacher_detail' teacher.id   %}" class="card__body" style="text-decoration: none; color: #737373">
                 <div class="dev__profile d-flex">
                   <img class="avatar avatar--lg "  src="{{ teacher.image.url }}" alt="{{ teacher.last_name }}" />
                   <div class="dev__meta p-5">
@@ -29,15 +29,15 @@
             </ul>
                 <div class="dev__skills">
                   <span class="tag tag--pill tag--main">
-                     {{ teacher.likes }}   <i class="fa fa-thumbs-up " aria-hidden="true"  ></i>
+                     {{ teacher.likes }} &nbsp; &nbsp; <i class="fa fa-thumbs-up " aria-hidden="true"  ></i>
                   </span>
                   <span class="tag tag--pill tag--main">
-                    {{ teacher.dislikes }}   <i class="fa fa-thumbs-down" aria-hidden="true"  ></i>
+                    {{ teacher.dislikes }} &nbsp;&nbsp;  <i class="fa fa-thumbs-down" aria-hidden="true"  ></i>
                   </span>
 
                      {% if teacher.comment_num %}
                   <span class="tag tag--pill tag--main">
-                   {{ teacher.comment_num }} نظر
+                   {{ teacher.comment_num }}&nbsp; نظر
                   </span>
                     {% endif %}
                 </div>

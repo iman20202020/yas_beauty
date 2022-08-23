@@ -3,7 +3,12 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="fa-IR">
 <style>
-li{font-size: 18px;color: black;}
+li{
+    word-break: break-word ;font-size: 14px; font-weight: normal; color: #5a6268;
+}
+a:link {
+   color:inherit;
+}
 </style>
 <head dir="rtl">
     <title>آموزش پاکسازی پوست | آموزش پاکسازی صورت|معرفی اساتید برتراستادباز </title>
@@ -17,11 +22,8 @@ li{font-size: 18px;color: black;}
 <meta property="og:url" content="https://ostadbaz.com/">
 <meta name="new_keywords" content="آموزش پاکسازی پوست -آموزش پاکسازی صورت-آموزش صفر تا صد پاکسازی پوست - مدرک فنی و حرفه ای - آموزش صفر تا صد پاکسازی صورت-پاکسازی پوست-آموزش آرایشگری -آموزش مراقبت های بعد از پاکسازی پوست - آموزش ماسک  و اسکراب ">
 {#<meta property="og:image" content="https:">#}
-<meta property="og:description" content="آموزش پاکسازی پوست و روند کامل درمانی برای بهبود ظاهر و زیبایی پوست صورت  شامل  آنالیز و بررسی ساختار پوست، پاکسازی انواع پوست، مراقبت های بعد از پاکسازی پوست و استفاده از انواع ماسک ها و اسکراب ها .آموزش رفع آلودگی‌ های سطحی و دانه‌ های سرسیاه  از سطح پوست  و رساندن مواد معدنی و اکسیژن ‌دار را به سطح درمیست (لایه زیرین پوست)  و تمام منافذ ">
-    <link rel="stylesheet" href="{% static "accounts/assets/bootstrap/css/bootstrap.min.css" %}">
-    <link rel="stylesheet" href="{% static "accounts/assets/farsi/farsi.css" %}">
-    <link rel="stylesheet" href="{% static 'accounts/fa5/css/all.css' %}">
-    <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">
+
+  <link rel="stylesheet" href="{% static 'uikit/app.css' %}" />
 </head>
 {% include 'teachme/nav_for_include.html' %}
 
@@ -34,12 +36,12 @@ li{font-size: 18px;color: black;}
     </article>
 </div>
 
-<div class="text-center m-3 "><button class="btn btn-dark"><a href="{% url 'accounts:consult_view' %}" class="text-white" >درخواست مشاوره تلفنی</a> </button> </div>
+<div class="text-center m-3 "><button class="btn btn-dark"><a href="{% url 'accounts:consult_view' %}" class="text-dark" >درخواست مشاوره تلفنی</a> </button> </div>
 
-<div class="row">
-
+    <div class="row">
      <label for="state_filter_select">استان:</label>
-                    <select  name="state_filter_select" onchange="filter_state()" data-form-field="state_filter_select" class="form-control" id="state_filter_select">
+                    <select  name="state_filter_select" onchange="filter_state()" data-form-field="state_filter_select"
+                             class="form-control" id="state_filter_select" style="font-size: medium">
                         <option value="">همه استان ها</option>
                     {% if state_filter %}
                         <option value="{{ state_filter }}" selected>{{ state_filter }}</option>
@@ -51,13 +53,11 @@ li{font-size: 18px;color: black;}
                         {% endfor %}
                     </select>
                 </div>
-
-
         <div class="  col-lg-12 col-md-12 col-sm-12 alert text-center alert-info text-dark mt-2 mb-0 py-1 px-3  ">
            <p>   آموزش پاکسازی پوست  : {{ teachers.count }}   استاد مورد تایید  </p>
                <p class="text-primary">  یک ساعت اول کلیه کلاس ها رایگان است.اگر خوشتان آمد پرداخت و ادامه دهید </p>
         </div><br>
-{% include 'teachme/teacher_view_for_include.html' %}
+{% include 'teachme/teacher_viewer_for_workshops_inc.html' %}
  <article class="">
      <h2 class="small">
          آموزش پاکسازی پوست و روند کامل درمانی برای بهبود ظاهر و زیبایی پوست صورت  شامل  آنالیز و بررسی ساختار پوست، پاکسازی انواع پوست، مراقبت های بعد از پاکسازی پوست و استفاده از انواع ماسک ها و اسکراب ها .آموزش رفع آلودگی‌ های سطحی و دانه‌ های سرسیاه  از سطح پوست  و رساندن مواد معدنی و اکسیژن ‌دار را به سطح درمیست (لایه زیرین پوست)  و تمام منافذ </h2>
