@@ -1,16 +1,20 @@
 {% extends "accounts/_base.html" %}
 {% load static %}
 {% block contents %}
-
-    <div class="container p-4 " >
-        <div class="mbr-section-head text-center">
-            <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 ">
-                {% if error %}تغییر مشخصات استاد{% else %}  ثبت مشخصات استاد{% endif %}</h3>
+<style>
+option{
+    font-size: medium;
+}
+</style>
+    <div class="container p-4 " style="font-size: medium" >
+        <div class="mbr-section-head text-center" style="font-size: medium">
+            <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 ">
+                {% if error %}تغییر مشخصات استاد{% else %}  ثبت مشخصات استاد{% endif %}</h4>
         </div>
-        <div class="row justify-content-center mt-4">
+        <div class="row justify-content-center mt-4" >
             <div class="dragArea row">
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group" data-for="points">
-                    <label  id="label_points"   for="points-form7-v" class="label ">امتیاز شما: {{ teacher_profile.points }} از 5
+                    <label  id="label_points"   for="points-form7-v" >امتیاز شما: {{ teacher_profile.points }} از 5
                         <div class="progress">
                             <div id="points_progress_bar" class="progress-bar  " >
                             </div>
@@ -21,7 +25,7 @@
 
             </div>
 
-        <div class="col-lg-8 mx-auto mbr-form " data-form-type="">
+        <div class="col-lg-8 mx-auto mbr-form " data-form-type="" style="font-size: medium">
             <form action="" id="teacher_edit_form" name="teacher_edit_form" method="POST" class="mbr-form form-with-styler mx-auto" enctype="multipart/form-data">
                 {% csrf_token %}
                  <div  data-form-alert="" class="alert text-center {% if  "successfully" in error  %} alert-success {% else %}alert-danger{% endif %} col-12 mbr-fonts-style align-center mb-0
@@ -30,7 +34,7 @@
                     {{ teacher_edit_form.errors }}
 
                  </div>
-<div class="text-center m-3 "><button class="btn btn-dark"><a href="{% url 'accounts:consult_view' %}" class="text-white" >درخواست مشاوره تلفنی</a> </button> </div>
+
             <br>
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group text-center" data-for="image">
                     <label for="degree_image">عکس خود را اینجا بارگذاری کنید :</label>
@@ -41,29 +45,31 @@
                     {% endif %}
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group" data-for="first_name">
-                    <input type="text"  name="first_name" onchange="show_confirm_key()" placeholder="نام*"
+                    <input type="text"  name="first_name" onchange="show_confirm_key()" placeholder="نام*" style="font-size: medium"
                         data-form-field="first_name" class="form-control" id="first_name-form7-v" value="{{ teacher_profile.first_name }}" required>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group" data-for="last_name">
-                    <input type="text"  name="last_name" onchange="show_confirm_key()" placeholder="نام خانوادگی*"
+                    <input type="text"  name="last_name" onchange="show_confirm_key()" placeholder="نام خانوادگی*" style="font-size: medium"
                         data-form-field="last_name" class="form-control" value="{{ teacher_profile.last_name }}"  id="last_name-form7-v" required>
                 </div>
 {#                <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="national_id">#}
-{#  <label for="national_id-form7-v ">     کد ملی * </label> <br><span class="small"> ( قابل مشاهده نیست و در اختیار کسی قرار نمی گیرد):</span>#}
+{#  <label for="national_id-form7-v ">     کد ملی * </label> <br><span class=""> ( قابل مشاهده نیست و در اختیار کسی قرار نمی گیرد):</span>#}
 {#                    <input type="text" onchange="show_confirm_key()" name="national_id" data-form-field="national_id" onkeyup="num_to_english(this.id)"#}
 {#                        class="form-control"  value="{{ teacher_profile.national_id }}" id="national_id-form7-v" required>#}
 {#                </div>#}
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="learn_type">
-                    <label for="learn_type-form7-v"> جنسیت :</label><br>
-                    <select  name="gender" onchange="show_confirm_key()" data-form-field="gender" class="form-control"  id="gender-form7-v">
-                        <option value=1>مرد </option>
+                    <label for="learn_type-form7-v" > جنسیت :</label><br>
+                    <select  name="gender" onchange="show_confirm_key()" data-form-field="gender" class="form-control"
+                             id="gender-form7-v" style="font-size: medium">
+                        <option value=1 >مرد </option>
                         <option value=2>زن</option>
                     </select>
                 </div>
 
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="category">
                      <label for="category-form7-v">زیرگروه تدریس شما :</label>
-                     <select name="category" onchange="show_confirm_key(),learn_type_based_view()" data-form-field="category" class="form-control" id="category-form7-v">
+                     <select name="category" onchange="show_confirm_key(),learn_type_based_view()" data-form-field="category"
+                             class="form-control" id="category-form7-v" style="font-size: medium">
                           {% for category in categories %}
                                <option value="{{ category.category }}" {% if  teacher_profile.category.category == category.category %}selected{% endif %}>
                                    {{ category.category_name }}
@@ -73,7 +79,8 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="syllabus">
                     <label for="syll">موضوع تدریس شما :</label>
-                    <select  onchange="show_confirm_key()" name="syllabus" data-form-field="syllabus" class="form-control "  id="syll">
+                    <select  onchange="show_confirm_key()" name="syllabus" data-form-field="syllabus" class="form-control "
+                             id="syll" style="font-size: medium">
                         {% if teacher_profile %}
                             <option selected value="{{ teacher_profile.syllabus.syllabus }}">{{ teacher_profile.syllabus.syllabus }}</option>
                         {% endif %}
@@ -87,7 +94,8 @@
 
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="price_range" id="hourly_price_div">
                     <label for="price-form7-v" dir="rtl"> هزینه هرساعت کلاس شما  :</label>
-                    <select  name="price_range"onchange="show_confirm_key()" data-form-field="price" class="form-control"  id="price-form7-v">
+                    <select  name="price_range"onchange="show_confirm_key()" data-form-field="price" class="form-control"
+                             id="price-form7-v" style="font-size: medium">
                         {% for price_range in price_ranges %}
                             <option dir="rtl" value="{{ price_range.price_range }}"
                                 {% if  teacher_profile.price_range.price_range == price_range.price_range %}selected{% endif %} >{{ price_range.price_range_name }}</option>
@@ -96,25 +104,30 @@
                 </div>
                              <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right  d-none" id="workshop_number_div" data-for="price_range">
                     <label for="workshop_number" dir="rtl"> تعداد نفرات هر ورکشاپ  :</label>
-                      <input   type="text" name="workshop_number" class="form-control" id="workshop_number" value="{{ teacher_profile.workshop_number }}"
+                      <input   type="text" name="workshop_number" class="form-control" id="workshop_number"
+                               value="{{ teacher_profile.workshop_number }}" style="font-size: medium"
                                placeholder="مثال: 3 تا 5 نفر" onchange="show_confirm_key()"  >
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right d-none " id="workshop_detail_div" data-for="price_range">
                         <label for="price-form7-v" dir="rtl"> ورکشاپ چند روزه است و هر روز چند ساعت؟:</label>
-                        <input   type="text" name="workshop_detail" placeholder="مثال:3 روزه هر روز 8 ساعت" value="{{ teacher_profile.workshop_detail }}"
+                        <input   type="text" name="workshop_detail" placeholder="مثال:3 روزه هر روز 8 ساعت"
+                                 value="{{ teacher_profile.workshop_detail }}" style="font-size: medium"
                             class="form-control" id="workshop_detail"    onchange="show_confirm_key()"  >
 
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right d-none " id="workshop_price_div" data-for="price_range">
+                <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right d-none " id="workshop_price_div"
+                     data-for="price_range" >
                         <label for="price-form7-v" dir="rtl"> مبلغ کل  دوره(تومان) :</label>
-                         <input   type="text" name="workshop_price" placeholder="مثال: 1 میلیون" value="{{ teacher_profile.workshop_price }}"
+                         <input   type="text" name="workshop_price" placeholder="مثال: 1 میلیون"
+                                  value="{{ teacher_profile.workshop_price }}" style="font-size: medium"
                             class="form-control" id="workshop_price"    onchange="show_confirm_key()"  >
 
                 </div>
 
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="experience" >
                     <label for="experience-form7-v " class="inline_label" dir="rtl">سابقه تدریس :</label>
-                    <select  name="experience" onchange="show_confirm_key()" data-form-field="experience" class="form-control"  id="experience-form7-v">
+                    <select  name="experience" onchange="show_confirm_key()" data-form-field="experience"
+                             class="form-control"  id="experience-form7-v" style="font-size: medium">
                         <option value="2" >۲ سال </option>
                         <option value="4">۴ سال </option>
                         <option value="6" selected>۶ سال </option>
@@ -128,16 +141,18 @@
                     </select>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group text-right" data-for="qualification">
-                    <label for="qualification-form7-v" class="label small" > خود را برای مخاطب شرح دهید و جزییات دوره آموزشی را بنویسید* :</label>
-                   <textarea   name="qualification" onchange="show_confirm_key()"
-                        class="form-control" id="qualification-form7-v"  rows="5" maxlength="1000" onchange="show_confirm_key()" required >
+                    <label for="qualification-form7-v" class="label " > خود را برای مخاطب شرح دهید و جزییات دوره آموزشی را بنویسید* :</label>
+                   <textarea   name="qualification" onchange="show_confirm_key()" style="font-size: medium"
+                        class="form-control text-right" id="qualification-form7-v"  rows="5" maxlength="1000"
+                               onchange="show_confirm_key()" required >
                        {% if teacher_profile.qualification %}{{ teacher_profile.qualification }}{% endif %}
                     </textarea>
                 </div>
 
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="learn_type">
                     <label for="learn_type-form7-v">نوع آموزش :</label><br>
-                    <select  name="learn_type"  onchange="show_confirm_key(),hide_city_when_online()" data-form-field="experience" class="form-control"  id="learn_type-form7-v">
+                    <select  name="learn_type"  onchange="show_confirm_key(),hide_city_when_online()"
+                             data-form-field="experience" class="form-control"  id="learn_type-form7-v" style="font-size: medium">
                         <option value=0 selected>آنلاین یا حضوری</option>
                         <option value=1>فقط آنلاین </option>
                         <option value=2>فقط حضوری</option>
@@ -146,7 +161,8 @@
 
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="state  " id="state_div">
                     <label for="state-form7-v">استان:</label>
-                    <select  name="state" onchange="show_confirm_key()" data-form-field="state" class="form-control" id="state-form7-v">
+                    <select  name="state" onchange="show_confirm_key()" data-form-field="state" class="form-control"
+                             id="state-form7-v" style="font-size: medium">
                         {% for state in states %}
                             <option value="{{ state.state }}"
                                 {% if  teacher_profile.state.state == state.state %}selected{% endif %}>{{ state.state }}
@@ -157,7 +173,8 @@
 
                 <div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="city" id="city_div">
                     <label for="city-form7-v">شهر:</label>
-                    <select  name="city" onchange="show_confirm_key()" data-form-field="city" class="form-control" id="city-form7-v">
+                    <select  name="city" onchange="show_confirm_key()" data-form-field="city" class="form-control"
+                             id="city-form7-v" style="font-size: medium">
                         {% for city in cities %}
                             <option value="{{ city.city }}"
                                 {% if  teacher_profile.city.city == city.city %}selected{% endif %}>{{ city.city_name }}
@@ -165,6 +182,14 @@
                         {% endfor %}
                     </select>
                 </div>
+
+            <div class="alert alert-success text-right" ><p style="font-size: medium">لطفا یک یا چند ویدئو از نحوه تدریس خود با ذکر نام به واتساپ استادباز ارسال کنید تا در پروفایل شما قرار داده شود</p><br>
+               </div>
+                <a  class="btn btn--sub text-white " href="https://api.whatsapp.com/send?phone=9361164819">ارسال ویدیو به واتساپ استادباز</a>
+
+
+
+
 
             <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image">
                     <label for="degree_image" class="small">عکس نمونه کار یا مدرک یا ...جهت جذب مخاطب1(اختیاری)  :</label>
@@ -245,15 +270,14 @@
 {#                  <span>در حال بارگذاری . . . </span><br>#}
                     <div class="spinner-border ml-auto no" role="status" aria-hidden="true"></div>
                 </div>
-
-                <div class="col-lg-12 col-md-12 col-sm-12 form-group  text-center" >
+{#<div class="container">#}
+                <div class="col-lg-12 col-md-12 col-sm-12 form-group  text-center "  >
                     <div><a href="{% url 'accounts:teacher_laws' %}">قوانین و نحوه پرداخت</a></div> <br>
 
-                    <div class="alert alert-success"><p>لطفا یک یا چند ویدئو از نحوه تدریس خود به شماره واتساپ 09361164819 ارسال کنید تا در پروفایل شما قرار داده شود</p></div>
-
-                    <input  id="confirm_edit_key" type="submit" onclick="show2(),window.scrollTo(0,document.body.scrollHeight);"
-                            class="btn btn-primary  form-control" value="پذیرش قوانین و ثبت ">
+                   <div class="text-center"> <input  id="confirm_edit_key" type="submit" onclick="show2(),window.scrollTo(0,document.body.scrollHeight);"
+                                 class="btn btn--sub  " value="پذیرش قوانین و ثبت " style="font-size: medium"></div>
                 </div>
+{#</div>#}
             </form>
 
         </div>

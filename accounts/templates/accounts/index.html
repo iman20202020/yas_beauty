@@ -18,7 +18,7 @@
 {% include 'accounts/title_anim_inc.html' %}
 </header>
 
-<div class="text-center m-3 "><button class="btn btn--sub" ><a href="{% url 'accounts:consult_view' %}" class="text-white" >درخواست مشاوره تلفنی</a> </button> </div>
+{#<div class="text-center m-3 "><button class="btn btn--sub" ><a href="{% url 'accounts:consult_view' %}" class="text-white" >درخواست مشاوره تلفنی</a> </button> </div>#}
 
 {% endblock %}
 {% block contents %}
@@ -29,8 +29,8 @@
 
 <div class="pic_container col-sm-12 col-md-3 col-lg-4 ">
   <a href="{% url 'accounts:beauty_trainings' %}"> <img class="border" src="{% static 'images/beuty-trainings-courses2.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
-  <div class="text-block text-right ">
-     <h6 class="text-dark font-weight-bold" >  آرایش و زیبایی</h6>
+  <div class="text-block text-right " style="text-align: right">
+     <h6 class="text-dark font-weight-bold " > آموزش آرایش و زیبایی</h6>
      <p class="text-dark font-weight-bold"> {{ teacher_makeup_count }} استاد</p>
   </div>
   </a>
@@ -39,7 +39,7 @@
 <div class="pic_container col-sm-12 col-md-6 col-lg-4  ">
   <a href="{% url 'accounts:music_trainings' %}"> <img class="border" src="{% static 'images/music-trainings-2.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
   <div class="text-block text-right">
-     <h6 class="text-dark font-weight-bold mb" >   موسیقی</h6>
+     <h6 class="text-dark font-weight-bold mb" > آموزش  موسیقی</h6>
      <p class="text-dark font-weight-bold"> {{ teacher_music_count }} استاد</p>
   </div>
   </a>
@@ -48,7 +48,7 @@
 <div class="pic_container col-sm-12 col-md-6 col-lg-4 ">
   <a href="{% url 'accounts:language_trainings' %}"> <img class="border" src="{% static 'images/language-trainings.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
   <div class="text-block text-right">
-     <h6 class="text-dark font-weight-bold"style="color: #737373;" >   زبان های خارجی</h6>
+     <h6 class="text-dark font-weight-bold"style="color: #737373;" >  آموزش زبان های خارجی</h6>
      <p class="text-dark font-weight-bold" style="color: #737373"> {{ teacher_language_count }} استاد</p>
   </div>
   </a>
@@ -57,7 +57,7 @@
 <div class="pic_container col-sm-12 col-md-6 col-lg-4  ">
   <a href="{% url 'accounts:high_school_trainings' %}"> <img class="border" src="{% static 'images/high-school-trainings.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
   <div class="text-block text-right ">
-     <p class="text-dark font-weight-bold " style="color: #737373;" >   متوسطه دوم و کنکور</p>
+     <p class="text-dark font-weight-bold " style="color: #737373;" > آموزش متوسطه دوم و کنکور</p>
      <p class="text-dark font-weight-bold" style="font-size: 12px;color: #737373;"> {{ teacher_high_school_count }} استاد</p>
   </div>
   </a>
@@ -66,7 +66,7 @@
 <div class="pic_container  col-sm-12 col-md-6 col-lg-4 ">
   <a href="{% url 'accounts:mid_school_trainings' %}"> <img class="border" src="{% static 'images/mid-school-trainings.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
   <div class="text-block text-right">
-     <h6 class="text-dark font-weight-bold" style="color: #737373;" >  متوسطه اول</h6>
+     <h6 class="text-dark font-weight-bold" style="color: #737373;" > آموزش متوسطه اول</h6>
      <p class="text-dark font-weight-bold" style="color: #737373;"> {{ teacher_mid_school_count }} استاد</p>
   </div>
 </a>

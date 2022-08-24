@@ -83,10 +83,14 @@
 </nav>
 
 {% include "accounts/messages.html" %}
+
 {% block title %}{% endblock %}
 
 <body >
-
+<br>
+    <div class="text-center">
+     <a  class="btn btn--sub text-white  " href="https://api.whatsapp.com/send?phone=9361164819">مشاوره واتساپ</a>
+    </div><br>
 {% if results or results_teachers %}
 <div class="container text-right  " >
 
@@ -105,8 +109,9 @@
     {% endfor %}
     </ul>
 </div>
-
 {% endif %}
+
+
   {% block contents %}{% endblock %}
 </body>
 <footer>

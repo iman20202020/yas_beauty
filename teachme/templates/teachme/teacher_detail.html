@@ -52,6 +52,7 @@
        <a  target="_blank" href="{{ teacher_selected.video_channel_link }}" class="p-4 ">  ویدئوهای بیشتر از این استاد</a><br><br>
     </div>
    {% endif %}
+<br>
     <div class="  container col-lg-4 col-md-6 col-sm-12  " >
         <textarea   class="form-control text-dark" id="text-describe" disabled rows="8"  dir="rtl"  style="font-size:14px; ">
             {{ teacher_selected.qualification }}
@@ -126,9 +127,10 @@
         <div class="text-center " > <label class="mr-3" for="comments_ul">نظرات کاربران:</label></div>
         <div class="container overflow-auto border " style="height: 200px;width: 90%;">
             <ul id="comments_ul" >
+
             {% for teacher in teacher_for_comments %}
                 {% if teacher.content %}
-
+                <hr>
                 <li class=" list-group text-right text-secondary" >
                     <p class="text text-left ">:{{ teacher.user_commenter.username|truncatechars:10 }}</p>
                     <p style="font-size: medium">{{ teacher.content }}</p>
