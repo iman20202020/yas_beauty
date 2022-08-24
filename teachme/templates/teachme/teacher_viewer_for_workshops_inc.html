@@ -28,13 +28,16 @@
 
             </ul>
                 <div class="dev__skills">
+                {% if teacher.likes %}
                   <span class="tag tag--pill tag--main">
                      {{ teacher.likes }} &nbsp; &nbsp; <i class="fa fa-thumbs-up " aria-hidden="true"  ></i>
                   </span>
+                {% endif %}
+                {% if teacher.dislikes %}
                   <span class="tag tag--pill tag--main">
                     {{ teacher.dislikes }} &nbsp;&nbsp;  <i class="fa fa-thumbs-down" aria-hidden="true"  ></i>
                   </span>
-
+                {% endif %}
                      {% if teacher.comment_num %}
                   <span class="tag tag--pill tag--main">
                    {{ teacher.comment_num }}&nbsp; نظر
