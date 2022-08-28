@@ -1,5 +1,10 @@
 {% extends 'accounts/_base.html' %}
 {% block title %}
+    <style>
+    div{
+        font-size: medium;
+    }
+    </style>
 <div class="row w-100 ">
     <div class="container">
         <div class=" text-center"  >
@@ -21,13 +26,13 @@
 
                     <input type="text" name="input_mobile"  id="input_mobile"
                            onkeyup="check_number('input_mobile_submit','input_mobile')"   autocomplete="new-password" placeholder="09123456789">
-                    <input type="submit"  id="input_mobile_submit" class="btn btn-dark " value="ثبت"  disabled>
+                    <input type="submit"  id="input_mobile_submit" class="btn btn--sub " value="ثبت"  disabled>
                 </form><br><br>
 
             </div>
 
-            <div id="send_otp_div"   {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: block"
-                 {% else %}style="display: none" {% endif %} >
+            <div id="send_otp_div"   {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %}
+                 style="display: block;font-size: medium;"{% else %}style="display: none" {% endif %} >
                 <strong>کد تایید به شماره همراه شما ارسال شد لطفا آنرا وارد کنید</strong><br><br>
                 <form action="" class="" method="post" class="form-group text-center" >
                     {% csrf_token %}
@@ -37,12 +42,13 @@
                     <input type="hidden" id="otp_code_generated" name="otp_code_generated" value="{{ otp_code }}">
                     <input type="hidden" id="mobile_number" name="mobile_number" value="{{ mobile_number }}">
                     <input type="hidden" id="teacher_selected_id" name="teacher_selected_id" value="{{ teacher_id }}">
-                    <input type="submit"  id="code_register" class="btn btn-dark" value="ثبت کد" disabled >
+                    <input type="submit"  id="code_register" class="btn btn--sub" value="ثبت کد" disabled >
                 </form>
                 <br>
             </div>
 
-            <div id="resend_otp_div" {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: block"{% else %}style="display: none" {% endif %} >
+            <div id="resend_otp_div" {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %}
+                 style="display: block;font-size: medium"{% else %}style="display: none" {% endif %} >
                 {% if user_verified == 'code_check_error' %} <strong class="text-danger"> کد وارد شده صحیح نیست</strong><br><br>{% endif %}
                 <form method="post" action="">
                     {% csrf_token %}
@@ -50,7 +56,7 @@
 
                     <input type="submit" id="resend_btn" class=" container" value="ارسال مجدد" style="display: none; width: 150px">
 
-                    <input  type="submit" class="btn btn-outline-dark" name="resend_mobile" value="وارد کردن دوباره شماره همراه">
+{#                    <input  type="submit" class="" name="resend_mobile" value="وارد کردن دوباره شماره همراه">#}
                 </form><br>
             <div id="countdown" class="inline-group"></div>
             </div>

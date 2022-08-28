@@ -33,12 +33,15 @@ class MyUserCreate(UserCreationForm):
 
 
 class TeacherEditForm(forms.ModelForm):
+
+    sample_video = forms.FileField(label="ویدیوی نمونه تدریس", required=False,  )
+
     class Meta:
         model = Teacher
         fields = ['first_name', 'last_name', 'gender', 'category', 'syllabus', 'price_range', 'workshop_number','image',
                   'workshop_detail','workshop_price', 'experience','qualification', 'learn_type', 'state', 'city',
                   'degree_image', 'degree_image2', 'degree_image3', 'degree_image4', 'degree_image5', 'degree_image6',
-                  'degree_image7', ]
+                  'degree_image7', 'sample_video']
 
 
 class CommentForm(forms.ModelForm):

@@ -100,9 +100,9 @@ class Teacher(models.Model):
     is_confirmed = models.BooleanField(default=False)
     gender = models.IntegerField(default=1,blank=True)
     slug = models.SlugField(blank=True,null=True)
-    likes = models.IntegerField(blank=True, null=True)
-    dislikes = models.IntegerField(blank=True, null=True)
-    comment_num = models.IntegerField(blank=True, null=True)
+    likes = models.IntegerField(default=0, blank=True, null=True)
+    dislikes = models.IntegerField(default=0, blank=True, null=True)
+    comment_num = models.IntegerField(default=0, blank=True, null=True)
 
     def __str__(self):
         return f"uid:{self.user_id}/{self.last_name}/{self.user.username}/{self.syllabus}"

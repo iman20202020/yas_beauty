@@ -28,6 +28,7 @@ option{
         <div class="col-lg-8 mx-auto mbr-form " data-form-type="" style="font-size: medium">
             <form action="" id="teacher_edit_form" name="teacher_edit_form" method="POST" class="mbr-form form-with-styler mx-auto" enctype="multipart/form-data">
                 {% csrf_token %}
+
                  <div  data-form-alert="" class="alert text-center {% if  "successfully" in error  %} alert-success {% else %}alert-danger{% endif %} col-12 mbr-fonts-style align-center mb-0
                         {% if  error  %} d-block {% else %}d-none {% endif %}d-none ">{{ error }}<br>
 
@@ -183,16 +184,31 @@ option{
                     </select>
                 </div>
 
-            <div class="alert alert-success text-right" ><p style="font-size: medium">لطفا یک یا چند ویدئو از نحوه تدریس خود با ذکر نام به واتساپ استادباز ارسال کنید تا در پروفایل شما قرار داده شود</p><br>
-               </div>
-                <a  class="btn btn--sub text-white " href="https://api.whatsapp.com/send?phone=9361164819">ارسال ویدیو به واتساپ استادباز</a>
+{#            <div class="alert alert-success text-right" ><p style="font-size: medium">لطفا یک یا چند ویدئو از نحوه تدریس خود با ذکر نام به واتساپ استادباز ارسال کنید تا در پروفایل شما قرار داده شود</p><br>#}
+{#               </div>#}
+{#                <a  class="btn btn--sub text-white " href="https://api.whatsapp.com/send?phone=9361164819">ارسال ویدیو به واتساپ استادباز</a>#}
+        <hr>
+<div class=" text-right">
+ <label class="text-dark">ویدیوی نمونه تدریس(الزامی)*:</label>
+ <label class="small">(حداکثر 30 مگابایت)</label><br>
+{{ teacher_edit_form.sample_video }}
+    <br>
+    {% if teacher_profile.sample_video %}
+                    <div><a class="" href="{{ teacher_profile.sample_video.url }}" >
+    </a></div>
 
+            {% endif %}
 
+            <br>
 
+            <a href="{% static 'teachme/video resize learning.mp4' %}" class="text-primary small">آموزش تغییر سایز ویدیو</a><br>
+            <a href="https://online-video-cutter.com/resize-video" class="text-primary small">لینک تغییر سایز ویدیو</a>
 
-
+</div>
+<hr>
+            <br>
             <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image">
-                    <label for="degree_image" class="small">عکس نمونه کار یا مدرک یا ...جهت جذب مخاطب1(اختیاری)  :</label>
+                    <label for="degree_image" class="small">عکس نمونه کار یا مدرک یا ...جهت جذب مخاطب(اختیاری)  :</label>
                     <input name="degree_image" id="degree_image" type="file" onchange="show_confirm_key()"
                            onfocus="image_upload_preview(this.id,'degree_image_preview')" class="file-upload">
             {% if teacher_profile.degree_image %}
@@ -201,7 +217,7 @@ option{
             {% endif %}
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image2">
-                    <label for="degree_image2" class="small">عکس نمونه کار یا مدرک یا ...جهت جذب مخاطب2(اختیاری)  :</label>
+{#                    <label for="degree_image2" class="small">عکس نمونه کار یا مدرک یا ...جهت جذب مخاطب2(اختیاری)  :</label>#}
                     <input name="degree_image2" id="degree_image2" type="file" onchange="show_confirm_key()"
                            onfocus="image_upload_preview(this.id,'degree_image2_preview')" class="file-upload">
             {% if teacher_profile.degree_image2 %}
@@ -212,7 +228,7 @@ option{
 
 
             <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image3">
-                    <label for="degree_image3" class="small">عکس نمونه کار یا مدرک یا ... جهت جذب مخاطب3(اختیاری)  :</label>
+{#                    <label for="degree_image3" class="small">عکس نمونه کار یا مدرک یا ... جهت جذب مخاطب3(اختیاری)  :</label>#}
                     <input name="degree_image3" id="degree_image3" type="file" onchange="show_confirm_key()"
                            onfocus="image_upload_preview(this.id,'degree_image3_preview')" class="file-upload">
             {% if teacher_profile.degree_image3 %}
@@ -222,8 +238,9 @@ option{
             </div>
 
             <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image4">
-                    <label for="degree_image4" class="small">عکس نمونه کار یا مدرک یا ... جهت جذب مخاطب4(اختیاری)  :</label>
-                    <input name="degree_image4" id="degree_image4" type="file" onchange="show_confirm_key()"
+{#                    <label for="degree_image4" class="small">عکس نمونه کار یا مدرک یا ... جهت جذب مخاطب4(اختیاری)  :</label>#}
+                    <input name="degree_image4" id="degree_image4"
+                           type="file" onchange="show_confirm_key()"
                            onfocus="image_upload_preview(this.id,'degree_image4_preview')" class="file-upload">
             {% if teacher_profile.degree_image4 %}
                     <img id="degree_image_preview4" src="{{teacher_profile.degree_image4.url}}
@@ -232,7 +249,7 @@ option{
             </div>
 
             <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image5">
-                    <label for="degree_image5" class="small">عکس نمونه کار یا مدرک یا ... جهت جذب مخاطب5(اختیاری)  :</label>
+{#                    <label for="degree_image5" class="small">عکس نمونه کار یا مدرک یا ... جهت جذب مخاطب5(اختیاری)  :</label>#}
                     <input name="degree_image5" id="degree_image5" type="file" onchange="show_confirm_key()"
                            onfocus="image_upload_preview(this.id,'degree_image5_preview')" class="file-upload">
             {% if teacher_profile.degree_image5 %}
@@ -242,7 +259,7 @@ option{
             </div>
 
             <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image6">
-                <label for="degree_image6" class="small">عکس نمونه کار یا مدرک یا ... جهت جذب مخاطب6(اختیاری)  :</label>
+{#                <label for="degree_image6" class="small">عکس نمونه کار یا مدرک یا ... جهت جذب مخاطب6(اختیاری)  :</label>#}
                 <input name="degree_image6" id="degree_image6" type="file" onchange="show_confirm_key()"
                            onfocus="image_upload_preview(this.id,'degree_image6_preview')" class="file-upload">
             {% if teacher_profile.degree_image6 %}
@@ -252,7 +269,7 @@ option{
             </div>
 
             <div class="col-lg-4 col-md-4 col-sm-12 form-group text-right" data-for="degree_image7">
-                    <label for="degree_image7" class="small">عکس نمونه کار یا مدرک یا ... جهت جذب مخاطب7(اختیاری)  :</label>
+{#                    <label for="degree_image7" class="small">عکس نمونه کار یا مدرک یا ... جهت جذب مخاطب7(اختیاری)  :</label>#}
                     <input name="degree_image7" id="degree_image7" type="file" onchange="show_confirm_key()"
                            onfocus="image_upload_preview(this.id,'degree_image7_preview')" class="file-upload">
             {% if teacher_profile.degree_image7 %}
@@ -260,24 +277,14 @@ option{
                      class="img-rounded col-lg-6 col-md-6 col-sm-12" alt="{{ teacher_profile.category.category }}" >
               {% endif %}
             </div>
-{#                <div class="col-lg-4 col-md-4 col-sm-12  text-right " data-for="sample_video">#}
-{#                    <label for="sample_video">ویدیوی نمونه تدریس(حدود 5 دقیقه) :</label>#}
-{#                    <input name="sample_video" id="sample_video" type="file" onchange="show_confirm_key() " class="-file-video"  >#}
-{#                        {% if teacher_profile.sample_video %}#}
-{#                            <video  src="{{ teacher_profile.sample_video.url }}" class="col-lg-6 col-md-12 col-sm-12 "controls></video>#}
-{#                        {% endif %}#}
-                <div  id="spinner-box" class="m-5 text-center  " style="display: none" >
-{#                  <span>در حال بارگذاری . . . </span><br>#}
-                    <div class="spinner-border ml-auto no" role="status" aria-hidden="true"></div>
-                </div>
-{#<div class="container">#}
-                <div class="col-lg-12 col-md-12 col-sm-12 form-group  text-center "  >
-                    <div><a href="{% url 'accounts:teacher_laws' %}">قوانین و نحوه پرداخت</a></div> <br>
 
-                   <div class="text-center"> <input  id="confirm_edit_key" type="submit" onclick="show2(),window.scrollTo(0,document.body.scrollHeight);"
-                                 class="btn btn--sub  " value="پذیرش قوانین و ثبت " style="font-size: medium"></div>
-                </div>
-{#</div>#}
+                  <div class="f text-right text-primary">
+                  <a href="{% url 'accounts:teacher_laws' %}" >قوانین و نحوه پرداخت</a> <br>
+
+                    <input  id="confirm_edit_key" type="submit" onclick="show2(),window.scrollTo(0,document.body.scrollHeight);"
+                                 class="btn btn--sub  " value="پذیرش قوانین و ثبت " style="font-size: medium">
+
+                    </div>
             </form>
 
         </div>
@@ -386,6 +393,12 @@ option{
                 }
         }});
     })
+
+
+    $(document).on('click', function() {
+
+         $('#confirm_edit_key').css('display','block');
+     });
 
 
     function show_confirm_key(){

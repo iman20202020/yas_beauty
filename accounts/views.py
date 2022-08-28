@@ -54,6 +54,7 @@ def index_accounts(request):
         'teacher_language_count': teacher_language_count,
         'teachers': teachers,
     }
+
     return render(request, 'accounts/index.html', context)
 
 
@@ -149,12 +150,7 @@ def logout_view(request):
 
 @login_required
 def profile_edit(request):
-    if hasattr(request.user, 'teacher'):
-        return HttpResponseRedirect(reverse('accounts:teacher_edit'))
-    else:
-        return HttpResponseRedirect(reverse('accounts:index_accounts'))
-
-
+    return HttpResponseRedirect(reverse('accounts:teacher_edit'))
 
 
 @login_required
@@ -304,7 +300,7 @@ def search_view(request):
     results_teachers =[]
     search_message = None
     if request.method == "GET":
-        search_query = request.GET.get('search_text',None)
+        search_query = request.GET.get('search_text')
         if search_query:
             result1 = Syllabus.objects.filter(syllabus__contains= search_query)
             result1_teachers = Teacher.objects.filter(syllabus__syllabus_name__contains=search_query,is_confirmed=True)
@@ -318,7 +314,7 @@ def search_view(request):
                 search_message = str(len(results_teachers)) + "استاد پیدا شد"
             else:
                 search_message = "موردی یافت نشد"
-        return render(request, 'accounts/index.html', {'results': results, 'search_message': search_message,'results_teachers': results_teachers})
+        return render(request, 'accounts/_base.html', {'results': results, 'search_message': search_message,'results_teachers': results_teachers})
 
 
 def user_verify(request):
@@ -329,6 +325,8 @@ def login_view(request):
     teacher_id = None
     response = {}
     logout(request)
+    if request.user.is_authenticated:
+        return redirect(reverse('accounts:index_accounts'))
     if 'teacher_selected_id' in request.POST:
         teacher_id = request.POST.get('teacher_selected_id')
 
