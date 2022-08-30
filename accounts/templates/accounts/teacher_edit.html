@@ -190,7 +190,7 @@ option{
         <hr>
 <div class=" text-right">
  <label class="text-dark">ویدیوی نمونه تدریس(الزامی)*:</label>
- <label class="small">(حداکثر 30 مگابایت)</label><br>
+ <label class="small">(حداکثر 80 مگابایت)</label><br>
 {{ teacher_edit_form.sample_video }}
     <br>
     {% if teacher_profile.sample_video %}
@@ -201,8 +201,8 @@ option{
 
             <br>
 
-            <a href="{% static 'teachme/video resize learning.mp4' %}" class="text-primary small">آموزش تغییر سایز ویدیو</a><br>
-            <a href="https://online-video-cutter.com/resize-video" class="text-primary small">لینک تغییر سایز ویدیو</a>
+{#            <a href="{% static 'teachme/video resize learning.mp4' %}" class="text-primary small">آموزش تغییر سایز ویدیو</a><br>#}
+{#            <a href="https://online-video-cutter.com/resize-video" class="text-primary small">لینک تغییر سایز ویدیو</a>#}
 
 </div>
 <hr>
@@ -278,11 +278,17 @@ option{
               {% endif %}
             </div>
 
+             <div  id="spinner-box" class="m-5 text-center  " style="display: none" >
+                        <span>در حال بارگذاری . . . </span><br>
+                    <div class="spinner-border ml-auto no" role="status" aria-hidden="true"></div>
+                </div>
+
                   <div class="f text-right text-primary">
                   <a href="{% url 'accounts:teacher_laws' %}" >قوانین و نحوه پرداخت</a> <br>
+                      <p></p>
 
                     <input  id="confirm_edit_key" type="submit" onclick="show2(),window.scrollTo(0,document.body.scrollHeight);"
-                                 class="btn btn--sub  " value="پذیرش قوانین و ثبت " style="font-size: medium">
+                                 class="btn btn--sub  " value=" ثبت مشخصات " style="font-size: medium">
 
                     </div>
             </form>

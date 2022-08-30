@@ -55,8 +55,9 @@
 <div class=" container ">
 <div class="badge badge-dark  w-100  " style="border-radius: 5px;font-size:large">
     <strong class="text-white" >جمعی از اساتید</strong></div>
-
-{% include 'teachme/teacher_viewer_for_teacher_list_inc.html' %}
+    <div class="card-columns">
+        {% include 'teachme/teacher_viewer_for_teacher_list_inc.html' %}
+    </div>
 </div>
 {% endblock %}
 {% block footer %}

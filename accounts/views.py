@@ -295,12 +295,13 @@ def comment_view(request, teacher_id,):
     return render(request, 'accounts/comment_detail.html', context)
 
 
+
 def search_view(request):
     results = []
     results_teachers =[]
     search_message = None
     if request.method == "GET":
-        search_query = request.GET.get('search_text')
+        search_query = request.GET.get('search_text',None)
         if search_query:
             result1 = Syllabus.objects.filter(syllabus__contains= search_query)
             result1_teachers = Teacher.objects.filter(syllabus__syllabus_name__contains=search_query,is_confirmed=True)
@@ -314,7 +315,9 @@ def search_view(request):
                 search_message = str(len(results_teachers)) + "استاد پیدا شد"
             else:
                 search_message = "موردی یافت نشد"
-        return render(request, 'accounts/_base.html', {'results': results, 'search_message': search_message,'results_teachers': results_teachers})
+
+        return render(request, 'accounts/index.html', {'results': results, 'search_message': search_message,'results_teachers': results_teachers})
+
 
 
 def user_verify(request):
