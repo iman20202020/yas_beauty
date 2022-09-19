@@ -116,10 +116,14 @@ class Comment(models.Model):
     is_confirmed = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
-        if self.is_confirmed:
-            self.teacher.comment_num += 1
-            self.teacher.save()
-        super(Comment, self).save(*args, **kwargs)
+        if self.content:
+            if self.is_confirmed:
+                self.teacher.comment_num += 1
+                self.teacher.save()
+            super(Comment, self).save(*args, **kwargs)
+
+
+
 
     def __str__(self):
         return f"teacher:{self.teacher},commenter:{self.user_commenter}"
@@ -145,6 +149,8 @@ class ClassRequest(models.Model):
     workshop_price = models.CharField(max_length=30)
     city = models.ForeignKey('City', on_delete=models.CASCADE)
     is_confirmed = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True,null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
 
     request_time = models.DateTimeField(auto_now=True,)
 

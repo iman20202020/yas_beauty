@@ -198,6 +198,7 @@ def teacher_edit(request):
                         teacher_edit_form.pk = teacher_profile.id
                         teacher = teacher_edit_form.save(commit=False)
                         # teacher.slug = f"{teacher.syllabus}-{teacher.last_name}"
+                        teacher.is_confirmed = False
                         teacher.save()
 
                         error = "مشخصات شما با موفقیت تغییر کرد.پس از بررسی در سایت قرار می گیرد"

@@ -89,7 +89,7 @@ def request_user_verify(request, teacher_id):
 
                 teacher_requested_user_id = getattr(teacher_requested, 'user_id')
                 teacher_requested_user_params = MyUser.objects.get(id=teacher_requested_user_id)
-                teacher_phone = teacher_requested_user_params.phone_number
+                teacher_phone = teacher_requested_user_params.username
 
                 student_phone = mobile_number
                 clerk_sms_token = '{},uid{}'.format(teacher_requested.last_name, teacher_requested_user_id)
