@@ -19,14 +19,15 @@ class MyUserAdmin(admin.ModelAdmin):
 class TeacherAdmin(admin.ModelAdmin):
     list_filter = ('is_confirmed', 'syllabus', 'state')
     search_fields = ['last_name', ]
+    readonly_fields = ['created', 'updated', ]
 
 class ClassRequestAdmin(admin.ModelAdmin):
     list_filter = ('teacher', 'student', 'teacher_phone', 'student_phone', 'category', 'syllabus', 'price',
                    'workshop_price', 'city', 'created', 'updated')
-    readonly_fields = ['created', 'updated' ]
+    readonly_fields = ['created', 'updated', ]
 
 class CommentAdmin(admin.ModelAdmin):
-    list_filter = ('is_confirmed',('content',admin.EmptyFieldListFilter))
+    list_filter = ('is_confirmed', ('content', admin.EmptyFieldListFilter))
 
 
 admin.site.register(MyUser, MyUserAdmin)

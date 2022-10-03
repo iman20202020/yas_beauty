@@ -4,6 +4,8 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import FileExtensionValidator, validate_email
 from django.db import models
+from django.urls import reverse
+from django.utils import timezone
 from django_resized import ResizedImageField
 
 
@@ -60,7 +62,7 @@ class Syllabus(models.Model):
 
 
 class PriceRange(models.Model):
-    price_range = models.IntegerField(primary_key=True, max_length=4,  unique=True,default=150)
+    price_range = models.IntegerField(primary_key=True, unique=True,default=150)
     price_range_name = models.CharField(max_length=50,)
 
     def __str__(self):
@@ -104,8 +106,17 @@ class Teacher(models.Model):
     dislikes = models.IntegerField(default=0, blank=True, null=True)
     comment_num = models.IntegerField(default=0, blank=True, null=True)
 
+
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
+
     def __str__(self):
         return f"uid:{self.user_id}/{self.last_name}/{self.user.username}/{self.syllabus}"
+
+
+    def get_absolute_url(self):
+        return reverse('teachme:teacher_detail',
+                       args=[self.id, ])
 
 class Comment(models.Model):
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE)
