@@ -28,7 +28,7 @@ def teacher_list(request):
     return render(request, 'teachme/teacher_list.html', context)
 
 
-def teacher_detail(request, teacher_id):
+def teacher_detail(request, teacher_id, slug):
 
     teacher_selected = Teacher.objects.get(pk=teacher_id)
 

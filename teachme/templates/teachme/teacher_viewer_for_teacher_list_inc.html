@@ -3,11 +3,11 @@
 {% for teacher in teachers %}
       <div class="column card " >
             <div class="dev">
-              <a href="{% url 'teachme:teacher_detail' teacher.id   %}" class="card__body" style="text-decoration: none">
+              <a href="{{ teacher.get_absolute_url }}" class="card__body" style="text-decoration: none">
                 <div class="dev__profile d-flex">
                   <img class="avatar avatar--lg "  src="{{ teacher.image.url }}" alt="{{ teacher.last_name }}-{{ teacher.syllabus }}" />
                   <div class="dev__meta p-5">
-{#                   <a href="{% url 'teachme:teacher_detail' teacher.id   %}"><img style="max-width:35%; " src="{{ teacher.image.url }}" alt="{{ teacher.last_name }}-{{ teacher.syllabus }}"></a>#}
+{#                   <a href="{{ teacher.get_absolute_url }}"><img style="max-width:35%; " src="{{ teacher.image.url }}" alt="{{ teacher.last_name }}-{{ teacher.syllabus }}"></a>#}
                       <h4 > {{ teacher.first_name }} {{ teacher.last_name }}</h4>
                  <h6>({{ teacher.city_id }})</h6>
 

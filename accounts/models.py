@@ -116,7 +116,8 @@ class Teacher(models.Model):
 
     def get_absolute_url(self):
         return reverse('teachme:teacher_detail',
-                       args=[self.id, ])
+                       args=[self.id, self.slug])
+
 
 class Comment(models.Model):
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE)

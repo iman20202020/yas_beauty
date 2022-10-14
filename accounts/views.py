@@ -2,6 +2,7 @@ from itertools import chain
 
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.utils.text import slugify
 
 from accounts import phone_vrify
 from accounts.otp import *
@@ -197,7 +198,9 @@ def teacher_edit(request):
                         teacher_edit_form.user = request.user
                         teacher_edit_form.pk = teacher_profile.id
                         teacher = teacher_edit_form.save(commit=False)
-                        # teacher.slug = f"{teacher.syllabus}-{teacher.last_name}"
+                        slug1 = str(teacher.syllabus).replace(" ", "-")
+                        slug2 = str(teacher.last_name).replace(" ", "-")
+                        teacher.slug = f"{slug1}-{slug2}"
                         teacher.is_confirmed = False
                         teacher.save()
 
@@ -267,7 +270,7 @@ def comment_view(request, teacher_id,):
             suggest = request.POST.get('suggest')
             if Comment.objects.filter(teacher_id=teacher_id,user_commenter_id=request.user.id).exists():
                 messages.error(request,'برای هر استاد فقط یک بار می توانید نظر دهید', 'danger')
-                return redirect(reverse('teachme:teacher_detail', None, args=(teacher_id,)))
+                return redirect(reverse('teachme:teacher_detail', None, args=(teacher_id, teacher.slug)))
             else:
 
                 comment = Comment.objects.create(teacher=teacher, content=content, user_commenter=request.user, suggest=suggest)
@@ -285,7 +288,7 @@ def comment_view(request, teacher_id,):
                         teacher.points = teacher_point
                 teacher.save()
                 messages.success(request, 'نظر شما ثبت شد ', 'success')
-                return redirect(reverse('teachme:teacher_detail', None, args=(teacher_id, )))
+                return redirect(reverse('teachme:teacher_detail', None, args=(teacher_id, teacher.slug )))
     else:
         cf = CommentForm()
 

@@ -3,7 +3,7 @@
 {% for teacher in teachers %}
       <div class="column card  ">
             <div class="dev ">
-              <a href="{% url 'teachme:teacher_detail' teacher.id   %}" class="card__body" style="text-decoration: none; color: #737373">
+              <a href="{{ teacher.get_absolute_url }}" class="card__body" style="text-decoration: none; color: #737373">
                 <div class="dev__profile d-flex">
                   <img class="avatar avatar--lg "  src="{{ teacher.image.url }}" alt="{{ teacher.last_name }}" />
                   <div class="dev__meta p-5">
