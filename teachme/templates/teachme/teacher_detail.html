@@ -1,17 +1,18 @@
 
 {% extends 'accounts/_base.html' %}
 {% load static %}
+
 {% block contents %}
     <style>
     div{
         border-radius: 10px;
-
     }
 
     </style>
 
 <div class="container p-4">
     <div class="mbr-section-head text-center">
+
         <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-6">
             <strong> مشخصات استاد</strong></h3>
     </div>
@@ -20,22 +21,58 @@
         <div>
             <p style="font-size: large; font-weight: bold">{{ teacher_selected.first_name }} {{ teacher_selected.last_name }}</p>
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-12 form-group" data-for="points">
+        <div class="col-lg-4 col-md-6 col-sm-12 text-center " data-for="points" style="background-color: #DDDDDD">
             <label  id="label_points"   for="points-form7-v" class="label  " style="font-size: medium">امتیاز استاد  {{ teacher_selected.points|floatformat:2 }}از 5
                 <div class="progress">
                     <div id="points_progress_bar" class="progress-bar  " style="width: 50%" >
                     </div>
                 </div>
-            </label>
-            <p  style="color: #0275d8">    {{ teacher_likes }}   <i class="fa fa-thumbs-up" aria-hidden="true"  style="font-size: 20px;"></i> &nbsp &nbsp, &nbsp
-       {{ teacher_dislikes }}   <i class="fa fa-thumbs-down" aria-hidden="true"  style="font-size: 20px;"></i> &nbsp &nbsp </p>
+            </label><br>
+            <div class="ml-4">
+             <a class="text-right text-decoration-none" id="like-btn" href="#" data-id="{{ teacher_selected.id }}" data-action="{% if request.user in teacher_selected.users_like.all %}un{% endif %}like">
+            <span >
+            <span id="total-like">{{ teacher_selected.users_like.count }}</span>
+
+                <i id="like-sign-btn" class="fa fa-thumbs-up" aria-hidden="true"  style="font-size: 20px;
+                        color: {% if request.user in teacher_selected.users_like.all %}#C51104{% else %}#51546e{% endif %};"></i>
+
+
+
+            </span>
+{#             <p>می پسندم</p>#}
+              </a>&emsp;&nbsp;
+         <a class="text-left text-decoration-none" id="dislike-btn" href="#" data-id="{{ teacher_selected.id }}" data-action="{% if request.user in teacher_selected.users_dislike.all %}no_{% endif %}dislike">
+                <span  >
+            <span id="total-dislike">{{ teacher_selected.users_dislike.count }}</span>
+
+                <i id="dislike-sign-btn" class="fa fa-thumbs-down" aria-hidden="true"  style="font-size: 20px;
+                    color: {% if request.user in teacher_selected.users_dislike.all %}#C51104{% else %}#51546e{% endif %};"></i>
+
+            </span>&emsp;&nbsp;
+{#                     <p >نمی پسندم</p>#}
+                 </a>
+
+            <a   class="text-dark text-decoration-none" onclick="this.hidden=true" href="{% url 'accounts:comment_view' teacher_selected.id %}" >
+                <span id="total-dislike">{{ teacher_selected.comment_num }}</span>
+                 <i class="fa fa-comment" aria-hidden="true" style="color: #6c757d; font-size: 20px"
+
+                ></i></a>
+
+            </div>
+
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-12 text-center">
-            <a   class="btn btn--sub  text-white " onclick="this.hidden=true" href="{% url 'accounts:comment_view' teacher_selected.id %}" >نظر خود را ثبت کنید
-                 <i class="fa fa-comment" aria-hidden="true" style="color: white;font-size:20px;"></i></a>
-            <br>
-        </div>
+{#        <div class="col-lg-4 col-md-6 col-sm-12 text-center">#}
+{#            <a   class="btn btn--sub  text-white " onclick="this.hidden=true" href="{% url 'accounts:comment_view' teacher_selected.id %}" >نظر خود را بنویسید#}
+{#                 <i class="fa fa-comment" aria-hidden="true" style="color: white;font-size:20px;"></i></a>#}
+{##}
+{##}
+{#            <br>#}
+{#        </div>#}
+   <p class="alert-danger m-3  "  id="alert_login" style="font-size: medium; border-radius: 4px; display: none">لطفا ابتدا وارد شوید</p>
     </div>
+
+
+
 
     <div class="  col-lg-4 col-md-6 col-sm-12 text-center m-2" >
         <img  src="{{ teacher_selected.image.url }}"  id="teacher_image" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
@@ -165,9 +202,113 @@
      }
      points_progress({{ teacher_selected.points }})
 
+{#    select a tags that have like class when clicked#}
+
+
+
 
     </script>
 
+    <script>
+
+$('#like-btn').click(function(e)
+    {
+    e.preventDefault();
+
+    {% if not request.user.is_authenticated %}
+        $('#alert_login').css('display','block')
+     {% else %}
+        $('#alert_login').css('display','none')
+    $.get
+    (
+        '{% url "teachme:like" %}',
+        {id: $(this).data('id'), action: $(this).data('action')},
+        function(data)
+        {
+            if (data['status'] == 'like_ok')
+            {  var like_counter_init = {{ teacher_selected.users_like.count }}
+                if($('#like-btn').data('action') == 'like' ) {
+                    $('#like-sign-btn').css('color', '#C51104')
+                    $('#like-btn').data('action', 'unlike')
+                    if ($('#total-like').text()<like_counter_init){
+                        $('#total-like').text(like_counter_init)
+
+                    }
+                    else {
+                        $('#total-like').text(like_counter_init + 1)
+
+                        {% if request.user in teacher_selected.users_dislike.all %}
+
+                            $('#total-dislike').text('{{ teacher_selected.users_dislike.count|add:-1 }}')
+                            $('#dislike-sign-btn').css('color', '#51546e')
+                        {% endif %}
+
+                    }
+                }
+                else{
+                    $('#like-sign-btn').css('color', '#51546e')
+                    $('#like-btn').data('action', 'like')
+                    {% if request.user in teacher_selected.users_like.all %}
+
+                     $('#total-like').text('{{ teacher_selected.users_like.count|add:-1 }}')
+                    {% else %}
+                     $('#total-like').text('{{ teacher_selected.users_like.count }}')
+                    {% endif %}
+                }
+            }
+        }
+    );
+{% endif %}
+ });
+
+
+$('#dislike-btn').click(function(e)
+    {
+    e.preventDefault();
+    $.get
+    (
+        '{% url "teachme:like" %}',
+        {id: $(this).data('id'), action: $(this).data('action')},
+        function(data)
+        {
+            if (data['status'] == 'dislike_ok')
+            {  var dislike_counter_init = {{ teacher_selected.users_dislike.count }}
+                if($('#dislike-btn').data('action') == 'dislike' ) {
+                    $('#dislike-sign-btn').css('color', '#C51104')
+                    $('#dislike-btn').data('action', 'no_dislike')
+                    if ($('#total-dislike').text()<dislike_counter_init){
+                        $('#total-dislike').text(dislike_counter_init)
+                    }
+                    else {
+                        $('#total-dislike').text(dislike_counter_init + 1)
+                        {% if request.user in teacher_selected.users_like.all %}
+                            $('#total-like').text('{{ teacher_selected.users_like.count|add:-1 }}')
+                            $('#like-sign-btn').css('color', '#51546e')
+                        {% endif %}
+                    }
+                }
+                else{
+                    $('#dislike-sign-btn').css('color', '#51546e')
+                    $('#dislike-btn').data('action', 'dislike')
+                    {% if request.user in teacher_selected.users_dislike.all %}
+
+                     $('#total-dislike').text('{{ teacher_selected.users_dislike.count|add:-1 }}')
+                    {% else %}
+                     $('#total-dislike').text('{{ teacher_selected.users_dislike.count }}')
+                    {% endif %}
+                     {#$('span.total').css('text-color', '#51546e')#}
+                }
+            }
+        }
+    );
+ });
+
+
+    </script>
+
+
 {% endblock %}
+
+
 
 

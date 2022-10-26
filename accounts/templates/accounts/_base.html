@@ -82,7 +82,8 @@
         </form>
     </div>
 </nav>
-
+{% include 'accounts/title_anim_inc.html' %}
+<hr>
 {% include "accounts/messages.html" %}
 
 {% block title %}{% endblock %}
@@ -90,7 +91,7 @@
 <body >
 <br>
     <div class="text-center">
-     <a  href="https://api.whatsapp.com/send?phone=9361164819">مشاوره واتساپ</a>
+{#     <a  href="https://api.whatsapp.com/send?phone=9361164819">مشاوره واتساپ</a>#}
     </div><br>
 {% if results or results_teachers %}
 <div class="container text-right  " >
@@ -104,7 +105,7 @@
 
     <ul>
     {% for teacher_result in results_teachers %}
-        <li><a href="{% url 'teachme:teacher_detail'  teacher_result.id  %}">
+        <li><a href="{% url 'teachme:teacher_detail'  teacher_result.id teacher_result.slug  %}">
             {{ teacher_result.first_name }} {{ teacher_result.last_name }} {{ teacher_result.syllabus }} {{ teacher_result.experience }} سال سابقه
                 </a></li>
     {% endfor %}
@@ -114,8 +115,7 @@
 
 
   {% block contents %}{% endblock %}
-</body>
-<footer>
+
 <hr>
 <article class="small text-right m-2 ">
     <div class="container small">
@@ -157,7 +157,7 @@
         <p class="small">copyright 2022 ostadbaz.com alright reserved <i class="fa fa-copyright"></i> </p>
     </div>
 </div>
-   </footer>
+
 
 <script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>
 <script src="{% static 'accounts/assets/bootstrap/js/bootstrap.min.js' %}"></script>
@@ -169,11 +169,52 @@
 <script src="{% static 'accounts/accounts.js' %}"></script>
 
 {% if user.is_authenticated %}
-    <script >
-        $(document).ready(function () {
-            $("#user_key").css('background-color', '#f67e7d')
-        })
-    </script>
-    <
+<script >
+   $(document).ready(function () {
+   $("#user_key").css('background-color', '#f67e7d')
+   })
+</script>
 {% endif %}
+
+
+<script>
+    var m=1;
+    var n=2;
+    var p=3;
+    var q=4;
+    function change_title(m,n,p,q){
+         $('#title_'+m).css('display','block')
+         $('#title_'+m).addClass("roll_anim")
+         $('#title_'+n).css('display','none')
+         $('#title_'+p).css('display','none')
+         $('#title_'+q).css('display','none')
+         $('#title_'+q).css('display','none')
+     };
+    ;
+         setInterval(function(){
+             change_title(m,n,p,q)
+             m++
+             n++
+             p++
+             q++
+             if (m>4){m=1}
+             if (n>4){n=1}
+             if (p>4){p=1}
+             if (q>4){q=1}
+              },4000);
+    function avail_list_toggle(list_name) {
+        $("#"+list_name).toggle()
+
+        window.scrollBy(0, 100);
+    }
+</script>
+
+
+<script>
+ $(document).ready(function(){
+ {% block domready %}
+ {% endblock %}
+ });
+</script>
+</body>
 </html>

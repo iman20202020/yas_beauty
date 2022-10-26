@@ -15,7 +15,7 @@
     </head>
 <header>
 
-{% include 'accounts/title_anim_inc.html' %}
+{#{% include 'accounts/title_anim_inc.html' %}#}
 </header>
 
 {#<div class="text-center m-3 "><button class="btn btn--sub" ><a href="{% url 'accounts:consult_view' %}" class="text-white" >درخواست مشاوره تلفنی</a> </button> </div>#}
@@ -83,35 +83,4 @@
 {% block footer %}
 
 
-<script>
-    var m=1;
-    var n=2;
-    var p=3;
-    var q=4;
-    function change_title(m,n,p,q){
-         $('#title_'+m).css('display','block')
-         $('#title_'+m).addClass("roll_anim")
-         $('#title_'+n).css('display','none')
-         $('#title_'+p).css('display','none')
-         $('#title_'+q).css('display','none')
-         $('#title_'+q).css('display','none')
-     };
-    ;
-         setInterval(function(){
-             change_title(m,n,p,q)
-             m++
-             n++
-             p++
-             q++
-             if (m>4){m=1}
-             if (n>4){n=1}
-             if (p>4){p=1}
-             if (q>4){q=1}
-              },4000);
-    function avail_list_toggle(list_name) {
-        $("#"+list_name).toggle()
-
-        window.scrollBy(0, 100);
-    }
-</script>
 {% endblock %}

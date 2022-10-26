@@ -21,6 +21,7 @@ class TeacherAdmin(admin.ModelAdmin):
     search_fields = ['last_name', ]
     readonly_fields = ['created', 'updated', ]
 
+
 class ClassRequestAdmin(admin.ModelAdmin):
     list_filter = ('teacher', 'student', 'teacher_phone', 'student_phone', 'category', 'syllabus', 'price',
                    'workshop_price', 'city', 'created', 'updated')

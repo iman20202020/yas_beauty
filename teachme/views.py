@@ -1,9 +1,8 @@
 from django.contrib import messages
-from django.core.paginator import Paginator
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from accounts.models import Teacher, MyUser, ClassRequest, Student, State, Comment
-from accounts.otp import send_otp
+
 from teachme.send_sms import *
 from accounts import phone_vrify
 
@@ -32,16 +31,16 @@ def teacher_detail(request, teacher_id, slug):
 
     teacher_selected = Teacher.objects.get(pk=teacher_id)
 
-    teacher_likes = teacher_selected.likes
-    teacher_dislikes = teacher_selected.dislikes
+    # teacher_likes = teacher_selected.likes
+    # teacher_dislikes = teacher_selected.dislikes
     teacher_for_comments = Comment.objects.filter(teacher_id=teacher_id, is_confirmed=True)
 
     teacher_cat = teacher_selected.category_id
     context = {
         'teacher_selected': teacher_selected,
         'teacher_cat': teacher_cat,
-        'teacher_likes': teacher_likes,
-        'teacher_dislikes': teacher_dislikes,
+        # 'teacher_likes': teacher_likes,
+        # 'teacher_dislikes': teacher_dislikes,
         'teacher_for_comments': teacher_for_comments,
     }
     return render(request, 'teachme/teacher_detail.html', context)
@@ -264,6 +263,47 @@ def hair_dress_training(request):
 
 
 
+def like_view(request):
 
-    # else:
-    #     return HttpResponse('notajax')
+
+    if request.is_ajax():
+        teacher_id = request.GET.get('id')
+        teacher = Teacher.objects.get(id=teacher_id)
+        action = request.GET.get('action')
+        if teacher_id and action:
+            try:
+                # teacher = Teacher.objects.get(id=teacher_id)
+                if action == 'like':
+                    teacher.users_like.add(request.user)
+                    teacher.users_dislike.remove(request.user)
+                    status = 'like_ok'
+                elif action == 'unlike':
+                    teacher.users_like.remove(request.user)
+                    status = 'like_ok'
+                elif action == 'dislike':
+                    teacher.users_dislike.add(request.user)
+                    teacher.users_like.remove(request.user)
+                    status = 'dislike_ok'
+                elif action == 'no_dislike':
+                    teacher.users_dislike.remove(request.user)
+                    status = 'dislike_ok'
+                else:
+                    status = 'error'
+                likes_count = teacher.users_like.count()
+                dislikes_count = teacher.users_dislike.count()
+                teacher_point = teacher.points+((likes_count-dislikes_count)/100)
+                teacher_point = round(teacher_point, 2)
+                if teacher_point < 5.0:
+                    teacher.points = teacher_point
+                else:
+                    teacher.points = 5.0
+                teacher.save()
+
+                return JsonResponse({'status': status})
+            except:
+                pass
+        return JsonResponse({'status': 'error'})
+    else:
+        pass
+
+

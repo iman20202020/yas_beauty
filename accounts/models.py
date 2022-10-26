@@ -1,3 +1,4 @@
+import os
 
 from django.contrib.auth.base_user import AbstractBaseUser
 # from django.contrib.auth.models import User
@@ -8,7 +9,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django_resized import ResizedImageField
 
-
+from accounts.image_rename import image_rename
 from accounts.validators import validate_video_size, validate_image_size
 
 
@@ -95,18 +96,16 @@ class Teacher(models.Model):
     workshop_price = models.CharField(max_length=100, blank=True)
     qualification = models.TextField(max_length=1000,blank=True,)
     experience = models.CharField(max_length=3, default='6', blank=True)
-    points = models.FloatField(default=3, blank=True)
+    points = models.FloatField(default=3.0, blank=True)
     sample_video = models.FileField(verbose_name='ویدیوی نمونه',upload_to='videos/',blank=True,
           validators=[FileExtensionValidator( allowed_extensions=['mp4', 'wmv','mov','3gp']),validate_video_size],)
     learn_type = models.IntegerField(default=0,blank=True)
     is_confirmed = models.BooleanField(default=False)
     gender = models.IntegerField(default=1,blank=True)
-    slug = models.SlugField(blank=True,null=True)
-    likes = models.IntegerField(default=0, blank=True, null=True)
-    dislikes = models.IntegerField(default=0, blank=True, null=True)
+    slug = models.SlugField(blank=True,null=True , allow_unicode=True)
+    users_like = models.ManyToManyField(MyUser, related_name='teachers_liked', blank=True)
+    users_dislike = models.ManyToManyField(MyUser, related_name='teachers_disliked', blank=True)
     comment_num = models.IntegerField(default=0, blank=True, null=True)
-
-
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
 
@@ -117,13 +116,19 @@ class Teacher(models.Model):
     def get_absolute_url(self):
         return reverse('teachme:teacher_detail',
                        args=[self.id, self.slug])
+    #
+    def save(self, *args, **kwargs):
+        slug1 = str(self.syllabus).replace(" ", "-")
+        self.slug = slug1
+        # image_rename(self)
+        super(Teacher, self).save(*args, **kwargs)
 
 
 class Comment(models.Model):
-    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE)
+    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, )
     user_commenter = models.ForeignKey('MyUser',on_delete=models.CASCADE, )
-    SUGGEST_CHOICES = (('1', 'می پسندم (like)'), ('2', ' نمی پسندم(dislike)'))
-    suggest = models.CharField(verbose_name='', max_length=20, choices=SUGGEST_CHOICES, default='1')
+    # SUGGEST_CHOICES = (('1', 'می پسندم (like)'), ('2', ' نمی پسندم(dislike)'))
+    # suggest = models.CharField(verbose_name='', max_length=20, choices=SUGGEST_CHOICES, default='1')
     content = models.TextField(max_length=500, null=True, blank=True)
     is_confirmed = models.BooleanField(default=False)
 
@@ -133,9 +138,6 @@ class Comment(models.Model):
                 self.teacher.comment_num += 1
                 self.teacher.save()
             super(Comment, self).save(*args, **kwargs)
-
-
-
 
     def __str__(self):
         return f"teacher:{self.teacher},commenter:{self.user_commenter}"

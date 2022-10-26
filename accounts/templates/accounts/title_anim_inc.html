@@ -21,18 +21,18 @@
 
             <div class="mbr-section-btn mt-1  text text-center">
                 <br>
-                <button class="btn btn--sub  " {% if user.is_authenticated %} hidden {% endif %} >
-                    <a class="text-white" href="{% url 'accounts:teacher_edit' %}"> &nbsp;ثبت نام اساتید&nbsp;
+
+                <button class="btn btn--sub  " >
+                    <a class=" text-white text-decoration-none" href="{% url 'accounts:index_accounts' %}">&nbsp; &nbsp;صفحه اصلی&nbsp; &nbsp;
+                    </a>
+                </button>
+            {% if not request.user.is_authenticated %}
+                <button class="btn btn--sub  "  >
+                    <a class="text-white text-decoration-none " href="{% url 'accounts:teacher_edit' %}"> &nbsp;ثبت نام / ورود&nbsp;
                         <i class="fas fa-user text-white" ></i>
                     </a>
                 </button>
-                <button class="btn btn--sub  " {% if user.is_authenticated %} hidden {% endif %}>
-                    <a class=" text-white" href="{% url 'accounts:login_view' %}">&nbsp; &nbsp; ورود اساتید&nbsp; &nbsp;
-                        <i class="fas fa-chalkboard-teacher text-white" ></i>&nbsp;
-                    </a>
-                </button>
-            {% if user.is_authenticated %}
-
+            {% else %}
                 <a class="btn btn--sub text-white" href="{% url 'accounts:teacher_edit' %}">
                     ثبت/تغییر مشخصات استاد<i class="fas fa-chalkboard-teacher" ></i>&nbsp;
                 </a>

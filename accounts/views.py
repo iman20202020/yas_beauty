@@ -1,3 +1,4 @@
+import os
 from itertools import chain
 
 from django.contrib import messages
@@ -158,8 +159,8 @@ def profile_edit(request):
 @csrf_exempt
 def teacher_edit(request):
         if request.is_ajax():
-            if 'category' in request.GET :
-                category = request.GET.get('category',None)
+            if 'category' in request.GET:
+                category = request.GET.get('category', None)
                 category_list = request.GET.get('category_list', None)
                 if category_list:
                     category_list = list(LearnCategory.objects.all().values())
@@ -173,8 +174,7 @@ def teacher_edit(request):
                     state_list = list(State.objects.all().values())
                     return JsonResponse(state_list, safe=False)
                 city = list(City.objects.filter(state=state).values())
-                return JsonResponse(city,safe=False)
-
+                return JsonResponse(city, safe=False)
         else:
             teacher_edit_form = TeacherEditForm()
             cities = list(City.objects.all().values())
@@ -189,19 +189,16 @@ def teacher_edit(request):
             if hasattr(request.user, 'teacher'):
                 teacher_profile = Teacher.objects.get(user_id=request.user.id)
                 teacher_edit_form = TeacherEditForm( instance=teacher_profile)
+
                 error = str(request.user)+" "+'خوش آمدید'
                 if request.method == 'POST':
                     teacher_edit_form = TeacherEditForm(request.POST, request.FILES,instance=teacher_profile)
-                    # national_id_entered = teacher_edit_form.data['national_id']
-                    # if is_valid_iran_code(national_id_entered):
                     if teacher_edit_form.is_valid():
                         teacher_edit_form.user = request.user
                         teacher_edit_form.pk = teacher_profile.id
                         teacher = teacher_edit_form.save(commit=False)
-                        slug1 = str(teacher.syllabus).replace(" ", "-")
-                        slug2 = str(teacher.last_name).replace(" ", "-")
-                        teacher.slug = f"{slug1}-{slug2}"
                         teacher.is_confirmed = False
+
                         teacher.save()
 
                         error = "مشخصات شما با موفقیت تغییر کرد.پس از بررسی در سایت قرار می گیرد"
@@ -262,35 +259,35 @@ def teacher_edit(request):
 
 @login_required
 def comment_view(request, teacher_id,):
+    teacher = Teacher.objects.get(id=teacher_id)
     if request.method == 'POST':
-        teacher = Teacher.objects.get(id=teacher_id)
+        content = request.POST.get('content')
+
         cf = CommentForm(request.POST or None)
+
         if cf.is_valid():
-            content = request.POST.get('content')
-            suggest = request.POST.get('suggest')
-            if Comment.objects.filter(teacher_id=teacher_id,user_commenter_id=request.user.id).exists():
-                messages.error(request,'برای هر استاد فقط یک بار می توانید نظر دهید', 'danger')
-                return redirect(reverse('teachme:teacher_detail', None, args=(teacher_id, teacher.slug)))
-            else:
+            Comment.objects.update_or_create(teacher=teacher,  user_commenter=request.user,
+                                             defaults={'content': content, 'is_confirmed': False} )
+            # comment.save()
+            # if suggest == '1':
+            #         teacher.likes += 1
 
-                comment = Comment.objects.create(teacher=teacher, content=content, user_commenter=request.user, suggest=suggest)
-                # teacher.comment_num += 1
-                comment.save()
-                if suggest == '1':
-                        teacher.likes += 1
-
-                if suggest == '2':
-                    teacher.dislikes += 1
-                if content or suggest == '1' or suggest == '2':
-                    teacher_point = teacher.points+((teacher.likes-teacher.dislikes)/100/(teacher.dislikes+teacher.likes))
-                    teacher_point = round(teacher_point, 2)
-                    if teacher_point < 5:
-                        teacher.points = teacher_point
-                teacher.save()
-                messages.success(request, 'نظر شما ثبت شد ', 'success')
-                return redirect(reverse('teachme:teacher_detail', None, args=(teacher_id, teacher.slug )))
+            # if suggest == '2':
+            #     teacher.dislikes += 1
+            # if content or suggest == '1' or suggest == '2':
+            #     teacher_point = teacher.points+((teacher.likes-teacher.dislikes)/100/(teacher.dislikes+teacher.likes))
+            #     teacher_point = round(teacher_point, 2)
+            #     if teacher_point < 5:
+            #         teacher.points = teacher_point
+            # teacher.save()
+            messages.success(request, 'نظر شما ثبت شد ', 'success')
+            return redirect(reverse('teachme:teacher_detail', None, args=(teacher_id, teacher.slug )))
     else:
-        cf = CommentForm()
+        if Comment.objects.filter(teacher_id=teacher_id, user_commenter_id=request.user.id).exists():
+            comment = Comment.objects.get(teacher=teacher, user_commenter=request.user)
+            cf = CommentForm(instance=comment)
+        else:
+            cf = CommentForm()
 
     context = {
         'comment_form': cf,
@@ -307,15 +304,12 @@ def search_view(request):
     if request.method == "GET":
         search_query = request.GET.get('search_text',None)
         if search_query:
-            result1 = Syllabus.objects.filter(syllabus__contains= search_query)
             result1_teachers = Teacher.objects.filter(syllabus__syllabus_name__contains=search_query,is_confirmed=True)
-            result2 = LearnCategory.objects.filter(category_name__contains=search_query)
             result2_teachers = Teacher.objects.filter(category__category__contains=search_query,is_confirmed=True)
-
             result3_teachers = Teacher.objects.filter(Q(last_name__contains=search_query,is_confirmed=True)|Q(first_name__contains=search_query,is_confirmed=True)|Q(qualification__contains=search_query,is_confirmed=True))
-            results = list(chain(result1, result2, ))
-            results_teachers = list(chain(result1_teachers,result2_teachers,result3_teachers ))
-            if  results_teachers :
+            result4_teachers = Teacher.objects.filter(Q(city__city__contains=search_query,is_confirmed=True)|Q(first_name__contains=search_query,is_confirmed=True)|Q(qualification__contains=search_query,is_confirmed=True))
+            results_teachers = list(chain(result1_teachers, result2_teachers, result3_teachers, result4_teachers, ))
+            if results_teachers:
                 search_message = str(len(results_teachers)) + "استاد پیدا شد"
             else:
                 search_message = "موردی یافت نشد"
@@ -341,7 +335,7 @@ def login_view(request):
         user_verified = None
         otp_code = None
         mobile_number = None
-        # my_next = request.POST.get('my_next')
+
 
         if 'input_mobile' in request.POST:
             mobile_number = request.POST.get('input_mobile')
@@ -523,3 +517,4 @@ def consult_view(request):
         # 'teacher_id': teacher_id,
     }
     return render(request, 'accounts/user_verify.html',context)
+

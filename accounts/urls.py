@@ -29,5 +29,7 @@ urlpatterns = [
     path('mid-school-trainings/', views.mid_school_trainings, name='mid_school_trainings'),
     path('music-trainings/', views.music_trainings, name='music_trainings'),
     path('language-trainings/', views.language_trainings, name='language_trainings'),
+
+
 ]
 

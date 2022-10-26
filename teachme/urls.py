@@ -19,6 +19,5 @@ urlpatterns = [
     path('extension-training-for-eylashes/', views.extension_training_for_eylashes, name="extension_training_for_eylashes"),
     path('face-cleaning-training/', views.face_cleaning_training, name="face_cleaning_training"),
     path('hair-dress-training/', views.hair_dress_training, name="hair_dress_training"),
-
-
+    path('like/', views.like_view, name='like')
 ]

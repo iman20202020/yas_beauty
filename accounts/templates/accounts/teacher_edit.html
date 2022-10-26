@@ -62,8 +62,8 @@ option{
                     <label for="learn_type-form7-v" > جنسیت :</label><br>
                     <select  name="gender" onchange="show_confirm_key()" data-form-field="gender" class="form-control"
                              id="gender-form7-v" style="font-size: medium">
-                        <option value=1 >مرد </option>
-                        <option value=2>زن</option>
+                        <option value=1  >مرد </option>
+                        <option value=2 {% if teacher_profile.gender == 2 %}selected{% endif %}>زن</option>
                     </select>
                 </div>
 
