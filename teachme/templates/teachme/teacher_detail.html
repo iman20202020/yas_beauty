@@ -28,8 +28,8 @@
                     </div>
                 </div>
             </label><br>
-            <div class="ml-4">
-             <a class="text-right text-decoration-none" id="like-btn" href="#" data-id="{{ teacher_selected.id }}" data-action="{% if request.user in teacher_selected.users_like.all %}un{% endif %}like">
+            <div class="ml-4 text-right" ><span style="font-size: medium"> نظر دهید:</span>&emsp;&emsp;&emsp;
+             <a class="text-right text-decoration-none pr-4" id="like-btn" href="#" data-id="{{ teacher_selected.id }}" data-action="{% if request.user in teacher_selected.users_like.all %}un{% endif %}like">
             <span >
             <span id="total-like">{{ teacher_selected.users_like.count }}</span>
 
