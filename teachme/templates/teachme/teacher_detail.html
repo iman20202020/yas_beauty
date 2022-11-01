@@ -1,4 +1,3 @@
-
 {% extends 'accounts/_base.html' %}
 {% load static %}
 
@@ -7,17 +6,13 @@
     div{
         border-radius: 10px;
     }
-
     </style>
-
-<div class="container p-4">
     <div class="mbr-section-head text-center">
 
         <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-6">
             <strong> مشخصات استاد</strong></h3>
     </div>
     <div class="row justify-content-center mt-4 p-2">
-
         <div>
             <p style="font-size: large; font-weight: bold">{{ teacher_selected.first_name }} {{ teacher_selected.last_name }}</p>
         </div>
@@ -32,48 +27,25 @@
              <a class="text-right text-decoration-none pr-4" id="like-btn" href="#" data-id="{{ teacher_selected.id }}" data-action="{% if request.user in teacher_selected.users_like.all %}un{% endif %}like">
             <span >
             <span id="total-like">{{ teacher_selected.users_like.count }}</span>
-
                 <i id="like-sign-btn" class="fa fa-thumbs-up" aria-hidden="true"  style="font-size: 20px;
                         color: {% if request.user in teacher_selected.users_like.all %}#C51104{% else %}#51546e{% endif %};"></i>
-
-
-
             </span>
-{#             <p>می پسندم</p>#}
               </a>&emsp;&nbsp;
          <a class="text-left text-decoration-none" id="dislike-btn" href="#" data-id="{{ teacher_selected.id }}" data-action="{% if request.user in teacher_selected.users_dislike.all %}no_{% endif %}dislike">
                 <span  >
             <span id="total-dislike">{{ teacher_selected.users_dislike.count }}</span>
-
                 <i id="dislike-sign-btn" class="fa fa-thumbs-down" aria-hidden="true"  style="font-size: 20px;
                     color: {% if request.user in teacher_selected.users_dislike.all %}#C51104{% else %}#51546e{% endif %};"></i>
-
             </span>&emsp;&nbsp;
-{#                     <p >نمی پسندم</p>#}
                  </a>
-
             <a   class="text-dark text-decoration-none" onclick="this.hidden=true" href="{% url 'accounts:comment_view' teacher_selected.id %}" >
                 <span id="total-dislike">{{ teacher_selected.comment_num }}</span>
                  <i class="fa fa-comment" aria-hidden="true" style="color: #6c757d; font-size: 20px"
-
                 ></i></a>
-
             </div>
-
         </div>
-{#        <div class="col-lg-4 col-md-6 col-sm-12 text-center">#}
-{#            <a   class="btn btn--sub  text-white " onclick="this.hidden=true" href="{% url 'accounts:comment_view' teacher_selected.id %}" >نظر خود را بنویسید#}
-{#                 <i class="fa fa-comment" aria-hidden="true" style="color: white;font-size:20px;"></i></a>#}
-{##}
-{##}
-{#            <br>#}
-{#        </div>#}
    <p class="alert-danger m-3  "  id="alert_login" style="font-size: medium; border-radius: 4px; display: none">لطفا ابتدا وارد شوید</p>
     </div>
-
-
-
-
     <div class="  col-lg-4 col-md-6 col-sm-12 text-center m-2" >
         <img  src="{{ teacher_selected.image.url }}"  id="teacher_image" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
     </div>

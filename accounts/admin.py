@@ -1,15 +1,14 @@
 
 
 from django.contrib import admin
-from accounts.models import Teacher, Syllabus, PriceRange, LearnCategory, City, MyUser, State, ClassRequest, Student, \
-    Comment
+from accounts.models import Teacher, Syllabus, PriceRange, LearnCategory, City, MyUser, State, ClassRequest, Comment
 
 admin.site.register(Syllabus)
 admin.site.register(PriceRange)
 admin.site.register(LearnCategory)
 admin.site.register(City)
 admin.site.register(State)
-admin.site.register(Student)
+
 # admin.site.register(ClassRequest)
 # admin.site.register(MyUser)
 
@@ -23,8 +22,7 @@ class TeacherAdmin(admin.ModelAdmin):
 
 
 class ClassRequestAdmin(admin.ModelAdmin):
-    list_filter = ('teacher', 'student', 'teacher_phone', 'student_phone', 'category', 'syllabus', 'price',
-                   'workshop_price', 'city', 'created', 'updated')
+    list_filter = ('created', 'updated', 'is_confirmed')
     readonly_fields = ['created', 'updated', ]
 
 class CommentAdmin(admin.ModelAdmin):

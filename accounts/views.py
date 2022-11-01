@@ -15,7 +15,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from accounts.forms import MyUserCreate, TeacherEditForm, CommentForm
-from accounts.models import LearnCategory, Syllabus, PriceRange, Teacher, City, MyUser, State, Comment, Student
+from accounts.models import LearnCategory, Syllabus, PriceRange, Teacher, City, MyUser, State, Comment
 
 
 def base_view(request):

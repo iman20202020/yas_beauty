@@ -20,7 +20,8 @@
   <link rel="stylesheet" href="{% static 'styles/app.css' %}" />
 {#  <link rel="stylesheet" href="{% static 'uikit/app.css' %}" />#}
     <style>
-    div{
+    *{
+        font-size: medium;
         font-size: medium;
     }
     </style>
@@ -33,11 +34,11 @@
             </div>
         <br>
             <div class="mbr-section-head ">
-                <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 "><strong>خوش آمدید</strong></h4>
+                <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 ">خوش آمدید</h4>
             </div><br>
 
             <div id="send_mobile_div" {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: none" {% endif %}>
-                <strong>لطفا شماره همراه خود را وارد کنید</strong><br><br>
+                لطفا شماره همراه خود را وارد کنید<br><br>
 
                 <form action="" class="" method="post" autocomplete="off">
                     {% csrf_token %}
@@ -53,7 +54,7 @@
 
             <div id="send_otp_div"   {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %}
                  style="display: block;font-size: medium;"{% else %}style="display: none" {% endif %} >
-                <strong>کد تایید به شماره همراه شما ارسال شد لطفا آنرا وارد کنید</strong><br><br>
+                کد تایید به شماره همراه شما ارسال شد لطفا آنرا وارد کنید<br><br>
                 <form action="" class="" method="post" class="form-group text-center" >
                     {% csrf_token %}
                     <input type="hidden" id="my_next2" name="my_next2" value="{{ my_next }}">
@@ -69,7 +70,7 @@
 
             <div id="resend_otp_div" {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %}
                  style="display: block;font-size: medium"{% else %}style="display: none" {% endif %} >
-                {% if user_verified == 'code_check_error' %} <strong class="text-danger"> کد وارد شده صحیح نیست</strong><br><br>{% endif %}
+                {% if user_verified == 'code_check_error' %}  کد وارد شده صحیح نیست<br><br>{% endif %}
                 <form method="post" action="">
                     {% csrf_token %}
                     <input type="hidden" id="input_mobile" name="input_mobile" value="{{ mobile_number }}">

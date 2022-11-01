@@ -19,19 +19,19 @@
 {% endblock %}
 {% block contents %}
 <hr>
-<div class=" card-column ">
-    <div class="card ">
-        <img class="border" src="{% static 'images/beuty-trainings-courses2.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
+<div class=" text-center  ">
+    <div class=" ">
+        <img class=" col-lg-6 col-md-6 col-sm-12" src="{% static 'images/beuty-trainings-courses2.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
         <div class="text-block text-right">
             <h6 class="text-secondary font-weight-bold" > آرایش و زیبایی</h6>
          </div>
     </div>
 
 
-    <div id="high_school_available_teachers " style="display: block ;" class="card">
+    <div id="high_school_available_teachers " style="display: block ;" class="  column  text-center">
         <ul  class="list-group d-lg-inline-flex"  >
             {% for teacher_count in teacher_counts %}
-                <li class='badge badge-pill p-2 mt-4' style="background-color: #51546e;font-size: medium">
+                <li class='badge badge-pill p-2 mt-4 ' style="background-color: #51546e;font-size: medium">
                 {% for syll_count in teacher_count%}
                     {% if  syll_count in syllabuses_makeup  %}
                          <a  href="{% url 'teachme:teacher_list'  %}?cat=آرایش و زیبایی&syl={{syll_count}}">
@@ -40,6 +40,7 @@
                 {% endfor %}استاد</span>
                          </a>
                 </li>
+
             {% endfor %}
         </ul>
     </div><br>
@@ -47,8 +48,9 @@
 
 <div class=" container ">
 <div class="badge badge-dark  w-100  " style="border-radius: 5px;font-size:large">
-    <strong class="text-white" >جمعی از اساتید</strong></div>
-    <div class="card-columns">
+    <strong class="text-white" >جمعی از اساتید</strong>
+</div>
+    <div class="">
         {% include 'teachme/teacher_viewer_for_workshops_inc.html' %}
     </div>
 </div>

@@ -3,13 +3,10 @@ import os
 from django.contrib.auth.base_user import AbstractBaseUser
 # from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import FileExtensionValidator, validate_email
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.urls import reverse
-from django.utils import timezone
 from django_resized import ResizedImageField
-
-from accounts.image_rename import image_rename
 from accounts.validators import validate_video_size, validate_image_size
 
 
@@ -25,8 +22,6 @@ class MyUser(AbstractUser):
             'unique': "یک کاربر با این شماره موبایل وجود دارد لطفا از شماره دیگری استفاده کنید",
         },
     )
-
-
 
 
 class State(models.Model):
@@ -127,8 +122,6 @@ class Teacher(models.Model):
 class Comment(models.Model):
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, )
     user_commenter = models.ForeignKey('MyUser',on_delete=models.CASCADE, )
-    # SUGGEST_CHOICES = (('1', 'می پسندم (like)'), ('2', ' نمی پسندم(dislike)'))
-    # suggest = models.CharField(verbose_name='', max_length=20, choices=SUGGEST_CHOICES, default='1')
     content = models.TextField(max_length=500, null=True, blank=True)
     is_confirmed = models.BooleanField(default=False)
 
@@ -143,29 +136,12 @@ class Comment(models.Model):
         return f"teacher:{self.teacher},commenter:{self.user_commenter}"
 
 
-class Student(models.Model):
-    # student_email = models.CharField(max_length=100)
-    student_phone = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.student_phone
-
-
 class ClassRequest(models.Model):
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE)
-    student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    teacher_phone = models.CharField(max_length=20,)
-    student_phone = models.CharField(max_length=20,)
-    teacher_last_name = models.CharField(max_length=100,)
-    category = models.ForeignKey('LearnCategory', on_delete=models.CASCADE)
-    syllabus = models.ForeignKey('Syllabus', on_delete=models.CASCADE)
-    price = models.ForeignKey('PriceRange', on_delete=models.CASCADE)
-    workshop_price = models.CharField(max_length=30)
-    city = models.ForeignKey('City', on_delete=models.CASCADE)
+    student = models.ForeignKey('MyUser', on_delete=models.CASCADE)
     is_confirmed = models.BooleanField(default=False)
-    created = models.DateTimeField(auto_now_add=True,null=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
-
     request_time = models.DateTimeField(auto_now=True,)
 
     def __str__(self):

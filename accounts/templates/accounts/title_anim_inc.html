@@ -8,9 +8,9 @@
     </div>
 
 {% if user.is_authenticated %}
-    <div class="text-center">
- <div class="alert alert-success " style="border-radius: 5px;">
-                    <p>{{ user.username }}خوش آمدید</p>
+    <div class="text-center container">
+ <div class="  alert-secondary " style="border-radius: 5px;">
+                    <p>{{ user.username }}&nbsp;خوش آمدید</p>
                 </div>
     </div><br>
 {% endif %}
@@ -21,11 +21,12 @@
 
             <div class="mbr-section-btn mt-1  text text-center">
                 <br>
-
-                <button class="btn btn--sub  " >
+            {% if not request.path == '/' %}
+                <button class="btn btn--sub  "  id="main_page_btn">
                     <a class=" text-white text-decoration-none" href="{% url 'accounts:index_accounts' %}">&nbsp; &nbsp;صفحه اصلی&nbsp; &nbsp;
                     </a>
                 </button>
+            {% endif %}
             {% if not request.user.is_authenticated %}
                 <button class="btn btn--sub  "  >
                     <a class="text-white text-decoration-none " href="{% url 'accounts:teacher_edit' %}"> &nbsp;ثبت نام / ورود&nbsp;
@@ -40,3 +41,6 @@
             </div>
         </div>
     </div>
+
+<script>
+</script>
