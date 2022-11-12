@@ -18,17 +18,20 @@
 </header>
 {% endblock %}
 {% block contents %}
+    <div class="text-center">
+{% include 'accounts/main_btns_inc.html' %}
+</div>
 <hr>
-<div class=" text-center  ">
-    <div class=" ">
-        <img class=" col-lg-6 col-md-6 col-sm-12" src="{% static 'images/beuty-trainings-courses2.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
+<div class=" container ">
+    <div class="pic_container col-lg-4 col-md-6 col-sm-12 ">
+        <img class=" border" src="{% static 'images/beuty-trainings-courses2.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
         <div class="text-block text-right">
             <h6 class="text-secondary font-weight-bold" > آرایش و زیبایی</h6>
          </div>
     </div>
 
 
-    <div id="high_school_available_teachers " style="display: block ;" class="  column  text-center">
+    <div id="high_school_available_teachers " style="display: block ;" class="col-lg-4 col-md-6 col-sm-12 text-center">
         <ul  class="list-group d-lg-inline-flex"  >
             {% for teacher_count in teacher_counts %}
                 <li class='badge badge-pill p-2 mt-4 ' style="background-color: #51546e;font-size: medium">
@@ -40,7 +43,6 @@
                 {% endfor %}استاد</span>
                          </a>
                 </li>
-
             {% endfor %}
         </ul>
     </div><br>

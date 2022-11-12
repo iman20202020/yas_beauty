@@ -201,39 +201,41 @@ def hair_dress_training(request):
 
 
 
-
 def like_view(request):
     if request.is_ajax():
         teacher_id = request.GET.get('id')
         teacher = Teacher.objects.get(id=teacher_id)
+        teacher_points = teacher.points
         action = request.GET.get('action')
         if teacher_id and action:
             try:
                 if action == 'like':
+                    teacher_points += 0.01
                     teacher.users_like.add(request.user)
                     teacher.users_dislike.remove(request.user)
                     status = 'like_ok'
                 elif action == 'unlike':
+                    teacher_points -= 0.01
                     teacher.users_like.remove(request.user)
                     status = 'like_ok'
                 elif action == 'dislike':
+                    teacher_points -= 0.01
                     teacher.users_dislike.add(request.user)
                     teacher.users_like.remove(request.user)
                     status = 'dislike_ok'
                 elif action == 'no_dislike':
+                    teacher_points += 0.01
                     teacher.users_dislike.remove(request.user)
                     status = 'dislike_ok'
                 else:
                     status = 'error'
-                likes_count = teacher.users_like.count()
-                dislikes_count = teacher.users_dislike.count()
-                teacher_point = teacher.points+((likes_count-dislikes_count)/100)
-                teacher_point = round(teacher_point, 2)
-                if teacher_point < 5.0:
-                    teacher.points = teacher_point
-                else:
+                if teacher_points > 5.0:
                     teacher.points = 5.0
-                teacher.save()
+                else:
+                    teacher.points = teacher_points
+
+                    teacher.save()
+
                 return JsonResponse({'status': status})
             except:
                 pass

@@ -1,29 +1,11 @@
-{#{% extends 'accounts/_base.html' %}#}
-{#{% block title %}#}
-{% load static %}
-<html dir="rtl" lang="fa-IR">
+{% extends 'accounts/_base.html' %}
+{% block title %}
 
-    <link rel="stylesheet" href="{% static "accounts/assets/bootstrap/css/bootstrap.min.css" %}">
-    <link rel="stylesheet" href="{% static "accounts/assets/farsi/farsi.css" %}">
-{#    <link rel="stylesheet" href="{% static 'accounts/fa5/css/all.css' %}">#}
-{#    <link rel="stylesheet" href="{% static 'accounts/fa5/css/v4-shims.css' %}">#}
-    <link rel="stylesheet" href="{% static 'yas.css' %}">
-    <!-- Font Awesome Icon Library -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
-  <!-- Icon - IconMonster -->
-{#  <link rel="stylesheet" href="https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css" />#}
-  <!-- Mumble UI -->
-  <link rel="stylesheet" href="{% static 'uikit/styles/uikit.css' %}" />
-  <!-- Dev Search UI -->
-  <link rel="stylesheet" href="{% static 'styles/app.css' %}" />
-{#  <link rel="stylesheet" href="{% static 'uikit/app.css' %}" />#}
     <style>
     *{
         font-size: medium;
-        font-size: medium;
     }
+
     </style>
 <div class="row w-100 ">
     <div class="container">
@@ -43,7 +25,7 @@
                 <form action="" class="" method="post" autocomplete="off">
                     {% csrf_token %}
                     <input type="hidden" id="my_next" name="my_next" value="{{ my_next }}">
-                    <input type="hidden" id="teacher_selected_id" name="teacher_selected_id" value="{{ teacher_id }}">
+{#                    <input type="hidden" id="teacher_selected_id" name="teacher_selected_id" value="{{ teacher_id }}">#}
 
                     <input type="text" name="input_mobile"  id="input_mobile" autofocus
                            onkeyup="check_number('input_mobile_submit','input_mobile')"   autocomplete="new-password" placeholder="09123456789">
@@ -62,9 +44,10 @@
                     <input type="text" id="veri_code_input" name="veri_code_input" autofocus placeholder="_   _   _   _" class="text-center" onkeyup="check_length()" >
                     <input type="hidden" id="otp_code_generated" name="otp_code_generated" value="{{ otp_code }}">
                     <input type="hidden" id="mobile_number" name="mobile_number" value="{{ mobile_number }}">
-                    <input type="hidden" id="teacher_selected_id" name="teacher_selected_id" value="{{ teacher_id }}">
+{#                    <input type="hidden" id="teacher_selected_id" name="teacher_selected_id" value="{{ teacher_id }}">#}
                     <input type="submit"  id="code_register" class="btn btn--sub" value="ثبت کد" disabled >
                 </form>
+
                 <br>
             </div>
 
@@ -81,14 +64,14 @@
                 </form><br>
             <div id="countdown" class="inline-group"></div>
             </div>
-{{ otp_code }}
+
         </div>
     </div>
 </div>
-    </html>
-
-<script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>
-<script src="{% static 'accounts/accounts.js' %}"></script>
+{#    </html>#}
+{% endblock %}
+{#<script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>#}
+{#<script src="{% static 'accounts/accounts.js' %}"></script>#}
 
 <script >
 

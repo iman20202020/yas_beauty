@@ -65,18 +65,18 @@
         </form>
     </div>
 </nav>
+
 {% include 'accounts/title_anim_inc.html' %}
-<hr>
+
 {% include "accounts/messages.html" %}
 
 {% block title %}{% endblock %}
 
 <body >
 <br>
-    <div class="text-center">
-     <p class="alert-dark font-weight-bold " >مشاوره و پشتیبانی : 09361164819</p>
-    </div><br>
+
 {% if results or results_teachers %}
+    <hr>
 <div class="container text-right  " >
 
     <ul>
@@ -97,12 +97,12 @@
 {% endif %}
 
   {% block contents %}{% endblock %}
-
+{% if not request.path == '/accounts/login/'%}
 <hr>
 <article class="small text-right m-2 ">
 <div class="container small">
     <a class="text-secondary" href="{% url 'teachme:nail_implants' %}"> آموزش کاشت ناخن</a>-
-<a class="text-secondary" href="{% url 'teachme:haircut_training' %}"> آموزش کوتاهی مو - آموزش کوتاهی مو زنانه </a>-
+<a class="text-secondary " href="{% url 'teachme:haircut_training' %}"> آموزش کوتاهی مو - آموزش کوتاهی مو زنانه </a>-
 <a class="text-secondary" href="{% url 'teachme:hair_coloring_training' %}"> آموزش رنگ و مش مو-آموزش رنگ مو-آموزش کار با مواد </a>-
 <a class="text-secondary" href="{% url 'teachme:hair_dress_training' %}">  آموزش بافت شینیون اکستنشن براشینگ و کرلی مو </a>-
 <a class="text-secondary" href="{% url 'teachme:face_cleaning_training' %}">  آموزش پاکسازی پوست - آموزش پاکسازی صورت </a>-
@@ -137,6 +137,10 @@
         <p class="small">copyright 2022 ostadbaz.com alright reserved <i class="fa fa-copyright"></i> </p>
     </div>
 </div>
+{% endif %}
+
+
+
 <script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>
 <script src="{% static 'accounts/assets/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'accounts/assets/dropdown/js/nav-dropdown.js' %}"></script>

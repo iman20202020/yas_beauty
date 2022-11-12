@@ -34,7 +34,7 @@ sitemaps = {
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
-    path('teachme/', include('teachme.urls')),
+    path('course/', include('teachme.urls')),
     path('blog/', include('blog.urls')),
 
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},

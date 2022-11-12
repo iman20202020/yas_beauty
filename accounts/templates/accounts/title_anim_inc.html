@@ -1,3 +1,4 @@
+
       <div  class="content border-secondary  border-top text-center pt-4 " style="height: 100px;  ">
 
         <h2 id="title_1" style="font-size: x-large; color:#5a6268;" > سامانه معرفی استاد و کلاس استادباز   </h2>
@@ -6,41 +7,3 @@
         <h2 id="title_4" style="display: none;font-size: x-large; ">معرفی کلاس های آموزشی (رایگان)</h2>
 
     </div>
-
-{% if user.is_authenticated %}
-    <div class="text-center container">
- <div class="  alert-secondary " style="border-radius: 5px;">
-                    <p>{{ user.username }}&nbsp;خوش آمدید</p>
-                </div>
-    </div><br>
-{% endif %}
-
-      <div class="row w-100 justify-content-center ">
-        <div class="col-sm-12 col-md-6 col-lg-4  text-center  " dir="rtl">
-          <a href="{% url 'accounts:how_use' %}" style="color: #3f4156"> <i class="fa fa-question text-white" ></i>راهنمای اساتید</a>
-
-            <div class="mbr-section-btn mt-1  text text-center">
-                <br>
-            {% if not request.path == '/' %}
-                <button class="btn btn--sub  "  id="main_page_btn">
-                    <a class=" text-white text-decoration-none" href="{% url 'accounts:index_accounts' %}">&nbsp; &nbsp;صفحه اصلی&nbsp; &nbsp;
-                    </a>
-                </button>
-            {% endif %}
-            {% if not request.user.is_authenticated %}
-                <button class="btn btn--sub  "  >
-                    <a class="text-white text-decoration-none " href="{% url 'accounts:teacher_edit' %}"> &nbsp;ثبت نام / ورود&nbsp;
-                        <i class="fas fa-user text-white" ></i>
-                    </a>
-                </button>
-            {% else %}
-                <a class="btn btn--sub text-white" href="{% url 'accounts:teacher_edit' %}">
-                    ثبت/تغییر مشخصات استاد<i class="fas fa-chalkboard-teacher" ></i>&nbsp;
-                </a>
-            {% endif %}
-            </div>
-        </div>
-    </div>
-
-<script>
-</script>

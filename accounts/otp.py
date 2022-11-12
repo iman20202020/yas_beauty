@@ -11,6 +11,9 @@ def generateOTP():
 
     return otp
 
+def fake_send_otp(mobile_number):
+    response = [{'status': 5}, '1234']
+    return response
 
 def send_otp(mobile_number):
     otp_code = generateOTP()

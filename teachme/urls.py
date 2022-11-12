@@ -5,7 +5,7 @@ from teachme import views
 app_name = 'teachme'
 urlpatterns = [
     path('teacher/list/', views.teacher_list, name="teacher_list"),
-    path('teacher/detail/<int:teacher_id>/<str:slug>', views.teacher_detail, name="teacher_detail"),
+    path('<int:teacher_id>/<str:slug>', views.teacher_detail, name="teacher_detail"),
     path('teacher/request/send/<int:teacher_id>', views.teacher_request_send, name="teacher_request_send"),
 # search pages
     path('nail-implants/', views.nail_implants, name="nail_implants"),

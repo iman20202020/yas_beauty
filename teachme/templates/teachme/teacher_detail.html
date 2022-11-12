@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </label><br>
-            <div class="ml-4 text-right" ><span style="font-size: medium"> نظر دهید:</span>&emsp;&emsp;&emsp;
+            <div class="ml-4 pr-4 text-right" ><span style="font-size: medium"> نظر دهید:</span>&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
              <a class="text-right text-decoration-none pr-4" id="like-btn" href="#" data-id="{{ teacher_selected.id }}" data-action="{% if request.user in teacher_selected.users_like.all %}un{% endif %}like">
             <span >
             <span id="total-like">{{ teacher_selected.users_like.count }}</span>
@@ -38,13 +38,13 @@
                     color: {% if request.user in teacher_selected.users_dislike.all %}#C51104{% else %}#51546e{% endif %};"></i>
             </span>&emsp;&nbsp;
                  </a>
-            <a   class="text-dark text-decoration-none" onclick="this.hidden=true" href="{% url 'accounts:comment_view' teacher_selected.id %}" >
+            <a   class="text-dark text-decoration-none"  href="{% url 'accounts:comment_view' teacher_selected.id %}" >
                 <span id="total-dislike">{{ teacher_selected.comment_num }}</span>
                  <i class="fa fa-comment" aria-hidden="true" style="color: #6c757d; font-size: 20px"
                 ></i></a>
             </div>
         </div>
-   <p class="alert-danger m-3  "  id="alert_login" style="font-size: medium; border-radius: 4px; display: none">لطفا ابتدا وارد شوید</p>
+        <p class="alert-danger m-3  "  id="alert_login" style="font-size: medium; border-radius: 4px; display: none"><a href="{% url 'accounts:login_view' %}?next={{ teacher_selected.get_absolute_url }}">لطفا ابتدا وارد شوید</a></p>
     </div>
     <div class="  col-lg-4 col-md-6 col-sm-12 text-center m-2" >
         <img  src="{{ teacher_selected.image.url }}"  id="teacher_image" class="img-thumbnail" alt="{{ teacher_selected.category_id }}">
@@ -237,6 +237,10 @@ $('#like-btn').click(function(e)
 $('#dislike-btn').click(function(e)
     {
     e.preventDefault();
+    {% if not request.user.is_authenticated %}
+        $('#alert_login').css('display','block')
+     {% else %}
+        $('#alert_login').css('display','none')
     $.get
     (
         '{% url "teachme:like" %}',
@@ -273,6 +277,7 @@ $('#dislike-btn').click(function(e)
             }
         }
     );
+        {% endif %}
  });
 
 

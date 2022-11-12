@@ -323,13 +323,13 @@ def user_verify(request):
 
 
 def login_view(request):
-    teacher_id = None
+    # teacher_id = None
     response = {}
     logout(request)
-    if request.user.is_authenticated:
-        return redirect(reverse('accounts:index_accounts'))
-    if 'teacher_selected_id' in request.POST:
-        teacher_id = request.POST.get('teacher_selected_id')
+    # if request.user.is_authenticated:
+    #     return redirect(reverse('accounts:index_accounts'))
+    # if 'teacher_selected_id' in request.POST:
+    #     teacher_id = request.POST.get('teacher_selected_id')
 
     if request.method == 'POST':
         user_verified = None
@@ -341,7 +341,8 @@ def login_view(request):
             mobile_number = request.POST.get('input_mobile')
             if len(mobile_number) == 10:
                 mobile_number = '0'+mobile_number
-            response = send_otp(mobile_number)
+            response = fake_send_otp(mobile_number)
+            # response = send_otp(mobile_number)
             if response[0]['status'] == 5:
                 user_verified = 'code_sent'
                 otp_code = response[1]
@@ -370,14 +371,14 @@ def login_view(request):
                 # user_create_form = MyUserCreate()
                 # user_create_form.fields['phone_number'].initial = mobile_number
 
-                user_saved = None
+                # user_saved = None
                 # my_next = request.POST.get('my_next2')
                 context = {
-                    'user_saved':user_saved,
+                    # 'user_saved':user_saved,
                     # 'user_create_form':user_create_form,
                     'user_verified':user_verified,
                     'mobile_number': mobile_number,
-                    'teacher_id': teacher_id,
+                    # 'teacher_id': teacher_id,
                     # 'my_next': my_next
                 }
                 if request.GET.get('next'):
@@ -397,7 +398,7 @@ def login_view(request):
      'user_verified': user_verified,
      'response': response,
      'otp_code': otp_code,
-     'teacher_id': teacher_id,
+     # 'teacher_id': teacher_id,
      # 'my_next': my_next
      }
     return render(request, 'accounts/user_verify.html', context )
