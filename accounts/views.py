@@ -22,7 +22,6 @@ def base_view(request):
     return render(request, 'accounts/_base.html', {})
 
 
-
 def index_accounts(request):
     teacher_university_count = Teacher.objects.filter(category='دانشگاهی',is_confirmed=True).count()
     teacher_high_school_count = Teacher.objects.filter(category='متوسطه دوم',is_confirmed=True).count()
@@ -198,9 +197,7 @@ def teacher_edit(request):
                         teacher_edit_form.pk = teacher_profile.id
                         teacher = teacher_edit_form.save(commit=False)
                         teacher.is_confirmed = False
-
                         teacher.save()
-
                         error = "مشخصات شما با موفقیت تغییر کرد.پس از بررسی در سایت قرار می گیرد"
                         clerk_phone = '09361164819'
                         teacher_user_id = request.user.id
@@ -239,8 +236,6 @@ def teacher_edit(request):
                     send_sms_teacher_edit(clerk_phone, sms_token, sms_token2, sms_token3)
                 else:
                     error = 'خطای فرم:'
-
-
             context = {
                 'teacher_profile' : teacher_profile,
                 'teacher_edit_form': teacher_edit_form,
@@ -268,18 +263,6 @@ def comment_view(request, teacher_id,):
         if cf.is_valid():
             Comment.objects.update_or_create(teacher=teacher,  user_commenter=request.user,
                                              defaults={'content': content, 'is_confirmed': False} )
-            # comment.save()
-            # if suggest == '1':
-            #         teacher.likes += 1
-
-            # if suggest == '2':
-            #     teacher.dislikes += 1
-            # if content or suggest == '1' or suggest == '2':
-            #     teacher_point = teacher.points+((teacher.likes-teacher.dislikes)/100/(teacher.dislikes+teacher.likes))
-            #     teacher_point = round(teacher_point, 2)
-            #     if teacher_point < 5:
-            #         teacher.points = teacher_point
-            # teacher.save()
             messages.success(request, 'نظر شما ثبت شد ', 'success')
             return redirect(reverse('teachme:teacher_detail', None, args=(teacher_id, teacher.slug )))
     else:
@@ -288,7 +271,6 @@ def comment_view(request, teacher_id,):
             cf = CommentForm(instance=comment)
         else:
             cf = CommentForm()
-
     context = {
         'comment_form': cf,
 
@@ -323,19 +305,12 @@ def user_verify(request):
 
 
 def login_view(request):
-    # teacher_id = None
     response = {}
     logout(request)
-    # if request.user.is_authenticated:
-    #     return redirect(reverse('accounts:index_accounts'))
-    # if 'teacher_selected_id' in request.POST:
-    #     teacher_id = request.POST.get('teacher_selected_id')
-
     if request.method == 'POST':
         user_verified = None
         otp_code = None
         mobile_number = None
-
 
         if 'input_mobile' in request.POST:
             mobile_number = request.POST.get('input_mobile')
@@ -363,30 +338,18 @@ def login_view(request):
                     user = MyUser.objects.get(username=mobile_number)
                     user.set_password(otp_code)
                     user.save()
-
                 else:
                     user = MyUser.objects.create(username=mobile_number, password=otp_code, )
-
                 login(request,user)
-                # user_create_form = MyUserCreate()
-                # user_create_form.fields['phone_number'].initial = mobile_number
-
-                # user_saved = None
-                # my_next = request.POST.get('my_next2')
                 context = {
-                    # 'user_saved':user_saved,
-                    # 'user_create_form':user_create_form,
                     'user_verified':user_verified,
                     'mobile_number': mobile_number,
-                    # 'teacher_id': teacher_id,
-                    # 'my_next': my_next
                 }
                 if request.GET.get('next'):
                     return redirect(request.GET.get('next'))
                 return render(request, 'accounts/index.html', context)
             else:
                 user_verified = 'code_check_error'
-
     else:
         user_verified = None
         otp_code = None
@@ -398,8 +361,6 @@ def login_view(request):
      'user_verified': user_verified,
      'response': response,
      'otp_code': otp_code,
-     # 'teacher_id': teacher_id,
-     # 'my_next': my_next
      }
     return render(request, 'accounts/user_verify.html', context )
 
@@ -446,8 +407,6 @@ def pass_reset(request):
 
                 otp_code = phone_vrify.code_send(mobile_number)
                 user_verified = 'code_sent'
-
-                
             context = {
                 'mobile_number': mobile_number,
                 'user_verified': user_verified,
@@ -457,13 +416,12 @@ def pass_reset(request):
         else:
             messages.error(request, 'کاربری با این شماره همراه موجود نیست', 'danger')
 
-
     return render(request, 'accounts/pass_reset.html', {'this_user': this_user})
-
 
 
 def site_laws(request):
     return render(request,'accounts/sit_laws.html',{})
+
 
 def how_use(request):
     return render(request,'accounts/how_use.html',{})
@@ -475,6 +433,7 @@ def how_use2(request):
 
 def teacher_laws(request):
     return render(request,'accounts/teacher_laws.html',{})
+
 
 def consult_view(request):
     clerk_phone = '09361164819'
@@ -495,27 +454,20 @@ def consult_view(request):
                 send_sms(clerk_phone, token, token2)
                 messages.success(request, 'درخواست شما ثبت شد بزودی جهت مشاوره با شما تماس می گیریم', 'success')
                 return redirect('accounts:index_accounts')
-
             else:
                 otp_code = None
                 user_verified = None
-
-
         else:
-
             otp_code = phone_vrify.code_send(mobile_number)
             user_verified = 'code_sent'
-
     else:
         user_verified = None
         otp_code = None
         mobile_number = None
-
     context = {
         'mobile_number': mobile_number,
         'user_verified': user_verified,
         'otp_code': otp_code,
-        # 'teacher_id': teacher_id,
     }
     return render(request, 'accounts/user_verify.html',context)
 
