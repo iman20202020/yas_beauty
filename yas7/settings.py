@@ -44,7 +44,10 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'teachme.apps.TeachmeConfig',
     'blog.apps.ClerkConfig',
+    'forum.apps.ForumConfig',
     'django_cleanup.apps.CleanupConfig',
+    "imagekit",
+    "hitcount",
 ]
 
 MIDDLEWARE = [
@@ -85,8 +88,10 @@ WSGI_APPLICATION = 'yas7.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": 'yas',
+        "USER": 'postgres',
+        "PASSWORD": 'Moni48199047',
     }
 }
 

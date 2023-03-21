@@ -48,13 +48,17 @@
                        {% if user.is_authenticated %} تغییر/ثبت مشخصات استاد {{ user }}{% else %}ورود و  ثبت نام{% endif %}
                    </a>
                </li>
+                 <li class="nav-item dropdown">
+                    <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="#" ><i class="fas fa-question "></i>   پرسش و پاسخ </a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'accounts:contact_us' %}" ><i class="fas fa-phone "></i>   تماس با ما</a>
-                    </li>
+                </li>
+
                     {% if  user.is_authenticated %}
-                    <li   >
+                <li   >
                         <a class="nav nav-link text text-white " href="{% url 'accounts:logout_view' %}" >خروج</a>
-                    </li>
+                </li>
                {% endif %}
            </ul>
        </div>

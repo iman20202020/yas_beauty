@@ -3,7 +3,7 @@ from accounts.models import Teacher, Syllabus
 
 
 def show_blog(request, blog_num):
-    blog_template = 'blog' + str(blog_num)+'.html'
+    blog_template = 'yasblog' + str(blog_num)+'.html'
     return render(request, blog_template, {})
 
 def view_all_teachers(request):

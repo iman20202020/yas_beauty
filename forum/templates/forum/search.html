@@ -1,0 +1,29 @@
+{#{% extends 'forum/base.html' %}#}
+{% load blog_tags %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+    <div class="container text-center">
+    {% if query %}
+ <h4>Posts containing "{{ query }}":</h4>
+ <p>
+ {% with results.count as total_results %}
+ Found {{ total_results }} result{{ total_results|pluralize }}
+ {% endwith %}
+ </p>
+ {% for post in results %}
+ <p>
+ <a href="{{ post.get_absolute_url }}">
+ {{ post.title }}
+ </a>
+ </p>
+ <p class="small"> {{ post.body|truncatewords_html:12 }}</p>
+ {% empty %}
+ <p>There are no results for your query.</p>
+ {% endfor %}
+ <p><a class="btn btn-success" href="{% url "forum:post_list" %}">Back to Home</a></p>
+
+ {% endif %}
+    </div>
+{% endblock %}
