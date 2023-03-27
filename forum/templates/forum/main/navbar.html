@@ -1,0 +1,14 @@
+{% load static %}<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid ">
+             <a class=" text-right small"  href="{% url 'accounts:index_accounts' %}">
+{#                 <img class="d-inline-block align-top" width="30" height="30" src="{% static 'accounts/images/logo1.png' %}"#}
+{#                      alt="استادباز پرسش و پاسخ ">#}
+                 اساتید
+             </a>
+             <a class="small" href="{% url 'forum:post_list' %}"> پست ها</a>
+      <form  action="{% url 'forum:post_search' %}" class="d-flex pt-2" role="search" method="get">
+      <input name="query" class="form-control me-1" type="search" placeholder="جستجو" aria-label="Search">
+      <button class="btn btn-success" type="submit"> ></button>
+    </form>
+  </div>
+</nav>

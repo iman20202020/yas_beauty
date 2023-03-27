@@ -1,0 +1,40 @@
+{% extends 'forum/base.html' %}
+{% block content %}
+<form enctype="multipart/form-data" method="post" action=" " dir="rtl" class="">
+    {{ post_form.as_p }}
+
+    {%  csrf_token %}
+    <input class="btn btn-success form-control" type="submit" value="ثبت">
+</form>
+
+
+{% endblock %}
+{% block domready %}
+        document.getElementById("{{ post_form.category.id_for_label }}").onchange = function() {
+        ajax_syllabus()
+    };
+
+function ajax_syllabus()
+    {
+        var category_select_obj = document.getElementById("{{ post_form.category.id_for_label }}")
+        $('#{{ post_form.syllabus.id_for_label }}').empty()
+        $.ajax({
+            url: "{% url 'forum:post_create' %}",
+            contentType: "json",
+            data:
+                {
+                category: category_select_obj.value,
+                },
+
+            success: function(result) {
+                var i;
+                for (i = 0; i < result.length; i++) {
+                optText = result[i]['syllabus_name'];
+                optValue = result[i]['syllabus'];
+                $('#{{ post_form.syllabus.id_for_label }}').append(`<option value="${optValue}">${optText}</option>`);
+                }
+        }
+        });
+    }
+
+{% endblock %}

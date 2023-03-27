@@ -3,26 +3,28 @@
 {% load hitcount_tags %}
 {% block content %}
 <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
-<div class="container">
+<div class="container " dir="rtl">
+<div id="post-list">
     <div class="row">
-        <div class="col-lg-9 mb-3">
-         <div class="col-lg-3 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
+         <div class="col-lg-9 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
                <div class="sticky-inner text-center">
-                    <a class="btn btn-lg btn-block btn-success rounded-0 py-4 mb-3 bg-op-6 roboto-bold" href="{% url 'forum:post_create' %}">Make your post</a>
+                    <a class="btn btn-lg btn-block btn-success rounded-3 py-2 mb-3 bg-op-6 roboto-bold" href="{% url 'forum:post_create' %}">پست جدید بنویسید</a>
                 </div>
 
-        {% for post in page_obj.object_list %}
-
+ {% for post in posts %}
             <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">
+
                 <div class="row align-items-center">
                     <div class="col-md-8 mb-3 mb-sm-0">
+
                         <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
                         <p class="text-sm "><span class="op-6">{{ post.body|truncatewords:10 }}</span></p>
-                        <p class="text-sm text-secondary"><span class="op-6">Posted{{ post.publish }} by {{ post.author }}</span></p>
-                        <div class="text-sm op-5">
-                        {% for tag in post.tags.all %}
-                            <a href="{% url "forum:post_list_by_tag" tag.slug %}">{{ tag.name }}</a>{% if not forloop.last %} , {% endif %}
-                        {% endfor %}
+
+                        <p class="text-sm text-secondary"><span class="op-6 small">{{ post.author_name }}  </span></p>
+
+                        <p class="text-sm text-secondary"><span class="op-6 small">{{ post.publish|date:"Y/m/d" }}  </span></p>
+                        <div class="text-sm op-5" dir="ltr">
+                            <a href="{% url "forum:post_list_by_tag" post.syllabus %}">{{ post.syllabus }}</a>
                         </div>
                     </div>
                     <div class="col-md-4 op-7">
@@ -39,9 +41,9 @@
                 </div>
             </div>
             {% endfor %}
-
         </div>
+         </div>
     </div>
 </div>
-</div>
+
 {% endblock %}

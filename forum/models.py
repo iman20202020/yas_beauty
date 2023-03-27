@@ -7,11 +7,12 @@ from django.utils import timezone
 from django_unique_slugify import unique_slugify
 from hitcount.models import HitCount
 from hitcount.settings import MODEL_HITCOUNT
+from pilkit.processors import ResizeToFit
 from taggit.managers import TaggableManager
-from imagekit.models import ProcessedImageField
+from imagekit.models import ProcessedImageField, ImageSpecField
 from imagekit.processors import ResizeToFill
 from hitcount.models import HitCountMixin
-
+from django_jalali.db import models as jmodels
 from accounts.models import MyUser, LearnCategory, Syllabus
 
 
@@ -30,9 +31,10 @@ class Post(models.Model, HitCountMixin):
     author = models.ForeignKey(MyUser, related_name='blog_posts', on_delete=models.CASCADE)
     author_name = models.CharField(max_length=100,)
     body = models.TextField()
-    image = ProcessedImageField(upload_to='forum/%Y/%m/%d/', blank=True, null=True, processors=[ResizeToFill(300, 225)],
-                                format='JPEG', options={'quality': 60})
-    publish = models.DateTimeField(default=timezone.now)
+    post_image = ProcessedImageField(upload_to='forum/%Y/%m/%d/', blank=True, null=True, processors=[ResizeToFit(width=400
+                                                                                                            , upscale=False)],
+                                format='JPEG', options={'quality': 80})
+    publish = jmodels.jDateTimeField(default=timezone.now)
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.DRAFT)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
