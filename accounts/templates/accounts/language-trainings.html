@@ -1,7 +1,8 @@
 {% extends 'accounts/_base.html' %}
 {% load static %}
 
-{% block title %}
+{% block title %}آموزش زبان های خارجی{% endblock %}
+{% block contents %}
 <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-224804857-1"></script>
@@ -12,18 +13,11 @@
 
       gtag('config', 'UA-224804857-1');
     </script>
-    <title>معرفی استاد آموزش آرایشگری استادباز</title>
-</head>
-<header>
-{#{% include 'accounts/title_anim_inc.html' %}#}
-</header>
-{% endblock %}
-{% block contents %}
 
+</head>
 <div class="text-center">
 {% include 'accounts/main_btns_inc.html' %}
 </div>
-{#<div class="text-center m-3 "><button class="btn btn--sub"><a href="{% url 'accounts:consult_view' %}" class="text-white" >درخواست مشاوره تلفنی</a> </button> </div>#}
 <hr>
 
 

@@ -365,60 +365,6 @@ def login_view(request):
     return render(request, 'accounts/user_verify.html', context )
 
 
-def pass_reset(request):
-    this_user = None
-    if request.method == 'POST':
-        if 'pass_1' in request.POST:
-            pass_1 = request.POST.get('pass_1')
-            pass_2 = request.POST.get('pass_2')
-            if pass_1 == pass_2:
-
-                mobile_number = request.POST.get('mobile_number')
-                if len(mobile_number) == 10:
-                    mobile_number = '0' + mobile_number
-                if mobile_number:
-                    user = MyUser.objects.get(phone_number=mobile_number)
-                    user.set_password(pass_1)
-                    user.save()
-                    login(request, user)
-                    messages.success(request, 'رمزعبور با موفقیت تغییر یافت', 'success')
-                    return redirect(reverse('accounts:index_accounts'))
-            else:
-                messages.error(request, 'رمز عبور با تکرار آن مطابق نیست','danger')
-        if 'input_mobile' in request.POST:
-            mobile_number = request.POST.get('input_mobile')
-        elif 'mobile_number' in request.POST:
-            mobile_number = request.POST.get('mobile_number')
-        else:
-            mobile_number = None
-        if len(mobile_number) == 10:
-            mobile_number = '0' + mobile_number
-        this_user = MyUser.objects.filter(phone_number=mobile_number, )
-        if this_user:
-            if 'veri_code_input' in request.POST and 'otp_code_generated' in request.POST:
-                veri_code_input = request.POST.get('veri_code_input')
-                otp_code = request.POST.get('otp_code_generated')
-                user_verified = 'code_checked'
-                if phone_vrify.code_otp_check(otp_code, veri_code_input):
-                    return render(request, 'accounts/pass_reset.html', {'this_user': this_user, 'phone_number': mobile_number})
-                else:
-                    user_verified = 'code_check_error'
-            else:
-
-                otp_code = phone_vrify.code_send(mobile_number)
-                user_verified = 'code_sent'
-            context = {
-                'mobile_number': mobile_number,
-                'user_verified': user_verified,
-                'otp_code': otp_code,
-            }
-            return render(request,'accounts/user_verify.html',context)
-        else:
-            messages.error(request, 'کاربری با این شماره همراه موجود نیست', 'danger')
-
-    return render(request, 'accounts/pass_reset.html', {'this_user': this_user})
-
-
 def site_laws(request):
     return render(request,'accounts/sit_laws.html',{})
 

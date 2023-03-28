@@ -1,8 +1,9 @@
 {% extends 'accounts/_base.html' %}
 {% load static %}
 
-{% block title %}
+{% block title %}آموزش موسیقی{% endblock %}
 <head>
+    {% block contents %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-224804857-1"></script>
     <script>
@@ -12,13 +13,11 @@
 
       gtag('config', 'UA-224804857-1');
     </script>
-    <title>معرفی استاد آموزش آرایشگری استادباز</title>
+
 </head>
-<header>
-{#{% include 'accounts/title_anim_inc.html' %}#}
-</header>
-{% endblock %}
-{% block contents %}
+
+
+
 <div class="text-center">
 {% include 'accounts/main_btns_inc.html' %}
 </div>

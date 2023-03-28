@@ -1,6 +1,8 @@
 {% extends 'accounts/_base.html' %}
 {% load static %}
-{% block title %}
+{% block title %}معرفی استاد و شاگرد استادباز{% endblock %}
+
+{% block contents %}
     <head xmlns="http://www.w3.org/1999/html">
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-224804857-1"></script>
@@ -11,7 +13,6 @@
 
   gtag('config', 'UA-224804857-1');
 </script>
-
     </head>
 <header>
 
@@ -19,12 +20,6 @@
 {% include 'accounts/main_btns_inc.html' %}
 </div>
 </header>
-
-{#<div class="text-center m-3 "><button class="btn btn--sub" ><a href="{% url 'accounts:consult_view' %}" class="text-white" >درخواست مشاوره تلفنی</a> </button> </div>#}
-
-{% endblock %}
-{% block contents %}
-
 <div class=" card-columns p-3 ">
     <div class="card ">
         <a href="{% url 'accounts:beauty_trainings' %}"> <img class="border" src="{% static 'images/beuty-trainings-courses2.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
@@ -78,11 +73,5 @@
     <div class="card-columns">
     {% include 'teachme/teacher_viewer_for_workshops_inc.html' %}
     </div>
-
-
 {% endblock %}
 
-{% block footer %}
-
-
-{% endblock %}
