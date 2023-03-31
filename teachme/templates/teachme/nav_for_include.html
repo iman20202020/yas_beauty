@@ -31,9 +31,15 @@
                    <li><a  id="user_key"  class="nav nav-link  text text-white "
                                  href=" {% if user.is_authenticated %}{% url 'accounts:profile_edit' %}
                                         {% else %}{% url 'accounts:login_view' %}{% endif %}" >
-                       {% if user.is_authenticated %}  نمایه کاربری {{ user }}{% else %}ورود و  ثبت نام{% endif %}
+                       {% if user.is_authenticated %}  نمایه کاربری {{ user }}{% else %}ورود و ثبت نام{% endif %}
                        </a>
                    </li>
+                   <li class="nav-item dropdown">
+                   <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'forum:post_list' %}" ><i class="fas fa-question "></i>   پرسش و پاسخ </a>
+               </li>
+               <li class="nav-item dropdown">
+                   <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'blog:blog_view' %}" ><i class="fas fa-blog "></i> مجله </a>
+               </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'accounts:contact_us' %}" ><i class="fas fa-phone "></i>   تماس با ما</a>
                     </li>

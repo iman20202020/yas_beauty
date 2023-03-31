@@ -1,0 +1,13 @@
+{% extends 'accounts/_base.html' %}
+{% block title %}مجله{% endblock %}
+{% block contents %}
+    <div class="row">
+        <div class="container text-center">
+            <ul class="list-unstyled">
+                <li>
+                    <a class="link"  href="{% url 'blog:named_blog_view' 'name' %}">name</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -7,7 +7,7 @@
         /*url('BYekan.eot?#iefix') format('embedded-opentype'),!*هک برای اکسپلورر 8 و ماقبل*!*/
         /*url('BYekan.woff') format('woff'),!*مرورگر های جدید*!*/
         url('Yekan.ttf') format('truetype');/*تمام مرورگرها به جزء اکسپلورر*/
-        /*url('BYekan.svg#BYekan') format('svg');!*نسخه های قدیمی سیستم عامل iOS*!*/
+        url('BYekan.svg#BYekan') format('svg');/*نسخه های قدیمی سیستم عامل iOS*/
     font-style:normal;
     font-weight:normal;
 }
