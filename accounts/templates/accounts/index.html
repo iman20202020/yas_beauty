@@ -14,18 +14,20 @@
   gtag('config', 'UA-224804857-1');
 </script>
     </head>
-<header>
-
+<style>
+h2{font-size: 20px;}
+h3{font-size: 18px;}
+</style>
 <div class="text-center">
 {% include 'accounts/main_btns_inc.html' %}
 </div>
-</header>
+
 <div class=" card-columns p-3 ">
     <div class="card ">
         <a href="{% url 'accounts:beauty_trainings' %}"> <img class="border" src="{% static 'images/beuty-trainings-courses2.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
             <div class="text-block text-right " style="text-align: right">
-                <h6 class="text-dark font-weight-bold " >  آرایش و زیبایی</h6>
-                <p class="text-dark font-weight-bold"> {{ teacher_makeup_count }} استاد</p>
+                <h2  class="text-dark font-weight-bold " >  آرایش و زیبایی</h2>
+                <h3 class="text-dark font-weight-bold"> {{ teacher_makeup_count }} استاد</h3>
             </div>
         </a>
     </div>

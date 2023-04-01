@@ -74,9 +74,6 @@
 {% include 'accounts/title_anim_inc.html' %}
 
 {% include "accounts/messages.html" %}
-
-
-
 <body >
 <br>
 
@@ -90,7 +87,6 @@
     {% endfor %}
     </ul>
     <p class="alert   ">{{ search_message }}</p>
-
     <ul>
     {% for teacher_result in results_teachers %}
         <li><a href="{% url 'teachme:teacher_detail'  teacher_result.id teacher_result.slug  %}">
@@ -101,7 +97,8 @@
 </div>
 {% endif %}
 
-  {% block contents %}{% endblock %}
+{% block contents %}{% endblock %}
+
 {% if not request.path == '/accounts/login/'%}
 <hr>
 <article class="small text-right m-2 ">
