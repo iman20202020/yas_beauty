@@ -1,0 +1,79 @@
+{% extends 'accounts/_base.html' %}
+{% load static %}
+{% block title %}معرفی استاد آرایشگری استادباز{% endblock %}
+
+{% block contents %}
+    <head xmlns="http://www.w3.org/1999/html">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-224804857-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-224804857-1');
+</script>
+    </head>
+<style>
+h2{font-size: 20px;}
+h3{font-size: 18px;}
+</style>
+<div class="text-center">
+{% include 'accounts/main_btns_inc.html' %}
+</div>
+
+<div class=" card-columns p-3 ">
+    <div class="card ">
+        <a href="{% url 'accounts:beauty_trainings' %}"> <img class="border" src="{% static 'images/beuty-trainings-courses2.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
+            <div class="text-block text-right " style="text-align: right">
+                <h2  class="text-dark font-weight-bold " >  آرایش و زیبایی</h2>
+                <h3 class="text-dark font-weight-bold"> {{ teacher_makeup_count }} استاد</h3>
+            </div>
+        </a>
+    </div>
+
+    <div class="card   ">
+        <a href="{% url 'accounts:music_trainings' %}"> <img class="border" src="{% static 'images/music-trainings-2.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
+            <div class="text-block text-right">
+                <h6 class="text-dark font-weight-bold mb" >   موسیقی</h6>
+                <p class="text-dark font-weight-bold"> {{ teacher_music_count }} استاد</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="card ">
+        <a href="{% url 'accounts:language_trainings' %}"> <img class="border" src="{% static 'images/language-trainings.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
+            <div class="text-block text-right">
+                <h6 class="text-dark font-weight-bold"style="color: #737373;" >   زبان های خارجی</h6>
+                <p class="text-dark font-weight-bold" style="color: #737373"> {{ teacher_language_count }} استاد</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="card  ">
+        <a href="{% url 'accounts:high_school_trainings' %}"> <img class="border" src="{% static 'images/high-school-trainings.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
+            <div class="text-block text-right ">
+                <p class="text-dark font-weight-bold " style="color: #737373;" >  متوسطه دوم و کنکور</p>
+                <p class="text-dark font-weight-bold" style="font-size: 12px;color: #737373;"> {{ teacher_high_school_count }} استاد</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="card">
+        <a href="{% url 'accounts:mid_school_trainings' %}"> <img class="border" src="{% static 'images/mid-school-trainings.jpg' %}" alt="Norway" style="width:100%; border-radius: 10px">
+                <div class="text-block text-right">
+                <h6 class="text-dark font-weight-bold" style="color: #737373;" >  متوسطه اول</h6>
+                <p class="text-dark font-weight-bold" style="color: #737373;"> {{ teacher_mid_school_count }} استاد</p>
+            </div>
+        </a>
+    </div>
+</div>
+    <div class="badge badge-dark  w-100  " style="border-radius: 5px;font-size:large">
+        <strong class="text-white" >جمعی از اساتید</strong>
+    </div>
+
+    <div class="card-columns">
+    {% include 'teachme/teacher_viewer_for_workshops_inc.html' %}
+    </div>
+{% endblock %}
+

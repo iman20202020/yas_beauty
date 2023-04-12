@@ -1,0 +1,200 @@
+{% load static %}
+<!DOCTYPE html>
+<html dir="rtl" lang="fa-IR">
+<head dir="rtl">
+    <title> {% block title %}{% endblock %} </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset=utf-8>
+    <meta name="description" content="آموزش کاشت ناخن صفر تا صد- آموزش میکروبلیدینگ- آموزش کاشت  ناخن- کلاس کاشت ناخن-
+   آموزش لیفت و لمینیت ابرو- آموزش پاکسازی پوست-
+آموزش لیفت و لمینیت مژه- آموزش پیانو- آموزش کاشت مژه- آموزش کوتاهی مو- آموزش ویولون-
+  آموزش شینیون - آموزش بافت مو-آموزش رنگ و مش - آموزش میکروپیگمنتیشن">
+<meta name="keywords" content="آموزش کاشت ناخن صفر تا صد- آموزش میکروبلیدینگ- آموزش کاشت  ناخن- کلاس کاشت ناخن-
+  آموزش لیفت و لمینیت ابرو- آموزش پاکسازی پوست-
+آموزش لیفت و لمینیت مژه-  آموزش کاشت مژه- آموزش کوتاهی مو- آموزش ویولون-
+ آموزش گیتار- آموزش شینیون - آموزش بافت مو-آموزش رنگ و مش - آموزش میکروپیگمنتیشن">
+<meta property="og:site_name" content="معرفی کلاس و استاد">
+<meta property="og:type" content="article">
+<meta property="og:title" content="معرفی بهترین اساتید کشور ">
+<meta property="og:url" content="https://ostadbaz.com/">
+<meta name="news_keywords" content="آموزش کاشت ناخن صفر تا صد- آموزش میکروبلیدینگ- آموزش کاشت  ناخن- کلاس کاشت ناخن-  آموزش لیفت و لمینیت ابرو- آموزش پاکسازی پوست-
+آموزش لیفت و لمینیت مژه- آموزش کاشت مژه- آموزش کوتاهی مو-
+ آموزش شینیون - آموزش بافت مو-آموزش رنگ و مش - آموزش میکروپیگمنتیشن">
+<meta property="og:description" content="معرفی رایگان استاد و کلاس  آرایشگری">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "accounts/assets/farsi/farsi.css" %}">
+    <link rel="stylesheet" href="{% static 'yas.css' %}">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+  <link rel="stylesheet" href="{% static 'uikit/styles/uikit.css' %}" />
+{#  <link rel="stylesheet" href="{% static 'styles/app.css' %}" />#}
+</head>
+<nav class="  navbar navbar-expand-lg navbar-dark w-100  bg-dark text-right " style="font-size: medium;">
+    <div class="container justify-content-start ">
+       <a class="  "  href="{% url 'accounts:index_accounts' %}"> <img class="img-fluid pr-2" src="{% static 'accounts/images/logo1.png' %}" alt="استادباز معرفی استاد و کلاس"> </a>
+       <button class="navbar-toggler " aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation" type="button" data-target="#navbar" data-toggle="collapse">
+           <span class="navbar-toggler-icon "></span>
+       </button>
+       <div id="navbar" class="navbar-collapse collapse">
+           <ul class="nav navbar-nav">
+               <li>
+                   <a  class="nav nav-link text text-white  " href="{% url 'accounts:index_accounts' %}"> صفحه اصلی   </a>
+               </li>
+               <li>
+                   <a  id="user_key"  class="nav nav-link  text text-white "
+                   href=" {% if user.is_authenticated %}{% url 'accounts:profile_edit' %}
+                       {% else %}{% url 'accounts:login_view' %}{% endif %}" >
+                       {% if user.is_authenticated %} تغییر/ثبت مشخصات استاد {{ user }}{% else %}ورود و  ثبت نام{% endif %}
+                   </a>
+               </li>
+               <li class="nav-item dropdown">
+                   <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'forum:post_list' %}" ><i class="fas fa-question "></i>   پرسش و پاسخ </a>
+               </li>
+               <li class="nav-item dropdown">
+                   <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'blog:blog_view' %}" ><i class="fas fa-blog "></i> مجله </a>
+               </li>
+               <li class="nav-item dropdown">
+                   <a class="nav-link  text text-white" id="dropdown-1" aria-expanded="false" href="{% url 'accounts:contact_us' %}" ><i class="fas fa-phone "></i>   تماس با ما</a>
+               </li>
+               {% if  user.is_authenticated %}
+               <li>
+                   <a class="nav nav-link text text-white " href="{% url 'accounts:logout_view' %}" >خروج</a>
+               </li>
+               {% endif %}
+           </ul>
+       </div>
+         <form action="{% url 'accounts:search_view' %}" method="get" >
+
+            <input  aria-label="Search" type="search" placeholder=" جستجوی موضوع،استاد..." name="search_text">
+            <button type="submit" ><i class='fa fa-search ' ></i></button>
+        </form>
+    </div>
+</nav>
+
+{% include 'accounts/title_anim_inc.html' %}
+
+{% include "accounts/messages.html" %}
+<body >
+<br>
+
+{% if results or results_teachers %}
+    <hr>
+<div class="container text-right  " >
+
+    <ul>
+    {% for result in results %}
+        <li>{{ result }} </li>
+    {% endfor %}
+    </ul>
+    <p class="alert   ">{{ search_message }}</p>
+    <ul>
+    {% for teacher_result in results_teachers %}
+        <li><a href="{% url 'teachme:teacher_detail'  teacher_result.id teacher_result.slug  %}">
+            {{ teacher_result.first_name }} {{ teacher_result.last_name }} {{ teacher_result.syllabus }} {{ teacher_result.experience }} سال سابقه
+                </a></li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% block contents %}{% endblock %}
+
+{% if not request.path == '/accounts/login/'%}
+<hr>
+<article class="small text-right m-2 ">
+<div class="container small">
+    <a class="text-secondary" href="{% url 'teachme:nail_implants' %}"> آموزش کاشت ناخن</a>-
+<a class="text-secondary " href="{% url 'teachme:haircut_training' %}"> آموزش کوتاهی مو - آموزش کوتاهی مو زنانه </a>-
+<a class="text-secondary" href="{% url 'teachme:hair_coloring_training' %}"> آموزش رنگ و مش مو-آموزش رنگ مو-آموزش کار با مواد </a>-
+<a class="text-secondary" href="{% url 'teachme:hair_dress_training' %}">  آموزش بافت شینیون اکستنشن براشینگ و کرلی مو </a>-
+<a class="text-secondary" href="{% url 'teachme:face_cleaning_training' %}">  آموزش پاکسازی پوست - آموزش پاکسازی صورت </a>-
+<a class="text-secondary" href="{% url 'teachme:extension_training_for_eylashes' %}">  آموزش کاشت مژه </a>-
+<a class="text-secondary" href="{% url 'teachme:eyebrow_microblading_training' %}">   آموزش میکروبلیدینگ - میکروپیگمنتیشن-آکادمی فی  </a>-
+<a class="text-secondary" href="{% url 'teachme:eyebrow_permanent_makeup_training' %}"> آموزش آرایش دائم ابرو چشم و لب  </a>-
+<a class="text-secondary" href="{% url 'teachme:eyebrow_lift_training' %}"> آموزش لیفت و لمینیت ابرو  </a>-
+<a class="text-secondary" href="{% url 'teachme:face_balancing_training' %}"> آموزش میکاپ-آموزش گریم </a>-
+<a class="text-secondary" href="{% url 'accounts:music_trainings' %}" > آموزش موسیقی   </a>-
+<a class="text-secondary" href="{% url 'accounts:music_trainings' %}" > آموزش 'گیتار   </a>-
+<a class="text-secondary" href="{% url 'accounts:music_trainings' %}" > آموزش ویولون   </a>-
+<a class="text-secondary" href="{% url 'accounts:music_trainings' %}" > آموزش پیانو   </a>-
+<a class="text-secondary" href="{% url 'accounts:language_trainings' %}" > آموزش زبان انگلیسی  </a>-
+<a class="text-secondary" href="{% url 'accounts:language_trainings' %}" > آموزش زبان آلمانی   </a>-
+<a class="text-secondary" href="{% url 'accounts:high_school_trainings' %}" > آموزش فیزیک   </a>-
+<a class="text-secondary" href="{% url 'accounts:high_school_trainings' %}" > آموزش ریاضی متوسطه دوم  </a>-
+<a class="text-secondary" href="{% url 'accounts:mid_school_trainings' %}" > آموزش ریاضی متوسطه اول  </a>-
+<a class="text-secondary" href="{% url 'accounts:high_school_trainings' %}" > آموزش ریاضی   </a>-
+<a class="text-secondary" href="{% url 'accounts:high_school_trainings' %}" > آموزش شیمی   </a>-
+</div>
+</article>
+    {% block footer %}
+    {% endblock %}
+<div class="container">
+    <div class="row w-100 text-center    " style="background-color: #DDDDDD">
+        <p class="small ">با ما در تماس باشید و ما را در شبکه های اجتماعی دنبال کنید</p>
+        <p class="small">  <i class="fa fa-phone"></i> <span>تلفن و واتساپ : 09361164819 و 02177874750</span></p>
+        <p class="small">   <i class="fa fa-envelope" aria-hidden="true"></i> <span>ایمیل: ostadbazir@gmail.com</span></p>
+        <p class="small ">  <a href="https://www.instagram.com/ostadbaz/" >  <span class=""> اینستاگرام : ostadbaz </span></a></p>
+        <p class="small">  <a href="https://www.aparat.com/ostadbaz">  <span> آپارات :</span><span> ostadbaz </span></a></p>
+        <p class="small">  <a href="https://www.youtube.com/channel/UCK3CnpPtXgOoz9oS1QEuX5A">  <span> یوتیوب :</span><span> ostadbaz </span></a></p>
+        <p class="small">copyright 2022 ostadbaz.com alright reserved <i class="fa fa-copyright"></i> </p>
+    </div>
+</div>
+{% endif %}
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="{% static 'accounts/assets/dropdown/js/nav-dropdown.js' %}"></script>
+<script src="{% static 'accounts/assets/dropdown/js/navbar-dropdown.js' %}"></script>
+<script src="{% static 'accounts/fa5/js/all.min.js' %}"></script>
+<script src="{% static 'accounts/accounts.js' %}"></script>
+
+{% if user.is_authenticated %}
+<script >
+   $(document).ready(function () {
+   $("#user_key").css('background-color', '#f67e7d')
+   })
+</script>
+{% endif %}
+<script>
+    var m=1;
+    var n=2;
+    var p=3;
+    var q=4;
+    function change_title(m,n,p,q){
+         $('#title_'+m).css('display','block')
+         $('#title_'+m).addClass("roll_anim")
+         $('#title_'+n).css('display','none')
+         $('#title_'+p).css('display','none')
+         $('#title_'+q).css('display','none')
+         $('#title_'+q).css('display','none')
+     };
+    ;
+         setInterval(function(){
+             change_title(m,n,p,q)
+             m++
+             n++
+             p++
+             q++
+             if (m>4){m=1}
+             if (n>4){n=1}
+             if (p>4){p=1}
+             if (q>4){q=1}
+              },4000);
+    function avail_list_toggle(list_name) {
+        $("#"+list_name).toggle()
+
+        window.scrollBy(0, 100);
+    }
+</script>
+<script>
+ $(document).ready(function(){
+ {% block domready %}
+ {% endblock %}
+ });
+</script>
+</body>
+</html>

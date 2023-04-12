@@ -39,6 +39,7 @@ urlpatterns = [
     path('course/', include('teachme.urls')),
     path('blog/', include('blog.urls')),
     path('forum/', include('forum.urls')),
+    path('ratings/', include('star_ratings.urls', namespace='ratings')),
 
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
          name='django.contrib.sitemaps.views.sitemap'),

@@ -23,121 +23,17 @@ def base_view(request):
 
 
 def index_accounts(request):
-    teacher_university_count = Teacher.objects.filter(category='دانشگاهی',is_confirmed=True).count()
-    teacher_high_school_count = Teacher.objects.filter(category='متوسطه دوم',is_confirmed=True).count()
-    teacher_mid_school_count = Teacher.objects.filter(category='متوسطه اول',is_confirmed=True).count()
-    teacher_primary_school_count = Teacher.objects.filter(category='دبستان',is_confirmed=True).count()
-    teacher_computer_count = Teacher.objects.filter(category='کامپیوتر',is_confirmed=True).count()
-    teacher_music_count = Teacher.objects.filter(category='موسیقی',is_confirmed=True).count()
-    teacher_art_count = Teacher.objects.filter(category='هنرهای تجسمی',is_confirmed=True).count()
-    teacher_sport_count = Teacher.objects.filter(category='ورزش و بدنسازی',is_confirmed=True).count()
-    teacher_cinema_count = Teacher.objects.filter(category='سینما و بازیگری',is_confirmed=True).count()
-    teacher_tech_count = Teacher.objects.filter(category='کارهای فنی',is_confirmed=True).count()
-    teacher_cooking_count = Teacher.objects.filter(category='آشپزی',is_confirmed=True).count()
-    teacher_makeup_count = Teacher.objects.filter(category='آرایش و زیبایی',is_confirmed=True).count()
-    teacher_language_count = Teacher.objects.filter(category='زبان های خارجی',is_confirmed=True).count()
-    teacher_bests = Teacher.objects.all().order_by('-points')[:10]
-    teachers = teacher_bests
+
+    teachers_count = Teacher.objects.filter(is_confirmed=True).count()
+    teacher_bests = Teacher.objects.all().order_by('-points')[:9]
 
     context = {
-        'teacher_university_count': teacher_university_count,
-        'teacher_high_school_count': teacher_high_school_count,
-        'teacher_mid_school_count': teacher_mid_school_count,
-        'teacher_sport_count': teacher_sport_count,
-        'teacher_music_count': teacher_music_count,
-        'teacher_art_count': teacher_art_count,
-        'teacher_computer_count': teacher_computer_count,
-        'teacher_primary_school_count': teacher_primary_school_count,
-        'teacher_cinema_count': teacher_cinema_count,
-        'teacher_tech_count': teacher_tech_count,
-        'teacher_cooking_count': teacher_cooking_count,
-        'teacher_makeup_count': teacher_makeup_count,
-        'teacher_language_count': teacher_language_count,
-        'teachers': teachers,
+        'teacher_bests': teacher_bests,
+        'teachers_count': teachers_count,
     }
 
     return render(request, 'accounts/index.html', context)
 
-
-def beauty_trainings(request):
-    teacher_counts = []
-    teachers = Teacher.objects.filter(category='آرایش و زیبایی', is_confirmed=True).order_by('-points')[:15]
-    syllabuses_makeup = Syllabus.objects.filter(learn_category='آرایش و زیبایی')
-    for syllabus in syllabuses_makeup:
-        teacher_count = Teacher.objects.filter(category='آرایش و زیبایی', syllabus_id=syllabus, is_confirmed=True).count()
-        if teacher_count is not 0:
-            teacher_counts.append([syllabus,teacher_count])
-    context = {
-        'syllabuses_makeup': syllabuses_makeup,
-        'teacher_counts': teacher_counts,
-        'teachers': teachers,
-    }
-    return render(request, 'accounts/beauty-trainings.html', context)
-
-
-def high_school_trainings(request):
-    teacher_counts = []
-    teachers = Teacher.objects.filter(category='متوسطه دوم', is_confirmed=True ).order_by('-points')[:15]
-    syllabuses_high_school = Syllabus.objects.filter(learn_category_id='متوسطه دوم')
-    for syllabus in syllabuses_high_school:
-        teacher_count = Teacher.objects.filter(category='متوسطه دوم', syllabus_id=syllabus, is_confirmed=True).count()
-        if teacher_count is not 0:
-            teacher_counts.append([syllabus,teacher_count])
-    context = {
-        'syllabuses_high_school': syllabuses_high_school,
-        'teacher_counts': teacher_counts,
-        'teachers': teachers,
-    }
-    return render(request, 'accounts/high_school_trainings.html', context)
-
-
-def mid_school_trainings(request):
-    teacher_counts = []
-    teachers = Teacher.objects.filter(category='متوسطه اول', is_confirmed=True ).order_by('-points')[:15]
-    syllabuses_mid_school = Syllabus.objects.filter(learn_category_id='متوسطه اول')
-    for syllabus in syllabuses_mid_school:
-        teacher_count = Teacher.objects.filter(category='متوسطه اول', syllabus_id=syllabus, is_confirmed=True).count()
-        if teacher_count is not 0:
-            teacher_counts.append([syllabus,teacher_count])
-    context = {
-        'syllabuses_mid_school': syllabuses_mid_school,
-        'teacher_counts': teacher_counts,
-        'teachers': teachers,
-    }
-    return render(request, 'accounts/mid_school_trainings.html', context)
-
-
-
-def music_trainings(request):
-    teacher_counts = []
-    teachers = Teacher.objects.filter(category='موسیقی', is_confirmed=True ).order_by('-points')[:15]
-    syllabuses_music = Syllabus.objects.filter(learn_category_id='موسیقی')
-    for syllabus in syllabuses_music:
-        teacher_count = Teacher.objects.filter(category='موسیقی', syllabus_id=syllabus, is_confirmed=True).count()
-        if teacher_count is not 0:
-            teacher_counts.append([syllabus,teacher_count])
-    context = {
-        'syllabuses_music': syllabuses_music,
-        'teacher_counts': teacher_counts,
-        'teachers': teachers,
-    }
-    return render(request, 'accounts/music-trainings.html', context)
-
-
-def language_trainings(request):
-    teacher_counts = []
-    teachers = Teacher.objects.filter(category='زبان های خارجی', is_confirmed=True ).order_by('-points')[:15]
-    syllabuses_language = Syllabus.objects.filter(learn_category_id='زبان های خارجی')
-    for syllabus in syllabuses_language:
-        teacher_count = Teacher.objects.filter(category='زبان های خارجی', syllabus_id=syllabus, is_confirmed=True).count()
-        if teacher_count is not 0:
-            teacher_counts.append([syllabus,teacher_count])
-    context = {
-        'syllabuses_language': syllabuses_language,
-        'teacher_counts': teacher_counts,
-        'teachers': teachers,
-    }
-    return render(request, 'accounts/language-trainings.html', context)
 
 
 def contact_us(request):
