@@ -20,7 +20,7 @@ def base_view(request):
 
 def index_accounts(request):
     teachers_count = Teacher.objects.filter(is_confirmed=True).count()
-    teacher_bests = Teacher.objects.all().order_by('-points')[:9]
+    teacher_bests = Teacher.objects.all().order_by('-points')[:1]
 
     context = {
         'teacher_bests': teacher_bests,
@@ -277,6 +277,6 @@ def consult_view(request):
 
 
 # comment for redirect to teacher_detail_view
-@login_required
-def comment_view(request, teacher_id):
-    return redirect('teachme:teacher_detail', args=[teacher_id])
+# @login_required
+# def comment_view(request, teacher_id):
+#     return redirect('teachme:teacher_detail', args=[teacher_id])

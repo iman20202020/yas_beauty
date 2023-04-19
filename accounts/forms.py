@@ -39,10 +39,7 @@ class TeacherEditForm(forms.ModelForm):
 
     class Meta:
         model = Teacher
-        fields = ['first_name', 'last_name', 'gender', 'syllabus', 'price_range', 'workshop_number','image',
-                  'workshop_detail','workshop_price', 'experience','qualification', 'learn_type', 'state', 'city',
-                  'degree_image', 'degree_image2', 'degree_image3', 'degree_image4', 'degree_image5', 'degree_image6',
-                  'degree_image7', 'sample_video']
+        fields = ['first_name', 'last_name', 'syllabus', 'state', 'city', ]
 
 
 class CommentForm(forms.ModelForm):

@@ -1,5 +1,4 @@
 from django import forms
-# from django.forms import Textarea
 from accounts.models import Syllabus
 from forum.models import Post, Comment
 

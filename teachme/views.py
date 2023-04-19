@@ -31,10 +31,10 @@ def teacher_list(request):
     return render(request, 'teachme/teacher_list.html', context)
 
 
-def teacher_detail(request, teacher_id):
-    teacher_selected = Teacher.objects.get(pk=teacher_id)
+def teacher_detail(request, teacher_slug):
+    teacher_selected = Teacher.objects.get(slug=teacher_slug)
+    teacher_id = teacher_selected.id
     teacher_for_comments = Comment.objects.filter(teacher_id=teacher_id, is_confirmed=True)
-
 
     context = {
         'teacher_selected': teacher_selected,
@@ -43,6 +43,7 @@ def teacher_detail(request, teacher_id):
     return render(request, 'teachme/teacher_detail.html', context)
 
 
+@login_required
 def comment(request, teacher_id):
     teacher = get_object_or_404(Teacher, id=teacher_id)
     if request.method == 'POST':

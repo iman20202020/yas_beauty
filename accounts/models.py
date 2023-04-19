@@ -4,13 +4,16 @@ from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.urls import reverse
 from django_resized import ResizedImageField
+from django_unique_slugify import unique_slugify
+from social_core.utils import slugify
+
 from accounts.validators import validate_video_size, validate_image_size
 
 
 class MyUser(AbstractUser):
     username = models.CharField(
         verbose_name='شماره همراه',
-        max_length=50,blank=True,
+        max_length=50, blank=True,
         unique=True,
         help_text=None,
         validators=[],
@@ -21,7 +24,7 @@ class MyUser(AbstractUser):
 
 
 class State(models.Model):
-    state = models.CharField(primary_key=True, max_length=50,unique=True)
+    state = models.CharField(primary_key=True, max_length=50, unique=True)
 
     def __str__(self):
         return self.state
@@ -45,8 +48,8 @@ class Syllabus(models.Model):
 
 
 class PriceRange(models.Model):
-    price_range = models.IntegerField(primary_key=True, unique=True,default=150)
-    price_range_name = models.CharField(max_length=50,)
+    price_range = models.IntegerField(primary_key=True, unique=True, default=150)
+    price_range_name = models.CharField(max_length=50, )
 
     def __str__(self):
         return self.price_range_name
@@ -57,31 +60,58 @@ class Teacher(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     national_id = models.PositiveIntegerField(blank=True, null=True)
-    price_range = models.ForeignKey('PriceRange', on_delete=models.CASCADE,)
+    # price_range = models.ForeignKey('PriceRange', on_delete=models.CASCADE,)
     video_channel_link = models.URLField(blank=True, null=True)
     state = models.ForeignKey('State', on_delete=models.CASCADE, default='تهران')
     city = models.ForeignKey('City', on_delete=models.CASCADE, default='تهران')
     syllabus = models.ForeignKey('Syllabus', on_delete=models.CASCADE, )
-    image = ResizedImageField(upload_to='images/', blank=True,validators=[validate_image_size], size=[300,300])
-    degree_image = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
-    degree_image2 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
-    degree_image3 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
-    degree_image4 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
-    degree_image5 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
-    degree_image6 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
-    degree_image7 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
-    workshop_number =models.CharField(max_length=100, blank=True)
-    workshop_detail = models.CharField(max_length=100, blank=True)
-    workshop_price = models.CharField(max_length=100, blank=True)
-    qualification = models.TextField(max_length=1000,blank=True,)
-    experience = models.CharField(max_length=3, default='6', blank=True)
-    points = models.FloatField(default=3.0, blank=True)
-    sample_video = models.FileField(verbose_name='ویدیوی نمونه',upload_to='videos/',blank=True,
-          validators=[FileExtensionValidator( allowed_extensions=['mp4', 'wmv','mov','3gp']),validate_video_size],)
-    learn_type = models.IntegerField(default=0,blank=True)
+    image = ResizedImageField(verbose_name='عکس استاد', upload_to='images/', blank=True, validators=[validate_image_size], size=[300, 300])
+    degree_image = ResizedImageField(verbose_name='نمونه کار1', upload_to="images/", validators=[validate_image_size], blank=True, null=True,
+                                     size=[300, 300])
+    degree_image2 = ResizedImageField(verbose_name='نمونه کار2 ', upload_to="images/", validators=[validate_image_size], blank=True, null=True,
+                                      size=[300, 300])
+    degree_image3 = ResizedImageField(verbose_name='نمونه کار3', upload_to="images/", validators=[validate_image_size], blank=True, null=True,
+                                      size=[300, 300])
+    degree_image4 = ResizedImageField(verbose_name='نمونه کار4', upload_to="images/", validators=[validate_image_size], blank=True, null=True,
+                                      size=[300, 300])
+    degree_image5 = ResizedImageField(verbose_name='نمونه کار5', upload_to="images/", validators=[validate_image_size], blank=True, null=True,
+                                      size=[300, 300])
+    degree_image6 = ResizedImageField(verbose_name='نمونه کار6', upload_to="images/", validators=[validate_image_size], blank=True, null=True,
+                                      size=[300, 300])
+    degree_image7 = ResizedImageField(verbose_name='نمونه کار7', upload_to="images/", validators=[validate_image_size], blank=True, null=True,
+                                      size=[300, 300])
+    degree_image8 = ResizedImageField(verbose_name='نمونه کار8', upload_to="images/", validators=[validate_image_size], blank=True, null=True,
+                                      size=[300, 300])
+    degree_image9 = ResizedImageField(verbose_name='نمونه کار9', upload_to="images/", validators=[validate_image_size], blank=True, null=True,
+                                      size=[300, 300])
+    degree_image10 = ResizedImageField(verbose_name='نمونه کار10', upload_to="images/", validators=[validate_image_size], blank=True, null=True,
+                                       size=[300, 300])
+    degree_image11 = ResizedImageField(verbose_name='نمونه کار11', upload_to="images/", validators=[validate_image_size], blank=True, null=True,
+                                       size=[300, 300])
+    degree_image12 = ResizedImageField(verbose_name='نمونه کار12', upload_to="images/", validators=[validate_image_size], blank=True, null=True,
+                                       size=[300, 300])
+    certificate_image1 = ResizedImageField(verbose_name='عکس مدرک استاد1', upload_to="images/", validators=[validate_image_size], blank=True, null=True,
+                                           size=[300, 300])
+    certificate_image2 = ResizedImageField(verbose_name='عکس مدرک استاد2', upload_to="images/", validators=[validate_image_size], blank=True, null=True,
+                                           size=[300, 300])
+    workshop_number = models.CharField(max_length=100, blank=True, null=True)
+    workshop_detail = models.CharField(max_length=100, blank=True, null=True)
+    workshop_price = models.CharField(max_length=100, blank=True, null=True)
+    qualification = models.TextField(max_length=1000, blank=True, null=True)
+    experience = models.CharField(max_length=3, default='6', blank=True, null=True)
+    points = models.FloatField(default=3.0, blank=True, null=True)
+    sample_video = models.FileField(verbose_name='ویدیوی نمونه', upload_to='videos/', blank=True, null=True,
+                                    validators=[FileExtensionValidator(allowed_extensions=['mp4', 'wmv', 'mov', '3gp']),
+                                                validate_video_size], )
+    describe_video = models.FileField(verbose_name='ویدیوی توضیح درباره خود و دوره', upload_to='videos/', blank=True,
+                                      null=True,
+                                      validators=[
+                                          FileExtensionValidator(allowed_extensions=['mp4', 'wmv', 'mov', '3gp']),
+                                          validate_video_size], )
+    # learn_type = models.IntegerField(default=0,blank=True)
     is_confirmed = models.BooleanField(default=False)
-    gender = models.IntegerField(default=1,blank=True)
-    slug = models.SlugField(blank=True,null=True , allow_unicode=True)
+    # gender = models.IntegerField(default=1,blank=True)
+    slug = models.SlugField(blank=True, null=True, allow_unicode=True)
     users_like = models.ManyToManyField(MyUser, related_name='teachers_liked', blank=True)
     users_dislike = models.ManyToManyField(MyUser, related_name='teachers_disliked', blank=True)
     comment_num = models.IntegerField(default=0, blank=True, null=True)
@@ -89,23 +119,24 @@ class Teacher(models.Model):
     updated = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
-        return f"uid:{self.user_id}/{self.last_name}/{self.user.username}/{self.syllabus}"
-
+        return f"uid:{self.id}/{self.last_name}/{self.user.username}/{self.syllabus}"
 
     def get_absolute_url(self):
         return reverse('teachme:teacher_detail',
-                       args=[self.id, ])
+                       args=[ self.slug, ])
+
     #
     def save(self, *args, **kwargs):
-        slug1 = str(self.syllabus).replace(" ", "-")
-        self.slug = slug1
+        # slug1 = str(self.syllabus).replace(" ", "-")
+        # self.slug = slug1
         # image_rename(self)
+        self.slug = f"{self.syllabus}-{self.id}"
         super(Teacher, self).save(*args, **kwargs)
 
 
 class Comment(models.Model):
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, )
-    user_commenter = models.ForeignKey('MyUser',on_delete=models.CASCADE, )
+    user_commenter = models.ForeignKey('MyUser', on_delete=models.CASCADE, )
     name = models.CharField(max_length=100, null=True, blank=True)
     content = models.TextField(max_length=500, null=True, blank=True)
     is_confirmed = models.BooleanField(default=False)
@@ -127,10 +158,7 @@ class ClassRequest(models.Model):
     is_confirmed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
-    request_time = models.DateTimeField(auto_now=True,)
+    request_time = models.DateTimeField(auto_now=True, )
 
     def __str__(self):
         return f"teacher:{self.teacher.last_name}/uid:{self.teacher.user_id} - stu:{self.student}"
-
-
-
