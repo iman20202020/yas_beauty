@@ -1,7 +1,4 @@
-import os
-
 from django.contrib.auth.base_user import AbstractBaseUser
-# from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import FileExtensionValidator
 from django.db import models
@@ -17,7 +14,6 @@ class MyUser(AbstractUser):
         unique=True,
         help_text=None,
         validators=[],
-
         error_messages={
             'unique': "یک کاربر با این شماره موبایل وجود دارد لطفا از شماره دیگری استفاده کنید",
         },
@@ -40,16 +36,7 @@ class City(models.Model):
         return self.city_name
 
 
-class LearnCategory(models.Model):
-    category = models.CharField(primary_key=True, max_length=50, )
-    category_name = models.CharField(max_length=50, )
-
-    def __str__(self):
-        return self.category_name
-
-
 class Syllabus(models.Model):
-    learn_category = models.ForeignKey('LearnCategory', on_delete=models.CASCADE)
     syllabus = models.CharField(primary_key=True, max_length=50, )
     syllabus_name = models.CharField(max_length=50, )
 
@@ -74,10 +61,8 @@ class Teacher(models.Model):
     video_channel_link = models.URLField(blank=True, null=True)
     state = models.ForeignKey('State', on_delete=models.CASCADE, default='تهران')
     city = models.ForeignKey('City', on_delete=models.CASCADE, default='تهران')
-    category = models.ForeignKey('LearnCategory', on_delete=models.CASCADE,)
     syllabus = models.ForeignKey('Syllabus', on_delete=models.CASCADE, )
     image = ResizedImageField(upload_to='images/', blank=True,validators=[validate_image_size], size=[300,300])
-    # national_card_image = ResizedImageField(upload_to='images/',blank=True,validators=[validate_image_size],null=True)
     degree_image = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
     degree_image2 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
     degree_image3 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
@@ -85,7 +70,6 @@ class Teacher(models.Model):
     degree_image5 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
     degree_image6 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
     degree_image7 = ResizedImageField(upload_to="images/", validators=[validate_image_size],blank=True,null=True, size=[300,300])
-    # jozveh = models.FileField(upload_to="jozveh/", blank=True,)
     workshop_number =models.CharField(max_length=100, blank=True)
     workshop_detail = models.CharField(max_length=100, blank=True)
     workshop_price = models.CharField(max_length=100, blank=True)
@@ -110,7 +94,7 @@ class Teacher(models.Model):
 
     def get_absolute_url(self):
         return reverse('teachme:teacher_detail',
-                       args=[self.id, self.slug])
+                       args=[self.id, ])
     #
     def save(self, *args, **kwargs):
         slug1 = str(self.syllabus).replace(" ", "-")
@@ -122,6 +106,7 @@ class Teacher(models.Model):
 class Comment(models.Model):
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, )
     user_commenter = models.ForeignKey('MyUser',on_delete=models.CASCADE, )
+    name = models.CharField(max_length=100, null=True, blank=True)
     content = models.TextField(max_length=500, null=True, blank=True)
     is_confirmed = models.BooleanField(default=False)
 

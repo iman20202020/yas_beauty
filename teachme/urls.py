@@ -5,7 +5,7 @@ from teachme import views
 app_name = 'teachme'
 urlpatterns = [
     path('teacher/list/', views.teacher_list, name="teacher_list"),
-    path('<int:teacher_id>/<str:slug>', views.teacher_detail, name="teacher_detail"),
+    path('<int:teacher_id>', views.teacher_detail, name="teacher_detail"),
     path('teacher/request/send/<int:teacher_id>', views.teacher_request_send, name="teacher_request_send"),
 # search pages
     path('nail-implants/', views.nail_implants, name="nail_implants"),
@@ -18,5 +18,6 @@ urlpatterns = [
     path('extension-training-for-eylashes/', views.extension_training_for_eylashes, name="extension_training_for_eylashes"),
     path('face-cleaning-training/', views.face_cleaning_training, name="face_cleaning_training"),
     path('hair-dress-training/', views.hair_dress_training, name="hair_dress_training"),
-    path('like/', views.like_view, name='like')
+    path('like/', views.like_view, name='like'),
+    path('comment/<int:teacher_id>/', views.comment, name='comment'),
 ]

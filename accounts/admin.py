@@ -1,11 +1,10 @@
 
 
 from django.contrib import admin
-from accounts.models import Teacher, Syllabus, PriceRange, LearnCategory, City, MyUser, State, ClassRequest, Comment
+from accounts.models import Teacher, Syllabus, PriceRange, City, MyUser, State, ClassRequest, Comment
 
 admin.site.register(Syllabus)
 admin.site.register(PriceRange)
-admin.site.register(LearnCategory)
 admin.site.register(City)
 admin.site.register(State)
 

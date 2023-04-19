@@ -1,24 +1,8 @@
 
-
-{% extends 'accounts/_base.html' %}
-{% block title %}
-<div class="row ">
-    <div class="container">
-        <div class=" text-center"  >
-            <div class="mbr-section-head ">
-                {% if messages %}
-                <div class="text-center">
-                    {% for msg in messages %}
-                       <p class="alert alert-{{ msg.tags }} " style="font-size: medium">{{ msg }}</p>
-                    {% endfor %}
-                </div>
-
-                {% endif %}
-                <a href="{% url 'accounts:index_accounts' %}"> <button class="btn btn-outline-dark">بازگشت به صفحه اصلی</button></a>
-            </div><br>
-        </div>
-    </div>
+{% if messages %}
+<div class="text-center">
+    {% for msg in messages %}
+       <p class="alert alert-{{ msg.tags }} " style="font-size: medium">{{ msg }}</p>
+    {% endfor %}
 </div>
-
-
-{% endblock %}
+{% endif %}

@@ -1,8 +1,11 @@
+{% extends 'accounts/_base.html' %}
+hgj
 {% if messages %}
 <div class="text-center">
     {% for msg in messages %}
        <p class="alert alert-{{ msg.tags }}" style="font-size: medium">{{ msg }}</p>
     {% endfor %}
+<a href="" class="btn btn-success" onclick="history.back()">بازگشت</a>
 </div>
 
 {% endif %}

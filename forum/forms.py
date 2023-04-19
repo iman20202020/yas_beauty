@@ -1,6 +1,6 @@
 from django import forms
 # from django.forms import Textarea
-from accounts.models import LearnCategory, Syllabus
+from accounts.models import Syllabus
 from forum.models import Post, Comment
 
 
@@ -10,13 +10,12 @@ class PostCreateForm(forms.ModelForm):
     author_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'نام خود را وارد کنید', 'dir': 'rtl', 'class': 'form-control'}), label='',)
     body = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'شرح پست', 'dir': 'rtl', 'class': 'form-control'}), label='',)
     # image = forms.ImageField(widget=forms.FileInput(attrs={ 'class': 'form-control'}), label='اضافه کردن تصویر',)
-    category = forms.ModelChoiceField(queryset=LearnCategory.objects.all() ,widget=forms.Select(attrs={ 'class': 'form-select text-center'}), label='زیرموضوع', )
     syllabus = forms.ModelChoiceField(queryset=Syllabus.objects.all(), widget=forms.Select(attrs={ 'class': 'form-select text-center'}), label='موضوع',)
 
 
     class Meta:
         model = Post
-        fields = ['author_name', 'title', 'category', 'syllabus', 'body', 'post_image', ]
+        fields = ['author_name', 'title', 'syllabus', 'body', 'post_image', ]
 
 
 class CommentForm(forms.ModelForm):

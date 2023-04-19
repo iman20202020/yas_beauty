@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
@@ -8,12 +7,10 @@ from django_unique_slugify import unique_slugify
 from hitcount.models import HitCount
 from hitcount.settings import MODEL_HITCOUNT
 from pilkit.processors import ResizeToFit
-from taggit.managers import TaggableManager
-from imagekit.models import ProcessedImageField, ImageSpecField
-from imagekit.processors import ResizeToFill
+from imagekit.models import ProcessedImageField
 from hitcount.models import HitCountMixin
 from django_jalali.db import models as jmodels
-from accounts.models import MyUser, LearnCategory, Syllabus
+from accounts.models import MyUser, Syllabus
 
 
 class PublishedManager(models.Manager):
@@ -32,15 +29,13 @@ class Post(models.Model, HitCountMixin):
     author_name = models.CharField(max_length=100,)
     body = models.TextField()
     post_image = ProcessedImageField(upload_to='forum/%Y/%m/%d/', blank=True, null=True, processors=[ResizeToFit(width=400
-                                                                                                            , upscale=False)],
-                                format='JPEG', options={'quality': 80})
+       , upscale=False)],format='JPEG', options={'quality': 80})
     publish = jmodels.jDateTimeField(default=timezone.now)
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.DRAFT)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     objects = models.Manager()
     published = PublishedManager()
-    category = models.ForeignKey(LearnCategory, on_delete=models.CASCADE, )
     syllabus = models.ForeignKey(Syllabus, on_delete=models.CASCADE, )
     hit_count_generic = GenericRelation(
         MODEL_HITCOUNT, object_id_field='object_pk',

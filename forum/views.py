@@ -1,23 +1,16 @@
 from itertools import chain
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
 from django.views.decorators.http import require_POST
-from django.views.generic import ListView
 from hitcount.views import HitCountDetailView
-from taggit.models import Tag
-
-from accounts.models import Syllabus, Teacher, LearnCategory
+from accounts.models import Syllabus, Teacher
 from forum.forms import PostCreateForm, CommentForm, SearchForm
 from forum.models import Post, Comment, CommentContact
-
-
 
 
 def post_list(request, syllabus=None):
@@ -61,15 +54,7 @@ class PostDetailView(HitCountDetailView):
 
 @login_required
 def post_create(request):
-    if request.is_ajax():
-        if 'category' in request.GET:
-            category = request.GET.get('category', None)
-            category_list = request.GET.get('category_list', None)
-            if category_list:
-                category_list = list(LearnCategory.objects.all().values())
-                return JsonResponse(category_list, safe=False)
-            syll = list(Syllabus.objects.filter(learn_category=category).values())
-            return JsonResponse(syll, safe=False)
+
     if request.method == 'POST':
         post_form = PostCreateForm(request.POST, request.FILES)
         if post_form.is_valid():
@@ -98,9 +83,8 @@ def post_search(request):
         search_query = SearchQuery(query)
         results_title_body = Post.published.annotate(search=search_vector, rank=SearchRank(search_vector, search_query)
                                           ).filter(rank__gte=0.3).order_by('-rank')
-        results_category = Post.objects.filter(syllabus__syllabus_name=query)
         results_name = Post.objects.filter(Q(author_name=query))
-        results = list(chain(results_title_body,results_name,results_category))
+        results = list(chain(results_title_body,results_name))
     return render(request, 'forum/base.html', {'form': form, 'query': query, 'results': results})
 
 

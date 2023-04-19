@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from accounts.models import Teacher, MyUser, ClassRequest, State, Comment
@@ -13,7 +14,8 @@ def teacher_list(request):
     states = State.objects.all()
     category_id = request.GET.get('cat')
     syllabus_id = request.GET.get('syl')
-    teachers = Teacher.objects.filter(category=category_id,syllabus=syllabus_id,is_confirmed=True).reverse().order_by('points')
+    teachers = Teacher.objects.filter(category=category_id, syllabus=syllabus_id, is_confirmed=True).reverse().order_by(
+        'points')
     state_filter = request.GET.get('st')
     if state_filter:
         teachers = teachers.filter(state=state_filter)
@@ -29,20 +31,29 @@ def teacher_list(request):
     return render(request, 'teachme/teacher_list.html', context)
 
 
-def teacher_detail(request, teacher_id, slug):
-
+def teacher_detail(request, teacher_id):
     teacher_selected = Teacher.objects.get(pk=teacher_id)
-
     teacher_for_comments = Comment.objects.filter(teacher_id=teacher_id, is_confirmed=True)
 
-    teacher_cat = teacher_selected.category_id
+
     context = {
         'teacher_selected': teacher_selected,
-        'teacher_cat': teacher_cat,
         'teacher_for_comments': teacher_for_comments,
     }
     return render(request, 'teachme/teacher_detail.html', context)
 
+
+def comment(request, teacher_id):
+    teacher = get_object_or_404(Teacher, id=teacher_id)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        comment_text = request.POST.get('comment')
+        try:
+            comment = Comment(teacher=teacher, user_commenter=request.user, name=name, content=comment_text)
+            if comment:
+                comment.save()
+        except:
+            ValidationError
 
 @login_required
 def teacher_request_send(request, teacher_id):
@@ -65,7 +76,7 @@ def teacher_request_send(request, teacher_id):
 
 # create pages for direct search
 def nail_implants(request):
-    teachers = Teacher.objects.filter(syllabus='کاشت ناخن',is_confirmed=True).reverse().order_by('points')
+    teachers = Teacher.objects.filter(syllabus='کاشت ناخن', is_confirmed=True).reverse().order_by('points')
     states = State.objects.all()
     state_filter = request.GET.get('st')
     if state_filter:
@@ -79,7 +90,8 @@ def nail_implants(request):
 
 
 def eyebrow_microblading_training(request):
-    teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب',is_confirmed=True).reverse().order_by('points')
+    teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب', is_confirmed=True).reverse().order_by(
+        'points')
     states = State.objects.all()
     state_filter = request.GET.get('st')
     if state_filter:
@@ -93,7 +105,8 @@ def eyebrow_microblading_training(request):
 
 
 def eyebrow_lift_training(request):
-    teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب',is_confirmed=True).reverse().order_by('points')
+    teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب', is_confirmed=True).reverse().order_by(
+        'points')
     states = State.objects.all()
     state_filter = request.GET.get('st')
     if state_filter:
@@ -107,7 +120,8 @@ def eyebrow_lift_training(request):
 
 
 def eyebrow_permanent_makeup_training(request):
-    teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب',is_confirmed=True).reverse().order_by('points')
+    teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب', is_confirmed=True).reverse().order_by(
+        'points')
     states = State.objects.all()
     state_filter = request.GET.get('st')
     if state_filter:
@@ -121,7 +135,7 @@ def eyebrow_permanent_makeup_training(request):
 
 
 def haircut_training(request):
-    teachers = Teacher.objects.filter(syllabus='کوتاهی موی بانوان',is_confirmed=True).reverse().order_by('points')
+    teachers = Teacher.objects.filter(syllabus='کوتاهی موی بانوان', is_confirmed=True).reverse().order_by('points')
     states = State.objects.all()
     state_filter = request.GET.get('st')
     if state_filter:
@@ -133,8 +147,9 @@ def haircut_training(request):
     }
     return render(request, 'teachme/haircut-training.html', context)
 
+
 def hair_coloring_training(request):
-    teachers = Teacher.objects.filter(syllabus='آموزش رنگ و مش مو',is_confirmed=True).reverse().order_by('points')
+    teachers = Teacher.objects.filter(syllabus='آموزش رنگ و مش مو', is_confirmed=True).reverse().order_by('points')
     states = State.objects.all()
     state_filter = request.GET.get('st')
     if state_filter:
@@ -146,8 +161,9 @@ def hair_coloring_training(request):
     }
     return render(request, 'teachme/hair-coloring-training.html', context)
 
+
 def face_balancing_training(request):
-    teachers = Teacher.objects.filter(syllabus='میکاپ',is_confirmed=True).reverse().order_by('points')
+    teachers = Teacher.objects.filter(syllabus='میکاپ', is_confirmed=True).reverse().order_by('points')
     states = State.objects.all()
     state_filter = request.GET.get('st')
     if state_filter:
@@ -159,8 +175,9 @@ def face_balancing_training(request):
     }
     return render(request, 'teachme/face-balancing-training.html', context)
 
+
 def extension_training_for_eylashes(request):
-    teachers = Teacher.objects.filter(syllabus='کاشت مژه',is_confirmed=True).reverse().order_by('points')
+    teachers = Teacher.objects.filter(syllabus='کاشت مژه', is_confirmed=True).reverse().order_by('points')
     states = State.objects.all()
     state_filter = request.GET.get('st')
     if state_filter:
@@ -172,8 +189,9 @@ def extension_training_for_eylashes(request):
     }
     return render(request, 'teachme/extension-training-for-eyelashes.html', context)
 
+
 def face_cleaning_training(request):
-    teachers = Teacher.objects.filter(syllabus='پاکسازی پوست',is_confirmed=True).reverse().order_by('points')
+    teachers = Teacher.objects.filter(syllabus='پاکسازی پوست', is_confirmed=True).reverse().order_by('points')
     states = State.objects.all()
     state_filter = request.GET.get('st')
     if state_filter:
@@ -198,7 +216,6 @@ def hair_dress_training(request):
         'states': states,
     }
     return render(request, 'teachme/hair-dress-training.html', context)
-
 
 
 def like_view(request):
@@ -242,5 +259,3 @@ def like_view(request):
         return JsonResponse({'status': 'error'})
     else:
         pass
-
-
