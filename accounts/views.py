@@ -6,21 +6,17 @@ from accounts.otp import *
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
-from accounts.forms import TeacherEditForm
-from accounts.models import Syllabus, PriceRange, Teacher, City, MyUser, State
+from accounts.models import Teacher, MyUser
 
 
-def base_view(request):
-    return render(request, 'accounts/_base.html', {})
 
 
 def index_accounts(request):
     teachers_count = Teacher.objects.filter(is_confirmed=True).count()
-    teacher_bests = Teacher.objects.all().order_by('-points')[:1]
+    teacher_bests = Teacher.objects.all().order_by('-points')[:3]
 
     context = {
         'teacher_bests': teacher_bests,
@@ -43,93 +39,6 @@ def logout_view(request):
 def profile_edit(request):
     return HttpResponseRedirect(reverse('accounts:teacher_edit'))
 
-
-@login_required
-@csrf_exempt
-def teacher_edit(request):
-    if request.is_ajax():
-        if 'state' in request.GET:
-            state = request.GET.get('state', None)
-            state_list = request.GET.get('state_list', None)
-            if state_list:
-                state_list = list(State.objects.all().values())
-                return JsonResponse(state_list, safe=False)
-            city = list(City.objects.filter(state=state).values())
-            return JsonResponse(city, safe=False)
-    else:
-        teacher_edit_form = TeacherEditForm()
-        cities = list(City.objects.all().values())
-        states = list(State.objects.all().values())
-        price_ranges = list(PriceRange.objects.all().values())
-        syllabuses = list(Syllabus.objects.all().values())
-        first_name = None
-        last_name = None
-        teacher_profile = None
-        error = ''
-        if hasattr(request.user, 'teacher'):
-            teacher_profile = Teacher.objects.get(user_id=request.user.id)
-            teacher_edit_form = TeacherEditForm(instance=teacher_profile)
-
-            error = str(request.user) + " " + 'خوش آمدید'
-            if request.method == 'POST':
-                teacher_edit_form = TeacherEditForm(request.POST, request.FILES, instance=teacher_profile)
-                if teacher_edit_form.is_valid():
-                    teacher_edit_form.user = request.user
-                    teacher_edit_form.pk = teacher_profile.id
-                    teacher = teacher_edit_form.save(commit=False)
-                    teacher.is_confirmed = False
-                    teacher.save()
-                    error = "مشخصات شما با موفقیت تغییر کرد.پس از بررسی در سایت قرار می گیرد"
-                    clerk_phone = '09361164819'
-                    teacher_user_id = request.user.id
-                    teacher_requested = MyUser.objects.get(id=request.user.id)
-                    teacher_email = request.user.username
-                    teacher_phone = teacher_requested.username
-                    sms_token = 'user_id:{},name:{}'.format(teacher_user_id, teacher.last_name)
-                    sms_token2 = teacher_phone
-                    sms_token3 = teacher_email
-                    send_sms_teacher_edit(clerk_phone, sms_token, sms_token2, sms_token3)
-
-                else:
-                    error = "خطا:"
-                # else:
-                #     error = " شماره ملی معتبر نیست"
-
-        if request.method == 'POST' and hasattr(request.user, 'teacher') == False:
-            teacher_edit_form = TeacherEditForm(request.POST, request.FILES)
-            # national_id_entered = teacher_edit_form.data['national_id']
-            # if is_valid_iran_code(national_id_entered):
-            if teacher_edit_form.is_valid():
-                teacher = teacher_edit_form.save(commit=False)
-                teacher.user = request.user
-                # teacher.slug = f"{teacher.syllabus}-{teacher.last_name}"
-                teacher.save()
-                error = "مشخصات شما ثبت شد.پس از بررسی در سایت قرار می گیرد"
-                teacher_profile = Teacher.objects.get(user_id=request.user.id)
-                clerk_phone = '09361164819'
-                teacher_user_id = request.user.id
-                teacher_requested = MyUser.objects.get(id=request.user.id)
-                teacher_email = request.user.username
-                teacher_phone = teacher_requested.username
-                sms_token = 'user_id:{},name:{}'.format(teacher_user_id, teacher.last_name)
-                sms_token2 = teacher_phone
-                sms_token3 = teacher_email
-                send_sms_teacher_edit(clerk_phone, sms_token, sms_token2, sms_token3)
-            else:
-                error = 'خطای فرم:'
-        context = {
-            'teacher_profile': teacher_profile,
-            'teacher_edit_form': teacher_edit_form,
-            'error': error,
-            'cities': cities,
-            'states': states,
-            'price_ranges': price_ranges,
-            # 'teacher_edited' : teacher_edited,
-            'syllabuses': syllabuses,
-            'first_name': first_name,
-            'last_name': last_name,
-        }
-        return render(request, 'accounts/teacher_edit.html', context)
 
 
 def search_view(request):

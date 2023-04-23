@@ -5,28 +5,18 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from accounts.models import Teacher, MyUser, ClassRequest, State, Comment
+from accounts.models import Teacher, MyUser, ClassRequest,  Comment
 from teachme.send_sms import *
 from accounts import phone_vrify
 
 
 def teacher_list(request):
-    states = State.objects.all()
-    category_id = request.GET.get('cat')
     syllabus_id = request.GET.get('syl')
-    teachers = Teacher.objects.filter(category=category_id, syllabus=syllabus_id, is_confirmed=True).reverse().order_by(
+    teachers = Teacher.objects.filter( syllabus=syllabus_id, is_confirmed=True).reverse().order_by(
         'points')
-    state_filter = request.GET.get('st')
-    if state_filter:
-        teachers = teachers.filter(state=state_filter)
 
     context = {
         'teachers': teachers,
-        'category_id': category_id,
-        'syllabus_id': syllabus_id,
-        'states': states,
-        'state_filter': state_filter,
-
     }
     return render(request, 'teachme/teacher_list.html', context)
 
@@ -78,14 +68,8 @@ def teacher_request_send(request, teacher_id):
 # create pages for direct search
 def nail_implants(request):
     teachers = Teacher.objects.filter(syllabus='کاشت ناخن', is_confirmed=True).reverse().order_by('points')
-    states = State.objects.all()
-    state_filter = request.GET.get('st')
-    if state_filter:
-        teachers = teachers.filter(state=state_filter)
     context = {
         'teachers': teachers,
-        'state_filter': state_filter,
-        'states': states,
     }
     return render(request, 'teachme/nail_implants.html', context)
 
@@ -93,14 +77,8 @@ def nail_implants(request):
 def eyebrow_microblading_training(request):
     teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب', is_confirmed=True).reverse().order_by(
         'points')
-    states = State.objects.all()
-    state_filter = request.GET.get('st')
-    if state_filter:
-        teachers = teachers.filter(state=state_filter)
     context = {
         'teachers': teachers,
-        'state_filter': state_filter,
-        'states': states,
     }
     return render(request, 'teachme/eyebrow-microblading-training.html', context)
 
@@ -108,14 +86,8 @@ def eyebrow_microblading_training(request):
 def eyebrow_lift_training(request):
     teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب', is_confirmed=True).reverse().order_by(
         'points')
-    states = State.objects.all()
-    state_filter = request.GET.get('st')
-    if state_filter:
-        teachers = teachers.filter(state=state_filter)
     context = {
         'teachers': teachers,
-        'state_filter': state_filter,
-        'states': states,
     }
     return render(request, 'teachme/eyebrow-lift-training.html', context)
 
@@ -123,98 +95,56 @@ def eyebrow_lift_training(request):
 def eyebrow_permanent_makeup_training(request):
     teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب', is_confirmed=True).reverse().order_by(
         'points')
-    states = State.objects.all()
-    state_filter = request.GET.get('st')
-    if state_filter:
-        teachers = teachers.filter(state=state_filter)
     context = {
         'teachers': teachers,
-        'state_filter': state_filter,
-        'states': states,
     }
     return render(request, 'teachme/permanent-makeup-training.html', context)
 
 
 def haircut_training(request):
     teachers = Teacher.objects.filter(syllabus='کوتاهی موی بانوان', is_confirmed=True).reverse().order_by('points')
-    states = State.objects.all()
-    state_filter = request.GET.get('st')
-    if state_filter:
-        teachers = teachers.filter(state=state_filter)
     context = {
         'teachers': teachers,
-        'state_filter': state_filter,
-        'states': states,
     }
     return render(request, 'teachme/haircut-training.html', context)
 
 
 def hair_coloring_training(request):
     teachers = Teacher.objects.filter(syllabus='آموزش رنگ و مش مو', is_confirmed=True).reverse().order_by('points')
-    states = State.objects.all()
-    state_filter = request.GET.get('st')
-    if state_filter:
-        teachers = teachers.filter(state=state_filter)
     context = {
         'teachers': teachers,
-        'state_filter': state_filter,
-        'states': states,
     }
     return render(request, 'teachme/hair-coloring-training.html', context)
 
 
 def face_balancing_training(request):
     teachers = Teacher.objects.filter(syllabus='میکاپ', is_confirmed=True).reverse().order_by('points')
-    states = State.objects.all()
-    state_filter = request.GET.get('st')
-    if state_filter:
-        teachers = teachers.filter(state=state_filter)
     context = {
         'teachers': teachers,
-        'state_filter': state_filter,
-        'states': states,
     }
     return render(request, 'teachme/face-balancing-training.html', context)
 
 
 def extension_training_for_eylashes(request):
     teachers = Teacher.objects.filter(syllabus='کاشت مژه', is_confirmed=True).reverse().order_by('points')
-    states = State.objects.all()
-    state_filter = request.GET.get('st')
-    if state_filter:
-        teachers = teachers.filter(state=state_filter)
     context = {
         'teachers': teachers,
-        'state_filter': state_filter,
-        'states': states,
     }
     return render(request, 'teachme/extension-training-for-eyelashes.html', context)
 
 
 def face_cleaning_training(request):
     teachers = Teacher.objects.filter(syllabus='پاکسازی پوست', is_confirmed=True).reverse().order_by('points')
-    states = State.objects.all()
-    state_filter = request.GET.get('st')
-    if state_filter:
-        teachers = teachers.filter(state=state_filter)
     context = {
         'teachers': teachers,
-        'state_filter': state_filter,
-        'states': states,
     }
     return render(request, 'teachme/face-cleaning-training.html', context)
 
 
 def hair_dress_training(request):
     teachers = Teacher.objects.filter(syllabus='شینیون و بافت مو', is_confirmed=True).reverse().order_by('points')
-    states = State.objects.all()
-    state_filter = request.GET.get('st')
-    if state_filter:
-        teachers = teachers.filter(state=state_filter)
     context = {
         'teachers': teachers,
-        'state_filter': state_filter,
-        'states': states,
     }
     return render(request, 'teachme/hair-dress-training.html', context)
 

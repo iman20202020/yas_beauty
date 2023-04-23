@@ -39,7 +39,7 @@ class TeacherEditForm(forms.ModelForm):
 
     class Meta:
         model = Teacher
-        fields = ['first_name', 'last_name', 'syllabus', 'state', 'city', ]
+        fields = ['first_name', 'last_name', 'syllabus', 'city', ]
 
 
 class CommentForm(forms.ModelForm):

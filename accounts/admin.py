@@ -1,12 +1,12 @@
 
 
 from django.contrib import admin
-from accounts.models import Teacher, Syllabus, PriceRange, City, MyUser, State, ClassRequest, Comment
+from accounts.models import Teacher, Syllabus, PriceRange, City, MyUser, ClassRequest, Comment
 
 admin.site.register(Syllabus)
 admin.site.register(PriceRange)
 admin.site.register(City)
-admin.site.register(State)
+# admin.site.register(State)
 
 # admin.site.register(ClassRequest)
 # admin.site.register(MyUser)
@@ -15,7 +15,7 @@ class MyUserAdmin(admin.ModelAdmin):
     search_fields = ['username', ]
 
 class TeacherAdmin(admin.ModelAdmin):
-    list_filter = ('is_confirmed', 'syllabus', 'state')
+    list_filter = ('is_confirmed', 'syllabus', )
     search_fields = ['last_name', ]
     readonly_fields = ['created', 'updated', ]
 

@@ -5,10 +5,9 @@ app_name = 'accounts'
 
 urlpatterns = [
     path('', views.index_accounts, name='index_accounts'),
-    path('base/', views.base_view, name='base_view'),
     path('user/verify', views.user_verify, name='user_verify'),
 
-    path('teacher/edit/', views.teacher_edit, name='teacher_edit'),
+    # path('teacher/edit/', views.teacher_edit, name='teacher_edit'),
     path('profile/edit/', views.profile_edit, name='profile_edit'),
     path('logout/',views.logout_view, name='logout_view'),
     path('accounts/login/',views.login_view, name='login_view'),
