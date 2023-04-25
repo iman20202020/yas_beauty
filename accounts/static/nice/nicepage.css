@@ -17240,6 +17240,7 @@ p {
 .u-text {
   word-wrap: break-word;
   position: relative;
+
 }
 .u-word-break {
   word-break: break-all;

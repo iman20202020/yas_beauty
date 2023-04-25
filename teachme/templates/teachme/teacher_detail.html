@@ -88,17 +88,14 @@
         <div class="u-palette-3-base u-shape u-shape-circle u-shape-2" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="750">
 
         </div>
-              <img src="{{ teacher_selected.degree_image4.url }}" alt="{{ teacher_selected.slug }}" class="u-image u-image-circle u-preserve-proportions u-image-2" data-image-width="1380" data-image-height="920">
-              <img src="{{ teacher_selected.degree_image5.url }}" alt="{{ teacher_selected.slug }}" class="u-image u-image-circle u-preserve-proportions  u-image-1" data-image-width="1380" data-image-height="920">
-              <img src="{{ teacher_selected.degree_image6.url }}" alt="{{ teacher_selected.slug }}" class="u-image u-image-circle u-preserve-proportions  u-image-4" data-image-width="1380" data-image-height="920">
-
-
+          <img src="{{ teacher_selected.degree_image4.url }}" alt="{{ teacher_selected.slug }}" class="u-image u-image-circle u-preserve-proportions u-image-2" data-image-width="1380" data-image-height="920">
+          <img src="{{ teacher_selected.degree_image5.url }}" alt="{{ teacher_selected.slug }}" class="u-image u-image-circle u-preserve-proportions  u-image-1" data-image-width="1380" data-image-height="920">
+          <img src="{{ teacher_selected.degree_image6.url }}" alt="{{ teacher_selected.slug }}" class="u-image u-image-circle u-preserve-proportions  u-image-4" data-image-width="1380" data-image-height="920">
       </div>
     </section>
     <section class="u-align-center u-clearfix u-grey-5 u-section-4" id="carousel_c208">
       <div class="u-expanded-width u-palette-3-base u-shape u-shape-rectangle u-shape-1"></div>
       <h2 class="u-text u-text-1" >How to Plan a Wedding</h2>
-      </p>
       <div class="u-list u-list-1">
         <div class="u-repeater u-repeater-1">
           <div class="u-align-center u-container-style u-list-item u-radius-20 u-repeater-item u-shape-round u-white u-list-item-1">
@@ -122,7 +119,6 @@
               <p class="u-text u-text-grey-50 u-text-8" >uspendisse vulputate eros in velit fermentum cursus. Nulla fringilla justo tellus, at sodales eros laoreet a. Quisque facilisis lorem augue, sit amet</p>
             </div>
           </div>
-
         </div>
       </div>
       <a href="{% url 'teachme:teacher_request_send' teacher_selected.id %}" class="u-active-palette-3-base u-align-center u-border-2 u-border-active-palette-3-base u-border-hover-palette-3-base u-border-palette-3-base u-btn u-btn-round u-button-style u-hover-palette-3-base u-none u-radius-10 u-text-active-white u-text-hover-white u-text-palette-3-dark-1 u-btn-2" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="" >درخواست استاد</a>
@@ -147,11 +143,6 @@
         </div>
       </div>
     </section>
-
-
-
-
-
 
 
 
@@ -216,10 +207,10 @@
             {% if user.is_authenticated %}
             <hr>
 
-            <div id="comment_form" class="u-form u-form-1 " dir="rtl">
+            <div id="comment_form-div" class="u-form u-form-1 " dir="rtl">
               <h2  class="u-text u-text-1 u-align-center" > نظر خود را ثبت کنید</h2>
                    <div id="message_viewer" class=" text-center"  style="display: none"><p dir="rtl"><i class="fa fa-check" style="font-size: xxx-large; color: #1c7430"></i></p></div>
-              <form method="post" action="{% url 'teachme:comment' teacher_selected.id %}" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"  name="form-1" style="padding: 10px;">
+              <form id="comment_form" method="post" action="{% url 'teachme:comment' teacher_selected.id %}" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"  name="form-1" style="padding: 10px;">
                 {% csrf_token %}
                   <div class="u-form-group u-form-name">
                   <label class="u-label" >نام</label>
@@ -234,8 +225,6 @@
                 </div>
               </form>
             </div>
-
-
           </div>
         </div>
 
@@ -252,10 +241,14 @@
 
     <script type="text/javascript">
         function message(){
-            $('#submit_comment').css('display', 'none')
-            {#$('#comment_form').css('display', 'none')#}
-            $('#message_viewer').css('display', 'block')
+            var name = document.forms["comment_form"]["name"].value;
+            var comment = document.forms["comment_form"]["comment"].value;
+            if (name!= "" && comment!="") {
+                $('#submit_comment').css('display', 'none')
+                $('#message_viewer').css('display', 'block')
+            }
         }
+
     </script>
 
 {% endblock %}

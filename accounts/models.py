@@ -86,9 +86,7 @@ class Teacher(models.Model):
                                            validators=[], size=[1300, 1300])
     certificate_image2 = ResizedImageField(verbose_name='عکس مدرک استاد2', upload_to="images/",
                                            validators=[], size=[1300, 1300])
-    end_image = ResizedImageField(verbose_name='عکس پایانی', upload_to="images/",
-                                           validators=[], size=[1300, 1300])
-
+    end_image = ResizedImageField(verbose_name='عکس پایانی', upload_to="images/", validators=[], size=[1300, 1300])
     workshop_number = models.CharField(max_length=100, blank=True, null=True)
     workshop_detail = models.CharField(max_length=100, blank=True, null=True)
     workshop_price = models.CharField(max_length=100, blank=True, null=True)
