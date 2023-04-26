@@ -10,17 +10,18 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from accounts.models import Teacher, MyUser
-
-
+from blog.models import Blog
 
 
 def index_accounts(request):
     teachers_count = Teacher.objects.filter(is_confirmed=True).count()
     teacher_bests = Teacher.objects.all().order_by('-points')[:3]
+    first_image = Blog.objects.filter(title="beauty slug")
 
     context = {
         'teacher_bests': teacher_bests,
         'teachers_count': teachers_count,
+        'first_image': first_image,
     }
 
     return render(request, 'accounts/index.html', context)

@@ -6,10 +6,10 @@
 
     <section class="u-align-center-sm u-align-center-xs u-align-right-lg u-align-right-md u-align-right-xl u-clearfix  u-section-1" id="sec-d422">
       <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
-        <div alt="" class="u-image u-image-circle u-image-1" data-image-width="1080" data-image-height="1080" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="250"></div>
+        <div  class="u-image u-image-circle u-image-1" data-image-width="1080" data-image-height="1080" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="250"></div>
         <div class="u-align-center u-bottom-left-radius-19 u-container-style u-group u-palette-2-base u-shape-round u-top-left-radius-19 u-group-1" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="500">
           <div class="u-container-layout u-container-layout-1">
-            <h1 class="u-text  u-text-palette-1-base  u-text-default u-text-1" >استادباز<br>معرفی رایگان &nbsp;<br>برترین اساتید آرایشگری<br>
+            <h1 class="u-text u-align-center u-text-palette-1-base   u-text-1" >استادباز<br>آموزش آرایشگری &nbsp;<br>معرف رایگان استاد <br>
               <br>
             </h1>
           </div>
@@ -77,21 +77,16 @@
           <a href=""> <p class="u-align-left u-text u-text-body-alt-color u-text-default u-text-10" data-animation-name="fadeIn" data-animation-duration="1000" data-animation-direction="Up" data-animation-delay="750" >چگونه استادم را انتخاب کنم</p></a>
       </div>
     </section>
-
      <section class="u-clearfix u-section-2" id="sec-dfee">
-{#      <div class="u-clearfix u-sheet u-sheet-1">#}
         <img src="https://media.farsnews.ir/Uploaded/Files/Images/1402/02/05/14020205000430_Test_PhotoN.jpg" alt="makeup-training" class="u-align-right u-image u-image-1" data-image-width="1080" data-image-height="1080" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="250"></img>
         <div class="u-container-style u-group u-radius-20 u-shape-round u-white u-group-1" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="500">
           <div class="u-container-layout u-valign-bottom u-container-layout-1">
             <h2 class="u-align-right  pb-3 text-secondary" >آموزش کلیه لاین های آرایشگری </h2>
             <p class="u-align-right u-text u-text-grey-70" >Egestas purus viverra accumsan in nisl nisi. ززززززززززززززززززززززززز ززززززززززززززززز زززززززززززززززززز ززززززززززززززززززززز  زززززززززززززززززززززززززز ززززززززززززززززززززززززززززززز   زززززززززززززززززززززززززززززززززززززززز   ززززززززززززززززززززززززززززززززززززززززززززززEnim nec dui nunc mattis enim ut. Consequat interdum varius sit amet mattis vulputate enim nulla. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet.</p>
-
            <a href="" class=" p-2 ml-4  u-active-palette-2-base u-align-left u-border-none u-btn u-btn-round u-button-style u-hover-feature u-hover-palette-2-base u-palette-2-base u-radius-50 u-text-active-white u-text-hover-white u-text-palette-1-base u-btn-2" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="" >&nbsp;بیشتر</a>
           </div>
         </div>
-{#      </div>#}
     </section>
-
     <section class="u-align-center u-clearfix u-container-align-center u-palette-2-base u-section-2" id="carousel_a589">
       <div class="u-clearfix u-sheet u-sheet-1">
         <h2 class="u-align-center u-text-palette-1-base  u-text u-text-1 pb-3" data-animation-name="customAnimationIn" data-animation-duration="1000" > با جمعی از استادهای ما آشنا بشید</h2>
@@ -104,7 +99,8 @@
                 <a href="{{ teacher.get_absolute_url }}">
                 <img class="u-expanded-width u-image u-image-round u-radius-15 u-image-1" src="{{ teacher.image.url }}" alt="{{ teacher.slug }}" data-image-width="812" data-image-height="812">
                 </a>
-                <h5 class="u-hover-feature u-text u-text-3 text-secondary" >استاد {{ teacher.last_name }} </h5>
+                <h5 class="u-hover-feature u-text u-text-5 text-secondary" >استاد {{ teacher.last_name }} </h5>
+                <h4 class="u-hover-feature u-text u-text-5 text-secondary" > {{ teacher.syllabus.persian_syllabus }} </h4>
 
                 {% ratings teacher %}
                 <p  dir="rtl" class="u-align-right u-hover-feature u-text u-text-grey-70 " >{{ teacher.experience }} سال سابقه تدریس  <br>{{ teacher.qualification|truncatewords:35 }}</p>

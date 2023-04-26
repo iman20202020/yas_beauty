@@ -35,6 +35,8 @@ class City(models.Model):
 class Syllabus(models.Model):
     syllabus = models.CharField(primary_key=True, max_length=50, )
     syllabus_name = models.CharField(max_length=50, )
+    persian_syllabus = models.CharField(verbose_name='موضوع', max_length=50, )
+
 
     def __str__(self):
         return self.syllabus_name
@@ -112,7 +114,7 @@ class Teacher(models.Model):
 
     def get_absolute_url(self):
         return reverse('teachme:teacher_detail',
-                       args=[ self.slug, ])
+                       args=[self.slug, ])
 
     def save(self, *args, **kwargs):
         unique_slugify(self, self.syllabus)
