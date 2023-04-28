@@ -1,10 +1,12 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AbstractUser
+from django.contrib.contenttypes.fields import GenericRelation
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.urls import reverse
 from django_resized import ResizedImageField
 from django_unique_slugify import unique_slugify
+from hitcount.settings import MODEL_HITCOUNT
 from social_core.utils import slugify
 
 from accounts.validators import validate_video_size, validate_image_size
@@ -59,36 +61,36 @@ class Teacher(models.Model):
     city = models.ForeignKey('City', on_delete=models.CASCADE, default='تهران')
     syllabus = models.ForeignKey('Syllabus', on_delete=models.CASCADE, )
     image = ResizedImageField(verbose_name='عکس استاد', upload_to='images/', validators=[],
-                              size=[1200, 1200])
+                              size=[800, 800])
     degree_image = ResizedImageField(verbose_name='نمونه کار1', upload_to="images/", validators=[],
-                                     size=[1300, 1300])
+                                     size=[800, 800])
     degree_image2 = ResizedImageField(verbose_name='نمونه کار2 ', upload_to="images/", validators=[],
-                                      size=[1300, 1300])
+                                      size=[800, 800])
     degree_image3 = ResizedImageField(verbose_name='نمونه کار3', upload_to="images/", validators=[],
-                                      size=[1300, 1300])
+                                      size=[800, 800])
     degree_image4 = ResizedImageField(verbose_name='نمونه کار4', upload_to="images/", validators=[],
-                                      size=[1300, 1300])
+                                      size=[800, 800])
     degree_image5 = ResizedImageField(verbose_name='نمونه کار5', upload_to="images/", validators=[],
-                                      size=[1300, 1300])
+                                      size=[800, 800])
     degree_image6 = ResizedImageField(verbose_name='نمونه کار6', upload_to="images/", validators=[],
-                                      size=[1300, 1300])
+                                      size=[800, 800])
     degree_image7 = ResizedImageField(verbose_name='نمونه کار7', upload_to="images/", validators=[],
-                                      size=[1300, 1300])
+                                      size=[800, 800])
     degree_image8 = ResizedImageField(verbose_name='نمونه کار8', upload_to="images/", validators=[],
-                                      size=[1300, 1300])
+                                      size=[800, 800])
     work_image = ResizedImageField(verbose_name='عکس بازار کار', upload_to="images/", validators=[],
-                                      size=[1300, 1300])
+                                      size=[800, 800])
     debugging_image = ResizedImageField(verbose_name='عکس رفع اشکال', upload_to="images/", validators=[],
-                                       size=[1300, 1300])
+                                       size=[800, 800])
     friendly_image = ResizedImageField(verbose_name=' عکس دوستانه', upload_to="images/", validators=[],
-                                       size=[1300, 1300])
+                                       size=[800, 800])
     original_diploma_image = ResizedImageField(verbose_name=' عکس مدرک هنرجوها', upload_to="images/", validators=[],
-                                       size=[1300, 1300])
+                                       size=[800, 800])
     certificate_image1 = ResizedImageField(verbose_name='عکس مدرک استاد1', upload_to="images/",
-                                           validators=[], size=[1300, 1300])
+                                           validators=[], size=[800, 800])
     certificate_image2 = ResizedImageField(verbose_name='عکس مدرک استاد2', upload_to="images/",
-                                           validators=[], size=[1300, 1300])
-    end_image = ResizedImageField(verbose_name='عکس پایانی', upload_to="images/", validators=[], size=[1300, 1300])
+                                           validators=[], size=[800, 800])
+    end_image = ResizedImageField(verbose_name='عکس پایانی', upload_to="images/", validators=[], size=[800, 800])
     workshop_number = models.CharField(max_length=100, blank=True, null=True)
     workshop_detail = models.CharField(max_length=100, blank=True, null=True)
     workshop_price = models.CharField(max_length=100, blank=True, null=True)
@@ -108,9 +110,11 @@ class Teacher(models.Model):
     comment_num = models.IntegerField(default=0, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
+    hit_count_generic = GenericRelation(MODEL_HITCOUNT, object_id_field='object_pk',
+                                        related_query_name='hit_count_generic_relation')
 
     def __str__(self):
-        return f"uid:{self.id}/{self.last_name}/{self.user.username}/{self.syllabus}"
+        return f"id:{self.id}/{self.last_name}/{self.user.username}/{self.syllabus}"
 
     def get_absolute_url(self):
         return reverse('teachme:teacher_detail',
@@ -145,7 +149,6 @@ class ClassRequest(models.Model):
     is_confirmed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
-    request_time = models.DateTimeField(auto_now=True, )
 
     def __str__(self):
         return f"teacher:{self.teacher.last_name}/uid:{self.teacher.user_id} - stu:{self.student}"

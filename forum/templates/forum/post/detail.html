@@ -6,10 +6,6 @@
     <div class="row text-center mb-5">
         <h1>{{ post.title }}</h1>
         <p>موضوع:{{ post.syllabus }}</p>
-
-
-
-
         <div class="info">
             <p>{{ post.author_name }}</p>
             {% if teacher  %}
@@ -21,7 +17,6 @@
             {% endif %}
                 <p>{{ post.publish|date:"Y/m/d" }}</p>
                 <p>views: {% get_hit_count for post %}</p>
-
            {% with total_likes=post.users_like.count users_like=post.users_like.all %}
                 <span id="total_likes">{{ total_likes }}</span>
                 like{{ total_likes|pluralize }}
@@ -36,7 +31,6 @@
         </div>
     </div>
     <a   href="{% url 'forum:post_comment' post.id  %}" class="btn btn-success text-right" >پاسخ دهید</a>
-
     <div class="bg-white mb-3 "dir="rtl">
         <h4 class="px-3 py-4 op-5 m-0 ">پست های مشابه</h4>
         <hr class="m-0">
@@ -51,7 +45,6 @@
          {% endfor %}
     </div>
     <hr>
-
     <div dir="rtl" class="small">
         {% with comments.count as total_comments %}
         <h2>پاسخ ها:
@@ -69,7 +62,6 @@
                             <p>{{ comment_to.name }}:  {{ comment_to.body }}</p>
                         {% endfor %}
                     {% endif %}
-
                 <div dir="ltr">
                     <a  href="{% url 'forum:comment_comment' post.id comment.id %}" class="button " >پاسخ دهید</a></div>
                 </div>

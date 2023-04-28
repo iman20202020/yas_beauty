@@ -1,19 +1,27 @@
 {% extends 'accounts/_base.html' %}
 {% load static %}
 {% load ratings %}
+{% load hitcount_tags %}
 {% block contents %}
 
     <section class="u-align-center-lg u-align-center-md u-align-center-xl u-align-left-sm u-align-left-xs u-clearfix u-white u-section-1" id="sec-785b">
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <div class="u-palette-3-base u-preserve-proportions u-shape u-shape-circle u-shape-1" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="0"></div>
+        <div class="u-palette-3-base u-preserve-proportions u-shape u-shape-circle u-shape-1 text-center" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="0">
+            <p class="text-secondary"> <i class="fa fa-eye"></i> {% get_hit_count for teacher_selected %}<br>
+                {% if teacher_class_count %}<i class="fa fa-graduation-cap"></i> {{ teacher_class_count }}{% endif %}<br>
+                {% if teacher_for_comments %}<i class="fa fa-comment" ></i> {{ teacher_for_comments.count }}{% endif %}
+            </p>
+        </div>
         <img class="u-image u-image-circle u-preserve-proportions u-image-1" src="{{ teacher_selected.degree_image.url }}" alt="" data-image-width="810" data-image-height="810" data-animation-name="customAnimationIn" data-animation-duration="1500">
            <video src="{{ teacher_selected.describe_video.url }}" controls  class="u-image u-image-circle u-image-2" data-image-width="1380" data-image-height="920" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="750"></video>
           <img class="u-border-20 u-border-palette-3-base u-image u-image-circle u-image-3" src="{{ teacher_selected.image.url }}" alt="" data-image-width="960" data-image-height="907" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="250">
-         <div class="text-center"> {% ratings teacher_selected %}</div>
+         <div class="text-center"> {% ratings teacher_selected %}
+
+         </div>
         <img class="u-image u-image-circle u-image-4" src="{{ teacher_selected.degree_image2.url }}" alt="" data-image-width="920" data-image-height="889" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="250">
         <div class="u-align-center u-container-style u-expanded-width-sm u-expanded-width-xs u-group u-shape-rectangle u-group-1" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="500">
           <div class="u-container-layout u-container-layout-1">
-            <h2 class="u-text u-text-palette-1-base u-text-1"> {{ teacher_selected.first_name }} {{ teacher_selected.last_name }}<br>
+            <h2 class="u-text u-text-palette-1-base u-text-1"> استاد {{ teacher_selected.last_name }}<br>
             </h2>
             <p class="u-text text-right" > {{ teacher_selected.qualification }}</p>
             <ul>
@@ -23,6 +31,7 @@
           </div>
         </div>
       </div>
+
     </section>
     <section class="u-align-center u-clearfix u-image u-shading u-section-2"  data-image-width="1620" data-image-height="1080" id="carousel_aeea">
       <div class="u-clearfix u-sheet u-sheet-1">
@@ -208,7 +217,6 @@
             <hr>
 
             <div id="comment_form-div" class="u-form u-form-1 " dir="rtl">
-              <h2  class="u-text u-text-1 u-align-center" > نظر خود را ثبت کنید</h2>
                    <div id="message_viewer" class=" text-center"  style="display: none"><p dir="rtl"><i class="fa fa-check" style="font-size: xxx-large; color: #1c7430"></i></p></div>
               <form id="comment_form" method="post" action="{% url 'teachme:comment' teacher_selected.id %}" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"  name="form-1" style="padding: 10px;">
                 {% csrf_token %}
@@ -227,9 +235,8 @@
             </div>
           </div>
         </div>
-
         {% else %}
-          <a href="{% url 'teachme:comment' teacher_selected.id %}" class="u-active-black u-border-none u-btn u-btn-round u-btn-submit u-button-style u-hover-black u-palette-3-base u-radius-12 u-btn-1" >نظر خود را ثبت کنید</a>
+                <div class="u-align-center"><a href="{% url 'teachme:comment' teacher_selected.id %}" class="u-active-black u-border-none u-btn u-btn-round u-btn-submit u-button-style u-hover-black u-palette-3-base u-radius-12 u-btn-3 " >نظر خود را ثبت کنید</a></div>
          {% endif %}
         <div class="u-shape u-shape-svg u-text-white u-shape-3">
           <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 160" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-a0bf"></use></svg>

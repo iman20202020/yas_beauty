@@ -9,19 +9,19 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from accounts.models import Teacher, MyUser
+from accounts.models import Teacher, MyUser, ClassRequest
 from blog.models import Blog
 
 
 def index_accounts(request):
     teachers_count = Teacher.objects.filter(is_confirmed=True).count()
-    teacher_bests = Teacher.objects.all().order_by('-points')[:3]
-    first_image = Blog.objects.filter(title="beauty slug")
+    teacher_bests = Teacher.objects.all().order_by('-points')[:9]
+    total_class_count = ClassRequest.objects.filter(is_confirmed=True).count()
 
     context = {
         'teacher_bests': teacher_bests,
         'teachers_count': teachers_count,
-        'first_image': first_image,
+        'total_class_count': total_class_count,
     }
 
     return render(request, 'accounts/index.html', context)

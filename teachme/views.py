@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from hitcount.views import HitCountDetailView
 
 from accounts.models import Teacher, MyUser, ClassRequest,  Comment
 from teachme.send_sms import *
@@ -21,16 +22,23 @@ def teacher_list(request):
     return render(request, 'teachme/teacher_list.html', context)
 
 
-def teacher_detail(request, teacher_slug):
-    teacher_selected = Teacher.objects.get(slug=teacher_slug)
-    teacher_id = teacher_selected.id
-    teacher_for_comments = Comment.objects.filter(teacher_id=teacher_id, is_confirmed=True)
+class TeacherDetailView(HitCountDetailView):
+    model = Teacher
+    template_name = 'teachme/teacher_detail.html'
+    context_object_name = 'teacher'
+    slug_field = 'slug'
+    count_hit = True
 
-    context = {
-        'teacher_selected': teacher_selected,
-        'teacher_for_comments': teacher_for_comments,
-    }
-    return render(request, 'teachme/teacher_detail.html', context)
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+
+        teacher_id = data['object'].id
+        teacher_classes = ClassRequest.objects.filter(teacher_id=teacher_id, is_confirmed=True).count()
+        teacher_for_comments = Comment.objects.filter(teacher_id=teacher_id, is_confirmed=True)
+        data['teacher_selected'] = data['object']
+        data['teacher_for_comments'] = teacher_for_comments
+        data['teacher_class_count'] = teacher_classes
+        return data
 
 
 @login_required
@@ -44,7 +52,7 @@ def comment(request, teacher_id):
             if comment:
                 comment.save()
         except:
-            ValidationError
+            ValidationError('')
 
 @login_required
 def teacher_request_send(request, teacher_id):
