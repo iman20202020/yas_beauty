@@ -1,25 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
 from hitcount.views import HitCountDetailView
-
-from accounts.models import Teacher, MyUser, ClassRequest,  Comment
+from accounts.models import Teacher, ClassRequest, Comment, Syllabus
+from teachme.page_titles import set_page_title
 from teachme.send_sms import *
-from accounts import phone_vrify
-
-
-def teacher_list(request):
-    syllabus_id = request.GET.get('syl')
-    teachers = Teacher.objects.filter( syllabus=syllabus_id, is_confirmed=True).reverse().order_by(
-        'points')
-
-    context = {
-        'teachers': teachers,
-    }
-    return render(request, 'teachme/teacher_list.html', context)
 
 
 class TeacherDetailView(HitCountDetailView):
@@ -73,130 +59,18 @@ def teacher_request_send(request, teacher_id):
     return redirect(teacher_requested.get_absolute_url())
 
 
-# create pages for direct search
-def nail_implants(request):
-    teachers_1 = Teacher.objects.filter(syllabus='nail-implant', is_confirmed=True).reverse().order_by('points')[:3]
-    teachers_2 = Teacher.objects.filter(syllabus='nail-implant', is_confirmed=True).reverse().order_by('points')[3:]
+def teachers_list(request, teachers_syllabus):
+    teachers_1 = Teacher.objects.filter(syllabus=teachers_syllabus, is_confirmed=True).reverse().order_by('points')[:1]
+    teachers_2 = Teacher.objects.filter(syllabus=teachers_syllabus, is_confirmed=True).reverse().order_by('points')[1:]
+    syllabus = get_object_or_404(Syllabus, syllabus=teachers_syllabus)
+    title = set_page_title(teachers_syllabus)
+
     context = {
         'teachers_1': teachers_1,
         'teachers_2': teachers_2,
+        'syllabus': syllabus,
+        'title': title,
     }
-    return render(request, 'teachme/nail_implants.html', context)
+    return render(request, 'teachme/teachers_list.html', context)
 
 
-def eyebrow_microblading_training(request):
-    teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب', is_confirmed=True).reverse().order_by(
-        'points')
-    context = {
-        'teachers': teachers,
-    }
-    return render(request, 'teachme/eyebrow-microblading-training.html', context)
-
-
-def eyebrow_lift_training(request):
-    teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب', is_confirmed=True).reverse().order_by(
-        'points')
-    context = {
-        'teachers': teachers,
-    }
-    return render(request, 'teachme/eyebrow-lift-training.html', context)
-
-
-def eyebrow_permanent_makeup_training(request):
-    teachers = Teacher.objects.filter(syllabus='آرایش دائم ابرو چشم و لب', is_confirmed=True).reverse().order_by(
-        'points')
-    context = {
-        'teachers': teachers,
-    }
-    return render(request, 'teachme/permanent-makeup-training.html', context)
-
-
-def haircut_training(request):
-    teachers = Teacher.objects.filter(syllabus='کوتاهی موی بانوان', is_confirmed=True).reverse().order_by('points')
-    context = {
-        'teachers': teachers,
-    }
-    return render(request, 'teachme/haircut-training.html', context)
-
-
-def hair_coloring_training(request):
-    teachers = Teacher.objects.filter(syllabus='آموزش رنگ و مش مو', is_confirmed=True).reverse().order_by('points')
-    context = {
-        'teachers': teachers,
-    }
-    return render(request, 'teachme/hair-coloring-training.html', context)
-
-
-def face_balancing_training(request):
-    teachers = Teacher.objects.filter(syllabus='میکاپ', is_confirmed=True).reverse().order_by('points')
-    context = {
-        'teachers': teachers,
-    }
-    return render(request, 'teachme/face-balancing-training.html', context)
-
-
-def extension_training_for_eylashes(request):
-    teachers = Teacher.objects.filter(syllabus='کاشت مژه', is_confirmed=True).reverse().order_by('points')
-    context = {
-        'teachers': teachers,
-    }
-    return render(request, 'teachme/extension-training-for-eyelashes.html', context)
-
-
-def face_cleaning_training(request):
-    teachers = Teacher.objects.filter(syllabus='پاکسازی پوست', is_confirmed=True).reverse().order_by('points')
-    context = {
-        'teachers': teachers,
-    }
-    return render(request, 'teachme/face-cleaning-training.html', context)
-
-
-def hair_dress_training(request):
-    teachers = Teacher.objects.filter(syllabus='شینیون و بافت مو', is_confirmed=True).reverse().order_by('points')
-    context = {
-        'teachers': teachers,
-    }
-    return render(request, 'teachme/hair-dress-training.html', context)
-
-
-def like_view(request):
-    if request.is_ajax():
-        teacher_id = request.GET.get('id')
-        teacher = Teacher.objects.get(id=teacher_id)
-        teacher_points = teacher.points
-        action = request.GET.get('action')
-        if teacher_id and action:
-            try:
-                if action == 'like':
-                    teacher_points += 0.01
-                    teacher.users_like.add(request.user)
-                    teacher.users_dislike.remove(request.user)
-                    status = 'like_ok'
-                elif action == 'unlike':
-                    teacher_points -= 0.01
-                    teacher.users_like.remove(request.user)
-                    status = 'like_ok'
-                elif action == 'dislike':
-                    teacher_points -= 0.01
-                    teacher.users_dislike.add(request.user)
-                    teacher.users_like.remove(request.user)
-                    status = 'dislike_ok'
-                elif action == 'no_dislike':
-                    teacher_points += 0.01
-                    teacher.users_dislike.remove(request.user)
-                    status = 'dislike_ok'
-                else:
-                    status = 'error'
-                if teacher_points > 5.0:
-                    teacher.points = 5.0
-                else:
-                    teacher.points = teacher_points
-
-                    teacher.save()
-
-                return JsonResponse({'status': status})
-            except:
-                pass
-        return JsonResponse({'status': 'error'})
-    else:
-        pass
