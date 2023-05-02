@@ -75,9 +75,11 @@ def teacher_request_send(request, teacher_id):
 
 # create pages for direct search
 def nail_implants(request):
-    teachers = Teacher.objects.filter(syllabus='کاشت ناخن', is_confirmed=True).reverse().order_by('points')
+    teachers_1 = Teacher.objects.filter(syllabus='nail-implant', is_confirmed=True).reverse().order_by('points')[:3]
+    teachers_2 = Teacher.objects.filter(syllabus='nail-implant', is_confirmed=True).reverse().order_by('points')[3:]
     context = {
-        'teachers': teachers,
+        'teachers_1': teachers_1,
+        'teachers_2': teachers_2,
     }
     return render(request, 'teachme/nail_implants.html', context)
 

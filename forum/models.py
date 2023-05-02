@@ -28,7 +28,7 @@ class Post(models.Model, HitCountMixin):
     author = models.ForeignKey(MyUser, related_name='blog_posts', on_delete=models.CASCADE)
     author_name = models.CharField(max_length=100,)
     body = models.TextField()
-    post_image = ProcessedImageField(upload_to='forum/%Y/%m/%d/', blank=True, null=True, processors=[ResizeToFit(width=400
+    post_image = ProcessedImageField(verbose_name="تصویر", upload_to='forum/%Y/%m/%d/', blank=True, null=True, processors=[ResizeToFit(width=400
        , upscale=False)],format='JPEG', options={'quality': 80})
     publish = jmodels.jDateTimeField(default=timezone.now)
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.DRAFT)

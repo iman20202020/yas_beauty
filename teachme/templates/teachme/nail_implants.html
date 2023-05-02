@@ -1,83 +1,20 @@
+{% extends 'accounts/_base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html dir="rtl" lang="fa-IR">
-<style>
-li{
-    word-break: break-word ;font-size: 14px; font-weight: normal; color: #5a6268;
-}
-a:link {
-   color:inherit;
-}
-</style>
-<head dir="rtl">
-    <title>آموزش کاشت ناخن| آموزش صفر تا صد انواع کاشت  |معرفی اساتید برتراستادباز </title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" charset=utf-8>
-    <meta name="description" content=" معرفی برترین اساتید کشور در زمینه آموزش کاشت ناخن - آموزش صفر تا صد انواع کاشت ناخن - طراحی ناخن - مانیکور - پدیکور - کاشت پودر - کاشت ژل ">
-<meta name="keywords" content=" آموزش کاشت ناخن - آموزش صفر تا صد انواع کاشت ناخن - طراحی ناخن - مانیکور - پدیکور - کاشت پودر - کاشت ژل ">
-<meta property="og:site_name" content="استادباز">
-<meta property="og:type" content="article">
-<meta property="og:title" content="معرفی بهترین اساتید کاشت ناخن کشور ">
-<meta property="og:url" content="https://ostadbaz.com/">
-<meta name="new_keywords" content=" آموزش کاشت ناخن - آموزش صفر تا صد انواع کاشت ناخن - طراحی ناخن - مانیکور - پدیکور - کاشت پودر - کاشت ژل">
-{#<meta property="og:image" content="https:">#}
-<meta property="og:description" content=" معرفی برترین اساتید کشور در زمینه آموزش کاشت ناخن - آموزش صفر تا صد انواع کاشت ناخن - طراحی ناخن - مانیکور - پدیکور - کاشت پودر - کاشت ژل">
 
+{% block title %}آموزش کاشن ناخن -آموزش ناخن کاری - شغل ناخن کاری{% endblock %}
+{% block contents %}
+    <section class="u-align-center u-clearfix u-container-align-center u-palette-6-base u-section-2" id="nail-title">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h1 class="u-align-center u-text-palette-1-base  u-text u-text-1 pb-3" data-animation-name="customAnimationIn" data-animation-duration="1000" >اساتید آموزش کاشت ناخن</h1>
+        <h3 class="u-align-center u-text-palette-1-base  u-text u-text-3 pb-3">
+          <i class="fas fa-chalkboard-teacher"></i>
+            {{ teachers.count }}
+        </h3>
+          {% include 'teachme/teacher_viewer_for_workshops_inc.html' %}
+      <a class="mb-3" href="{% url 'accounts:index_accounts' %}" style="color: #f8b001; font-size: x-large"><i class="fa fa-arrow-left"></i> </a>
+      </div>
+   </section>
 
-</head>
-
-{% include 'teachme/nav_for_include.html' %}
-
-<div class="col-lg-6 col-md-6 col-sm-12 form-group text-right" data-for="state_filter_select  " id="state_div">
-
-<div class="container p-4">
-    <div class="row">
-
-    <article class="">
-        <h2 class="small"> معرفی اساتید برتر  کلاس و ورکشاپ های آموزش کاشت ناخن - آموزش صفر تا صد انواع کاشت ناخن - آموزش طراحی ناخن -
-            آموزش ترمیم ناخن - آپدیت و رفع اشکال ناخن کاران - مدرک فنی و حرفه ای - آموزش کاشت به سبک روسی </h2>
-    </article>
-</div>
-
-{#<div class="text-center m-3 "><button class="btn btn-dark"><a href="{% url 'accounts:consult_view' %}" class="text-dark" >درخواست مشاوره تلفنی</a> </button> </div>#}
-
-
-<div class="row">
-     <label for="state_filter_select">استان:</label>
-                    <select  name="state_filter_select" onchange="filter_state()" data-form-field="state_filter_select"
-                             class="form-control" id="state_filter_select" style="font-size: medium">
-                        <option value="">همه استان ها</option>
-                    {% if state_filter %}
-                        <option value="{{ state_filter }}" selected>{{ state_filter }}</option>
-                    {% endif %}
-                        {% for state in states %}
-                            <option value="{{ state.state }}"
-                                {% if  teacher_profile.state.state == state.state %}selected{% endif %}>{{ state.state }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                </div>
-        <div class="  col-lg-12 col-md-12 col-sm-12 alert text-center alert-info text-dark mt-2 mb-0 py-1 px-3  ">
-            <p>   آموزش کاشت ناخن : {{ teachers.count }}   استاد مورد تایید  </p>
-            <p class="text-primary">   یک ساعت اول کلیه کلاس ها رایگان است.اگر خوشتان آمد پرداخت کرده و ادامه دهید </p>
-        </div><br>
-{% include 'teachme/teacher_viewer_for_workshops_inc.html' %}
-<div class="row">
-    <article class="">
-        <h2 class="small"> معرفی اساتید برتر  کلاس و ورکشاپ های آموزش کاشت ناخن - آموزش صفر تا صد انواع کاشت ناخن - آموزش طراحی ناخن -
-            آموزش ترمیم ناخن - آپدیت و رفع اشکال ناخن کاران - مدرک فنی و حرفه ای - آموزش کاشت به سبک روسی </h2>
-    </article>
-</div>
-
- </div>
-</div>
-
-<div class="text-center">
-     <a class="btn btn-primary  " href="{% url 'accounts:index_accounts' %}">
-       بازگشت به صفحه اصلی
-    </a>
-    </div>
-<br>
 
 <script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>
 <script src="{% static 'accounts/assets/bootstrap/js/bootstrap.min.js' %}"></script>
@@ -88,3 +25,4 @@ function filter_state() {
 }
 </script>
 
+{% endblock %}

@@ -9,13 +9,16 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from accounts.models import Teacher, MyUser, ClassRequest
-from blog.models import Blog
+from accounts.models import Teacher, MyUser, ClassRequest, Syllabus
 
 
 def index_accounts(request):
+    teacher_bests = Teacher.objects.none()
     teachers_count = Teacher.objects.filter(is_confirmed=True).count()
-    teacher_bests = Teacher.objects.all().order_by('-points')[:9]
+    syllabuses = Syllabus.objects.all()
+    for syllabus in syllabuses:
+        teacher_best = Teacher.objects.filter(syllabus=syllabus, is_confirmed=True).order_by('-points')[:1]
+        teacher_bests |= teacher_best
     total_class_count = ClassRequest.objects.filter(is_confirmed=True).count()
 
     context = {

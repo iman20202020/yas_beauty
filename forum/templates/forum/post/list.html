@@ -24,7 +24,7 @@
 
                         <p class="text-sm text-secondary"><span class="op-6 small">{{ post.publish|date:"Y/m/d" }}  </span></p>
                         <div class="text-sm op-5" dir="ltr">
-                            <a href="{% url "forum:post_list_by_tag" post.syllabus %}">{{ post.syllabus }}</a>
+                            <a href="{% url "forum:post_list_by_tag" post.syllabus.syllabus %}">{{ post.syllabus }}</a>
                         </div>
                     </div>
                     <div class="col-md-4 op-7">

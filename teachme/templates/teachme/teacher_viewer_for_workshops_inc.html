@@ -1,53 +1,97 @@
 {% load static %}
+{% load ratings %}
+{#{% for teacher in teachers %}#}
+{#      <div class=" column card text-right " >#}
+{#            <div class="dev ">#}
+{#              <a href="{{ teacher.get_absolute_url }}" class="card__body" style="text-decoration: none; color: #737373">#}
+{#                <div class="dev__profile d-flex">#}
+{#                  <img class="avatar avatar--lg "  src="{{ teacher.image.url }}" alt="{{ teacher.last_name }}" />#}
+{#                  <div class="dev__meta p-5">#}
+{#                      <h4 > {{ teacher.first_name }} {{ teacher.last_name }}</h4>#}
+{#                 <h6>{{ teacher.syllabus_id }}({{ teacher.city_id }})</h6>#}
+{##}
+{##}
+{##}
+{#                  </div>#}
+{#                </div>#}
+{#               <ul class="">#}
+{#                <li  class="text-right "> {{ teacher.qualification|truncatewords:20 }} </li>#}
+{#    <li  class="text-right "> امتیاز : {{ teacher.points|floatformat:2 }} از 5</li>#}
+{##}
+{#                <li  class="text-right  "> {{ teacher.experience }}سال سابقه تدریس </li>#}
+{#                <li  class="text-right ">#}
+{#                    {% if teacher.learn_type == 0 %}آنلاین یا حضوری{% endif %}#}
+{#                            {% if teacher.learn_type == 1 %}آنلاین{% endif %}#}
+{#                            {% if teacher.learn_type == 2 %} حضوری{% endif %}#}
+{#                </li>#}
+{#                 <li  class="text-right "> کلاس {{ teacher.workshop_number }} {{ teacher.workshop_detail }} </li>#}
+{#                <li  class="text-right ">  {{ teacher.workshop_price }}  </li>#}
+{##}
+{#            </ul>#}
+{#                <div class="dev__skills">#}
+{#                {% if teacher.users_like.count %}#}
+{#                  <span class="tag tag--pill tag--main">#}
+{#                     {{ teacher.users_like.count }} &nbsp; &nbsp; <i class="fa fa-thumbs-up " aria-hidden="true"  ></i>#}
+{#                  </span>#}
+{#                {% endif %}#}
+{#                {% if teacher.users_dislike.count %}#}
+{#                  <span class="tag tag--pill tag--main">#}
+{#                    {{ teacher.users_dislike.count }} &nbsp;&nbsp;  <i class="fa fa-thumbs-down" aria-hidden="true"  ></i>#}
+{#                  </span>#}
+{#                {% endif %}#}
+{##}
+{#                     {% if teacher.comment_num %}#}
+{#                  <span class="tag tag--pill tag--main">#}
+{#                   {{ teacher.comment_num }}&nbsp; نظر#}
+{#                  </span>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#                </a>#}
+{#            </div>#}
+{#     </div>#}
 
-{% for teacher in teachers %}
-      <div class=" column card text-right " >
-            <div class="dev ">
-              <a href="{{ teacher.get_absolute_url }}" class="card__body" style="text-decoration: none; color: #737373">
-                <div class="dev__profile d-flex">
-                  <img class="avatar avatar--lg "  src="{{ teacher.image.url }}" alt="{{ teacher.last_name }}" />
-                  <div class="dev__meta p-5">
-                      <h4 > {{ teacher.first_name }} {{ teacher.last_name }}</h4>
-                 <h6>{{ teacher.syllabus_id }}({{ teacher.city_id }})</h6>
 
-
-
-                  </div>
-                </div>
-               <ul class="">
-                <li  class="text-right "> {{ teacher.qualification|truncatewords:20 }} </li>
-    <li  class="text-right "> امتیاز : {{ teacher.points|floatformat:2 }} از 5</li>
-
-                <li  class="text-right  "> {{ teacher.experience }}سال سابقه تدریس </li>
-                <li  class="text-right ">
-                    {% if teacher.learn_type == 0 %}آنلاین یا حضوری{% endif %}
-                            {% if teacher.learn_type == 1 %}آنلاین{% endif %}
-                            {% if teacher.learn_type == 2 %} حضوری{% endif %}
-                </li>
-                 <li  class="text-right "> کلاس {{ teacher.workshop_number }} {{ teacher.workshop_detail }} </li>
-                <li  class="text-right ">  {{ teacher.workshop_price }}  </li>
-
-            </ul>
-                <div class="dev__skills">
-                {% if teacher.users_like.count %}
-                  <span class="tag tag--pill tag--main">
-                     {{ teacher.users_like.count }} &nbsp; &nbsp; <i class="fa fa-thumbs-up " aria-hidden="true"  ></i>
-                  </span>
-                {% endif %}
-                {% if teacher.users_dislike.count %}
-                  <span class="tag tag--pill tag--main">
-                    {{ teacher.users_dislike.count }} &nbsp;&nbsp;  <i class="fa fa-thumbs-down" aria-hidden="true"  ></i>
-                  </span>
-                {% endif %}
-
-                     {% if teacher.comment_num %}
-                  <span class="tag tag--pill tag--main">
-                   {{ teacher.comment_num }}&nbsp; نظر
-                  </span>
-                    {% endif %}
-                </div>
+    <section class="u-align-center u-clearfix u-container-align-center u-palette-6-base u-section-2" id="teacher_list-1">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-align-center u-text-palette-1-base  u-text u-text-1 pb-3" data-animation-name="customAnimationIn" data-animation-duration="1000" > با جمعی از استادهای ما آشنا بشید</h2>
+        <p class="u-align-center u-text  u-text-2 u-text-palette-1-base " data-animation-name="customAnimationIn" data-animation-duration="1500" > در این سامانه بهترین استادهای آرایشگری رو بصورت رایگان بهتون معرفی می کنیم</p>
+          <div class="u-expanded-width u-list u-list-1">
+          <div class="u-repeater u-repeater-1">
+             {% for teacher in teachers_1 %}
+            <div class="u-align-center u-container-style u-list-item u-radius-20 u-repeater-item u-shape-round u-video-cover u-white u-list-item-1" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="750">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
+                <a href="{{ teacher.get_absolute_url }}">
+                <img class="u-expanded-width u-image u-image-round u-radius-15 u-image-1" src="{{ teacher.image.url }}" alt="{{ teacher.slug }}" data-image-width="812" data-image-height="812">
                 </a>
-            </div>
-     </div>
+                <h5 class="u-hover-feature u-text u-text-5 text-secondary" >استاد {{ teacher.last_name }} </h5>
+                <h4 class="u-hover-feature u-text u-text-5 text-secondary" > {{ teacher.syllabus.persian_syllabus }} </h4>
 
- {% endfor %}
+                {% ratings teacher %}
+                <p  dir="rtl" class="u-align-right u-hover-feature u-text u-text-grey-70 " >{{ teacher.experience }} سال سابقه تدریس  <br>{{ teacher.qualification|truncatewords:35 }}</p>
+                <a href="{{ teacher.get_absolute_url }}" class="u-align-center u-border-1 u-border-active-black u-border-hover-black u-border-no-left u-border-no-right u-border-no-top u-border-palette-1-base u-bottom-left-radius-0 u-bottom-right-radius-0 u-btn u-button-style u-hover-feature u-none u-radius-0 u-text-active-black u-text-body-color u-text-hover-black u-top-left-radius-0 u-top-right-radius-0 u-btn-1">بیشتر</a>
+              </div>
+            </div>
+          {% endfor %}
+
+        <h2 class="u-align-center u-text-palette-1-base  u-text u-text-1 pb-3" data-animation-name="customAnimationIn" data-animation-duration="1000" > با جمعی از استادهای ما آشنا بشید</h2>
+        <p class="u-align-center u-text  u-text-2 u-text-palette-1-base " data-animation-name="customAnimationIn" data-animation-duration="1500" > در این سامانه بهترین استادهای آرایشگری رو بصورت رایگان بهتون معرفی می کنیم</p>
+             {% for teacher in teachers_2 %}
+            <div class="u-align-center u-container-style u-list-item u-radius-20 u-repeater-item u-shape-round u-video-cover u-white u-list-item-1" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="750">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
+                <a href="{{ teacher.get_absolute_url }}">
+                <img class="u-expanded-width u-image u-image-round u-radius-15 u-image-1" src="{{ teacher.image.url }}" alt="{{ teacher.slug }}" data-image-width="812" data-image-height="812">
+                </a>
+                <h5 class="u-hover-feature u-text u-text-5 text-secondary" >استاد {{ teacher.last_name }} </h5>
+                <h4 class="u-hover-feature u-text u-text-5 text-secondary" > {{ teacher.syllabus.persian_syllabus }} </h4>
+
+                {% ratings teacher %}
+                <p  dir="rtl" class="u-align-right u-hover-feature u-text u-text-grey-70 " >{{ teacher.experience }} سال سابقه تدریس  <br>{{ teacher.qualification|truncatewords:35 }}</p>
+                <a href="{{ teacher.get_absolute_url }}" class="u-align-center u-border-1 u-border-active-black u-border-hover-black u-border-no-left u-border-no-right u-border-no-top u-border-palette-1-base u-bottom-left-radius-0 u-bottom-right-radius-0 u-btn u-button-style u-hover-feature u-none u-radius-0 u-text-active-black u-text-body-color u-text-hover-black u-top-left-radius-0 u-top-right-radius-0 u-btn-1">بیشتر</a>
+              </div>
+            </div>
+          {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+{# {% endfor %}#}

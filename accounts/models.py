@@ -36,12 +36,11 @@ class City(models.Model):
 
 class Syllabus(models.Model):
     syllabus = models.CharField(primary_key=True, max_length=50, )
-    syllabus_name = models.CharField(max_length=50, )
     persian_syllabus = models.CharField(verbose_name='موضوع', max_length=50, )
 
 
     def __str__(self):
-        return self.syllabus_name
+        return self.persian_syllabus
 
 
 class PriceRange(models.Model):
@@ -121,7 +120,7 @@ class Teacher(models.Model):
                        args=[self.slug, ])
 
     def save(self, *args, **kwargs):
-        unique_slugify(self, self.syllabus)
+        unique_slugify(self, self.syllabus.syllabus)
         super(Teacher, self).save(*args, **kwargs)
 
 
