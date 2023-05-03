@@ -24,8 +24,7 @@
  </a>
  </p>
  <p class="small"> {{ post.body|truncatewords_html:12 }}</p>
-{# {% empty %}#}
-{# <p>نتیجه ای یافت نشد</p>#}
+
  {% endfor %}
  <p><a class="btn btn-success" href="{% url "forum:post_list" %}">بازگشت</a></p>
 

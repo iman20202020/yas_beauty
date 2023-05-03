@@ -13,21 +13,15 @@ from forum.forms import PostCreateForm, CommentForm, SearchForm
 from forum.models import Post, Comment, CommentContact
 
 
-def post_list(request, syllabus=None):
+def post_list(request, tag_syllabus=None):
     posts = Post.published.all()
+    syllabus = None
 
-    if syllabus:
-        posts = posts.filter(syllabus=syllabus)
+    if tag_syllabus:
+        posts = posts.filter(syllabus=tag_syllabus)
+        syllabus = get_object_or_404(Syllabus, syllabus=tag_syllabus)
 
     return render(request, 'forum/post/list.html', {'syllabus': syllabus, 'posts': posts})
-
-
-# class PostsView(ListView):
-#     model = Post
-#     paginate_by = 2
-#     context_object_name = 'posts'
-#     template_name = 'forum/post/list.html'
-#     # ordering = ['title']
 
 
 

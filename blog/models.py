@@ -8,10 +8,10 @@ class Blog(models.Model):
     title = models.CharField(max_length=150)
     slug = models.SlugField(blank=True, null=True, allow_unicode=True)
 
-    image1 = ResizedImageField( upload_to="blog/images/", size=[1300, 1300])
-    image2 = ResizedImageField( upload_to="blog/images/", size=[1300, 1300])
-    image3 = ResizedImageField( upload_to="blog/images/", size=[1300, 1300])
-    image4 = ResizedImageField( upload_to="blog/images/", size=[1300, 1300])
+    image1 = ResizedImageField( upload_to="blog/images/", size=[800, 800])
+    image2 = ResizedImageField( upload_to="blog/images/", size=[800, 800])
+    image3 = ResizedImageField( upload_to="blog/images/", size=[800, 800])
+    image4 = ResizedImageField( upload_to="blog/images/", size=[800, 800])
 
     persian_main_title = models.CharField(max_length=200)
     persian_title1 = models.CharField(max_length=200)
