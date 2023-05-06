@@ -39,8 +39,8 @@ class Syllabus(models.Model):
     persian_syllabus = models.CharField(verbose_name='موضوع', max_length=50, )
 
 
-    def __str__(self):
-        return self.persian_syllabus
+    # def __str__(self):
+    #     return self.persian_syllabus
 
 
 class PriceRange(models.Model):

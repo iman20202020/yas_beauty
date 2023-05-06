@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     "imagekit",
     "hitcount",
     "star_ratings",
-
+    "seo",
 ]
 
 MIDDLEWARE = [
@@ -152,3 +152,19 @@ HITCOUNT_KEEP_HIT_ACTIVE = {'minutes': 60}
 HITCOUNT_HITS_PER_IP_LIMIT = 0  # unlimited
 HITCOUNT_EXCLUDE_USER_GROUP = ()  # not used
 HITCOUNT_KEEP_HIT_IN_DATABASE = {'seconds': 10}
+
+
+SEO_VIEWS_CHOICES = (
+    ('index', 'Index page'),
+    # ('faq', 'FAQ page'),
+)
+
+SEO_MODELS = [
+    'accounts.teacher',
+    'auth.user'
+]
+
+SEO_HTML_ADMIN_WIDGET = {
+    'widget': 'TinyMCE',
+    'widget_path': 'tinymce.widgets'
+}
