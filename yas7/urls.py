@@ -37,7 +37,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
     path('course/', include('teachme.urls')),
-    path('blog/', include('blog.urls')),
+    # path('blog/', include('blog.urls')),
     path('forum/', include('forum.urls')),
     path('ratings/', include('star_ratings.urls', namespace='ratings')),
 

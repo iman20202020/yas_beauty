@@ -1,0 +1,16 @@
+{% extends 'forum/base.html' %}
+{% load seo %}
+{% block content %}
+<h1>{{ seo.h1 }}</h1>
+<div id='seo_text' class="">
+    {{ seo.seo_text|safe }}
+</div>
+    <ul>
+        {% for blog in blogs %}
+        <li>
+            <a href="{% url 'forum:blog_detail' blog.id %}">{{ blog.persian_title }}</a>
+        </li>
+        {% endfor %}
+   </ul>
+{% endblock %}
+{#{% endblock %}#}

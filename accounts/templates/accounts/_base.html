@@ -55,7 +55,7 @@
             <ul class="u-nav u-spacing-20 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="{% url 'accounts:login_view' %}" style="padding: 10px;">صفحه اصلی</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="{% url 'accounts:login_view' %}" style="padding: 10px;">ثبت نام/ورود</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="{% url 'forum:post_list' %}" style="padding: 10px;">پرسش و پاسخ</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="{% url 'blog:blog_view' %}" style="padding: 10px;">مجله</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="{% url 'forum:blogs' %}" style="padding: 10px;">مجله</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="{% url 'accounts:contact_us' %}" style="padding: 10px;">تماس با ما</a>
 {% if user.is_authenticated %}
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="{% url 'accounts:logout_view' %}" style="padding: 10px;">خروج</a>
@@ -70,7 +70,7 @@
                 <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'accounts:index_accounts' %}">صفحه اصلی</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'accounts:login_view' %}">ورود/ثبت نام</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'forum:post_list' %}">پرسش و پاسخ</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'blog:blog_view' %}">مجله</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'forum:blogs' %}">مجله</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'accounts:contact_us' %}">تماس با ما</a>
 {% if user.is_authenticated %}
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'accounts:logout_view' %}">خروج</a>

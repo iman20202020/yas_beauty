@@ -18,6 +18,8 @@ urlpatterns = [
     path('search/', views.post_search, name='post_search'),
     path('like/', views.post_like, name='post_like'),
 
+    path('blogs/', views.BlogIndexView.as_view(), name='blogs'),
+    path('blog/<id>', views.BlogDetailView.as_view(), name='blog_detail'),
 ]
 
 

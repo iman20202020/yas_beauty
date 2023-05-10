@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps', # new
     'accounts.apps.AccountsConfig',
     'teachme.apps.TeachmeConfig',
-    'blog.apps.ClerkConfig',
+    # 'blog.apps.ClerkConfig',
     'forum.apps.ForumConfig',
     'django_cleanup.apps.CleanupConfig',
     "imagekit",
@@ -164,10 +164,12 @@ SEO_VIEWS_CHOICES = (
 
 SEO_MODELS = [
     'accounts.teacher',
-    'blog.blog'
+    'forum.blog'
 ]
 
 SEO_HTML_ADMIN_WIDGET = {
     'widget': 'TinyMCE',
     'widget_path': 'tinymce.widgets'
 }
+
+SEO_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp']

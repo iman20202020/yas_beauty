@@ -1,6 +1,7 @@
 from django.contrib import admin
-from forum.models import Post, Comment
+from forum.models import Post, Comment, Blog
 
+admin.site.register(Blog)
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):

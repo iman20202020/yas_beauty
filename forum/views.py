@@ -7,10 +7,13 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.utils.text import slugify
 from django.views.decorators.http import require_POST
+from django.views.generic import TemplateView, DetailView
 from hitcount.views import HitCountDetailView
+from seo.mixins.views import ViewSeoMixin, ModelInstanceViewSeoMixin
+
 from accounts.models import Syllabus, Teacher
 from forum.forms import PostCreateForm, CommentForm, SearchForm
-from forum.models import Post, Comment, CommentContact
+from forum.models import Post, Comment, CommentContact, Blog
 
 
 def post_list(request, tag_syllabus=None):
@@ -133,4 +136,22 @@ def comment_comment(request, post_id, comment_id):
         comment_form = CommentForm()
 
     return render(request, 'forum/base.html', {'comment_form': comment_form, 'now_commented': now_commented, 'post': post, })
+
+
+class BlogIndexView(ViewSeoMixin, TemplateView):
+    seo_view = 'index'
+    template_name = 'forum/blog/index.html'
+
+    def get_context_data(self, **kwargs) :
+        data = super().get_context_data(**kwargs)
+        blogs = Blog.objects.filter(published=True)
+        data['blogs'] = blogs
+
+        return data
+
+
+class BlogDetailView(ModelInstanceViewSeoMixin, DetailView):
+    template_name = 'forum/blog/detail.html'
+    model = Blog
+    pk_url_kwarg = 'id'
 
