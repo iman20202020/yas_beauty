@@ -1,0 +1,26 @@
+{#{% extends 'accounts/_base.html' %}#}
+
+{#{% block title %}{% endblock %}#}
+{#{% block contents %}#}
+<html lang="fa">
+{% load seo %}
+
+<head>
+
+    <meta charset="UTF-8">
+    {% get_seo_data seo %}
+</head>
+<h1>{{ seo.h1 }}</h1>
+...
+<div id='seo_text'>
+    {{ seo.seo_text|safe }}
+</div>
+    <ul>
+        {% for blog in blogs %}
+        <li>
+            <a href="{% url 'blog:named_blog_view' blog.slug %}">{{ blog.persian_main_title }}</a>
+        </li>
+        {% endfor %}
+   </ul>
+</html>
+{#{% endblock %}#}

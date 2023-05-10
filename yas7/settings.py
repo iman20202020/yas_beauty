@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "hitcount",
     "star_ratings",
     "seo",
+
 ]
 
 MIDDLEWARE = [
@@ -61,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'seo.middleware.url_seo_middleware',
+
 
 ]
 
@@ -78,7 +81,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
+                'seo.context_processors.seo',
             ],
         },
     },
@@ -121,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa-IR'
 
 TIME_ZONE = 'Asia/Tehran'
 
@@ -161,7 +164,7 @@ SEO_VIEWS_CHOICES = (
 
 SEO_MODELS = [
     'accounts.teacher',
-    'auth.user'
+    'blog.blog'
 ]
 
 SEO_HTML_ADMIN_WIDGET = {
