@@ -9,7 +9,7 @@
 {#                      alt="استادباز پرسش و پاسخ ">#}<i class="fa fa-chalkboard-teacher" style="font-size: x-large; "></i>
              </a>
              <a class="small" href="{% url 'forum:post_list' %}"><i class="fa fa-question" style="font-size: x-large"></i> </a>
-             <a class="small" href="{% url 'forum:post_list' %}"><i class="fa fa-newspaper" style="font-size: x-large"></i> </a>
+             <a class="small" href="{% url 'forum:blogs' %}"><i class="fa fa-newspaper" style="font-size: x-large"></i> </a>
       <form  action="{% url 'forum:post_search' %}" class="d-flex pt-2" role="search" method="get">
       <input name="query" class="form-control me-1" type="search" placeholder="جستجو" aria-label="Search">
       <button class="btn btn-success" type="submit"> <i class="fa fa-search"></i> </button>

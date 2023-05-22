@@ -24,7 +24,7 @@ def post_list(request, tag_syllabus=None):
         posts = posts.filter(syllabus=tag_syllabus)
         syllabus = get_object_or_404(Syllabus, syllabus=tag_syllabus)
 
-    return render(request, 'forum/post/list.html', {'syllabus': syllabus, 'posts': posts})
+    return render(request, 'forum/post/list.html', {'syllabus': syllabus, 'posts': posts, })
 
 
 
@@ -146,6 +146,8 @@ class BlogIndexView(ViewSeoMixin, TemplateView):
         data = super().get_context_data(**kwargs)
         blogs = Blog.objects.filter(published=True)
         data['blogs'] = blogs
+        data['section'] = 'blogs_list'
+
 
         return data
 

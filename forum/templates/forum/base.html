@@ -34,25 +34,26 @@ a {
 {% elif comment_form %}
     {% include 'forum/comment.html' %}
 {% elif syllabus %}
-
-<br>
-<div class="container">
-    <div class="row text-center mb-5">
-        <div class="col-lg-9 mb-3">
-            <h5 class="text text-success">پست های مربوط به {{ syllabus.persian_syllabus }}</h5>
-            {% elif not post and not post_form %}
-            <h4 class="text text-success text-center ">پرسش و پاسخ و مجله</h4>
-            <h4 class="text text-success text-center ">استادباز  </h4>
-            <p class="text-center" ><span  >پرسش و پاسخ:  </span><span  > {% total_posts %}  </span></p>
-
+    <br>
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-9 mb-3">
+                <h5 class="text text-success">پست های مربوط به {{ syllabus.persian_syllabus }}</h5>
+                {% elif not post and not post_form %}
+                {% if section == 'forum_posts_list' %}
+                <h1 class="text text-success text-center ">پرسش و پاسخ <br>استادباز  </h1>
+                      <h2 class="text-center" > {% total_posts %} پست </h2>
+                {% elif section == 'blogs_list' %}
+                <h1 class="text text-success text-center ">مجله استادباز</h1>
+                      <h2 class="text-center" > {{ blogs.count }} مقاله </h2>
+                 {% endif %}
+            </div>
+        </div>
     </div>
-{% endif %}
+    {% endif %}
 
- {% if blogs  %}
-            <p class="text-center" ><span  >مقاله:  </span><span  > {{ blogs.count }}  </span></p>
-            {% endif %}
-    </div>
-</div>
+
+
 
  <div id="content" class="container ">
  {% block content %}

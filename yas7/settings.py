@@ -82,6 +82,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'seo.context_processors.seo',
+                'accounts.context_processor.add_section_request',
             ],
         },
     },
