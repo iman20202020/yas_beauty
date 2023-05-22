@@ -1,349 +1,195 @@
-import os
 from itertools import chain
-from os import walk
-from django.template.defaultfilters import filesizeformat
-from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
-from django.contrib.auth import logout, login, authenticate
+from django.contrib import messages
+from django.shortcuts import redirect
+from accounts import phone_vrify
+from accounts.otp import *
+from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.postgres.search import SearchVector, SearchQuery
-from django.core.exceptions import ValidationError
 from django.db.models import Q
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
-
-from accounts.forms import MyUserCreate, StudentEditForm, TeacherEditForm
-from accounts.models import LearnCategory, Syllabus, PriceRange, Student, Teacher, City
-
-
-def base_view(request):
-    return render(request, 'accounts/_base.html', {})
+from accounts.models import Teacher, MyUser, ClassRequest, Syllabus
 
 
 def index_accounts(request):
-#slect syllabuses for each category on index
-    syllabuses_university = Syllabus.objects.filter(learn_category='دانشگاهی')
-    teacher_university = Teacher.objects.filter(category='دانشگاهی')
-    syllabuses_high_school = Syllabus.objects.filter(learn_category='متوسطه دوم')
-    teacher_high_school = Teacher.objects.filter(category='متوسطه دوم')
-    syllabuses_mid_school = Syllabus.objects.filter(learn_category='متوسطه اول')
-    teacher_mid_school = Teacher.objects.filter(category='متوسطه اول')
-    syllabuses_primary_school = Syllabus.objects.filter(learn_category='دبستان')
-    teacher_primary_school = Teacher.objects.filter(category='دبستان')
-
-    syllabuses_computer = Syllabus.objects.filter(learn_category='کامپیوتر')
-    teacher_computer = Teacher.objects.filter(category='کامپیوتر')
-    syllabuses_music = Syllabus.objects.filter(learn_category='موسیقی')
-    teacher_music = Teacher.objects.filter(category='موسیقی')
-    syllabuses_art = Syllabus.objects.filter(learn_category='هنرهای تجسمی')
-    teacher_art = Teacher.objects.filter(category='هنرهای تجسمی')
-    syllabuses_sport = Syllabus.objects.filter(learn_category='ورزش')
-    teacher_sport = Teacher.objects.filter(category='ورزش')
-    syllabuses_cinema = Syllabus.objects.filter(learn_category='سینما و بازیگری')
-    teacher_cinema = Teacher.objects.filter(category='سینما و بازیگری')
-    syllabuses_tech = Syllabus.objects.filter(learn_category='کارهای فنی')
-    teacher_tech = Teacher.objects.filter(category='کارهای فنی')
-    syllabuses_cooking = Syllabus.objects.filter(learn_category='آشپزی')
-    teacher_cooking = Teacher.objects.filter(category='آشپزی')
-
-    syllabuses_makeup = Syllabus.objects.filter(learn_category='آرایش و زیبایی')
-    teacher_makeup = Teacher.objects.filter(category='آرایش و زیبایی')
+    teacher_bests = Teacher.objects.none()
+    teachers_count = Teacher.objects.filter(is_confirmed=True).count()
+    syllabuses = Syllabus.objects.all()
+    for syllabus in syllabuses:
+        teacher_best = Teacher.objects.filter(syllabus=syllabus, is_confirmed=True).order_by('-points')[:1]
+        teacher_bests |= teacher_best
+    total_class_count = ClassRequest.objects.filter(is_confirmed=True).count()
 
     context = {
-        'syllabuses_university': syllabuses_university,
-        'teacher_university': teacher_university,
-        'syllabuses_high_school': syllabuses_high_school,
-        'teacher_high_school': teacher_high_school,
-        'syllabuses_mid_school': syllabuses_mid_school,
-        'teacher_mid_school': teacher_mid_school,
-        'syllabuses_sport': syllabuses_sport,
-        'teacher_sport': teacher_sport,
-        'syllabuses_music': syllabuses_music,
-        'teacher_music': teacher_music,
-        'syllabuses_art': syllabuses_art,
-        'teacher_art': teacher_art,
-        'syllabuses_computer': syllabuses_computer,
-        'teacher_computer': teacher_computer,
-        'syllabuses_primary_school': syllabuses_primary_school,
-        'teacher_primary_school': teacher_primary_school,
-        'syllabuses_cinema' : syllabuses_cinema,
-        'teacher_cinema' : teacher_cinema,
-        'syllabuses_tech': syllabuses_tech,
-        'teacher_tech': teacher_tech,
-        'syllabuses_cooking': syllabuses_cooking,
-        'teacher_cooking': teacher_cooking,
-        'syllabuses_makeup': syllabuses_makeup,
-        'teacher_makeup': teacher_makeup,
-
+        'teacher_bests': teacher_bests,
+        'teachers_count': teachers_count,
+        'total_class_count': total_class_count,
     }
 
     return render(request, 'accounts/index.html', context)
 
 
-def user_create(request):
-    if request.method == 'POST':
-        logout(request)
-        user_create_form = MyUserCreate(request.POST)
-        if user_create_form.is_valid:
-            try:
-                user = user_create_form.save(commit=False)
-                # user.is_active = False
-
-                user_saved = user
-                user.save()
-                login(request, user)
-            except:
-                user_saved = None
-        else:
-            user_saved = None
-    else:
-        user_create_form = MyUserCreate()
-        user_saved = None
-    context = {
-        'user_create_form': user_create_form,
-        'user_saved': user_saved,
-
-    }
-    return render(request, 'accounts/user_create.html', context)
-
-
-def login_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            if request.GET.get('next'):
-                return HttpResponseRedirect(request.GET.get('next'))
-            if hasattr(user, 'teacher'):
-                return HttpResponseRedirect(reverse('accounts:teacher_edit'))
-            elif hasattr(user, 'student'):
-                return HttpResponseRedirect(reverse('accounts:student_edit'))
-            else:
-                return HttpResponse("logined but you are not saaved as a student or a teacher"
-                                    "please signup with a different username!!!")
-
-        else:
-            context = {
-                'username': username,
-                'error': "user not found",
-            }
-            return render(request, 'accounts/login.html', context)
-    else:
-        context = {}
-        return render(request, 'accounts/login.html', context)
+def contact_us(request):
+    return render(request, 'accounts/contact_us.html', {})
 
 
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('accounts:index_accounts'))
 
+
 @login_required
 def profile_edit(request):
-    if hasattr(request.user, 'teacher'):
-        return HttpResponseRedirect(reverse('accounts:teacher_edit'))
-    if hasattr(request.user, 'student'):
-        return HttpResponseRedirect(reverse('accounts:student_edit'))
-    else:
-        return HttpResponse("لطفا دوباره بصورت معلم یا دانش آموز ثبت نام کنید")
+    return HttpResponseRedirect(reverse('accounts:teacher_edit'))
 
 
-@login_required
-@csrf_exempt
-def student_edit(request):
-    if request.is_ajax():
-        category = request.GET.get('category',None)
-        category_list = request.GET.get('category_list', None)
-        if category_list:
-            category_list = list(LearnCategory.objects.all().values())
-            return JsonResponse(category_list, safe=False)
-        syll = list(Syllabus.objects.filter(learn_category=category).values())
-        return JsonResponse(syll, safe=False)
-
-    else:
-
-        student_edit_form = StudentEditForm()
-        cities = list(City.objects.all().values())
-        price_ranges = list(PriceRange.objects.all().values())
-        # languages = list(Language.objects.all().values())
-        categories = list(LearnCategory.objects.all().values())
-        syllabuses = None
-        student_profile = None
-        error = None
-        if hasattr(request.user, 'student'):
-            student_profile = Student.objects.get(user_id=request.user.id)
-            student_edit_form = StudentEditForm(instance=student_profile)
-            error = str(request.user)+" "+'خوش آمدید'
-            if request.method == 'POST':
-                try:
-                    student_edited = StudentEditForm(request.POST)
-                    student_edited = student_edited.save(commit=False)
-                    student_edited.user = request.user
-                    student_edited.pk = student_profile.id
-                    student_edited.save()
-                    student_profile = request.user.student
-                    error = "نمایه شما با موفقیت تغییر یافت "
-                except :
-
-                    error = 'ورودی های خود را کنترل کنید'
-                    raise ValidationError( 'ورودی های خود را کنترل کنید')
-            if hasattr(request.user, 'teacher'):
-                return HttpResponse("شما به عنوان معلم ثبت نام کرده اید نه دانش آموز ")
-
-        if request.method == 'POST' and hasattr(request.user, 'student') is False:
-            try:
-                student_edit_form = StudentEditForm(request.POST)
-
-                if student_edit_form.is_valid():
-
-                    student = student_edit_form.save(commit=False)
-                    student.user = request.user
-                    student.save()
-                    error = "به عنوان دانش آموز در سیستم ثبت شدید"
-                    student_profile = request.user.student
-            except:
-                student_profile = request.POST
-                error = "لطفا ورودی های هود را کنترل کنید"
-
-
-        context = {
-            'student_profile' : student_profile,
-            'student_edit_form': student_edit_form,
-            'error': error,
-            'cities': cities,
-            'price_ranges' : price_ranges,
-            # 'learn_types' : learn_types,
-            'categories' : categories,
-            'syllabuses' : syllabuses,
-            # 'first_name' : first_name,
-            # 'last_name' : last_name,
-            }
-
-
-        return render(request, 'accounts/student_edit.html', context)
-
-
-
-
-
-@login_required
-@csrf_exempt
-
-
-
-def teacher_edit(request):
-        if request.is_ajax():
-            category = request.GET.get('category',None)
-            category_list = request.GET.get('category_list', None)
-            if category_list:
-                category_list = list(LearnCategory.objects.all().values())
-                return JsonResponse(category_list, safe=False)
-            syll = list(Syllabus.objects.filter(learn_category=category).values())
-            return JsonResponse(syll,safe=False)
-
-        else:
-
-            teacher_edit_form = TeacherEditForm()
-            cities = list(City.objects.all().values())
-            price_ranges=list(PriceRange.objects.all().values())
-            # languages=list(Language.objects.all().values())
-            categories=list(LearnCategory.objects.all().values())
-            syllabuses = None
-            first_name = None
-            last_name = None
-            teacher_profile= None
-            error = ''
-            if hasattr(request.user, 'teacher'):
-                teacher_profile = Teacher.objects.get(user_id=request.user.id)
-                teacher_edit_form = TeacherEditForm(instance=teacher_profile)
-                error = str(request.user)+" "+'خوش آمدید'
-
-                if request.method == 'POST':
-                    try:
-                        teacher_edited = TeacherEditForm(request.POST, request.FILES)
-                        teacher_edited = teacher_edited.save(commit=False)
-                        teacher_edited.user = request.user
-                        teacher_edited.pk = teacher_profile.id
-                        if teacher_edited.sample_video == "":
-                            teacher_edited.sample_video = teacher_profile.sample_video
-
-                        if teacher_edited.image == "":
-                            teacher_edited.image = teacher_profile.image
-                        if teacher_edited.degree_image == "":
-                            teacher_edited.degree_image = teacher_profile.degree_image
-                        if teacher_edited.national_card_image == "":
-                            teacher_edited.national_card_image = teacher_profile.national_card_image
-                        teacher_edited.save()
-                        # file_usage_check = list(list(Teacher.objects.all().values()))
-                        # video_filenames = next(walk('/videos'))
-                        # for i in range(0,len(video_filenames)):
-                        #     if video_filenames[i] not in file_usage_check:
-                        #         os.remove('media/videos/Django-Web-Development_7_1.mp4')
-
-
-                        teacher_profile = request.user.teacher
-                        error = "نمایه شما با موفقیت تغییر کرد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
-                    except :
-                         raise ValidationError("ورودی ها دقیق نیست")
-            elif hasattr(request.user, 'student'):
-                return HttpResponse("مشخصات شما به عنوان دانش آموز ثبت شده لطفا با نام کاربری دیگری به عنوان معلم ثبت نام کنید ")
-            if request.method == 'POST' and hasattr(request.user, 'teacher') == False:
-                try:
-                    teacher_edit_form = TeacherEditForm(request.POST, request.FILES)
-                    if teacher_edit_form.is_valid():
-                        teacher = teacher_edit_form.save(commit=False)
-                        teacher.user = request.user
-                        teacher.save()
-                        error = "مشخصات شما ثبت شد. نتیجه بررسی از طریق پیامک به اطلاع شما خواهد رسید"
-                        teacher_profile = request.user.teacher
-                except:
-                    teacher_profile = request.POST
-                    error = "لطفا اطلاعات وارد شده را بررسی کنید"
-            context = {
-                'teacher_profile' : teacher_profile,
-                'teacher_edit_form': teacher_edit_form,
-                'error': error,
-                'cities': cities,
-                'price_ranges' : price_ranges,
-                # 'languages' : languages,
-                'categories' : categories,
-                'syllabuses' : syllabuses,
-                'first_name' : first_name,
-                'last_name' : last_name,
-                }
-
-
-            return render(request, 'accounts/teacher_edit.html', context)
 
 def search_view(request):
     results = []
-    results_teachers =[]
+    results_teachers = []
     search_message = None
     if request.method == "GET":
-        search_query = request.GET.get('search_text',None)
-
+        search_query = request.GET.get('search_text', None)
         if search_query:
-
-            result1 = Syllabus.objects.filter(syllabus__icontains= search_query)
-            result1_teachers = Teacher.objects.filter(syllabus__syllabus_name__contains=search_query)
-            result2 = LearnCategory.objects.filter(category_name__icontains=search_query)
-            result2_teachers = Teacher.objects.filter(category__category__contains=search_query)
-
-            result3_teachers = Teacher.objects.filter(Q(last_name__icontains=search_query)|Q(first_name__icontains=search_query))
-            results = list(chain(result1, result2, ))
-            results_teachers = list(chain(result1_teachers,result2_teachers,result3_teachers ))
-
-            if  results_teachers :
-                search_message = str(len(results_teachers)) + "معلم پیدا شد"
-
+            result1_teachers = Teacher.objects.filter(syllabus__syllabus_name__contains=search_query, is_confirmed=True)
+            result3_teachers = Teacher.objects.filter(
+                Q(last_name__contains=search_query, is_confirmed=True) | Q(first_name__contains=search_query,
+                                                                           is_confirmed=True) | Q(
+                    qualification__contains=search_query, is_confirmed=True))
+            result4_teachers = Teacher.objects.filter(
+                Q(city__city__contains=search_query, is_confirmed=True) | Q(first_name__contains=search_query,
+                                                                            is_confirmed=True) | Q(
+                    qualification__contains=search_query, is_confirmed=True))
+            results_teachers = list(chain(result1_teachers, result3_teachers, result4_teachers, ))
+            if results_teachers:
+                search_message = str(len(results_teachers)) + "استاد پیدا شد"
             else:
                 search_message = "موردی یافت نشد"
 
-        return render(request, 'accounts/index.html', {'results': results, 'search_message': search_message,'results_teachers': results_teachers})
+        return render(request, 'accounts/index.html',
+                      {'results': results, 'search_message': search_message, 'results_teachers': results_teachers})
 
 
+def user_verify(request):
+    return redirect(reverse('accounts:login_view'))
 
 
+def login_view(request):
+    response = {}
+    logout(request)
+    if request.method == 'POST':
+        user_verified = None
+        otp_code = None
+        mobile_number = None
+
+        if 'input_mobile' in request.POST:
+            mobile_number = request.POST.get('input_mobile')
+            if len(mobile_number) == 10:
+                mobile_number = '0' + mobile_number
+            response = fake_send_otp(mobile_number)
+            # response = send_otp(mobile_number)
+            if response[0]['status'] == 5:
+                user_verified = 'code_sent'
+                otp_code = response[1]
+            else:
+                user_verified = 'code_not_sent'
+                otp_code = None
+        if 'veri_code_input' in request.POST and 'mobile_number' in request.POST:
+            otp_code = request.POST.get('otp_code_generated')
+            veri_code_input = request.POST.get('veri_code_input')
+            mobile_number = request.POST.get('mobile_number')
+            if len(mobile_number) == 10:
+                mobile_number = '0' + mobile_number
+            if otp_code == veri_code_input:
+                user_verified = 'code_checked'
+                user_exists = MyUser.objects.filter(username=mobile_number).exists()
+
+                if user_exists:
+                    user = MyUser.objects.get(username=mobile_number)
+                    user.set_password(otp_code)
+                    user.save()
+                else:
+                    user = MyUser.objects.create(username=mobile_number, password=otp_code, )
+                login(request, user)
+                context = {
+                    'user_verified': user_verified,
+                    'mobile_number': mobile_number,
+                }
+                if request.GET.get('next'):
+                    return redirect(request.GET.get('next'))
+                return render(request, 'accounts/index.html', context)
+            else:
+                user_verified = 'code_check_error'
+    else:
+        user_verified = None
+        otp_code = None
+        mobile_number = None
+        my_next = None
+
+    context = {
+        'mobile_number': mobile_number,
+        'user_verified': user_verified,
+        'response': response,
+        'otp_code': otp_code,
+    }
+    return render(request, 'accounts/user_verify.html', context)
+
+
+def site_laws(request):
+    return render(request, 'accounts/sit_laws.html', {})
+
+
+def how_use(request):
+    return render(request, 'accounts/how_use.html', {})
+
+
+def how_use2(request):
+    return render(request, 'accounts/how_use2.html', {})
+
+
+def teacher_laws(request):
+    return render(request, 'accounts/teacher_laws.html', {})
+
+
+def consult_view(request):
+    clerk_phone = '09361164819'
+    if request.method == 'POST':
+        if 'input_mobile' in request.POST:
+            mobile_number = request.POST.get('input_mobile')
+        elif 'mobile_number' in request.POST:
+            mobile_number = request.POST.get('mobile_number')
+        else:
+            mobile_number = None
+
+        if 'veri_code_input' in request.POST and 'otp_code_generated' in request.POST:
+            veri_code_input = request.POST.get('veri_code_input')
+            otp_code = request.POST.get('otp_code_generated')
+            if phone_vrify.code_otp_check(otp_code, veri_code_input):
+                token = str(mobile_number)
+                token2 = 'مشاوره'
+                send_sms(clerk_phone, token, token2)
+                messages.success(request, 'درخواست شما ثبت شد بزودی جهت مشاوره با شما تماس می گیریم', 'success')
+                return redirect('accounts:index_accounts')
+            else:
+                otp_code = None
+                user_verified = None
+        else:
+            otp_code = phone_vrify.code_send(mobile_number)
+            user_verified = 'code_sent'
+    else:
+        user_verified = None
+        otp_code = None
+        mobile_number = None
+    context = {
+        'mobile_number': mobile_number,
+        'user_verified': user_verified,
+        'otp_code': otp_code,
+    }
+    return render(request, 'accounts/user_verify.html', context)
+
+
+# comment for redirect to teacher_detail_view
+# @login_required
+# def comment_view(request, teacher_id):
+#     return redirect('teachme:teacher_detail', args=[teacher_id])

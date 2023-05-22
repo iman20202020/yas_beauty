@@ -1,0 +1,17 @@
+
+
+{% if now_commented %}
+    <div class=" alert alert-info" dir="rtl">
+        <p >پاسخ شما ثبت شد .پس از یررسی منتشر می شود.</p>
+
+        <p dir="ltr"><a href="{% url 'forum:post_detail' post.slug %}" class="btn btn-success">بازگشت</a></p>
+    </div>
+{% else %}
+<div class="form" dir="rtl">
+        <form method="post" class="form-control" >
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" value="ثبت" class="btn btn-success form-control"></p>
+        </form>
+    </div>
+{% endif %}

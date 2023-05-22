@@ -1,0 +1,28 @@
+{% extends 'accounts/_base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block contents %}
+    <section class="u-align-center u-clearfix u-container-align-center u-palette-6-base u-section-2" id="teacher-title">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h1 class="u-align-center u-text-palette-1-base  u-text u-text-1 pb-3" data-animation-name="customAnimationIn" data-animation-duration="1000" >اساتید آموزش {{ syllabus.persian_syllabus }}</h1>
+        <h3 class="u-align-center u-text-palette-1-base  u-text u-text-3 pb-3">
+          <i class="fas fa-chalkboard-teacher"></i>
+            {{ teachers_1.count| add:teachers_2.count }}
+        </h3>
+          {% include 'teachme/teacher_viewer_for_workshops_inc.html' %}
+      <a class="mb-3" href="{% url 'accounts:index_accounts' %}" style="color: #f8b001; font-size: x-large"><i class="fa fa-arrow-left"></i> </a>
+      </div>
+   </section>
+
+
+<script src="{% static 'accounts/assets/bootstrap/js/jquery-3.5.1.min.js' %}"></script>
+<script src="{% static 'accounts/assets/bootstrap/js/bootstrap.min.js' %}"></script>
+<script>
+function filter_state() {
+    let state_filter = $('#state_filter_select').val();
+   window.location.replace("{% url 'teachme:teachers_list' syllabus %}"+"?st="+state_filter);
+}
+</script>
+
+{% endblock %}

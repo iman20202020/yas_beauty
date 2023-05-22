@@ -1,46 +1,98 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView, TemplateView
+from hitcount.views import HitCountDetailView
+from seo.mixins.views import ViewSeoMixin
+
+from accounts.models import Teacher, ClassRequest, Comment, Syllabus
+from teachme.page_titles import set_page_title
+from teachme.send_sms import *
+
+
+class TeacherDetailView(ViewSeoMixin, HitCountDetailView):
+    seo_view = 'teacher_detail'
+    model = Teacher
+    template_name = 'teachme/teacher_detail.html'
+    context_object_name = 'teacher'
+    slug_field = 'slug'
+    count_hit = True
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+
+        teacher_id = data['object'].id
+        teacher_classes = ClassRequest.objects.filter(teacher_id=teacher_id, is_confirmed=True).count()
+        teacher_for_comments = Comment.objects.filter(teacher_id=teacher_id, is_confirmed=True)
+        data['teacher_selected'] = data['object']
+        data['teacher_for_comments'] = teacher_for_comments
+        data['teacher_class_count'] = teacher_classes
+        return data
+
+
+@login_required
+def comment(request, teacher_id):
+    teacher = get_object_or_404(Teacher, id=teacher_id)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        comment_text = request.POST.get('comment')
+        try:
+            comment = Comment(teacher=teacher, user_commenter=request.user, name=name, content=comment_text)
+            if comment:
+                comment.save()
+        except:
+            ValidationError('')
+
+@login_required
+def teacher_request_send(request, teacher_id):
+    clerk_phone = '09361164819'
+    teacher_requested = Teacher.objects.get(id=teacher_id)
+    student_user = request.user
+    ClassRequest.objects.update_or_create(teacher=teacher_requested, student=student_user)
+    teacher_phone = teacher_requested.user.username
+    student_phone = student_user.username
+    clerk_sms_token = '{},id{}'.format(teacher_requested.last_name, teacher_requested.id)
+    clerk_sms_token2 = teacher_phone
+    clerk_sms_token3 = student_phone
+    send_sms_stu(student_phone, teacher_requested.last_name)
+    send_sms_clerk(clerk_phone, clerk_sms_token, clerk_sms_token2, clerk_sms_token3)
+
+    messages.success(request, 'درخواست شما ثبت شد بزودی جهت هماهنگی با شما تماس می گیریم', 'success large')
+
+    return redirect(teacher_requested.get_absolute_url())
+
+
+class TeacherList(ViewSeoMixin,TemplateView):
+    model = Teacher
+    seo_view = 'teacher_list'
+    template_name = 'teachme/teachers_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        syllabus = get_object_or_404(Syllabus, syllabus=self.kwargs["syllabus"])
+        teachers = Teacher.objects.filter(syllabus=syllabus)
+        context["teachers_1"] = teachers[:1]
+        context["teachers_2"] = teachers[1:]
+
+        return context
 
 
 
-from django.contrib.auth.models import User
-from django.core.paginator import Paginator
-from django.shortcuts import render
-from accounts.models import Student, Teacher
 
 
-def index(request):
-    return render(request, 'teachme/index.html', {})
+# def teachers_list(request, teachers_syllabus):
+#     teachers_1 = Teacher.objects.filter(syllabus=teachers_syllabus, is_confirmed=True).reverse().order_by('points')[:1]
+#     teachers_2 = Teacher.objects.filter(syllabus=teachers_syllabus, is_confirmed=True).reverse().order_by('points')[1:]
+#     syllabus = get_object_or_404(Syllabus, syllabus=teachers_syllabus)
+#     title = set_page_title(teachers_syllabus)
+#
+#     context = {
+#         'teachers_1': teachers_1,
+#         'teachers_2': teachers_2,
+#         'syllabus': syllabus,
+#         'title': title,
+#     }
+#     return render(request, 'teachme/teachers_list.html', context)
 
-
-def teacher_list(request):
-    user_select = User.objects.get(id=request.user.pk)
-    student_selected = Student.objects.get(user=user_select)
-    student_city = student_selected.city
-    student_learn_type = student_selected.learn_type
-    student_category = student_selected.category
-    student_syllabus = student_selected.syllabus
-    student_price_range = student_selected.price_range
-    # student_mobile_number = student_selected.mobile_number
-    if student_selected.learn_type < 2:
-        teachers = Teacher.objects.filter( category=student_category, syllabus=student_syllabus,
-                                      price_range=student_price_range)
-    else:
-        teachers = Teacher.objects.filter(category=student_category, syllabus=student_syllabus,
-                                          price_range=student_price_range,city=student_city,learn_type=student_learn_type)
-    teachers = Paginator(teachers, 5)
-    page_number = request.GET.get('page')
-    page_obj = teachers.get_page(page_number)
-    context = {
-        'teachers': teachers,
-        'page_obj': page_obj,
-    }
-    return render(request, 'teachme/teacher_list.html', context)
-
-
-def teacher_detail(request, teacher_id):
-    teacher_selected = Teacher.objects.get(pk=teacher_id)
-    context = {
-        'teacher_selected': teacher_selected,
-    }
-    return render(request, 'teachme/teacher_detail.html', context)
 

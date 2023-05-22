@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="fa-IR"><head>
+<title>search</title>
+</head>
+<body>
+
+    <div class="container text-center">
+    {% if query %}
+ <h4>: "{{ query }} "</h4>
+ <p>
+ {% with results.count as total_results %}
+     {% if total_results %}
+ نتیجه یافت شد {{ total_results }}
+     {% else %}
+     نتیجه ای یافت نشد
+     {% endif %}
+ {% endwith %}
+ </p>
+ {% for post in results %}
+ <p>
+ <a href="{{ post.get_absolute_url }}">
+ {{ post.title }}
+ </a>
+ </p>
+ <p class="small"> {{ post.body|truncatewords_html:12 }}</p>
+
+ {% endfor %}
+ <p><a class="btn btn-success" href="{% url "forum:post_list" %}">بازگشت</a></p>
+
+ {% endif %}
+    </div>
+</body>

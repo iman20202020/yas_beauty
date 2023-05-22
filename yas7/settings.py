@@ -33,16 +33,24 @@ ALLOWED_HOSTS =[]
 # Application definition
 
 INSTALLED_APPS = [
+    'django_jalali',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', # new
+    'django.contrib.sitemaps', # new
     'accounts.apps.AccountsConfig',
     'teachme.apps.TeachmeConfig',
-    'verify.apps.VerifyConfig',
-    'ghasedak',
+    # 'blog.apps.ClerkConfig',
+    'forum.apps.ForumConfig',
+    'django_cleanup.apps.CleanupConfig',
+    "imagekit",
+    "hitcount",
+    "star_ratings",
+    "seo",
 
 ]
 
@@ -54,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'seo.middleware.url_seo_middleware',
+
 
 ]
 
@@ -71,6 +81,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'seo.context_processors.seo',
+                'accounts.context_processor.add_section_request',
             ],
         },
     },
@@ -84,8 +96,10 @@ WSGI_APPLICATION = 'yas7.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": 'yas',
+        "USER": 'postgres',
+        "PASSWORD": 'Moni48199047',
     }
 }
 
@@ -96,25 +110,22 @@ DATABASES = {
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
+
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 4,
+        }
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+
+
 ]
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'fa-ir'
+LANGUAGE_CODE = 'fa-IR'
 
 TIME_ZONE = 'Asia/Tehran'
 
@@ -127,24 +138,42 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR,'static/')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'accounts/static'),
-    os.path.join(BASE_DIR, 'media/')
+
+
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static_root/')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = 'accounts.MyUser'
+SITE_ID = 1
+
+HITCOUNT_KEEP_HIT_ACTIVE = {'minutes': 60}
+HITCOUNT_HITS_PER_IP_LIMIT = 0  # unlimited
+HITCOUNT_EXCLUDE_USER_GROUP = ()  # not used
+HITCOUNT_KEEP_HIT_IN_DATABASE = {'seconds': 10}
+
+
+SEO_VIEWS_CHOICES = (
+    ('blog_index', 'Blog index page'),
+    ('main_index', 'Main index page'),
+    ('teacher_list', 'Teacher list '),
+    ('teacher_detail', 'Teacher detail '),
+    # ('faq', 'FAQ page'),
+)
+
+SEO_MODELS = [
+    'accounts.teacher',
+    'forum.blog'
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+SEO_HTML_ADMIN_WIDGET = {
+    'widget': 'TinyMCE',
+    'widget_path': 'tinymce.widgets'
+}
 
-# CONTENT_TYPES = ['image', 'video']
-# 2.5MB - 2621440
-# 5MB - 5242880
-# 10MB - 10485760
-# 20MB - 20971520
-# 50MB - 5242880
-# 100MB 104857600
-# 250MB - 214958080
-# 500MB - 429916160
-# MAX_UPLOAD_SIZE = 5242880
-
+SEO_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp']

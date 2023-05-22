@@ -1,0 +1,95 @@
+{% extends 'accounts/_base.html' %}
+
+{% block title %}ورد/ثبت نام{% endblock %}
+
+{% block contents %}
+    <style>
+    *{
+        font-size: medium;
+    }
+    </style>
+
+<div class="row w-100 ">
+    <div class="container">
+        <div class=" text-center"  >
+            <div  data-form-alert="" class="alert text-center alert-danger col-12 mbr-fonts-style align-center mb-0
+                {% if  error  %} d-block {% else %}d-none {% endif %}d-none ">{{ error }}<br>
+                    {{ teacher_edit_form.errors }}
+            </div>
+        <br>
+            <div class="mbr-section-head ">
+                <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 ">خوش آمدید</h4>
+            </div><br>
+
+            <div id="send_mobile_div" {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %} style="display: none" {% endif %}>
+                لطفا شماره همراه خود را وارد کنید<br><br>
+
+                <form action="" class="" method="post" autocomplete="off">
+                    {% csrf_token %}
+                    <input type="hidden" id="my_next" name="my_next" value="{{ my_next }}">
+
+                    <input type="text" name="input_mobile"  id="input_mobile" autofocus
+                           onkeyup="check_number('input_mobile_submit','input_mobile')"   autocomplete="new-password" placeholder="09123456789">
+                    <input type="submit"  id="input_mobile_submit" class="btn btn--sub " value="ثبت"  disabled>
+                </form><br><br>
+            </div>
+
+            <div id="send_otp_div"   {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %}
+                 style="display: block;font-size: medium;"{% else %}style="display: none" {% endif %} >
+                کد تایید به شماره همراه شما ارسال شد لطفا آنرا وارد کنید<br><br>
+                <form action="" class="" method="post" class="form-group text-center" >
+                    {% csrf_token %}
+                    <input type="hidden" id="my_next2" name="my_next2" value="{{ my_next }}">
+                    <label for="veri_code_input"></label>
+                    <input type="text" id="veri_code_input" name="veri_code_input" autofocus placeholder="_   _   _   _" class="text-center" onkeyup="check_length()" >
+                    <input type="hidden" id="otp_code_generated" name="otp_code_generated" value="{{ otp_code }}">
+                    <input type="hidden" id="mobile_number" name="mobile_number" value="{{ mobile_number }}">
+                    <input type="submit"  id="code_register" class="btn btn--sub" value="ثبت کد" disabled >
+                </form>
+
+                <br>
+            </div>
+
+            <div id="resend_otp_div" {% if user_verified == 'code_sent' or user_verified == 'code_check_error' %}
+                 style="display: block;font-size: medium"{% else %}style="display: none" {% endif %} >
+                {% if user_verified == 'code_check_error' %}  کد وارد شده صحیح نیست<br><br>{% endif %}
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <input type="hidden" id="input_mobile" name="input_mobile" value="{{ mobile_number }}">
+
+                    <input type="submit" id="resend_btn" class=" container" value="ارسال مجدد" style="display: none; width: 150px">
+                </form><br>
+            <div id="countdown" class="inline-group"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script >
+
+window.addEventListener( "pageshow", function ( event ) {
+  var historyTraversal = event.persisted ||
+                         ( typeof window.performance != "undefined" &&
+                              window.performance.navigation.type === 2 );
+  if ( historyTraversal ) {
+    window.location.reload(true);
+  }
+});
+
+
+var timeleft = 60;
+var downloadTimer = setInterval(function(){
+  if(timeleft <= 0){
+    clearInterval(downloadTimer);
+    $('#countdown').css('display','none') ;
+    $('#resend_btn').css('display','block')
+  } else {
+    document.getElementById("countdown").innerHTML =    timeleft +" ثانیه تا ارسال مجدد ";
+  }
+  timeleft -= 1;
+}, 1000);
+
+</script>
+
+{% endblock %}

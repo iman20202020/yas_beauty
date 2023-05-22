@@ -1,27 +1,22 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UsernameField, UserChangeForm
-from django.contrib.auth.models import User
-from django.core.exceptions import NON_FIELD_ERRORS
-from django.template.defaultfilters import filesizeformat
-from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.forms import UserCreationForm
 
 
-from accounts.models import Student, Teacher
-from yas7 import settings
+from accounts.models import Teacher, MyUser, Comment
 
 
 class MyUserCreate(UserCreationForm):
-    email = forms.EmailField(required=True, label='ایمیل')
+    # email = forms.EmailField(required=True, label='ایمیل')
+    class Meta(UserCreationForm.Meta):
+        model = MyUser
+        fields = ("phone_number", "username",)
 
     def __init__(self, *args, **kwargs):
         super(MyUserCreate, self).__init__(*args, **kwargs)
-
         super().__init__(*args, **kwargs)
         for fieldname in ['username',]:
-            self.fields[fieldname].help_text = None
-    # error_messages = {
-    #      'رمز عبور ها یکسان نیست',
-    # }
+            self.fields[fieldname].validator = None
+
     password1 = forms.CharField(
         label="گذر واژه",
         strip=False,
@@ -30,45 +25,34 @@ class MyUserCreate(UserCreationForm):
     )
     password2 = forms.CharField(
         label="تکرار گذر واژه",
-        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password',}),
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password', }),
         strip=False,
         help_text=None,
     )
-    phone_number = forms.CharField(label="شماره همراه ")
+
+    phone_number = forms.CharField(required=True, label="شماره همراه", widget=forms.TextInput(attrs={'readonly':'readonly'}) )
 
 
-    class Meta(UserCreationForm.Meta):
-        model = User
-        fields = ("username","email","phone_number")
-        field_classes = {'username': UsernameField}
+class TeacherEditForm(forms.ModelForm):
 
-class StudentEditForm(forms.ModelForm):
+    sample_video = forms.FileField(label="ویدیوی نمونه تدریس", required=False,  )
+
     class Meta:
-        model = Student
-        exclude = ['user','email']
-
-        field_classes = {'username': UsernameField}
-
-
-class TeacherEditForm(UserChangeForm):
-
-
-
-    class Meta(UserChangeForm.Meta):
         model = Teacher
-
-        exclude = ['user','email']
-
+        fields = ['first_name', 'last_name', 'syllabus', 'city', ]
 
 
+class CommentForm(forms.ModelForm):
+    content = forms.CharField(label="",required=False,max_length=300, widget=forms.Textarea(
+    attrs ={
+        'class': 'form-control',
+        'style': 'font-size: medium',
+        'placeholder': ' نظر خود را بنویسید',
+        'rows': 4,
+        'cols': 50,
 
-    # def clean_content(self):
-    #     content = self.cleaned_data['content']
-    #     content_type = content.content_type.split('/')[0]
-    #     if content_type in settings.CONTENT_TYPES:
-    #         if content._size > settings.MAX_UPLOAD_SIZE:
-    #             raise forms.ValidationError(_('Please keep filesize under %s. Current filesize %s') % (
-    #                 filesizeformat(settings.MAX_UPLOAD_SIZE), filesizeformat(content._size)))
-    #     else:
-    #         raise forms.ValidationError(_('File type is not supported'))
-    #     return content
+    }))
+
+    class Meta:
+        model = Comment
+        fields = ['content', ]

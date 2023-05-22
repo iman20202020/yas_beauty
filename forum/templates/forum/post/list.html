@@ -1,0 +1,49 @@
+{% extends 'forum/base.html' %}
+{% load static %}
+{% load hitcount_tags %}
+{% block content %}
+<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+<div class="container " dir="rtl">
+<div id="post-list">
+    <div class="row">
+         <div class="col-lg-9 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
+               <div class="sticky-inner text-center">
+                    <a class="btn btn-lg btn-block btn-success rounded-3 py-2 mb-3 bg-op-6 roboto-bold" href="{% url 'forum:post_create' %}">پست جدید بنویسید</a>
+                </div>
+
+ {% for post in posts %}
+            <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">
+
+                <div class="row align-items-center">
+                    <div class="col-md-8 mb-3 mb-sm-0">
+
+                        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                        <p class="text-sm "><span class="op-6">{{ post.body|truncatewords:10 }}</span></p>
+
+                        <p class="text-sm text-secondary"><span class="op-6 small">{{ post.author_name }}  </span></p>
+
+                        <p class="text-sm text-secondary"><span class="op-6 small">{{ post.publish|date:"Y/m/d" }}  </span></p>
+                        <div class="text-sm op-5" dir="ltr">
+                            <a href="{% url "forum:post_list_by_tag" post.syllabus.syllabus %}">{{ post.syllabus }}</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 op-7">
+                        <div class="row text-center op-7">
+                        {% with total_likes=post.users_like.count %}
+                            <div class="col px-1"> <i class="ion-heart icon-1x"></i> <span class="d-block text-sm">{{ total_likes }} Like{{ total_likes|pluralize }}</span> </div>
+                        {% endwith %}
+                        {% with total_comments=post.comments.count %}
+                            <div class="col px-1"> <i class="ion-ios-chatboxes-outline icon-1x"></i> <span class="d-block text-sm">{{ total_comments }}</span> </div>
+                        {% endwith %}
+                            <div class="col px-1"> <i class="ion-ios-eye-outline icon-1x"></i> <span class="d-block text-sm">{% get_hit_count for post %} Views</span> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+         </div>
+    </div>
+</div>
+
+{% endblock %}

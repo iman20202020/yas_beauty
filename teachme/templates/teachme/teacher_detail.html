@@ -1,152 +1,261 @@
-
 {% extends 'accounts/_base.html' %}
 {% load static %}
-{% block title %}
-
-{% endblock %}
-
-
+{% load ratings %}
+{% load hitcount_tags %}
 {% block contents %}
 
-              <div class="col-lg-12 col-md-12 col-sm-12 form-group bg-info  " data-for="points" >
-                  <div  id="label_points"   for="points-form7-v" class="label p-2 text-center"><strong class="text-white"> امتیاز معلم : {{ teacher_selected.points }}/5</strong>
-                        <div class="progress">
-                            <div id="p_progress_bar" class="progress-bar  " >
-                            </div>
-                        </div>
-                    </div>
-              </div>
-{#<div class="dragArea row">#}
-{#    <div class="col-lg-12 col-md-12 col-sm-12 d-lg-inline-flex">#}
-{#        <div class=" col-lg-3 col-md-6 col-sm-12 p-2 ">#}
-{#             <h6 class="text">نام معلم :</h6>#}
-{#            <p class="text-center"><strong class="text  " >  {{ teacher_selected.first_name }} &nbsp; {{ teacher_selected.last_name }} </strong></p>#}
-{#        </div>#}
-{##}
-{#        <div class=" col-lg-3 col-md-6 col-sm-12 p-2 ">#}
-{#             <h6 class="text">Language:</h6>#}
-{#            <p class="text-center"><strong  >  {{ teacher_selected.language.language_name }} </strong></p>#}
-{#        </div>#}
-{#        <div class=" col-lg-3 col-md-6 col-sm-12 p-2 ">#}
-{#              <h6 class="text">موضوع :</h6>#}
-{#            <p class="text-center"><strong class="text  " >  {{ teacher_selected.syllabus.syllabus_name }} </strong></p>#}
-{#        </div>#}
-{##}
-{##}
-{#    </div>#}
+    <section class="u-align-center-lg u-align-center-md u-align-center-xl u-align-left-sm u-align-left-xs u-clearfix u-white u-section-1" id="sec-785b">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <div class="u-palette-3-base u-preserve-proportions u-shape u-shape-circle u-shape-1 text-center" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="0">
+            <p class="text-secondary"> <i class="fa fa-eye"></i> {% get_hit_count for teacher_selected %}<br>
+                {% if teacher_class_count %}<i class="fa fa-graduation-cap"></i> {{ teacher_class_count }}{% endif %}<br>
+                {% if teacher_for_comments %}<i class="fa fa-comment" ></i> {{ teacher_for_comments.count }}{% endif %}
+            </p>
+        </div>
+        <img class="u-image u-image-circle u-preserve-proportions u-image-1" src="{{ teacher_selected.degree_image.url }}" alt="" data-image-width="810" data-image-height="810" data-animation-name="customAnimationIn" data-animation-duration="1500">
+           <video src="{{ teacher_selected.describe_video.url }}" controls  class="u-image u-image-circle u-image-2" data-image-width="1380" data-image-height="920" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="750"></video>
+          <img class="u-border-20 u-border-palette-3-base u-image u-image-circle u-image-3" src="{{ teacher_selected.image.url }}" alt="" data-image-width="960" data-image-height="907" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="250">
+         <div class="text-center"> {% ratings teacher_selected %}
 
-{#    <div class="col-lg-12 col-md-12 col-sm-12  d-lg-inline-flex">#}
-{#        <div class=" col-lg-3 col-md-6 col-sm-12 p-2 ">#}
-{#               <h6 class="text">رشته و مدرک تحصیلی معلم:</h6>#}
-{#            <p class="text-center"><strong class="text  " >  {{ teacher_selected.qualification}} </strong></p>#}
-{#        </div>#}
-{#        <div class=" col-lg-3 col-md-6 col-sm-12 p-2 ">#}
-{#            <h6 class="text">سابقه تدریس (سال):</h6>#}
-{#            <p class="text-center"><strong class="text  " >  {{ teacher_selected.experience }} </strong></p>#}
-{#        </div>#}
-{#        <div class=" col-lg-3 col-md-6 col-sm-12 p-2 ">#}
-{#             <h6 class="text">محدوده قیمت :</h6>#}
-{#            <p class="text-center"><strong class="text  " >  {{ teacher_selected.price_range.price_range_name }} </strong></p>#}
-{#        </div>#}
-<div class=" d-flex   align-items-center row bg-secondary ">
-        <div class="  col-lg-3 col-md-3 col-sm-12" >
-            <img  src="{% static teacher_selected.image %}"  id="teacher_image" class="img-thumbnail">
+         </div>
+        <img class="u-image u-image-circle u-image-4" src="{{ teacher_selected.degree_image2.url }}" alt="" data-image-width="920" data-image-height="889" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="250">
+        <div class="u-align-center u-container-style u-expanded-width-sm u-expanded-width-xs u-group u-shape-rectangle u-group-1" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="500">
+          <div class="u-container-layout u-container-layout-1">
+            <h2 class="u-text u-text-palette-1-base u-text-1"> استاد {{ teacher_selected.last_name }}<br>
+            </h2>
+            <p class="u-text text-right" > {{ teacher_selected.qualification }}</p>
+            <ul>
+                <li>{{ teacher_selected.workshop_price }}</li>
+            </ul>
+            <a href="{% url 'teachme:teacher_request_send' teacher_selected.id %}" class="u-active-palette-3-base u-align-center u-border-2 u-border-active-palette-3-base u-border-hover-palette-3-base u-border-palette-3-base u-btn u-btn-round u-button-style u-hover-palette-3-base u-none u-radius-10 u-text-active-white u-text-hover-white u-text-palette-3-dark-1 " data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="" >درخواست استاد</a>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <section class="u-align-center u-clearfix u-image u-shading u-section-2"  data-image-width="1620" data-image-height="1080" id="carousel_aeea">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-body-color u-text-1" >  نقشه راه استاد</h2>
+        <div class="u-expanded-width u-list u-list-1">
+          <div class="u-repeater u-repeater-1">
+            <div class="u-container-style u-list-item u-palette-3-light-3 u-repeater-item u-list-item-1">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
+                <h4 class="u-text u-text-default u-text-2 text-right pr-4"  > شروع کار</h4>
+                <p class="u-align-right u-text u-text-body-color u-text-default u-text-3 text-right" >Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
+              </div>
             </div>
-            <div class="embed-responsive embed-responsive-4by3  col-lg-3 col-md-3 col-sm-12 " >
-  <video class="embed-responsive-item " src="{% static 'videos/v1.mp4' %}" controls></video>
+            <div class="u-container-style u-list-item u-palette-3-light-3 u-repeater-item u-list-item-2">
+             <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
+                <h4 class="u-text u-text-default u-text-2 text-right pr-4"  > شروع کار</h4>
+                <p class="u-align-right u-text u-text-body-color u-text-default u-text-3 text-right" >Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
+              </div>
+            </div>
+            <div class="u-container-style u-list-item u-palette-3-light-3 u-repeater-item u-list-item-3">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
+                <h4 class="u-text u-text-default u-text-2 text-right pr-4"  > شروع کار</h4>
+                <p class="u-align-right u-text u-text-body-color u-text-default u-text-3 text-right" >Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
+              </div>
+            </div>
+            <div class="u-container-style u-list-item u-palette-3-light-3 u-repeater-item u-list-item-4">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
+                <h4 class="u-text u-text-default u-text-2 text-right pr-4"  > شروع کار</h4>
+                <p class="u-align-right u-text u-text-body-color u-text-default u-text-13 text-right" >Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
+              </div>
+            </div>
+            <div class="u-container-style u-list-item u-palette-3-light-3 u-repeater-item u-list-item-5">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
+                <h4 class="u-text u-text-default u-text-2 text-right pr-4" > شروع کار</h4>
+                <p class="u-align-right u-text u-text-body-color u-text-default u-text-13 text-right" >Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
+              </div>
+            </div>
+            <div class="u-container-style u-list-item u-palette-3-light-3 u-repeater-item u-list-item-6">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
+                <h4 class="u-text u-text-default u-text-2 text-right pr-4" > شروع کار</h4>
+                <p class="u-align-right u-text u-text-body-color u-text-default u-text-13 text-right" >Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-3" id="sec-e077">
+      <div class="u-clearfix u-sheet u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+          {% if teacher_selected.sample_video %}
+         <img src="{{ teacher_selected.degree_image3.url }}" class="u-image u-image-circle u-image-1"  data-image-width="639" data-image-height="639" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="250">
+          {% endif %}
+        <video src="{{ teacher_selected.sample_video.url }}" controls class="u-image u-image-circle u-image-2" data-image-width="1380" data-image-height="920" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="750"></video>
+            <img src="{{ teacher_selected.image.url }}" class="u-border-palette-3-base u-image u-image-circle  u-image-3">
+
+        <div class="u-align-left u-container-style u-expanded-width-xs u-group u-white u-group-1" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="500">
+          <div class="u-container-layout u-container-layout-1">
+            <h2 class="u-text u-text-default u-text-1 text-center  " >چطور وارد بازار کار شویم </h2>
+            <p class="u-text u-text-13 text-right" >نتمنتاممنت بیاتیتاتا ینتایتاتتااتاتی  تیاایتای یتاتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتت تتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتت تتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتت تتتتتتتتتتتتتتتتت ت تتتتتتتتتتتتتتتتتتتتتتتتت ت تیبستنبانتاس      تتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتتت ثثثثثث خخخخخخخخخخخخخخخخخخخخخخخخخخخخخخخخخخخخ خ خخخخخخخخخخخخخخخخخخخخخخخخخخخخخخخخخخخخخخ
+            </p>
+            <a href="{{ teacher_selected.video_channel_link }}" class="u-active-palette-3-base u-align-center u-border-2 u-border-active-palette-3-base u-border-hover-palette-3-base u-border-palette-3-base u-btn u-btn-round u-button-style u-hover-palette-3-base u-none u-radius-10 u-text-active-white u-text-hover-white u-text-palette-3-dark-1 " target="_blank" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="" >ویدئوهای بیشتر</a>
+          </div>
+        </div>
+        <div class="u-palette-3-base u-shape u-shape-circle u-shape-2" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="750">
 
         </div>
-
-<div class="   col-lg-5 col-md-5 col-sm-12 m-2    " >
-
-         <textarea class="form-control bg-secondary  text-white" id="exampleFormControlTextarea1" disabled rows="6" dir="auto">
-          اطلاعات استاد :&#13;
-             {{ teacher_selected.qualification }}
-         </textarea>
+          <img src="{{ teacher_selected.degree_image4.url }}" alt="{{ teacher_selected.slug }}" class="u-image u-image-circle u-preserve-proportions u-image-2" data-image-width="1380" data-image-height="920">
+          <img src="{{ teacher_selected.degree_image5.url }}" alt="{{ teacher_selected.slug }}" class="u-image u-image-circle u-preserve-proportions  u-image-1" data-image-width="1380" data-image-height="920">
+          <img src="{{ teacher_selected.degree_image6.url }}" alt="{{ teacher_selected.slug }}" class="u-image u-image-circle u-preserve-proportions  u-image-4" data-image-width="1380" data-image-height="920">
+      </div>
+    </section>
+    <section class="u-align-center u-clearfix u-grey-5 u-section-4" id="carousel_c208">
+      <div class="u-expanded-width u-palette-3-base u-shape u-shape-rectangle u-shape-1"></div>
+      <h2 class="u-text u-text-1" >How to Plan a Wedding</h2>
+      <div class="u-list u-list-1">
+        <div class="u-repeater u-repeater-1">
+          <div class="u-align-center u-container-style u-list-item u-radius-20 u-repeater-item u-shape-round u-white u-list-item-1">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
+              <img src="{{ teacher_selected.debugging_image.url }}" alt="{{ teacher_selected.slug }}" class="u-image u-image-circle u-image-1"></img>
+              <h5 class="u-text u-text-9" >رفع اشکال تک تک موارد</h5>
+              <p class="u-text u-text-grey-50 u-text-4" >متامنتامسی ستایلنتسای یسیتاسیاشسنی یشمتیانتشساینتشس یمیسالشستاشینش ی</p>
             </div>
-</div>
-<div class=" col justify-content-center">
-
-    <table class="table table-striped ">
-        <thead>
-            <tr>
-                <th>نام معلم</th>
-                <th>موضوع تدریس</th>
-                <th>رشته و آخرین مدرک تحصیلی</th>
-                <th> سابقه تدریس </th>
-                <th>محدوده قیمت کلاس </th>
-                <th> امتیاز معلم از 5</th>
-            </tr>
-
-            </thead>
-        <tr>
-            <td> {{ teacher_selected.first_name }}  {{ teacher_selected.last_name }}</td>
-            <td>{{ teacher_selected.syllabus.syllabus_name }}</td>
-            <td>{{ teacher_selected.qualification }}</td>
-            <td>{{ teacher_selected.experience }}</td>
-            <td>{{ teacher_selected.price_range.price_range_name }}</td>
-            <td>{{ teacher_selected.points}}</td>
-        </tr>
-    </table>
-</div>
-
-    <div class="col-lg-12 col-md-12 col-sm-12">
-        <form class="form-control text-right" action="" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="teacher_request_send" value="#">
-            <button type="submit" class="btn btn-primary ">ارسال درخواست به معلم </button>
-
-        </form>
-         <a href="{% url 'teachme:teacher_list' %}">بازگشت به لیست معلم ها>></a>
-
-    </div>
-
-
-</div>
-
-
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-radius-20 u-repeater-item u-shape-round u-video-cover u-white u-list-item-2">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2">
+              <img src="{{ teacher_selected.friendly_image.url }}" alt="{{ teacher_selected.slug }}" class="u-image u-image-circle u-image-2"></img>
+              <h5 class="u-text u-text-9" >محیط دوستانه و صمیمی</h5>
+              <p class="u-text u-text-grey-50 u-text-6" >Suspendisse vulputate eros in velit fermentum cursus. Nulla fringilla justo tellus, at sodales eros laoreet a. Quisque facilisis lorem augue, sit amet</p>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-radius-20 u-repeater-item u-shape-round u-video-cover u-white u-list-item-3">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3">
+              <img src="{{ teacher_selected.original_diploma_image.url }}" alt="{{ teacher_selected.slug }}" class="u-image u-image-circle u-image-3">
+              <h5 class="u-text u-text-9" >مدرک معتبر</h5>
+              <p class="u-text u-text-grey-50 u-text-8" >uspendisse vulputate eros in velit fermentum cursus. Nulla fringilla justo tellus, at sodales eros laoreet a. Quisque facilisis lorem augue, sit amet</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="{% url 'teachme:teacher_request_send' teacher_selected.id %}" class="u-active-palette-3-base u-align-center u-border-2 u-border-active-palette-3-base u-border-hover-palette-3-base u-border-palette-3-base u-btn u-btn-round u-button-style u-hover-palette-3-base u-none u-radius-10 u-text-active-white u-text-hover-white u-text-palette-3-dark-1 u-btn-2" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="" >درخواست استاد</a>
+    </section>
+    <section class="u-clearfix u-section-5" id="carousel_f152">
+      <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+        <div class="u-image u-image-circle u-preserve-proportions u-image-1" data-image-width="1212" data-image-height="920"></div>
+        <div class="u-preserve-proportions u-shape u-shape-svg u-text-palette-3-base u-shape-1">
+          <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 160" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-410b"></use></svg>
+          <svg class="u-svg-content" viewBox="0 0 160 160" x="0px" y="0px" id="svg-410b" style="enable-background:new 0 0 160 160;"><path d="M80,30c27.6,0,50,22.4,50,50s-22.4,50-50,50s-50-22.4-50-50S52.4,30,80,30 M80,0C35.8,0,0,35.8,0,80s35.8,80,80,80
+	s80-35.8,80-80S124.2,0,80,0L80,0z"></path></svg>
+        </div>
+        <div class="u-palette-3-base u-preserve-proportions u-shape u-shape-circle u-shape-2" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="250"></div>
+        <img src="{{ teacher_selected.work_image.url }}" alt="{{ teacher_selected.slug }}" class="u-image u-image-circle u-preserve-proportions u-image-2" data-image-width="800" data-image-height="800">
+        <img src="{{ teacher_selected.degree_image7.url }}" class="u-image u-image-circle u-preserve-proportions u-image-3" data-image-width="1380" data-image-height="920"></img>
+        <div class="u-align-left u-container-style u-expanded-width-sm u-expanded-width-xs u-group u-radius-50 u-shape-round u-white u-group-1">
+           <div class="u-container-layout u-valign-middle u-container-layout-1 text-right  ">
+            <h2 class="u-text u-text-1"> موقعیت های شغلی</h2>
+            <p class="u-text u-text-2" >کمنکتنمتبیس کینستکنتکیس کمنتکمنتسی کمنتکسشن شسگجحخشهجحخسی گشسمینتبکمنستکی
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
 
 
 
 
 
+    <section class="u-clearfix u-image u-shading u-section-6" id="carousel_9504">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-clearfix u-expanded-width u-gutter-30 u-layout-wrap u-layout-wrap-1">
+          <div class="u-gutter-0 u-layout">
+            <div class="u-container-layout u-align-center">
+              <div class="u-container-style u-image u-layout-cell u-left-cell u-size-20 u-image-1">
+                <div class="u-container-layout u-container-layout-1"></div>
+              </div>
+              <div class="u-container-style u-image u-layout-cell u-size-20 u-image-2 ">
+                <div class="u-container-layout  u-align-center">
+                    <img  class="img-fluid m-4" src="{{ teacher_selected.certificate_image1.url }}">
+                    <img  class="img-fluid m-4" src="{{ teacher_selected.certificate_image2.url }}">
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-right-cell u-size-20 u-layout-cell-3 u-align-center ">
+                <div class="u-container-layout u-valign-right u-container-layout-3">
+                  <h4 class="u-align-center u-text u-text-1" >مدارک استاد</h4>
+                  <h2 class="u-align-center u-text u-text-2" >چطور به اساتید ما اعتماد کنید</h2>
+                  <p class="u-align-center u-text u-text-3 text-right" > استاد های ما از بهترین اساتید کشور گلچین شده و مدارک و سابقه استاد قبل از قراردادن روی سایت بررسی و تایید می شوند و 1 ساعت اول کلیه کلاس ها رایگان است و هنرجو می تواند در صورت عدم رضایت بعد از 1 ساعت اول بدون پرداخت شهریه کلاس را ترک کند</p>
+                  <a href="https://nicepage.review" class="u-active-palette-3-base u-align-center u-border-2 u-border-active-palette-3-base u-border-hover-palette-3-base u-border-palette-3-base u-btn u-btn-round u-button-style u-hover-palette-3-base u-none u-radius-10 u-text-active-white u-text-body-alt-color u-text-hover-white " data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="" >ثبت درخواست استاد </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+<section class="u-align-center u-clearfix u-palette-3-base u-section-8" id="carousel_db20">
+      <div class="u-clearfix u-sheet u-valign-right-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+        <div class="u-shape u-shape-svg u-text-palette-3-light-2 u-shape-1">
+          <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 160" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-e858"></use></svg>
+          <svg class="u-svg-content" viewBox="0 0 160 160" x="0px" y="0px" id="svg-e858" style="enable-background:new 0 0 160 160;"><path d="M80,30c27.6,0,50,22.4,50,50s-22.4,50-50,50s-50-22.4-50-50S52.4,30,80,30 M80,0C35.8,0,0,35.8,0,80s35.8,80,80,80
+	        s80-35.8,80-80S124.2,0,80,0L80,0z"></path></svg>
+        </div>
+        <img src="{{ teacher_selected.end_image.url }}" alt="{{ teacher_selected.slug }}" class="u-image u-image-circle u-image-1" data-image-width="838" data-image-height="838">
+        <div class="u-palette-3-light-2 u-shape u-shape-circle u-shape-2"></div>
+        <div class="u-align-right u-container-style u-expanded-width-sm u-expanded-width-xs u-group u-radius-15 u-shape-round u-white u-group-1">
+          <div class="u-container-layout u-valign-center u-container-layout-1" >
+            {% if teacher_for_comments %}
+            <h2  class="u-text u-text-1 u-align-right" >  نظرات کاربران</h2>
+            <ul id="comments_ul" >
+            {% for teacher in teacher_for_comments %}
+                {% if teacher.content %}
+                <hr>
+{#                   <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">#}
+                <li class=" small text-right text-secondary" >
+                    <p class="text text-left ">{{ teacher.user_commenter.username|truncatechars:9 }}</p>
+                    <p  class="text ">{{ teacher.content|linebreaks }}</p>
+                </li>
+{#                </div>#}
+                {% endif %}
+            {% endfor %}
+            </ul>
+            {% endif %}
 
-    <script  src="{% static 'teachme/assets/web/assets/jquery/jquery.min.js' %}"></script>
+            {% if user.is_authenticated %}
+            <hr>
+
+            <div id="comment_form-div" class="u-form u-form-1 " dir="rtl">
+                   <div id="message_viewer" class=" text-center"  style="display: none"><p dir="rtl"><i class="fa fa-check" style="font-size: xxx-large; color: #1c7430"></i></p></div>
+              <form id="comment_form" method="post" action="{% url 'teachme:comment' teacher_selected.id %}" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"  name="form-1" style="padding: 10px;">
+                {% csrf_token %}
+                  <div class="u-form-group u-form-name">
+                  <label class="u-label" >نام</label>
+                  <input type="text" placeholder="نام خود را وارد کنید" id="name-a736" name="name" class="u-grey-5 u-input u-input-rectangle u-radius-12" required="" >
+                  </div>
+                <div class="u-form-group u-form-message">
+                  <label class="u-label" >نظر شما</label>
+                  <textarea placeholder="نظر خود را بنویسید" id="message-a736" name="comment" class="u-grey-5 u-input u-input-rectangle u-radius-12" required="" ></textarea>
+                </div>
+                <div class="u-align-left u-form-group u-form-submit">
+                  <input id="submit_comment" onclick="message() " type="submit" value="ثبت" class="form-control btn btn-secondary">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% else %}
+                <div class="u-align-center "><a href="{% url 'teachme:comment' teacher_selected.id %}" class="u-active-black u-border-none u-btn u-btn-round u-btn-submit u-button-style u-hover-black u-palette-3-base u-radius-12 u-btn-3 " >نظر خود را ثبت کنید</a></div>
+         {% endif %}
+        <div class="u-shape u-shape-svg u-text-white u-shape-3">
+          <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 160" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-a0bf"></use></svg>
+          <svg class="u-svg-content" viewBox="0 0 160 160" x="0px" y="0px" id="svg-a0bf" style="enable-background:new 0 0 160 160;"><path d="M80,30c27.6,0,50,22.4,50,50s-22.4,50-50,50s-50-22.4-50-50S52.4,30,80,30 M80,0C35.8,0,0,35.8,0,80s35.8,80,80,80
+	s80-35.8,80-80S124.2,0,80,0L80,0z"></path></svg>
+        </div>
+      </div>
+    </section>
+
     <script type="text/javascript">
-
-
-        function readURL(input) {
-
-            if (input.image) {
-                alert("jhskj")
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#teacher_image').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.image); // convert to base64 string
+        function message(){
+            var name = document.forms["comment_form"]["name"].value;
+            var comment = document.forms["comment_form"]["comment"].value;
+            if (name!= "" && comment!="") {
+                $('#submit_comment').css('display', 'none')
+                $('#message_viewer').css('display', 'block')
             }
         }
 
-
-          function points_progress(p) {
-
-                        var points_ratio = p/5 ;
-                        var w = points_ratio *100 + '%'
-                        var bg_color;
-                        var bg = points_ratio*350-80;
-                        bg_color = 'hsl('+ bg +', 90%,43%)';
-                        $("#p_progress_bar").css('background-color',bg_color).css('width',w)
-
-                    }
-          $(document).ready(function () {
-
-                points_progress({{ teacher_selected.points }});
-                readURL('teacher_image')
-          })
-
-
     </script>
+
 {% endblock %}
-
-
