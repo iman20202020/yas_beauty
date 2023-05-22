@@ -15,11 +15,9 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path, include
 
-from accounts.models import Teacher
 from accounts.sitemaps import TeacherSitemap
 from forum.sitemaps import PostSitemap
 from yas7 import settings
@@ -29,16 +27,13 @@ sitemaps = {
     'posts': PostSitemap,
 }
 
-# info_dict = {
-#     'queryset': Teacher.objects.all(),
-# }
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
     path('course/', include('teachme.urls')),
     # path('blog/', include('blog.urls')),
-    path('forum/', include('forum.urls')),
+    path('blog/', include('forum.urls')),
     path('ratings/', include('star_ratings.urls', namespace='ratings')),
 
 

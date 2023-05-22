@@ -158,7 +158,10 @@ HITCOUNT_KEEP_HIT_IN_DATABASE = {'seconds': 10}
 
 
 SEO_VIEWS_CHOICES = (
-    ('index', 'Index page'),
+    ('blog_index', 'Blog index page'),
+    ('main_index', 'Main index page'),
+    ('teacher_list', 'Teacher list '),
+    ('teacher_detail', 'Teacher detail '),
     # ('faq', 'FAQ page'),
 )
 

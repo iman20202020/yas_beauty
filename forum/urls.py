@@ -6,7 +6,7 @@ app_name = 'forum'
 
 urlpatterns = [
     # get post_list without tag filter
-    path('', views.post_list, name='post_list'),
+    path('forum/', views.post_list, name='post_list'),
     # get post_list filtered by tag
     path('syllabus/<str:tag_syllabus>/', views.post_list, name='post_list_by_tag'),
     # post detail
@@ -19,7 +19,8 @@ urlpatterns = [
     path('like/', views.post_like, name='post_like'),
 
     path('blogs/', views.BlogIndexView.as_view(), name='blogs'),
-    path('blog/<id>', views.BlogDetailView.as_view(), name='blog_detail'),
+    path('<id>', views.BlogDetailView.as_view(), name='blog_detail'),
+
 ]
 
 

@@ -2,13 +2,17 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView, TemplateView
 from hitcount.views import HitCountDetailView
+from seo.mixins.views import ViewSeoMixin
+
 from accounts.models import Teacher, ClassRequest, Comment, Syllabus
 from teachme.page_titles import set_page_title
 from teachme.send_sms import *
 
 
-class TeacherDetailView(HitCountDetailView):
+class TeacherDetailView(ViewSeoMixin, HitCountDetailView):
+    seo_view = 'teacher_detail'
     model = Teacher
     template_name = 'teachme/teacher_detail.html'
     context_object_name = 'teacher'
@@ -59,18 +63,36 @@ def teacher_request_send(request, teacher_id):
     return redirect(teacher_requested.get_absolute_url())
 
 
-def teachers_list(request, teachers_syllabus):
-    teachers_1 = Teacher.objects.filter(syllabus=teachers_syllabus, is_confirmed=True).reverse().order_by('points')[:1]
-    teachers_2 = Teacher.objects.filter(syllabus=teachers_syllabus, is_confirmed=True).reverse().order_by('points')[1:]
-    syllabus = get_object_or_404(Syllabus, syllabus=teachers_syllabus)
-    title = set_page_title(teachers_syllabus)
+class TeacherList(ViewSeoMixin,TemplateView):
+    model = Teacher
+    seo_view = 'teacher_list'
+    template_name = 'teachme/teachers_list.html'
 
-    context = {
-        'teachers_1': teachers_1,
-        'teachers_2': teachers_2,
-        'syllabus': syllabus,
-        'title': title,
-    }
-    return render(request, 'teachme/teachers_list.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        syllabus = get_object_or_404(Syllabus, syllabus=self.kwargs["syllabus"])
+        teachers = Teacher.objects.filter(syllabus=syllabus)
+        context["teachers_1"] = teachers[:1]
+        context["teachers_2"] = teachers[1:]
+
+        return context
+
+
+
+
+
+# def teachers_list(request, teachers_syllabus):
+#     teachers_1 = Teacher.objects.filter(syllabus=teachers_syllabus, is_confirmed=True).reverse().order_by('points')[:1]
+#     teachers_2 = Teacher.objects.filter(syllabus=teachers_syllabus, is_confirmed=True).reverse().order_by('points')[1:]
+#     syllabus = get_object_or_404(Syllabus, syllabus=teachers_syllabus)
+#     title = set_page_title(teachers_syllabus)
+#
+#     context = {
+#         'teachers_1': teachers_1,
+#         'teachers_2': teachers_2,
+#         'syllabus': syllabus,
+#         'title': title,
+#     }
+#     return render(request, 'teachme/teachers_list.html', context)
 
 

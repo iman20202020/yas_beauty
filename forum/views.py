@@ -139,7 +139,7 @@ def comment_comment(request, post_id, comment_id):
 
 
 class BlogIndexView(ViewSeoMixin, TemplateView):
-    seo_view = 'index'
+    seo_view = 'blog_index'
     template_name = 'forum/blog/index.html'
 
     def get_context_data(self, **kwargs) :
