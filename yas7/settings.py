@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&
 DEBUG = True
 
 
-ALLOWED_HOSTS =[]
+ALLOWED_HOSTS =['yasacademy.ir', 'www.yasacademy.ir']
 
 
 # Application definition
